@@ -19,6 +19,7 @@ function AddDoctorClinicInfo(){
     
 	useEffect(()=>{
         getAllClinics();
+        console.log("hello")
     },[])
 
     const getAllClinics =()=>{
