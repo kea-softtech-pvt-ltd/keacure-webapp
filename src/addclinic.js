@@ -20,7 +20,8 @@ const AddClinic = (props) => {
 	},[])
     const fetchSpecializations = async () =>{
         const result = await axios.get(`http://localhost:9000/api/drspecialization`); 
-        setDrSpecialization(result.data);   
+        setDrSpecialization(result.data);
+        console.log("shubh")   
     }
     
     function handleChange(event){
