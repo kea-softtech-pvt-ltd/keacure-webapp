@@ -36,6 +36,7 @@ function AddDoctorClinicInfo(){
         setActiveModal(null);
     };
     const sessionShow  = (e, index) => {
+        e.preventDefault();
         setActiveModal(index);
     }
     const onSessionFormSubmit = (e) => {

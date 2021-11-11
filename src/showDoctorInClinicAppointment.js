@@ -2,31 +2,31 @@ import { useState } from "react";
 import { AiOutlineArrowRight ,AiOutlineArrowLeft } from "react-icons/ai";
 import Carousel from "react-bootstrap/Carousel";
 import { Link } from "react-router-dom";
-import {slots} from "./constant";
+import { slots} from "./constant";
 
 function ShowDoctorInClinicAppointment(props){
-
     const [showText, setShowText] = useState(false);
-    const handleChange = () => {
+    const handleChange = (e) => {
+        e.preventDefault();
         setShowText(true);
     };
     const slot = slots;
+    
     return(
         <>
         <div>
             <div className="row">
-                <h6>select Appointment Date And Time</h6>
                 <div>
                     <Carousel interval={null} controls={true} nextIcon={<div className="AiArrowIcon"><AiOutlineArrowRight/></div>} prevIcon={<div className="AiArrowIcon"><AiOutlineArrowLeft/></div>}>
                         {slot.map((item, index) => {
                         return (
                             <Carousel.Item>
-                            <div style={{ height: 100, background: "white", color: "black" }}>
-                                <Carousel.Caption>
-                                <div><b>{item.date}</b></div>
-                                <Link onClick={handleChange}>{item.slot}</Link>
-                                </Carousel.Caption>
-                            </div>
+                                <div style={{ height: 100, background: "white", color: "black" }}>
+                                    <Carousel.Caption>
+                                    <div><b>{item.date}</b></div>
+                                    <Link onClick={handleChange}>{item.slot}</Link>
+                                    </Carousel.Caption>
+                                </div>
                             </Carousel.Item>
                         );
                         })}

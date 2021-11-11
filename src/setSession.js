@@ -30,6 +30,7 @@ function SetSession(props){
     const handleClose = () => setShowTime(false);
 
     const handleShow = (e, dayName) =>{
+        e.preventDefault();
         setShowTime(true)
         setDayNames(dayName)
     };

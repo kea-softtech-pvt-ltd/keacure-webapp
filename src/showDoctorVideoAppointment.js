@@ -1,50 +1,59 @@
-import { useState} from "react";
+import { useEffect, useState} from "react";
 import { AiOutlineArrowRight ,AiOutlineArrowLeft } from "react-icons/ai";
 import Carousel from "react-bootstrap/Carousel";
 import { Link } from "react-router-dom";
-import { slots} from "./constant";
-import { setDoctorBooking} from "./recoil/atom/setDoctorBooking"
-import { useRecoilState } from "recoil";
-import { useEffect } from "react";
+import { ShowAvailableSlot } from "./showAvailableSlot";
 
 function ShowDoctorVideoAppointment(props){
-    const [coilDoctorBooking , setCoilDoctorBooking ] = useRecoilState(setDoctorBooking)
-    const [showText, setShowText] = useState(false);
-
-    const handleChange = () => {
-        setShowText(true);
+    const setSessions = props.setSessions;
+    const [showSlot, setShowSlot] = useState(false);
+    const [dayMonth , setDayMonth]=  useState('')
+    const handleChange = (e) => {
+        e.preventDefault();
+        setShowSlot(true);
     };
 
     useEffect(()=>{
-        setCoilDoctorBooking(slots)
-    },[])
-    
+        showDateMonth();
+    })
+
+    const showDateMonth =() =>{
+        var date = new Date().getDate();
+        var month = new Date().getMonth();
+        var label = [{month: month}]
+        var months = [];
+        var m = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+           "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" ];
+
+        label.forEach(function(value){
+            var monthName = m[value.month];
+            months.push(monthName);
+        });
+        setDayMonth(date + ' ' + months  );
+    }
+
     return (
         <div className="row">
-            <h6>select Appointment Date And Time</h6>
+            {setSessions ?(
+            <>
+            <div>
+            {/* <h6>select Appointment Date And Time</h6> */}
             <Carousel interval={null} controls={true} nextIcon={<div className="AiArrowIcon"><AiOutlineArrowRight/></div>} prevIcon={<div className="AiArrowIcon"><AiOutlineArrowLeft/></div>}>
-                {coilDoctorBooking.map(item=>(    
-                    <Carousel.Item>
-                        <div style={{ height: 100, background: "white", color: "black" }}>
-                            <Carousel.Caption>
-                                <div><b>{item.date}</b></div>
-                                <Link onClick={handleChange}>{item.slot}</Link>
-                            </Carousel.Caption>
-                        </div>
-                    </Carousel.Item>
-                ))}
-            </Carousel>
-            {showText?
-                <section className="radiobutton">
-                    {coilDoctorBooking.map(item=>(
-                    <div>
-                        <Link to={`/doctorbookingwithpatientlogin/${item._id}`} className="btn_1" type="radio" time={slots}>
-                            <label>{item.time}</label>
-                        </Link>
+                <Carousel.Item>
+                    <div style={{ height: 100, background: "white", color: "black" }}>
+                        <Carousel.Caption>
+                            <div><b>{dayMonth} {setSessions[0].fees} fee</b></div>
+                            <Link onClick={handleChange}>6 slot Available</Link>
+                        </Carousel.Caption>
                     </div>
-                    ))}
-                </section>
+                </Carousel.Item>
+            </Carousel>
+            </div>
+            {showSlot?
+                <ShowAvailableSlot sessionSlot={setSessions}/>
             :null} 
+            </>
+            ):null}
         </div>
     )
 }

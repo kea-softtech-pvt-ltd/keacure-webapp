@@ -20,6 +20,7 @@ function AddDoctorOwnClinicInfo(){
         setActiveModal1(null);
     };
     const ownSessionShow  = (e, index) => {
+        e.preventDefault();
         setActiveModal1(index);
     }
     const onOwnSessionFormSubmit = (e) => {

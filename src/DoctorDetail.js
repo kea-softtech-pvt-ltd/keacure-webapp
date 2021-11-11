@@ -10,10 +10,7 @@ import { DoctorDetailsEducationalStatement} from "./doctorDetailsEducationalStat
 
 export default function DoctorDetail () {
     const { doctorId} = useParams() ;
-    console.log(doctorId)
-
     const [fetchProfileData , setFetchProfileData] = useState([]);
-    console.log(fetchProfileData)
 
     useEffect(()=>{
         console.log("hiiii")
@@ -40,7 +37,7 @@ export default function DoctorDetail () {
     
             <div className="container margin_60">
                 <div className="row">
-                    <div className="col-xl-8 col-lg-8">
+                    <div className="col-xl-7 col-lg-7">
                         <MainNav>  
                             <ul className="clearfix">
                                 <li><Link to="#section_1" className="active">General info</Link></li>

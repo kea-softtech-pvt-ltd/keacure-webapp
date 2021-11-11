@@ -2901,6 +2901,9 @@ label.css-label strong {
 	-moz-border-radius: 5px;
 	-ms-border-radius: 5px
 }
+.MuiPaper-elevation1 {
+	margin: 10px;
+}
 #sidebar_detail h4 {
 	color: #6d7b84;
 	font-size: 18px;
@@ -2914,7 +2917,7 @@ label.css-label strong {
 }
 .box_profile ul.statistic li,
 .profile ul.statistic li {
-	background-color: #74d1c6;
+	background-color: #00c5fb;
 	font-weight: 600;
 	min-width: 95px;
 	display: inline-block
