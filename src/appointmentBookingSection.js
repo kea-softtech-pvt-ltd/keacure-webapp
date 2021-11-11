@@ -16,13 +16,13 @@ function AppointmentBookingSection(props){
                     </div>
                     <small><h5><FaClinicMedical/> Clinic List</h5></small>
                     <div>
-                        {clinicData.map((clinicItem) =>(
-                            <MainAccordion key={clinicItem.id} title={clinicItem.clinicName}>
+                        {clinicData.map((clinicItem ,id) =>(
+                            <MainAccordion key={id} title={clinicItem.clinicName}>
                                 <DoctorAppointmentType clinicData={clinicItem}/>
                             </MainAccordion>
                         ))}
-                        {ownClinicData.map((ownClinicItem) =>(
-                            <MainAccordion title={ownClinicItem.clinicName}>
+                        {ownClinicData.map((ownClinicItem ,id) =>(
+                            <MainAccordion key={id} title={ownClinicItem.clinicName}>
                                 <DoctorAppointmentType clinicData={ownClinicItem}/>
                             </MainAccordion>
                         ))}

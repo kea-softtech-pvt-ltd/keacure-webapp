@@ -42,6 +42,7 @@ export default function PatientList(){
     const classes = useStyles();
     //for fetch json data
     let[rows ,setRows] =useState([])
+    console.log(rows)
     let { url } = useRouteMatch();
 	useEffect(()=>{
 		const result = axios(
@@ -70,7 +71,7 @@ export default function PatientList(){
                                             onChange={onChange}
                                             value={value}
                                             clearIcon= {null} 
-                                          />
+                                        />
                                     </div>
                                     <div className="col-lg-2"> 
                                     <label>To Date</label>
@@ -130,7 +131,7 @@ export default function PatientList(){
                                                     </div>
                                                 </TableCell>
                                             </TableRow>
-                                            ))}
+                                        ))}
                                         </TableBody>
                                     </Table>
                                 </TableContainer>

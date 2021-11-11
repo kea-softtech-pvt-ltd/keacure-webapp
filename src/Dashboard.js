@@ -7,19 +7,24 @@ import { MainWrapper } from "./mainComponent/mainWrapper";
 export default function Dashboard(){
     const { doctorId } = useParams();
     let history = useHistory();
-    function handleClick() {
-        history.push("/patientlist");
+    
+    function handleClick(e) {
+        e.preventDefault()
+        history.push("/patientlist/:id");
     }
 
-    function handleOnProfileClick() {
+    function handleOnProfileClick(e) {
+        e.preventDefault()
         history.push(`/doctorProfile/${doctorId}`);
     }
 
-    function handlePaymentClick() {
+    function handlePaymentClick(e) {
+        e.preventDefault()
         history.push("/PatientsPaymentHistory");
     }
 
-    function handleClinicClick() {
+    function handleClinicClick(e) {
+        e.preventDefault()
         history.push("/PatientsClinicHistory");
     }
 

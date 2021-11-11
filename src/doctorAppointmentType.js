@@ -7,9 +7,9 @@ import axios from "axios";
 
 const DoctorAppointmentType = (props)=>{
     const { _id,doctorId } = props.clinicData
-    const [showVideoSlot ,setShowVideoSlot]    = useState(false)    
-    const [showClinicSlot ,setShowClinicSlot] = useState(false)
-    const [clinicSession , setClinicSession]   = useState([[],[]])
+    const [showVideoSlot ,setShowVideoSlot] = useState(false)    
+    const [showClinicSlot ,setShowClinicSlot ] = useState(false)
+    const [clinicSession , setClinicSession] = useState([[],[]])
 
     const getVideoSlot =(e)=>{
         e.preventDefault();
@@ -45,28 +45,24 @@ const DoctorAppointmentType = (props)=>{
     return (
         <>
         <div className="box_list home">
-            <ul>
             {clinicSession[0].length > 0 ?(   
-                <> 
-                <li><Link to="" onClick={getVideoSlot}><FaVideo/>  Book Video Appointment</Link></li>
-                {showVideoSlot === true?
-                    <ShowDoctorVideoAppointment setSessions ={clinicSession[0]}/>
-                :null}
-                </>
+                <ul> 
+                    <li><Link to="" onClick={getVideoSlot}><FaVideo/>  Book Video Appointment</Link></li>
+                    {showVideoSlot === true?
+                        <ShowDoctorVideoAppointment setSessions ={clinicSession[0]}/>
+                    :null}
+                </ul>
             ):"Slots Not Available"}    
-            </ul>
         </div>  
         <div className="box_list home">
-            <ul>
             {clinicSession[1].length > 0 ?(   
-                <>     
-                <li><Link to="" onClick={getInClinicSlot}><FaWalking/>  Book InClinic Appointment</Link></li>
-                {showClinicSlot === true?
-                    <ShowDoctorInClinicAppointment setSessions = {clinicSession[1]}/>
-                :null}
-                 </>
+                <ul>     
+                    <li><Link to="" onClick={getInClinicSlot}><FaWalking/>  Book InClinic Appointment</Link></li>
+                    {showClinicSlot === true?
+                        <ShowDoctorInClinicAppointment setSessions = {clinicSession[1]}/>
+                    :null}
+                </ul>
             ):"Slots Not Available"} 
-            </ul>
         </div>
         </>
     )

@@ -37,7 +37,6 @@ import {
    
 export default function Appointment(){
     //for datepicker
-    console.log("patient list")
     const [value, onChange] = useState(new Date());
     
     const classes = useStyles();

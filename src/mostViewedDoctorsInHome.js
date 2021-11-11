@@ -31,8 +31,8 @@ function MostViewedDoctorsInHome(){
                         
                     <div className="wrapper">
                         <h3>{item.name}</h3>
-                        {item.educationList.map(data =>(
-                            <small>{data.specialization}</small>
+                        {item.educationList.map((data , id) =>(
+                            <small kry={id}>{data.specialization}</small>
                         ))}
                         <div>{item.description}</div>
                             <ReactStars

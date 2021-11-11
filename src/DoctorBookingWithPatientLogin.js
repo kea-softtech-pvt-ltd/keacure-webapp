@@ -64,9 +64,10 @@ export default function DoctorBookingWithPatientLogin(){
                         <div className="col-xl-8 col-lg-8">
                             <div className="box_general_3 cart">
                                 <div id="login-2">
-                                <h3> Please login to KeaCure</h3>
+                                    <h3> Please login to KeaCure</h3>
                                     <form>
                                         <div className="box_form clearfix">
+                                            We will send OTP to your mobile number
                                             <div className="box_login last">
                                                 <div className="row">
                                                     <div className="col-md-9 ">
