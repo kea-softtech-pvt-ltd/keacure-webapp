@@ -1,5 +1,4 @@
-import { useHistory } from "react-router-dom";
-import { useParams }from "react-router-dom";
+import { useHistory ,useParams } from "react-router-dom";
 import { MainCards } from './mainComponent/mainCards';
 import { MainNav } from "./mainComponent/mainNav";
 import { MainWrapper } from "./mainComponent/mainWrapper";
@@ -10,7 +9,7 @@ export default function Dashboard(){
     
     function handleClick(e) {
         e.preventDefault()
-        history.push("/patientlist/:id");
+        history.push(`/patientlist/${doctorId}`);
     }
 
     function handleOnProfileClick(e) {
@@ -20,12 +19,12 @@ export default function Dashboard(){
 
     function handlePaymentClick(e) {
         e.preventDefault()
-        history.push("/PatientsPaymentHistory");
+        history.push(`/PatientsPaymentHistory/${doctorId}`);
     }
 
     function handleClinicClick(e) {
         e.preventDefault()
-        history.push("/PatientsClinicHistory");
+        history.push(`/PatientsClinicHistory/${doctorId}`);
     }
 
     return(

@@ -1,6 +1,6 @@
 import React from 'react';
 import { TabPanel } from "./tabpanel";
-import {DoctorClinic}  from "./doctorClinic"
+import { DoctorClinic}  from "./doctorClinic"
 import { useState } from "react";
 import { DoctorProfessionalExperience} from "./doctorProfessionalExperience"
 import { DoctorEducation} from "./doctorEducation";

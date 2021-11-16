@@ -11,11 +11,11 @@ import {StyledRadio} from "./radiobutton";
 import {PrettoSlider} from "./slider";
 
 function PatientLifestyle(props){
-    const { registerId } = props;
+    const { patientId } = props;
 
     //fetch data
     useEffect(()=>{
-        fetch(`http://localhost:9000/api/fetch/${registerId}`).then(res =>{
+        fetch(`http://localhost:9000/api/fetch/${patientId}`).then(res =>{
         if(res){
             return res.json()
                 }
@@ -47,7 +47,7 @@ function PatientLifestyle(props){
         formData.append('alcoholconsumption', data.alcoholconsumption);
         formData.append('foodpreferences', data.foodpreferences);
         formData.append('occupation', data.occupation);
-        axios.post(`http://localhost:9000/api/update/${registerId}`, formData)
+        axios.post(`http://localhost:9000/api/update/${patientId}`, formData)
         .then(function(response){
             history.push("/patientdashboard");
         })

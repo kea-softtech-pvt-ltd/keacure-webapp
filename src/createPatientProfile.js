@@ -5,10 +5,12 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import {MainInput} from "./mainComponent/mainInput";
 import {MainButtonInput} from "./mainComponent/mainButtonInput";
+
 export default function CreatePatientProfile(){
     const { doctorId } = useParams();
     const { patientId } = useParams()
     const [updatePatientData ,setUpdatePatientData] = useState([])
+    console.log(updatePatientData)
     //for all input onchange method
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -17,7 +19,6 @@ export default function CreatePatientProfile(){
     };
     useEffect(()=>{
         register("name", { required: true });
-        register("lName", { required: true });
         register("age", { required: true });
         register("gender", { required: true });
         register("email", { required: true });
@@ -27,7 +28,6 @@ export default function CreatePatientProfile(){
     const onSubmit= data => {
         const newPatientData = {
             name      :   data.name,
-            lName     :   data.lName,
             gender    :   data.gender,
             age       :   data.age,
             email     :   data.email
@@ -60,7 +60,7 @@ export default function CreatePatientProfile(){
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="row">
                                     <div className="col-md-6 col-sm-6">
-                                        <label>First name</label>
+                                        <label>Full name</label>
                                         <MainInput 
                                             type="text" 
                                             name="name" 
@@ -68,19 +68,7 @@ export default function CreatePatientProfile(){
                                             onChange={handleInputChange} 
                                             placeholder="Jhon">
                                         </MainInput>
-                                        {errors.name && <span className="validation">Please enter your first name</span>}                                            
-                                    </div>
-
-                                    <div className="col-md-6 col-sm-6">
-                                        <label>Last name</label>
-                                        <MainInput 
-                                            type="text" 
-                                            name="lName" 
-                                            value={updatePatientData.lName} 
-                                            onChange={handleInputChange} 
-                                            placeholder="Doe">
-                                        </MainInput>
-                                        {errors.lName && <span className="validation">Please enter your Last name</span>}
+                                        {errors.name && <span className="validation">Please enter your full name</span>}                                            
                                     </div>
                                 </div>
                                 <div className="row">

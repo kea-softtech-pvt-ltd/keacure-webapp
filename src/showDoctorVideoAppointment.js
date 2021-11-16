@@ -9,6 +9,7 @@ function ShowDoctorVideoAppointment(props){
     const setSessions = props.setSessions;
     const [showSlot, setShowSlot] = useState(false);
     const [dayMonth , setDayMonth]=  useState('')
+    console.log(dayMonth)
     const handleChange = (e) => {
         e.preventDefault();
         setShowSlot(true);
@@ -18,13 +19,17 @@ function ShowDoctorVideoAppointment(props){
         showDateMonth();
     })
 
-    const showDateMonth =() =>{
+    const showDateMonth =(days) =>{
         var date = new Date().getDate();
+        // const date = new Date(this.valueOf());
+        // date.setDate(date.getDate() + days);
+        // var date = new Date();
+        // date.setDate(date.getDate() + days);
         var month = new Date().getMonth();
         var label = [{month: month}]
         var months = [];
-        var m = [ "January", "February", "March", "April", "May", "June", 
-           "July", "August", "September", "October", "November", "December" ];
+        var m = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+           "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" ];
 
         label.forEach(function(value){
             var monthName = m[value.month];

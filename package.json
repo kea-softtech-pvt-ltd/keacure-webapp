@@ -55,6 +55,7 @@
     "recoil": "^0.4.1",
     "redux": "^4.1.0",
     "redux-devtools": "^3.7.0",
+    "text-slider": "^1.0.1",
     "throttle": "^1.0.3",
     "uuid": "^8.3.2"
   },

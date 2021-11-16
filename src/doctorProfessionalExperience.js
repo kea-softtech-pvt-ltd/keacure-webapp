@@ -19,7 +19,6 @@ function DoctorProfessionalExperience(props){
 
 return(
     <>
-        
         <FetchExperience/>           
         <Link onClick={() => handleAdd()}>
             <Icon className="addiconbutton" style={{ fontSize: 25 }}>add</Icon>
@@ -34,7 +33,6 @@ return(
         <div className="text-right add_top_30">
             <MainButtonInput onClick={props.data}>Next</MainButtonInput>
         </div>
-        
     </>
     )
 }

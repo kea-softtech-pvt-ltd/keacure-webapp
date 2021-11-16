@@ -105,7 +105,7 @@ return(
                     value={experienceData.clinicName} 
                     onChange={handleInputChange} 
                     placeholder="clinic name">
-                {errors.clinicName && <span className="validation">Please enter clinic name</span>}
+                    {errors.clinicName && <span className="validation">Please enter clinic name</span>}
                 </MainInput>
             </div>
 

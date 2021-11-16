@@ -57,16 +57,16 @@ export default function GetLoginPatientProfile(){
                                         <div className="col-md-6">
                                             <div className="row">
                                                 <div className="col-md-8">
-                                                    <label><b>First name :</b></label>
+                                                    <label><b>Patient name :</b></label>
                                                     {fetchPatientData.name}
                                                 </div>
                                             </div> 
-                                            <div className="row">   
+                                            {/* <div className="row">   
                                                 <div className="col-md-8">
                                                     <label><b>Last name :</b></label>
                                                     {fetchPatientData.lName}
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className="row">
                                                 <div className="col-md-8">
                                                     <label><b>Age :</b></label>

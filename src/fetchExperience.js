@@ -28,7 +28,7 @@ function FetchExperience(){
     },[])
 
     const getAllExperience =() =>{
-        fetch(`http://localhost:9000/api/fetchExData/${doctorId}`).then(res =>{
+        fetch(`http:// localhost:9000/api/fetchExData/${doctorId}`).then(res =>{
             if(res){
             return res.json()
                 }

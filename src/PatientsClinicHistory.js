@@ -1,11 +1,24 @@
-import React from 'react';
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import Typography from "@material-ui/core/Typography";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import {MainAccordion} from "./mainComponent/MainAccordion";
+import React, { useEffect, useState } from 'react';
+import { MainAccordion} from "./mainComponent/MainAccordion";
+import { useParams} from "react-router-dom";
+import axios from 'axios';
+
 export default function PatientsClinicHistory(){
+    const {doctorId} = useParams()
+    console.log(doctorId)
+    const [fetchClinicData , setFetchClinicData] = useState([]);
+    console.log(fetchClinicData)
+    useEffect(()=>{
+        getDoctorClinicInfo();
+    },[])
+    
+    async function getDoctorClinicInfo(){
+        const result = await axios.get(`http://localhost:9000/api/fetchclinic/${doctorId}`); 
+        const data = await axios.get(`http://localhost:9000/api/fetchownclinic/${doctorId}`); 
+        setFetchClinicData(result.data);   
+        setFetchClinicData(data.data);   
+
+    }
     return(
         <main>
             <div className="container margin_120_95">			
@@ -17,9 +30,10 @@ export default function PatientsClinicHistory(){
                             </div>
                         </nav>
                         <div className="box_form">
+                        {fetchClinicData.map(item =>(
                             <div className="row">
                                 <div className="col-lg-6 ">
-                                    <MainAccordion title={"Nobel Clinic"}>
+                                    <MainAccordion title={item.clinicName}>
                                         <div className="accordian">
                                         <span>1.</span>Shubhangi Suryawanshi
                                         </div>
@@ -30,62 +44,9 @@ export default function PatientsClinicHistory(){
                                         <span>3.</span>Karishma Kulkarni
                                         </div>
                                     </MainAccordion>
-                                    <Accordion>
-                                        <AccordionSummary className="AccordionSummary" expandIcon={<ExpandMoreIcon />}>
-                                            <Typography>Sidhhi Clinic</Typography>
-                                        </AccordionSummary>
-                                        <AccordionDetails>
-                                            <Typography>
-                                                <div className="accordian">
-                                                <span>1.</span>Shubhangi Suryawanshi
-                                                </div>
-                                                <div className="accordian">
-                                                <span>2.</span>Ravina Nikam
-                                                </div>
-                                                <div className="accordian">
-                                                <span>3.</span>Karishma Kulkarni
-                                                </div>
-                                            </Typography>
-                                        </AccordionDetails>
-                                    </Accordion>
-                                    <Accordion>
-                                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                            <Typography>Nobel Clinic</Typography>
-                                        </AccordionSummary>
-                                        <AccordionDetails>
-                                            <Typography>
-                                                <div className="accordian">
-                                                <span>1.</span>Shubhangi Suryawanshi
-                                                </div>
-                                                <div className="accordian">
-                                                <span>2.</span>Ravina Nikam
-                                                </div>
-                                                <div className="accordian">
-                                                <span>3.</span>Karishma Kulkarni
-                                                </div>
-                                            </Typography>
-                                        </AccordionDetails>
-                                    </Accordion>
-                                    <Accordion>
-                                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                                            <Typography>Nobel Clinic</Typography>
-                                        </AccordionSummary>
-                                        <AccordionDetails>
-                                            <Typography>
-                                                <div className="accordian">
-                                                <span>1.</span>Shubhangi Suryawanshi
-                                                </div>
-                                                <div className="accordian">
-                                                <span>2.</span>Ravina Nikam
-                                                </div>
-                                                <div className="accordian">
-                                                <span>3.</span>Karishma Kulkarni
-                                                </div>
-                                            </Typography>
-                                        </AccordionDetails>
-                                    </Accordion>
                                 </div>
                             </div>
+                            ))}
                         </div>
                     </div>
                 </div>

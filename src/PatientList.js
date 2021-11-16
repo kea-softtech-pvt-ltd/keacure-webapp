@@ -14,10 +14,7 @@ import FormControl from "@material-ui/core/FormControl";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import DatePicker from 'react-date-picker';
 import { CSVLink } from "react-csv";
-
-import { 
-    Link,
-    useRouteMatch
+import { Link, useRouteMatch
    } from "react-router-dom";
 
   //for table
@@ -41,7 +38,7 @@ export default function PatientList(){
     
     const classes = useStyles();
     //for fetch json data
-    let[rows ,setRows] =useState([])
+    const [rows ,setRows] =useState([])
     console.log(rows)
     let { url } = useRouteMatch();
 	useEffect(()=>{

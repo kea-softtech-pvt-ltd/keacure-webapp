@@ -1,10 +1,10 @@
 import React from 'react';
 import Icon from '@material-ui/core/Icon';
 import { FetchEducation} from "./fetchEducation";
-import {AddDoctorEducation} from "./addDoctorEducation";
+import { AddDoctorEducation} from "./addDoctorEducation";
 import { useState} from "react";
 import { Link } from '@material-ui/core';
-import {MainButtonInput} from "./mainComponent/mainButtonInput";
+import { MainButtonInput} from "./mainComponent/mainButtonInput";
 
 function DoctorEducation(props){
     const [showEducation, setShowEducation] = useState(false);

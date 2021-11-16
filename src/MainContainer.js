@@ -54,7 +54,7 @@ function MainContainer() {
           <Route exact path="/registerpatient">
             <RegisterPatient />
           </Route>
-          <Route path="/patientprofile/:registerId">
+          <Route path="/patientprofile/:patientId">
             < PatientProfile />
           </Route>
           <Route path="/doctorprofile/:doctorId">
@@ -66,10 +66,10 @@ function MainContainer() {
           <Route path="/editdoctorprofile/:doctorId">
             <EditDoctorProfile />
           </Route>
-          <Route exact path="/patientlist">
+          <Route exact path="/patientlist/:doctorId">
             <PatientList />
           </Route>
-          <Route path="/patientlist/:patientId">
+          <Route path="/patientlist">
             <OPD/>
           </Route>
           <Route path="/Appointment/:patientId">
@@ -78,7 +78,7 @@ function MainContainer() {
           <Route path="/dashboard/:doctorId">
             <Dashboard />
           </Route>
-          <Route path="/patientdashboard">
+          <Route path="/patientdashboard/:patientId">
             <PatientDashboard />
           </Route>
           <Route path="/medicinehistory">
@@ -87,10 +87,10 @@ function MainContainer() {
           <Route path="/patientinfo">
             < PatientInfo />
           </Route>
-          <Route path="/patientspaymenthistory">
+          <Route path="/patientspaymenthistory/:doctorId">
             < PatientsPaymentHistory />
           </Route>
-          <Route path="/Patientsclinichistory">
+          <Route path="/Patientsclinichistory/:doctorId">
             < PatientsClinicHistory />
           </Route>
           <Route path="/appointment">

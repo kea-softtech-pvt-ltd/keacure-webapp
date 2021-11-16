@@ -1,13 +1,12 @@
-import { StyledRadio } from "./radiobutton";
 import { useState , useEffect } from "react";
 import { useParams }from "react-router-dom";
 import { useForm } from "react-hook-form";
 import React from 'react';
 import axios from 'axios';
 import avatarImage from "./img/profile.png";
-import {MainButtonInput} from "./mainComponent/mainButtonInput";
+import { MainButtonInput} from "./mainComponent/mainButtonInput";
 import { MainInput } from './mainComponent/mainInput';
-import {PlacesAutocompleteInput} from "./mainComponent/placesAutocomplete"
+import { PlacesAutocompleteInput} from "./mainComponent/placesAutocomplete"
 import { MainRadioGroup } from "./mainComponent/mainRadioGroup";
 
 function DoctorPersonalInformation(props){

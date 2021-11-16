@@ -1,32 +1,51 @@
+import { Link ,useHistory ,useParams} from "react-router-dom";
+import { DoctorBookingConfirmPay} from "./doctorBookingConfirmPay";
+import { LoginPatientOtp} from "./loginPatientOtp";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
-import {Link} from "react-router-dom";
+import { setNewPatientId} from "./recoil/atom/setNewPatientId";
+import { useRecoilState } from "recoil";
+import { MainInput} from "./mainComponent/mainInput";
+import { MainButtonInput} from "./mainComponent/mainButtonInput";
 
 export default function LoginPatient(){
-    const[email , setEmail] = useState('');
-    const[password,setPassword]= useState('');
-    const [error, setError] = useState('');
+    //const {patientId} = useParams();
+    const history = useHistory();
+    const [patientId , setPatientId] = useRecoilState(setNewPatientId);
+    const [mobile, setMobile] = useState("");
+    const [isError, setIsError] = useState(false);
+    const [showOTP ,setShowOTP] = useState(false) 
 
-    let history = useHistory();
-    const handleClick = async(e) =>{
-        e.preventDefault();
-        const res  = await fetch('http://localhost:9000/api/login',{
-            method:"post",
-            headers:{
-            "Content-Type":"application/json"
-            },
-            body:JSON.stringify({
-                email:email,
-                password:password
-            })
-        });    
-        const data = res.json();
-        if(res.status === 400 || !data){
-            setError('Please enter valid Email and Password!');
-        }else{
-            history.push("/patientdashboard");
+    const getOTPSection = (e) => {
+        e.preventDefault()
+        if(mobile.length < 10) { 
+            setIsError('Please Enter valid mobile number.')
         }
-    }
+        else{
+            try{
+                fetch("http://localhost:9000/api/patientLogin",{
+                    method: 'POST',
+                    headers:{
+                    'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                    mobile: mobile,
+                    })       
+                })
+                .then(res=>res.json())
+                .then(data=>{
+                    setPatientId(data._id)
+                    if(data.isLoggedIn){
+                        history.push(`/PatientDashboard/${data._id}`)
+                    }else{
+                        setShowOTP(true) 
+                    }
+                })
+            }
+            catch(e){
+                console.log(e)
+            }
+        }
+    };
 
     return(
         <div>
@@ -34,29 +53,41 @@ export default function LoginPatient(){
                 <div className="bg_color_2">
                     <div className="container margin_60_35">
                         <div id="login-2">
-                            <h1>Please login to Findoctor!</h1>
-                            <form method="POST" onSubmit={handleClick} >
+                            <h1> Please login to KeaCure</h1>
+                            <form>
                                 <div className="box_form clearfix">
+                                    We will send OTP to your mobile number
                                     <div className="box_login last">
-                                        <div className="form-group">
-                                            <input type="text" className="form-control" name="email" onChange={(e)=>setEmail(e.target.value)}  value={email}  placeholder="pleae enter your email address"/>
+                                        <div className="row">
+                                            <div className="col-md-9 ">
+                                                <MainInput 
+                                                    type="text" 
+                                                    name="mobile" 
+                                                    value={mobile.mobile} 
+                                                    maxLength={10} 
+                                                    pattern="[+-]?\d+(?:[.,]\d+)?"
+                                                    onChange={(e)=>setMobile(e.target.value)} 
+                                                    placeholder="Phone Number (+XX)">
+                                                </MainInput>                                       
+                                                {<span className="validation">{isError}</span>}
+                                            </div>
+
+                                            <div className="col-md-2 ">
+                                                <MainButtonInput onClick={getOTPSection}>Go</MainButtonInput>
+                                            </div>
                                         </div>
-                                        <div className="form-group">
-                                            <input type="password" className="form-control"  name="password" onChange={(e)=>setPassword(e.target.value)}  value={password} placeholder="Your password"/>
-                                            {error && (<span className="validation"> {error} </span>)}
-                                            <Link to="#0" className="forgot"><small>Forgot password?</small></Link>
-                                        </div>
-                                        <div className="form-group">
-                                            <input className="btn_1" type="submit" value="Login"/>
-                                        </div>
+                                        
+                                        {showOTP === true?
+                                            <LoginPatientOtp patientId={patientId}/>
+                                        :null}
                                     </div>
-                                </div>
+                                </div>    
                             </form>
-                            <div className="text-center link_bright">Do not have an account yet? <Link to="/registerpatient"><strong>Register now!</strong></Link></div>
-                        </div>
+                        </div> 
                     </div>
                 </div>
-            </main>
-        </div>
+	        </main>
+	    </div>
+        
     )
 }

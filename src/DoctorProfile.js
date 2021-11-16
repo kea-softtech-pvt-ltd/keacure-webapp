@@ -4,6 +4,7 @@ import { MainNav } from "./mainComponent/mainNav";
 
 export default function DoctorProfile(){ 
     const {doctorId} = useParams()
+    console.log(doctorId)
     return(
         <div>
             <main>

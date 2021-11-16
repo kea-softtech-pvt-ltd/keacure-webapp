@@ -1,25 +1,26 @@
-import { useHistory } from "react-router-dom";
+import { useHistory ,useParams} from "react-router-dom";
 import { MainNav } from './mainComponent/mainNav';
 import { MainCards } from './mainComponent/mainCards';
 import { MainWrapper } from './mainComponent/mainWrapper';
   
 export default function PatientDashboard(){
+    const { patientId } = useParams();
     let history = useHistory();
 
     function handleClick() {
-        history.push("/appointment");
+        history.push(`/appointment/${patientId}`);
     }
 
     function onClick() {
-        history.push("/patientinfo");
+        history.push(`/patientinfo/${patientId}`);
     }
 
     function onPaymentClick() {
-        history.push("/doctorbooking");
+        history.push(`/doctorbooking/${patientId}`);
     }
 
     function onProfileClick() {
-        history.push("/patientprofile");
+        history.push(`/patientprofile/${patientId}`);
     }
     
     return(
