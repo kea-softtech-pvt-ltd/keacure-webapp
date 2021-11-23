@@ -24,6 +24,7 @@ export default function PatientProfile() {
   const goToLifestyle=()=>{ 
     setValue(2)
   }
+
   return (
     <MainWrapper>
       <MainNav>Patient Information</MainNav>
@@ -37,14 +38,14 @@ export default function PatientProfile() {
         </MainTabs>
 
         <TabPanel value={value} index={0}>
-          <PatientPersonalInformation data={goToMedical} patientId={patientId} />
+          <PatientPersonalInformation personal={goToMedical} patientId={patientId} />
         </TabPanel>
 
         <TabPanel value={value} index={1}>
-          <PatientMedicalInformation data={goToLifestyle} patientId={patientId} />
+          <PatientMedicalInformation Medical={goToLifestyle} patientId={patientId} />
         </TabPanel>
 
-        <TabPanel value={value} index={2}>
+        <TabPanel>
           <PatientLifestyle patientId={patientId} />
         </TabPanel>
       </div>

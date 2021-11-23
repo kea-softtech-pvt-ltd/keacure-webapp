@@ -2,11 +2,15 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { MainButtonInput } from "./mainComponent/mainButtonInput";
 import { MainInput } from "./mainComponent/mainInput";
+import { setNewPatientId} from "./recoil/atom/setNewPatientId";
+import { useRecoilState } from "recoil";
 
 function LoginPatientOtp(props){
     const history = useHistory()
-    const { patientId} = props;
+    const { patientId, redirection} = props;
+    const [ patientData , setPatientData] = useRecoilState(setNewPatientId);
     const [ loginotp ,setLoginOtp] = useState('');
+    
     const [ errormessage, setErrormessage] = useState(false);
 
     const handleSubmit =(e) => {
@@ -42,7 +46,12 @@ function LoginPatientOtp(props){
                     })
                     .then(res=>res.json())
                     .then(response =>{
-                        history.push(`/PatientProfile/${response._id}`);
+                        setPatientData(patientId)
+                        if(redirection == "dashboard") {
+                            history.push(`/PatientProfile/${response._id}`);
+                        } else {
+                            history.push(`/createpatientprofile/${response._id}`);
+                        }
                     })  
                 }
             }) 

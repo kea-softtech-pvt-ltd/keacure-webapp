@@ -1,7 +1,11 @@
 const MainButtonInput =(props)=>{
     return(
         <div className="form-group">     
-            <input type="submit" className="btn_1" onClick={props.onClick} value={props.children}/>
+            <input 
+                type="submit" 
+                className="btn_1" 
+                onClick={props.onClick} 
+                value={props.children}/>
         </div>
     )
 }

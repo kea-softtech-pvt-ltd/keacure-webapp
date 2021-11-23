@@ -1,10 +1,10 @@
 import {  selector  } from 'recoil';
-import {  setPatientId } from '../atom/setPatientId'
+import {  setNewPatientId } from '../atom/setNewPatientId'
 
 export const patientIdState = selector({
   key: 'patientIdState', // unique ID (with respect to other atoms/selectors)
   get: ({get}) => {
-    const PatientId = get(setPatientId);
+    const PatientId = get(setNewPatientId);
     return PatientId;
   },
 });

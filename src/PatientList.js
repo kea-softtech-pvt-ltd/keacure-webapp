@@ -14,8 +14,7 @@ import FormControl from "@material-ui/core/FormControl";
 import NativeSelect from "@material-ui/core/NativeSelect";
 import DatePicker from 'react-date-picker';
 import { CSVLink } from "react-csv";
-import { Link, useRouteMatch
-   } from "react-router-dom";
+import { Link, useRouteMatch ,useParams} from "react-router-dom";
 
   //for table
   const useStyles = makeStyles((theme) => ({
@@ -32,22 +31,32 @@ import { Link, useRouteMatch
       
   }));
    
-export default function PatientList(){
+export default function PatientList({}){
+    const {patientId} = useParams()
+    console.log(patientId)
     //for datepicker
     const [value, onChange] = useState(new Date());
     
     const classes = useStyles();
     //for fetch json data
-    const [rows ,setRows] =useState([])
-    console.log(rows)
+    const [patientList ,setPatientList] =useState([])
+    console.log(patientList)
     let { url } = useRouteMatch();
-	useEffect(()=>{
-		const result = axios(
-			constants.PATIENTLIST_DATA
-		);
-		setRows(result.data);
-	},[]);
+	// useEffect(()=>{
+	// 	const result = axios(
+	// 		constants.PATIENTLIST_DATA
+	// 	);
+	// 	setRows(result.data);
+	// },[]);
 
+    useEffect(()=>{
+        getPatientDetails()
+    },[])
+
+    async function getPatientDetails(){
+        const result = await axios.get(`http://localhost:9000/api/patientById/${patientId}`);
+        setPatientList(result.data)
+    }
     return(
         <div>
             <main>
@@ -91,7 +100,7 @@ export default function PatientList(){
                                         </FormControl>
                                     </div> 
                                     <div className="col-lg-3 ">
-                                        <CSVLink data={rows} filename={"my-file.csv"}
+                                        <CSVLink data={patientList} filename={"my-file.csv"}
                                         className="btn_1"
                                         >
                                         Export CSV
@@ -115,20 +124,20 @@ export default function PatientList(){
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                        {rows.map((row) => (
-                                            <TableRow key={row.id}>
-                                                <TableCell align="right">{row.PatientName}</TableCell>
-                                                <TableCell align="right">{row.AppointmentDate}</TableCell>
-                                                <TableCell align="right">{row.PatientContact}</TableCell>
-                                                <TableCell align="right">{row.ModeofAppointment}</TableCell>
-                                                <TableCell align="right">{row.ModeofPayment}</TableCell>
+                                        {/* {patientList.map((row) => ( */}
+                                            <TableRow>
+                                                <TableCell align="right">{patientList.name}</TableCell>
+                                                <TableCell align="right"></TableCell>
+                                                <TableCell align="right">{patientList.mobile}</TableCell>
+                                                <TableCell align="right">{patientList.Appointment}</TableCell>
+                                                <TableCell align="right"></TableCell>
                                                 <TableCell align="right">
                                                     <div className="linklist">
-                                                        <Link className="patientlistlink"  to={`${url}/${row.id}`}>{<i className="icon_pencil-edit" title="print"></i>}</Link>
+                                                        <Link className="patientlistlink"  to={`OPD/${patientList.id}`}>{<i className="icon_pencil-edit" title="print"></i>}</Link>
                                                     </div>
                                                 </TableCell>
                                             </TableRow>
-                                        ))}
+                                        {/* ))} */}
                                         </TableBody>
                                     </Table>
                                 </TableContainer>

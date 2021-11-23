@@ -1,8 +1,7 @@
 import React from 'react';
 import { EditExperience} from "./editExperience";
-import { Link } from "react-router-dom";
+import { Link ,useParams} from "react-router-dom";
 import { Modal} from "react-bootstrap";
-import { useParams}from "react-router-dom";
 import { useState , useEffect} from "react";
 import { setDoctorExperience} from "./recoil/atom/setDoctorExperience";
 import { useRecoilState } from 'recoil';
@@ -23,12 +22,13 @@ function FetchExperience(){
     const EditData = () => {
         handleClose(true);
     };
+    
     useEffect(() => {
         getAllExperience()    
     },[])
 
     const getAllExperience =() =>{
-        fetch(`http:// localhost:9000/api/fetchExData/${doctorId}`).then(res =>{
+        fetch(`http://localhost:9000/api/fetchExData/${doctorId}`).then(res =>{
             if(res){
             return res.json()
                 }

@@ -1,7 +1,10 @@
-import { 
-    Link,
-   } from "react-router-dom";
+import {Link,} from "react-router-dom";
+import { patientIdState }from "./recoil/selector/patientIdState"
+import { useRecoilValue } from "recoil";
+
 export default function Header(){
+    const patientId = useRecoilValue(patientIdState)
+    console.log(patientId)
     return(
         <header className="header_sticky">	
             <Link to="#menu" className="btn_mobile">
@@ -20,7 +23,7 @@ export default function Header(){
                     </div>
                     <div className="col-lg-9 col-6">
                         <ul id="top_access">
-                            <li><Link to="/logindoctor"><i className="pe-7s-user"></i></Link></li>
+                            <li><Link to="/logout"><i className="pe-7s-user"></i></Link></li>
                         </ul>
                         <nav id="menu" className="main-menu">
                             <ul>

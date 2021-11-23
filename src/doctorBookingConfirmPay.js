@@ -3,14 +3,15 @@ import { useState ,useEffect } from "react";
 import { Link } from "react-router-dom";
 //import { setDoctorBooking} from "./recoil/atom/setDoctorBooking";
 import { doctorBookingState}  from "./recoil/selector/doctorBookingState"
+import { patientIdState }from "./recoil/selector/patientIdState"
 import { useRecoilValue } from "recoil";
-import { slots } from "./constant";
 
 function DoctorBookingConfirmPay(props){
     const {time} = props;
     const {doctorId} = props;
     const [doctorName ,setDoctorName] = useState({})
     const [bookingData ,setBookingData] = useRecoilValue(doctorBookingState);
+    const patientId = useRecoilValue(patientIdState)
     console.log(time)
 
     useEffect(()=>{
@@ -22,13 +23,6 @@ function DoctorBookingConfirmPay(props){
         const result = await axios.get(`http://localhost:9000/api/doctor/${doctorId}`); 
         setDoctorName(result.data);
     }
-
-    // const getBookingData = async() =>{
-    //     const result = await axios(
-    //         slots
-    //     );
-    //     setBookingData(result.data);
-    // }
 
     return(
         <aside className="col-xl-4 col-lg-4" id="sidebar">
@@ -46,9 +40,17 @@ function DoctorBookingConfirmPay(props){
                             <li className="linkAlign">Appointment Type : <strong className="float-right"></strong></li>
                         </ul>
                     </div>
-                    <div className="disabled-link">
-                        <Link to="/bookingconfirm" className="btn_2 full-width">Confirm and pay</Link>
-                    </div>
+                    {
+                        patientId?
+                        <div>
+                            <Link to="/bookingconfirm" className="btn_1 full-width">Confirm booking</Link>
+                        </div>
+                        :
+                        <div className="disabled-link">
+                            <Link to="#" className="btn_2 full-width">Confirm booking</Link>
+                        </div>
+                    }
+                    
                 </form>
             </div>
         </aside>

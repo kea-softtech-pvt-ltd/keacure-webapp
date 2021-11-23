@@ -4,7 +4,9 @@ import { MainCards } from './mainComponent/mainCards';
 import { MainWrapper } from './mainComponent/mainWrapper';
   
 export default function PatientDashboard(){
-    const { patientId } = useParams();
+    
+    const { patientId }   = useParams()
+    console.log(patientId)
     let history = useHistory();
 
     function handleClick() {

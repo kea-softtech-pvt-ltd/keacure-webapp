@@ -81,19 +81,19 @@ export default function OPD(){
     //fetch patient data
     let { patientId } = useParams();
     let[row ,setRows] =useState([])
-    useEffect(()=>{
-        const result =  axios(
-            constants.PATIENTLIST_DATA
-        );
-        let tempData = getService(result.data, patientId)
-        setRows(tempData[0])
-    });
+    // useEffect(()=>{
+    //     const result =  axios(
+    //         constants.PATIENTLIST_DATA
+    //     );
+    //     let tempData = getService(result.data, patientId)
+    //     setRows(tempData[0])
+    // });
 
-    function getService(data, id) {
-        return data.filter(function(element){//callback function
-            return (element.id === id) // id json
-        })
-    }
+    // function getService(data, id) {
+    //     return data.filter(function(element){//callback function
+    //         return (element.id === id) // id json
+    //     })
+    // }
     
     //for history button
     let history = useHistory();
@@ -237,9 +237,9 @@ export default function OPD(){
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
-                                                {fields.map((field) => {
+                                                {/* {fields.map((field) => { */}
                                                     return (
-                                                    <TableRow key={field.id}>
+                                                    <TableRow>
                                                         <TableCell align="right">
                                                             <Autocomplete
                                                                 onChange={(event, newValues) => {
@@ -286,7 +286,7 @@ export default function OPD(){
                                                         </TableCell>
                                                     </TableRow>
                                                     );
-                                                })}
+                                                {/* })} */}
                                                 </TableBody>
                                             </Table>
                                         </TableContainer>
@@ -327,15 +327,15 @@ export default function OPD(){
                                                     </TableRow>
                                                 </TableHead>
                                                 <TableBody>
-                                                {rows.map((item) => (
-                                                    <TableRow key={item.id}>
-                                                        <TableCell align="right">{item.SrNO}</TableCell>
-                                                        <TableCell align="right">{item.PrisciptionDate}</TableCell>
+                                                {/* {rows.map((item) => ( */}
+                                                    <TableRow>
+                                                        <TableCell align="right">item.SrNO</TableCell>
+                                                        <TableCell align="right">item.PrisciptionDate</TableCell>
                                                         <TableCell align="right">
                                                             <div className="iconbutton" onClick={handleClick} ><VisibilityIcon style={{ fontSize:20 }}/></div>
                                                         </TableCell>
                                                     </TableRow>
-                                                ))}
+                                                {/* ))} */}
                                                 </TableBody>
                                             </Table>
                                         </TableContainer>

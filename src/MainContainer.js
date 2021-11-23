@@ -23,6 +23,7 @@ import SearchLocationInput from "./demo";
 import CreatePatientProfile from "./createPatientProfile";
 import GetLoginPatientProfile from "./getLoginPatientProfile";
 import User from "./user";
+import PatientLogoutForm from "./patientLogoutForm";
 
 function MainContainer() {
     return (
@@ -104,6 +105,9 @@ function MainContainer() {
           </Route>
           <Route path="/user">
             < User />
+          </Route>
+          <Route path="/logout">
+            < PatientLogoutForm/>
           </Route>
         </Switch>
   );

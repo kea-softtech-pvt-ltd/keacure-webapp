@@ -21,7 +21,7 @@ function MostViewedDoctorsInHome(){
     return(
     <div className="row">
         {fetchDetails.map((item ,index)=>(
-            <div className="col-lg-4 col-md-6" key={index}>
+            <div className="col-lg-4 col-md-6" key={item.id}>
                 <div className="box_list home">
                     <Link to="#0" data-toggle="tooltip" data-placement="top" title="Add to wishlist" className="wish_bt"></Link>
                     <figure>
@@ -32,7 +32,7 @@ function MostViewedDoctorsInHome(){
                     <div className="wrapper">
                         <h3>{item.name}</h3>
                         {item.educationList.map((data , id) =>(
-                            <small kry={id}>{data.specialization}</small>
+                            <small key={id}>{data.specialization}</small>
                         ))}
                         <div>{item.description}</div>
                             <ReactStars

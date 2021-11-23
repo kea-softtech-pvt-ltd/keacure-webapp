@@ -1,14 +1,15 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import {Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { Modal} from "react-bootstrap";
-import {EditMedicalData}  from "./editMedicalData";
+import { EditLifeStyleData}  from "./editlifestyledata";
 import { useRecoilState } from "recoil";
-import {setPatientMedical}  from "./recoil/atom/setPatientMedical";
+import { setPatientLifestyle}  from "./recoil/atom/setPatientLifestyle";
 
-function FetchPatientMedicalInfo(props){
+function FetchPatientLifestyleData(props){
     const { patientId} = props;
-    const [ fetchPatientdata , setFetchPatientData] = useRecoilState(setPatientMedical)
+    const [ fetchPatientdata , setFetchPatientData] = useRecoilState(setPatientLifestyle)
+    //const [ fetchPatientdata , setFetchPatientData] = useState([])
     console.log(fetchPatientdata)
     const [ activeModal, setActiveModal] = useState()
 
@@ -21,7 +22,7 @@ function FetchPatientMedicalInfo(props){
         setActiveModal(index)
     };
     
-    const MedicalData = () => {
+    const lifeStyleData = () => {
         handleClose(true);
     };
     useEffect(()=>{
@@ -29,7 +30,7 @@ function FetchPatientMedicalInfo(props){
     },[])
 
     async function getPatientData(){
-        const result = await axios.get(`http://localhost:9000/api/fetchPatientMedicalInfo/${patientId}`);
+        const result = await axios.get(`http://localhost:9000/api/fetchPatientLifestyleInfo/${patientId}`);
         setFetchPatientData(result.data)
     }
     return(
@@ -42,43 +43,39 @@ function FetchPatientMedicalInfo(props){
                     <Modal.Title>Edit Patient Data</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <EditMedicalData patientId={patientId} medicalId={item._id} onSubmit={MedicalData} />
+                    <EditLifeStyleData patientId={patientId} lifeStyleId={item._id} onSubmit={lifeStyleData} />
                 </Modal.Body>
             </Modal>
             <div className="row">
                 <div className="col-md-6 ">
-                    {/* <div className="fetchedudata">
-                        <div><b>Allergies</b></div>
-                        <div>{item.allergies}</div>
-                    </div> */}
                     <div className="fetchedudata">
-                        <div><b>Current Medications</b></div>
-                        <div>{item.cmedication}</div>
+                        <div><b>Smoking Habits</b></div>
+                        <div>{item.smokingHabits}</div>
                     </div>
                     <div className="fetchedudata">
-                        <div><b>Past Medications</b></div>
-                        <div>{item.pmedication}</div>
+                        <div><b>Alcohol Consumption</b></div>
+                        <div>{item.alcoholConsumption}</div>
                     </div>
                 </div>
 
                 <div className="col-md-6 ">
                     <div className="fetchedudata">
-                        <div><b>Chronic Diseases</b></div>
-                        <div>{item.diseases}</div>
+                        <div><b>Food Preferences</b></div>
+                        <div>{item.foodPreferences}</div>
                     </div>
                     <div className="fetchedudata">
-                        <div><b>Injuries</b></div>
-                        <div>{item.injuries}</div>
+                        <div><b>Occupation</b></div>
+                        <div>{item.occupation}</div>
                     </div>
-                    <div className="fetchedudata">
-                        <div><b>Surgeries</b></div>
-                        <div>{item.surgeries}</div>
-                    </div>
+                    {/* <div className="fetchedudata">
+                        <div><b>ActivityLevel</b></div>
+                        <div>{item.activityLevel}</div>
+                    </div> */}
                 </div>
             </div>
-        </div>
-        ))}    
+        </div> 
+        ))}   
         </>
     )
 }
-export {FetchPatientMedicalInfo}
+export {FetchPatientLifestyleData}

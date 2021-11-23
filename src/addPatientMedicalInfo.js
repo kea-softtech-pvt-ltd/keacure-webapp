@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -12,17 +11,23 @@ import { MenuProps, useStyles } from "./utils";
 import FormControl from "@material-ui/core/FormControl";
 import { MainInput } from './mainComponent/mainInput';
 import { MainButtonInput} from "./mainComponent/mainButtonInput";
+import { setPatientMedical} from "./recoil/atom/setPatientMedical";
+import { useRecoilState } from 'recoil';
 
 function AddPatientMedicalInfo(props){
     const { patientId } = props;
+    console.log(patientId)
+    //use racoil state for fetch data instatly
+    const [ coilPatientMedical , setCoilPatientMedical] = useRecoilState(setPatientMedical)
     //update data
     const [updateData ,setUpdateData]= useState([])
+    //console.log(updateData)
     const classes = useStyles();
     //for fetch allergirs
     const [allergy ,setAllergy] = useState([])
     useEffect(()=>{
         getAllergies()
-        register("allergies", { required: true });
+        //register("allergies", { required: true });'
         register("cmedication", { required: true });
         register("pmedication", { required: true });
         register("diseases", { required: true });
@@ -31,7 +36,7 @@ function AddPatientMedicalInfo(props){
     },[])
 
     const getAllergies =()=>{
-        fetch(`http://localhost:9000/api/getAllergies`).then(res =>{
+        fetch('http://localhost:9000/api/getAllergies').then(res =>{
             if(res){
                 return res.json()
             }
@@ -39,10 +44,10 @@ function AddPatientMedicalInfo(props){
             setAllergy(jsonRes)
         });
     }
+
     //autoselected
     const [selected, setSelected] = useState([]);
-    const isAllSelected =
-        allergy.length > 0 && selected.length == allergy.length;
+    const isAllSelected = allergy.length > 0 && selected.length == allergy.length;
 
     const handleOnChange = e => {
         const { name, value } = e.target;
@@ -59,9 +64,8 @@ function AddPatientMedicalInfo(props){
         setValue(name, value)
     };
 
-    let history = useHistory();
-    const { register, handleSubmit , setValue , formState: { errors } } = useForm();
-    const onSubmit = data => {
+    const { register, handleSubmit ,setValue , formState: { errors } } = useForm();
+    const onSubmit = (data) => {
         const patientData = {
             patientId   : patientId,
             allergies   : data.allergies,
@@ -71,9 +75,10 @@ function AddPatientMedicalInfo(props){
             injuries    : data.injuries,
             surgeries   : data.surgeries
         }
-        axios.post(`http://localhost:9000/api/patientMedicalInfo`, patientData)
-        .then(function(response){
-           // history.push("/patientdashboard");
+        axios.post('http://localhost:9000/api/patientMedicalInfo', patientData)
+        .then((response)=>{
+            setCoilPatientMedical(coilPatientMedical.concat(response.data))
+            props.addRecord()
         })
     }  
 
@@ -84,46 +89,6 @@ function AddPatientMedicalInfo(props){
                     <div className="form-group">
                         <label><b>Allergies</b></label>
                     </div>
-                    {/* <div className="form-group">    
-                        <FormControl variant="outlined" className={classes.formControl} {...register("allergies", { required: true })}>
-                            <Select
-                                labelId="mutiple-select-label"
-                                multiple
-                                value={selected}
-                                onChange={handleOnChange}
-                                renderValue={(selected) => selected.join(",")}
-                                MenuProps={MenuProps}
-                                name="allergies">
-                                <MenuItem
-                                value="all"
-                                classes={{
-                                    root: isAllSelected ? classes.selectedAll : ""
-                                }}>
-                                <ListItemIcon>
-                                    <Checkbox
-                                    value={updateData.allergies}
-                                    classes={{ indeterminate: classes.indeterminateColor }}
-                                    checked={isAllSelected.allergies}
-                                    indeterminate={selected.length > 0 && selected.length < allergy.length}
-                                    />
-                                </ListItemIcon>
-                                <ListItemText
-                                    classes={{ primary: classes.selectAllText }}
-                                    primary="Select All"
-                                />
-                                </MenuItem>
-                                {allergy.map((option) => (
-                                <MenuItem key={option._id} value={option.name}>
-                                    <ListItemIcon>
-                                    <Checkbox checked={selected.indexOf(option.name) > -1} />
-                                    </ListItemIcon>
-                                    <ListItemText primary={option.name} />
-                                </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        {errors.allergies && <span className="validation">Please select your allergies</span>}
-                    </div> */}
                     <label><b>Current Medications</b></label>
                     <MainInput 
                         type="text" 
@@ -146,13 +111,13 @@ function AddPatientMedicalInfo(props){
                 </div>
 
                 <div className="col-md-6 ">
-                    <label><b>Chronic Diseases</b></label>
+                    <label><b>Chronic diseases</b></label>
                     <MainInput 
                         type="text" 
                         name="diseases"  
                         onChange={handleInputChange} 
                         value={updateData.diseases} 
-                        placeholder="Chronic Diseases">
+                        placeholder="Chronic diseases">
                         {errors.diseases && <span className="validation">Please enter your diseases</span>}
                     </MainInput>
 

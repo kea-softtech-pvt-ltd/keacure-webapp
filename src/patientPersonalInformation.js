@@ -1,6 +1,4 @@
-import React from 'react';
-import { useState, useEffect } from "react";
-//import { useHistory } from "react-router-dom";
+import React,{ useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { PlacesAutocompleteInput} from "./mainComponent/placesAutocomplete"
@@ -10,12 +8,10 @@ import avatarImage from "./img/profile.png";
 import { MainButtonInput } from './mainComponent/mainButtonInput';
 
 function PatientPersonalInformation(props){
-    //fetch data
     const { patientId } = props;
-    const [fetchData , setFetchData] = useState([])
     //update data
     const [updateData ,setUpdateData]= useState({})
-    const[patientPhoto, setPatientPhoto] = useState(avatarImage);
+    const [patientPhoto, setPatientPhoto] = useState(avatarImage);
     useEffect(()=>{
         fetch(`http://localhost:9000/api/patientById/${patientId}`).then(res =>{
             if(res){
@@ -93,7 +89,7 @@ function PatientPersonalInformation(props){
         formData.append('photo', data.photo);
         formData.append('name', data.name);
         formData.append('email', data.email);
-        //formData.append('mobile', data.mobile);
+        formData.append('mobile', updateData.mobile);
         formData.append('bloodgroup', data.bloodgroup);
         formData.append('maritalstatus', data.maritalstatus);
         formData.append('height', data.height);
@@ -106,13 +102,14 @@ function PatientPersonalInformation(props){
         
         axios.post(`http://localhost:9000/api/insertPatientDetails/${patientId}`, formData)
         .then(function(response){
+            console.log(response)
            // history.push(`/patientdashboard/${patientId}`);
-           props.data();
+             props.personal();
         })
     }  
 
     return(
-        <form enctype='multipart/form-data' onSubmit={handleSubmit(onSubmit)}>
+        <form encType='multipart/form-data' onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
                 <div className="col-md-6 ">
                     <div className="row">

@@ -2,7 +2,7 @@ import React from 'react';
 import { useState ,useEffect} from "react";
 import Icon from '@material-ui/core/Icon';
 import { FetchExperience} from "./fetchExperience";
-import {AddDoctorProfessionalExperience} from "./addDoctorProfessionalExperience";
+import { AddDoctorProfessionalExperience} from "./addDoctorProfessionalExperience";
 import { Link } from '@material-ui/core';
 import { MainButtonInput} from "./mainComponent/mainButtonInput";
 
