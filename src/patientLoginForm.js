@@ -1,5 +1,5 @@
 import { Link ,useHistory ,useParams} from "react-router-dom";
-import { DoctorBookingConfirmPay} from "./doctorBookingConfirmPay";
+import { DoctorBookingConfirmation} from "./doctorbookingconfirmation";
 import { LoginPatientOtp} from "./loginPatientOtp";
 import { useState } from "react";
 
@@ -59,7 +59,7 @@ function PatientLoginForm(props){
     return(
         <>
             <div id="login-2">
-                <h3> Please login to KeaCure</h3>
+                <h1> Please login to KeaCure</h1>
                 <form>
                     <div className="box_form clearfix">
                         We will send OTP to your mobile number

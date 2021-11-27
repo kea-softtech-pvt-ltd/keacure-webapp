@@ -17,13 +17,13 @@ function SetSession(props){
     const [fetchTime, setfetchTime] = useRecoilState(SetDoctorSessionTiming);
 
     const dayList = {
+        "sun": "Sunday",
         "mon": "Monday",
         "tue": "Tuesday",
         "wed": "Wednesday",
         "thu": "Thursday",
         "fri": "Friday",
         "sat": "Saturday",
-        "sun": "Sunday"
     }
     const daysKeys = Object.keys(dayList)
 

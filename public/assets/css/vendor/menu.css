@@ -42,7 +42,7 @@
 		font-weight: 500
 	}
 	.main-menu>ul>li span:hover>a {
-		color: #e74e84
+		color: #3f4079
 	}
 	.main-menu ul ul {
 		position: absolute;
@@ -69,7 +69,7 @@
 		-webkit-transition: all .2s ease;
 		-ms-transition: all .2s ease;
 		transition: all .2s ease;
-		border-top: 2px solid #e74e84
+		border-top: 2px solid #00c5fb
 	}
 	.main-menu ul ul li {
 		display: block;

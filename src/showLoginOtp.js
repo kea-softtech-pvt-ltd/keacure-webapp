@@ -42,6 +42,7 @@ function ShowLoginOtp (props) {
                     })
                     .then(res=>res.json())
                     .then(response =>{
+                        console.log(response)
                         history.push(`/editdoctorprofile/${response._id}`);
                     })  
                 }

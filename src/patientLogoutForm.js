@@ -10,15 +10,19 @@ function PatientLogoutForm(){
 
     return(
         <>
-            <div id="login-2">
-                {patientData ==""?
-                    <h3> Succefully logout..</h3>
-                    :
-                    null
-                }
-                
-                
-            </div>
+        <main>
+            <div className="bg_color_2">
+                <div className="container margin_60_35">
+                    <div id="login-2">
+                        {patientData ==""?
+                            <h1> Succefully Logout...</h1>
+                            :
+                            null
+                        }
+                    </div>
+                </div>
+            </div>    
+        </main>        
         </>
     )
 }

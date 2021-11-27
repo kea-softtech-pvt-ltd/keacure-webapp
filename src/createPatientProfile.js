@@ -1,8 +1,6 @@
 import { useEffect } from "react";
-import { useState } from "react";
 import { Link ,useParams ,useHistory} from "react-router-dom";
-import {DoctorBookingConfirmPay} from "./doctorBookingConfirmPay";
-import GetLoginPatientProfile from "./getLoginPatientProfile";
+import {DoctorBookingConfirmation} from "./doctorbookingconfirmation";
 import { PatientRegistrationForm } from "./patientRegistrationForm";
 
 export default function CreatePatientProfile(){
@@ -34,7 +32,7 @@ export default function CreatePatientProfile(){
                             <PatientRegistrationForm patientId={patientId} handalChange={handalChange}/>
                         </div>
                     </div>
-                    <DoctorBookingConfirmPay doctorId={doctorId}/>
+                    <DoctorBookingConfirmation doctorId={doctorId}/>
                 </div>
             </div>
         </main>

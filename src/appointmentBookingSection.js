@@ -5,7 +5,6 @@ import { FaClinicMedical} from "react-icons/fa";
 
 function AppointmentBookingSection(props){
     const { clinicData , ownClinicData } = props;
-    console.log(props)
 
     return(
         <aside className="col-xl-5 col-lg-5" id="sidebar">
@@ -17,7 +16,7 @@ function AppointmentBookingSection(props){
                     <small><h5><FaClinicMedical/> Clinic List</h5></small>
                     <div>
                         {clinicData.map((clinicItem ,id) =>(
-                            <MainAccordion key={id} title={clinicItem.clinicName}>
+                            <MainAccordion key={id}  title={clinicItem.clinicName}>
                                 <DoctorAppointmentType clinicData={clinicItem}/>
                             </MainAccordion>
                         ))}

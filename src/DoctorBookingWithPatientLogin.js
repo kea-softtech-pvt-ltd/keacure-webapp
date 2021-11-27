@@ -1,6 +1,6 @@
 import { Link ,useParams} from "react-router-dom";
 import React from "react";
-import { DoctorBookingConfirmPay} from "./doctorBookingConfirmPay";
+import { DoctorBookingConfirmation} from "./doctorbookingconfirmation";
 import { PatientLoginForm } from "./patientLoginForm";
 import { patientIdState }from "./recoil/selector/patientIdState"
 import { useRecoilValue } from "recoil";
@@ -33,7 +33,7 @@ export default function DoctorBookingWithPatientLogin(){
                             }
                             </div>
                         </div>
-                        <DoctorBookingConfirmPay doctorId={doctorId}/>
+                        <DoctorBookingConfirmation doctorId={doctorId}/>
                     </div>
                 </div>
 

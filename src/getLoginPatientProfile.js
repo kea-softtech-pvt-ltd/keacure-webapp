@@ -1,5 +1,5 @@
 import { Link ,useParams} from "react-router-dom";
-import {DoctorBookingConfirmPay} from "./doctorBookingConfirmPay";
+import {DoctorBookingConfirmation} from "./doctorbookingconfirmation";
 import {FetchPatientInfo} from "./fetchPatientInfo";
 
 export default function GetLoginPatientProfile(){
@@ -25,7 +25,7 @@ export default function GetLoginPatientProfile(){
                             <FetchPatientInfo patientId={patientId}/>
                         </div>
                     </div>
-                    <DoctorBookingConfirmPay doctorId={doctorId}/>
+                    <DoctorBookingConfirmation doctorId={doctorId}/>
                 </div>
             </div>
         </main>

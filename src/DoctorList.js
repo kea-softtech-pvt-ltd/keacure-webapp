@@ -4,6 +4,8 @@ import { Link} from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import {MainInput} from "./mainComponent/mainInput";
 import {MainButtonInput} from "./mainComponent/mainButtonInput"
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 
 export default function DoctorList(){
 	const timer = useRef();
@@ -114,7 +116,7 @@ export default function DoctorList(){
                             ))}    
                            
                             <nav aria-label="" class="add_top_20">
-                                <ul class="pagination pagination-sm">
+                                {/* <ul class="pagination pagination-sm">
                                     <li class="page-item disabled">
                                         <Link class="page-link" to="#" tabindex="-1">Previous</Link>
                                     </li>
@@ -124,7 +126,10 @@ export default function DoctorList(){
                                     <li class="page-item">
                                         <Link class="page-link" to="#">Next</Link>
                                     </li>
-                                </ul>
+                                </ul> */}
+                                <Stack spacing={2}>
+                                    <Pagination count={5} variant="outlined" color="primary" />
+                                </Stack>
                             </nav>
                         </div>
                         <aside class="col-lg-5" id="sidebar">

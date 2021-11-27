@@ -6,7 +6,7 @@ import {ShowDoctorInClinicAppointment} from "./showDoctorInClinicAppointment";
 import axios from "axios";
 
 const DoctorAppointmentType = (props)=>{
-    const { _id,doctorId } = props.clinicData
+    const { _id,doctorId } = props.clinicData;
     const [showVideoSlot ,setShowVideoSlot] = useState(false)    
     const [showClinicSlot ,setShowClinicSlot ] = useState(false)
     const [clinicSession , setClinicSession] = useState([[],[]])
@@ -23,19 +23,19 @@ const DoctorAppointmentType = (props)=>{
         fetchSessionData()
     },[])
 
+    const fetchSessionSlots = (`http://localhost:9000/api/fetcSessionSlots/${doctorId}/${_id}`)
+
     const fetchSessionData = async () =>{
-        const result = await axios.get( `http://localhost:9000/api/fetcSessionSlots/${doctorId}/${_id}`); 
+        const result = await axios.get(fetchSessionSlots); 
         let tempSessions = [] 
         const videoClinics = getDataBySpeciality(result.data, "VideoAppointment") 
         tempSessions.push(videoClinics)
         const inClinics = getDataBySpeciality(result.data, "InClinicAppointment") 
         tempSessions.push(inClinics)
-        console.log(tempSessions)
         setClinicSession(tempSessions)    
     }
 
     function getDataBySpeciality(data, flag) {
-        console.log("getDataBySpeciality", flag)
         const result = data.filter(function(val, key){
             return (val.Appointment == flag)
         })
@@ -49,7 +49,7 @@ const DoctorAppointmentType = (props)=>{
                 <ul> 
                     <li><Link to="" onClick={getVideoSlot}><FaVideo/>  Book Video Appointment</Link></li>
                     {showVideoSlot === true?
-                        <ShowDoctorVideoAppointment setSessions ={clinicSession[0]}/>
+                        <ShowDoctorVideoAppointment clinicId={_id} setSessions ={clinicSession[0]}/>
                     :null}
                 </ul>
             ):"Slots Not Available"}    

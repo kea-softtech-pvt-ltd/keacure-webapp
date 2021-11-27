@@ -15,17 +15,16 @@ function MostViewedDoctorsInHome(){
 
     const getallDoctors = async ()=>{
         const result = await axios.get(`http://localhost:9000/api/doctor`); 
-        
         setFetchdetails(result.data);   
     }
     return(
     <div className="row">
         {fetchDetails.map((item ,index)=>(
-            <div className="col-lg-4 col-md-6" key={item.id}>
+            <div className="col-lg-4 col-md-6" key={index}>
                 <div className="box_list home">
-                    <Link to="#0" data-toggle="tooltip" data-placement="top" title="Add to wishlist" className="wish_bt"></Link>
+                    <Link to={`/doctordetail/${item._id}`} data-toggle="tooltip" data-placement="top" title="Add to wishlist" className="wish_bt"></Link>
                     <figure>
-                        <Link to="#"><img src={`../images/${item.photo}`} className="img-fluid" alt=""/></Link>
+                        <Link to={`/doctordetail/${item._id}`}><img src={`../images/${item.photo}`} className="img-fluid" alt=""/></Link>
                         <div className="preview"><span>Read more</span></div>
                     </figure>
                         
