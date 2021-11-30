@@ -2,8 +2,6 @@ import { slots} from "./constant";
 import { Link } from "react-router-dom";
 
 const ShowVideoAppointSlots = (props)=>{
-    const { fetchSessionSlots} = props;
-    console.log(fetchSessionSlots)
     const { sessionSlot} = props;
 
     return(

@@ -4,7 +4,8 @@ import { MainButtonInput} from "./mainComponent/mainButtonInput";
 import { MainInput } from "./mainComponent/mainInput";
 
 function ShowLoginOtp (props) {
-    const {doctorId} = props;
+    
+    const { doctorId } = props;
     let history = useHistory()
     const [ loginotp ,setLoginOtp] =useState('');
     const [ errormessage, setErrormessage] = useState(false);
@@ -42,13 +43,13 @@ function ShowLoginOtp (props) {
                     })
                     .then(res=>res.json())
                     .then(response =>{
-                        console.log(response)
                         history.push(`/editdoctorprofile/${response._id}`);
                     })  
                 }
             }) 
         }
     }
+
     return(
         <>
             <div className="row">

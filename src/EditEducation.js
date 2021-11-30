@@ -121,8 +121,8 @@ function EditEducation(props){
                         name="comYear" 
                         onChange={handleInputChange}>
                         <option value="" >Select Year</option>
-                        {options.map((option) =>(
-                            <option key={option.id}>{option}</option>
+                        {options.map((option ,index) =>(
+                            <option key={index}>{option}</option>
                         ))}
                     </MainSelect>
                 </div>
@@ -134,8 +134,8 @@ function EditEducation(props){
                         value={updateEducation.specialization} 
                         onChange={handleInputChange}>
                         <option value="" >Select specialization</option>
-                        {drspecialization.map((special) =>(
-                            <option key={special.id}>{special.specialization}</option>
+                        {drspecialization.map((special , index) =>(
+                            <option key={index}>{special.specialization}</option>
                         ))}
                     </MainSelect>
 
@@ -145,12 +145,11 @@ function EditEducation(props){
                         name="document" 
                         accept="image/*" 
                         placeholder="document" 
-                        required={true}
                         multiple={true}>
                         <div className="fetchedudata">
                             {drDocument.map((eduImage ,index) => {
                                 return (
-                                    <div key={eduImage.id}>
+                                    <div key={index}>
                                         {(/\.(gif|jpe?g|png)$/i).test(eduImage)? (
                                             <img
                                                 alt="education"
@@ -166,7 +165,7 @@ function EditEducation(props){
                                                 accept="image/*"
                                             />
                                         ) }
-                                        <Link onClick={() => removeImage(EduId, index)}>x</Link>
+                                        <Link to="#" onClick={() => removeImage(EduId, index)}>x</Link>
                                     </div>
                                 )
                             })}

@@ -18,10 +18,10 @@ const AddClinic = (props) => {
 	useEffect(()=>{
 		fetchSpecializations()
 	},[])
+
     const fetchSpecializations = async () =>{
         const result = await axios.get(`http://localhost:9000/api/drspecialization`); 
         setDrSpecialization(result.data);
-        console.log("hiiii")   
     }
     
     function handleChange(event){
@@ -105,8 +105,8 @@ const AddClinic = (props) => {
                             name="specialization" 
                             onChange={handleChange} 
                             value={clinicInfo.specialization}>
-                            {drspecialization.map(item =>(
-                            <option>{item.specialization}</option>
+                            {drspecialization.map((item , index) =>(
+                            <option key={index}>{item.specialization}</option>
                             ))}
                         </MainSelect>
                     </div>    

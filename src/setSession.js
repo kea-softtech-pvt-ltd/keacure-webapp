@@ -70,8 +70,8 @@ function SetSession(props){
 return(
     <div className="container">
         <ul>
-            {daysKeys.map((item)=>
-                <li className="sessionlink">
+            {daysKeys.map((item ,index)=>
+                <li className="sessionlink" key ={index}>
                     <div className="col-lg-12 ml-auto">
                         <div className="row">
                             <div className="col-md-2">
@@ -90,7 +90,7 @@ return(
                                             :<FaWalking/>}
                                     </span>
                                 </div>
-                                : <Link onClick={e => handleShow(e, item)} className="sessionlistlink">
+                                : <Link to ="#" onClick={e => handleShow(e, item)} className="sessionlistlink">
                                     Set Session Timing
                                 </Link>
                             }   

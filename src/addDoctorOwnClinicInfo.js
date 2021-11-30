@@ -77,7 +77,7 @@ function AddDoctorOwnClinicInfo(){
                         </div>    
                         <div className="col-md-6 ">
                             <div className="form-group">
-                                <Link onClick={e => ownSessionShow(e, index)} className="patientlistlink">{<AccessTimeRoundedIcon style={{ fontSize:25 }}/>}</Link>
+                                <Link to="#" onClick={e => ownSessionShow(e, index)} className="patientlistlink">{<AccessTimeRoundedIcon style={{ fontSize:25 }}/>}</Link>
                             </div>
                             <Modal  id={`modal-${uniq._id}`} show={activeModal1 === index} onHide={ownSessionClose}>
                                 <Modal.Header closeButton>

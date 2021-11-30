@@ -19,7 +19,6 @@ function AddDoctorClinicInfo(){
     
 	useEffect(()=>{
         getAllClinics();
-        console.log("hello")
     },[])
 
     const getAllClinics =()=>{
@@ -76,7 +75,7 @@ function AddDoctorClinicInfo(){
                         </div>    
                         <div className="col-md-6 ">
                             <div className="form-group">
-                                <Link onClick={e => sessionShow(e, index)} className="patientlistlink">{<AccessTimeRoundedIcon style={{ fontSize:25 }}/>}</Link>
+                                <Link to ="#" onClick={e => sessionShow(e, index)} className="patientlistlink">{<AccessTimeRoundedIcon style={{ fontSize:25 }}/>}</Link>
                             </div>
                             <Modal id={`modal-${item._id}`} show={activeModal === index} onHide={sessionClose}>
                                 <Modal.Header closeButton>

@@ -134,8 +134,8 @@ function AddDoctorEducation(props){
                         value={updateEduData.specialization} 
                         onChange={handleInputChange}>
                         <option>Select specialization</option>
-                        {drspecialization.map((spe) =>(
-                            <option key={spe.id}>{spe.specialization}</option>
+                        {drspecialization.map((spe , index) =>(
+                            <option key={index}>{spe.specialization}</option>
                         ))}
                     </MainSelect>
                     {errors.specialization && <span className="validation">Please select your specialization</span>}

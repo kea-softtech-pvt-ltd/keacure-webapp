@@ -99,8 +99,8 @@ return (
                         name="specialization" 
                         onChange={handleChange} 
                         value={ownClinicInfo.specialization}>
-                        {drspecialization.map(item =>(
-                        <option>{item.specialization}</option>
+                        {drspecialization.map((item , index) =>(
+                        <option key={index}>{item.specialization}</option>
                         ))}
                     </MainSelect>
                 </div>    

@@ -27,12 +27,12 @@ function ShowDoctorVideoAppointment(props){
             Appointment:"VideoAppointment" ,
             })      
         })
-        .then(res=>res.json())
+       // .then(res=>res.json())
         .then(response =>{
-            console.log(response.data)
+            console.log(response)
         })  
         //const result = axios.get(`http://localhost:9000/api/fetchDaysSlots`,( item.day, doctorId, clinicId, "VideoAppointment"));
-        // console.log(item.day, doctorId, clinicId, "VideoAppointment")
+        console.log(item.day, doctorId, clinicId, "VideoAppointment")
         // console.log(result.data)
         setShowSlot(true);
     };
@@ -43,7 +43,6 @@ function ShowDoctorVideoAppointment(props){
     },[])
 
     const showDateMonth =(days) =>{
-        var date = new Date();
         var month = new Date().getMonth();
         var m = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
            "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" ];
@@ -60,9 +59,12 @@ function ShowDoctorVideoAppointment(props){
         for(let i=0; i<7;i++) {
             let d = new Date();
             let apochDate = d.setDate(d.getDate()+i)
+            let apochMonth = d.setDate(d.getDate())
+            let month = showDateMonth(new Date(apochMonth).getDate())
             const day = getStringDay(new Date(apochDate).getDay())
-            sevenDates.push({"date": new Date(apochDate).getDate(), "day":day, "fullDate": new Date(apochDate), "dayMonth": showDateMonth(new Date(apochDate).getDate(new Date(apochDate)))})
+            sevenDates.push({"date": new Date(apochDate).getDate(), "day":day, "fullDate": new Date(apochDate), "dayMonth":month })
         }
+        console.log(sevenDates)
         setDayMonth(sevenDates)
     }
 
@@ -70,27 +72,24 @@ function ShowDoctorVideoAppointment(props){
         <div className="row">
             {setSessions ?(
                 <>
-                <div style={{width: "100%"}}>
-                    <Carousel interval={null} controls={true} nextIcon={<div className="AiArrowIcon"><AiOutlineArrowRight/></div>} prevIcon={<div className="AiArrowIcon"><AiOutlineArrowLeft/></div>}>
-                    {dayMonth.map((item, index) => (
-                        <Carousel.Item key={index}>
-                            <div style={{ height: 100, background: "white", color: "black" }}>
-                                <Carousel.Caption>
-                                    <div><b>{item.day} {item.dayMonth}<FaRupeeSign/> {setSessions[0].fees}</b></div>
-                                    <Link to="#" onClick={(e)=> handleChange(e,item) }>Show Available Slots</Link>
-                                </Carousel.Caption>
-                            </div>
-                        </Carousel.Item>
-                    ))}
-                    </Carousel>
-                </div>
-                
-                <>
-                {showSlot?
-                <ShowVideoAppointSlots sessionSlot={setSessions}/>
-                :null} 
-                </>
-                
+                    <div style={{width: "100%"}}>
+                        <Carousel interval={null} controls={true} nextIcon={<div className="AiArrowIcon"><AiOutlineArrowRight/></div>} prevIcon={<div className="AiArrowIcon"><AiOutlineArrowLeft/></div>}>
+                        {dayMonth.map((item, index) => (
+                            <Carousel.Item key={index}>
+                                <div style={{ height: 100, background: "white", color: "black" }}>
+                                    <Carousel.Caption>
+                                        <div><b>{item.day} {item.dayMonth}<FaRupeeSign/> {setSessions[0].fees}</b></div>
+                                        <Link to="#" onClick={(e)=> handleChange(e,item) }>Show Available Slots</Link>
+                                    </Carousel.Caption>
+                                </div>
+                            </Carousel.Item>
+                        ))}
+                        </Carousel>
+                    </div>
+                    
+                    {showSlot?
+                    <ShowVideoAppointSlots sessionSlot={setSessions}/>
+                    :null} 
                 </>
             ):null}
         </div>

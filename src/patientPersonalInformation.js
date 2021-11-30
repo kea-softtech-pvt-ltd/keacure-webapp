@@ -103,8 +103,8 @@ function PatientPersonalInformation(props){
         axios.post(`http://localhost:9000/api/insertPatientDetails/${patientId}`, formData)
         .then(function(response){
             console.log(response)
-           // history.push(`/patientdashboard/${patientId}`);
-             props.personal();
+            //history.push(`/patientdashboard/${patientId}`);
+            props.personal();
         })
     }  
 
@@ -201,7 +201,7 @@ function PatientPersonalInformation(props){
                 </div>
 
                 <div className="col-md-6 ">
-                     <div className="form-group">
+                    <div className="form-group">
                         <label><b>Date Of Birth</b></label>
                     </div>    
                     <div className="row">
@@ -255,6 +255,7 @@ function PatientPersonalInformation(props){
                         name="emcontact" 
                         onChange={handleInputChange} 
                         value={updateData.emcontact} 
+                        maxLength={10}
                         className="form-control" 
                         placeholder="Emergency Contact">
                         {errors.emcontact && <span className="validation">Please enter your contact</span>}

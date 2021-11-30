@@ -10,12 +10,14 @@ import { SetDoctorSessionTiming}  from "./recoil/atom/SetDoctorSessionTiming";
 import { MainButtonInput} from "./mainComponent/mainButtonInput";
 import { MainInput, MainInputBox } from './mainComponent/mainInput';
 import { MainSelect } from './mainComponent/mainSelect';
+import moment from 'moment';
 
 function SetTiming(props){
     const { doctorId } = useParams();
     const { clinicId, day } = props;
     const [ error , setError] = useState("");
-    const [ toTime, setToTime ] = useState(new Date())
+    const [ fromTime, setFromTime ] = useState(new Date())
+    const [ toTime, setToTime ] = useState()
     const [ coilSessionTimining ,setCoilSessionTimining] = useRecoilState(SetDoctorSessionTiming)
     const [ sessionTime ,setSessionTime]= useState({
         clinicId:clinicId,
@@ -33,26 +35,6 @@ function SetTiming(props){
         setSessionTime({ ...sessionTime, [name]: value });
     };
 
-    const handleFromTimeSelection =(time)=> {
-        const timeStep = sessionTime.timeSlot
-        const toTime = new Date(  time.getTime()  + timeStep*60000);
-        setToTime(toTime)
-        checkTime(time, toTime)
-        setSessionTime(sessionTime =>{
-            return{
-                ...sessionTime,
-                ['fromTime']:time
-            }
-        })
-
-        setSessionTime(sessionTime =>{
-            return{
-                ...sessionTime,
-                ['toTime']:toTime
-            }
-        })
-    }
-
     function checkTime(from, to) {
         if(from.getTime() >= to.getTime()) {
             setError("please select valid time")
@@ -61,13 +43,65 @@ function SetTiming(props){
             setError("")
         }
     }
-    
+
+    const handleFromTimeSelection =(time)=> {
+        checkTime(sessionTime.fromTime ,time)
+        setSessionTime(sessionTime =>{
+            return{
+                ...sessionTime,
+                ['fromTime']:time
+            }
+        })
+    }
+ 
     const handleToTimeSelection =(time)=>{
+        const interval = sessionTime.timeSlot;
+        const fromTime = sessionTime.fromTime;
+        const toTime = sessionTime.toTime;
+
+        const startedTime = new Date()
+        const endedTime = new Date()
+        var exactFromTime = startedTime.toLocaleTimeString(undefined, {hour: '2-digit', minute:'2-digit', timeZone: 'Asia/Kolkata'})
+        var exactToTime = endedTime.toLocaleTimeString(undefined, {hour: '2-digit', minute:'2-digit', timeZone: 'Asia/Kolkata'})
+        console.log(exactFromTime,exactToTime);
+    
+        let slots = {
+            slotInterval: interval,
+            openTime: fromTime,
+            closeTime: toTime
+        };
+          
+        //Format the time
+        let startTime = moment(slots.openTime, "HH:mm");
+        
+        //Format the end time and the next day to it 
+        let endTime = moment(slots.closeTime, "HH:mm").add(1, 'days');
+        
+        //Times
+        let allTimes = [];
+        
+        //Loop over the times - only pushes time with 30 minutes interval
+        while (startTime < endTime) {
+        //Push times
+        allTimes.push(startTime.format("HH:mm")); 
+        //Add interval of 30 minutes
+        startTime.add(slots.slotInterval, 'minutes');
+        }
+        setSessionTime(allTimes)
+        console.log(allTimes);
+
         checkTime(sessionTime.toTime, time)
         setSessionTime(sessionTime =>{
             return{
                 ...sessionTime,
                 ['toTime']:time
+            }
+        })
+
+        setSessionTime(sessionTime =>{
+            return{
+                ...sessionTime,
+                ['fromTime']:fromTime
             }
         })
     }
@@ -148,7 +182,14 @@ function SetTiming(props){
                         </div>
                     </div>   
                 </div>
-                 
+                {toTime ?
+                <div className="row">
+                    <div className="btn_1">
+                        
+                    </div>
+                </div> 
+                :null} 
+
                 <div className="options">
                     <div className="row">
                         <div className="col-lg-6">
@@ -163,6 +204,7 @@ function SetTiming(props){
                         </div>
                     </div>  
                 </div>
+                
                 <div className="text-center add_top_30">
                     <MainButtonInput>Set</MainButtonInput>
                 </div> 

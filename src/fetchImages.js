@@ -14,7 +14,7 @@ function FetchImages(props){
             <div><b>Qualification Document Photo</b></div>
             {drDocument.map((eduImage ,index) => {
                 return (
-                    <>
+                    <div  key={index}>
                         {(/\.(gif|jpe?g|png)$/i).test(eduImage)? (
                             <img
                                 src={"/uploads/" + eduImage}
@@ -22,7 +22,6 @@ function FetchImages(props){
                                 name="document"
                                 accept="image/*"
                                 alt="doctorDocument"
-                                key={index}
                             />
                         ) : (
                             <img
@@ -31,10 +30,9 @@ function FetchImages(props){
                                 name="document"
                                 accept="image/*"
                                 alt="doctorDocument"
-                                key={index}
                             />
                         ) }
-                    </> 
+                    </div> 
                 )
             })}
         </div>

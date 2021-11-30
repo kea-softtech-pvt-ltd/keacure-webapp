@@ -65,7 +65,7 @@ function FetchExperience(){
         {fetchExperience.map((experience ,index) => {
             return(
                 <div className="modal-border" key={index}>
-                    <Link onClick={e => handleShow(e , index)} className="editbutton"><i className="icon_pencil-edit" title="Edit profile"></i></Link>
+                    <Link to="#" onClick={e => handleShow(e , index)} className="editbutton"><i className="icon_pencil-edit" title="Edit profile"></i></Link>
                     <Modal show={activeModal === index} onHide={handleClose} id={`experience-${experience._id}`} key={experience._id}>
                         <Modal.Header closeButton>
                             <Modal.Title>Edit Experience Data</Modal.Title>
