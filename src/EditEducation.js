@@ -101,8 +101,8 @@ function EditEducation(props){
                         value={updateEducation.degree} 
                         onChange={handleInputChange} >
                         <option value="" >Select Degree</option>
-                        {drdegrees.map((item) =>(
-                            <option key={item.id} className="form-control">{item.degree}</option>
+                        {drdegrees.map((item , index) =>(
+                            <option key={index} className="form-control">{item.degree}</option>
                         ))}
                     </MainSelect>
 

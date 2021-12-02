@@ -16,7 +16,6 @@ import { useRecoilState } from 'recoil';
 
 function AddPatientMedicalInfo(props){
     const { patientId } = props;
-    console.log(patientId)
     //use racoil state for fetch data instatly
     const [ coilPatientMedical , setCoilPatientMedical] = useRecoilState(setPatientMedical)
     //update data
@@ -78,7 +77,7 @@ function AddPatientMedicalInfo(props){
         axios.post('http://localhost:9000/api/patientMedicalInfo', patientData)
         .then((response)=>{
             setCoilPatientMedical(coilPatientMedical.concat(response.data))
-            props.addRecord()
+            props.addMedicalRecord()
         })
     }  
 

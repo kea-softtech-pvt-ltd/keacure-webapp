@@ -76,6 +76,7 @@ function PatientPersonalInformation(props){
             reader.readAsDataURL(file);
         }   
     }
+    
     const handleInputChange = event => {
         const { name, value } = event.target;
         setUpdateData({ ...updateData, [name]: value });
@@ -102,8 +103,6 @@ function PatientPersonalInformation(props){
         
         axios.post(`http://localhost:9000/api/insertPatientDetails/${patientId}`, formData)
         .then(function(response){
-            console.log(response)
-            //history.push(`/patientdashboard/${patientId}`);
             props.personal();
         })
     }  

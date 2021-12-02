@@ -4,13 +4,13 @@ import Carousel from "react-bootstrap/Carousel";
 import { Link, useParams } from "react-router-dom";
 import { ShowVideoAppointSlots } from "./showavailableslots";
 import { FaRupeeSign } from "react-icons/fa";
-import axios from "axios";
 
 function ShowDoctorVideoAppointment(props){
     const { doctorId } =  useParams()
     const { clinicId } = props;
     const { setSessions } = props;
-    const [ showSlot, setShowSlot ] = useState(false);
+    const [ showSlot, setShowSlot ] = useState([]);
+    const [ showFeesBySlot, setShowFeesBySlot ] = useState([]);
     const [ dayMonth , setDayMonth ] =  useState([])
 
     const handleChange = (e, item) => {
@@ -21,20 +21,19 @@ function ShowDoctorVideoAppointment(props){
             'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-            day: item.day,
-            doctorId:doctorId,
-            clinicId:clinicId,
-            Appointment:"VideoAppointment" ,
+                doctorId:doctorId,
+                clinicId:clinicId,
+                day: item.day,
+                //fees:setSessions.item.fees,
+                Appointment:"VideoAppointment" ,
             })      
         })
-       // .then(res=>res.json())
+        //console.log(setSessions.item.fees)
+        .then(res=>res.json())
         .then(response =>{
-            console.log(response)
+            setShowSlot(response.showSelectedSlots)
+            setShowFeesBySlot(response)
         })  
-        //const result = axios.get(`http://localhost:9000/api/fetchDaysSlots`,( item.day, doctorId, clinicId, "VideoAppointment"));
-        console.log(item.day, doctorId, clinicId, "VideoAppointment")
-        // console.log(result.data)
-        setShowSlot(true);
     };
 
     useEffect(()=>{
@@ -64,7 +63,6 @@ function ShowDoctorVideoAppointment(props){
             const day = getStringDay(new Date(apochDate).getDay())
             sevenDates.push({"date": new Date(apochDate).getDate(), "day":day, "fullDate": new Date(apochDate), "dayMonth":month })
         }
-        console.log(sevenDates)
         setDayMonth(sevenDates)
     }
 
@@ -78,7 +76,7 @@ function ShowDoctorVideoAppointment(props){
                             <Carousel.Item key={index}>
                                 <div style={{ height: 100, background: "white", color: "black" }}>
                                     <Carousel.Caption>
-                                        <div><b>{item.day} {item.dayMonth}<FaRupeeSign/> {setSessions[0].fees}</b></div>
+                                        <div><b>{item.day} {item.dayMonth}</b></div>
                                         <Link to="#" onClick={(e)=> handleChange(e,item) }>Show Available Slots</Link>
                                     </Carousel.Caption>
                                 </div>
@@ -87,8 +85,8 @@ function ShowDoctorVideoAppointment(props){
                         </Carousel>
                     </div>
                     
-                    {showSlot?
-                    <ShowVideoAppointSlots sessionSlot={setSessions}/>
+                    {showSlot.length > 0?
+                        <ShowVideoAppointSlots showFeesBySlot={showFeesBySlot} sessionSlot={showSlot}/>
                     :null} 
                 </>
             ):null}

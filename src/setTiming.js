@@ -16,9 +16,11 @@ function SetTiming(props){
     const { doctorId } = useParams();
     const { clinicId, day } = props;
     const [ error , setError] = useState("");
-    const [ fromTime, setFromTime ] = useState(new Date())
-    const [ toTime, setToTime ] = useState()
     const [ coilSessionTimining ,setCoilSessionTimining] = useRecoilState(SetDoctorSessionTiming)
+    const [ selectedSlots ,setSelectedSlots] = useState([])
+    const [showSelectedSlots ,setShowSelectedSlots] = useState([])
+
+    console.log(showSelectedSlots)
     const [ sessionTime ,setSessionTime]= useState({
         clinicId:clinicId,
         doctorId:doctorId,
@@ -35,17 +37,37 @@ function SetTiming(props){
         setSessionTime({ ...sessionTime, [name]: value });
     };
 
-    function checkTime(from, to) {
-        if(from.getTime() >= to.getTime()) {
-            setError("please select valid time")
+    const handleChange = (event) =>{
+        console.log(event.target.checked)
+
+        let temp = []
+        temp = showSelectedSlots
+        const { name, value } = event.target;
+        if(event.target.checked) {
+            temp.push({
+                slotTime: value,
+                status: 0
+            })
+            
+        } else {
+            let abc = temp.filter(function(item, index){
+                return (item.slotTime != value)
+            })
+            temp = abc
         }
-        else{
-            setError("")
-        }
+        setShowSelectedSlots(temp)
+        //setShowSelectedSlots({ ...showSelectedSlots});
     }
+    // function checkTime(from, to) {
+    //     if(from.getTime() >= to.getTime()) {
+    //         setError("please select valid time")
+    //     }
+    //     else{
+    //         setError("")
+    //     }
+    // }
 
     const handleFromTimeSelection =(time)=> {
-        checkTime(sessionTime.fromTime ,time)
         setSessionTime(sessionTime =>{
             return{
                 ...sessionTime,
@@ -53,44 +75,9 @@ function SetTiming(props){
             }
         })
     }
- 
+
     const handleToTimeSelection =(time)=>{
-        const interval = sessionTime.timeSlot;
-        const fromTime = sessionTime.fromTime;
-        const toTime = sessionTime.toTime;
-
-        const startedTime = new Date()
-        const endedTime = new Date()
-        var exactFromTime = startedTime.toLocaleTimeString(undefined, {hour: '2-digit', minute:'2-digit', timeZone: 'Asia/Kolkata'})
-        var exactToTime = endedTime.toLocaleTimeString(undefined, {hour: '2-digit', minute:'2-digit', timeZone: 'Asia/Kolkata'})
-        console.log(exactFromTime,exactToTime);
-    
-        let slots = {
-            slotInterval: interval,
-            openTime: fromTime,
-            closeTime: toTime
-        };
-          
-        //Format the time
-        let startTime = moment(slots.openTime, "HH:mm");
-        
-        //Format the end time and the next day to it 
-        let endTime = moment(slots.closeTime, "HH:mm").add(1, 'days');
-        
-        //Times
-        let allTimes = [];
-        
-        //Loop over the times - only pushes time with 30 minutes interval
-        while (startTime < endTime) {
-        //Push times
-        allTimes.push(startTime.format("HH:mm")); 
-        //Add interval of 30 minutes
-        startTime.add(slots.slotInterval, 'minutes');
-        }
-        setSessionTime(allTimes)
-        console.log(allTimes);
-
-        checkTime(sessionTime.toTime, time)
+        //checkTime(sessionTime.toTime, time)
         setSessionTime(sessionTime =>{
             return{
                 ...sessionTime,
@@ -98,25 +85,37 @@ function SetTiming(props){
             }
         })
 
-        setSessionTime(sessionTime =>{
-            return{
-                ...sessionTime,
-                ['fromTime']:fromTime
-            }
-        })
+        //for time slots
+        const interval = sessionTime.timeSlot;
+        const fromTime = sessionTime.fromTime;
+        const toTime = sessionTime.time;
+        console.log("fromTime",fromTime)
+        console.log("totime",time)
+       
+        const startTime = moment(fromTime, "HH:mm");
+        const endTime = moment(time, "HH:mm")
+        
+        const allTimes = [];
+        //Loop over the times - only pushes time with 20 or 30 minutes interval
+        while (startTime < time) {
+            allTimes.push(startTime.format("HH:mm")); //Push times
+            startTime.add(interval, 'minutes');//Add interval of selected minutes
+        }
+        setSelectedSlots(allTimes)
     }
 
     async function handleTimeClick(e){
         e.preventDefault();
         const setTimeData  = {
-            clinicId      :   clinicId,
-            doctorId      :   sessionTime.doctorId,
-            fromTime      :   sessionTime.fromTime,
-            toTime        :   sessionTime.toTime,
-            timeSlot      :   sessionTime.timeSlot,
-            Appointment   :   sessionTime.Appointment,
-            fees          :   sessionTime.fees,
-            day           :   sessionTime.day
+            clinicId          :   clinicId,
+            doctorId          :   sessionTime.doctorId,
+            fromTime          :   sessionTime.fromTime,
+            toTime            :   sessionTime.toTime,
+            timeSlot          :   sessionTime.timeSlot,
+            showSelectedSlots :   showSelectedSlots,
+            Appointment       :   sessionTime.Appointment,
+            fees              :   sessionTime.fees,
+            day               :   sessionTime.day
         }
         const res = await axios.post(`http://localhost:9000/api/setSession`, setTimeData)
         .then(res =>{
@@ -182,12 +181,15 @@ function SetTiming(props){
                         </div>
                     </div>   
                 </div>
-                {toTime ?
-                <div className="row">
-                    <div className="btn_1">
-                        
-                    </div>
-                </div> 
+
+                {selectedSlots ?
+                    <section className="borderSlots"> 
+                    {selectedSlots.map((item,index)=>(
+                        <div key={index}>
+                            <MainInputBox type="checkbox" onChange={handleChange} value={item} name="selectedSlots" ><label className="btn_1">{item}</label></MainInputBox>
+                        </div>
+                    ))}
+                    </section>
                 :null} 
 
                 <div className="options">
@@ -197,6 +199,7 @@ function SetTiming(props){
                                 <b>Video Appointment</b>
                             </MainInputBox>
                         </div>
+
                         <div className="col-lg-6">
                             <MainInputBox type="checkbox"  name="Appointment"  value="InClinicAppointment" onChange={handleInputChange} label="In Clinic Appointment">
                                 <b>In Clinic Appointment</b>

@@ -1,19 +1,23 @@
 import { slots} from "./constant";
 import { Link } from "react-router-dom";
+import { FaRupeeSign } from "react-icons/fa";
 
 const ShowVideoAppointSlots = (props)=>{
     const { sessionSlot} = props;
-
+    const {showFeesBySlot} = props;
     return(
-        <section className="radiobutton">
+        <>
+        <b>Fees - <FaRupeeSign/> {showFeesBySlot.fees} /-</b>
+        <section>
             {sessionSlot.map((item , index)=>(
                 <div key={index}>
-                    <Link to={`/doctorbookingwithpatientlogin/${item._id}`} className="btn_1" type="radio" time={slots}>
-                        <label>{new Date(item.fromTime).toLocaleTimeString(undefined, {hour: '2-digit', minute:'2-digit',timeZone: 'Asia/Kolkata'})}</label>
+                    <Link to={`/doctorbookingwithpatientlogin/${item._id}`} className="btn_1" type="radio">
+                        <label>{item.slotTime}</label>
                     </Link>
                 </div>
             ))}
         </section>
+        </>
     )
 }
 export {ShowVideoAppointSlots}
@@ -21,17 +25,20 @@ export {ShowVideoAppointSlots}
 
 const ShowInClinicAppointSlots = (props)=>{
     const {sessionSlot} = props
-    console.log(sessionSlot)
+    const {showFeesBySlot} = props;
     return(
+        <>
+        <b>Fees - <FaRupeeSign/> {showFeesBySlot.fees} /-</b>
         <section className="radiobutton">
             {sessionSlot.map(item=>(
                 <div>
                     <Link to={`/doctorbookingwithpatientlogin/${item._id}`} className="btn_1" type="radio" time={slots}>
-                        <label>{new Date(item.fromTime).toLocaleTimeString(undefined, {hour: '2-digit', minute:'2-digit',timeZone: 'Asia/Kolkata'})}</label>
+                        <label>{item.slotTime}</label>
                     </Link>
                 </div>
             ))}
         </section>
+        </>
     )
 }
 export {ShowInClinicAppointSlots}

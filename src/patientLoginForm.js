@@ -37,14 +37,12 @@ function PatientLoginForm(props){
                 .then(data=>{
                     setPatientId(data._id)
                     if(data.isLoggedIn){
-                        console.log(data._id)
                        setPatientData(data._id)
-                       if(redirection == "dashboard") {
+                        if(redirection == "dashboard") {
                             history.push(`/patientdashboard/${data._id}`)
-                       } else {
+                        } else {
                         history.push(`/getLoginPatientProfile/${data._id}`)
                        }
-                       
                     }else{
                         setShowOTP(true) 
                     }

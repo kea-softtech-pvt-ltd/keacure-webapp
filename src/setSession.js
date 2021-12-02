@@ -81,8 +81,8 @@ return(
                             {fetchTime[item]
                                 ?<div className="col-md-10">
                                     <span>
-                                        {new Date(fetchTime[item][0].fromTime).toLocaleTimeString(undefined, {hour: '2-digit', minute:'2-digit',timeZone: 'Asia/Kolkata'})} 
-                                        To 
+                                        {new Date(fetchTime[item][0].fromTime).toLocaleTimeString(undefined, {hour: '2-digit', minute:'2-digit',timeZone: 'Asia/Kolkata'})}
+                                        - 
                                         {new Date(fetchTime[item][0].toTime).toLocaleTimeString(undefined, {hour: '2-digit', minute:'2-digit', timeZone: 'Asia/Kolkata'})}  
                                         <FaRupeeSign/>
                                         {fetchTime[item][0].fees}/-  {(fetchTime[item][0].Appointment ==="VideoAppointment")

@@ -3232,6 +3232,13 @@ section > div {
 .radiobutton   input[type="radio"]:not(:disabled) ~ label {
     cursor: pointer;
 }
+
+.checkbutton input[type="checkbox"] {
+	display: none;
+  }
+  .checkbutton   input[type="checkbox"]:not(:disabled) ~ label {
+	  cursor: pointer;
+  }
 section > div >label {
     display: block;
     width: 100px;
@@ -4287,7 +4294,10 @@ input[type=file]::-webkit-file-upload-button {
     flex-shrink: 0;
     user-select: none;
 }
-
+.borderSlots{
+	border-bottom:2px #d2d0cd solid;
+	padding: 10px;
+}
 .modal-border{
     border-bottom:1px #d2d0cd solid;
 	padding: 20px;

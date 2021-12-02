@@ -11,7 +11,6 @@ import { MainTabs } from "./mainComponent/mainTabs";
 
 export default function PatientProfile() {
   const { patientId } = useParams();
-  console.log(patientId)
   //for using tab
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
@@ -28,6 +27,7 @@ export default function PatientProfile() {
   return (
     <MainWrapper>
       <MainNav>Patient Information</MainNav>
+
       <div className="box_form">
         <MainTabs
           value={value}
@@ -49,6 +49,7 @@ export default function PatientProfile() {
           <PatientLifestyle patientId={patientId} />
         </TabPanel>
       </div>
+      
     </MainWrapper>
   );
 }

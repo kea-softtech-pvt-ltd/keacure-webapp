@@ -59,7 +59,7 @@ const DoctorAppointmentType = (props)=>{
                 <ul>     
                     <li><Link to="" onClick={getInClinicSlot}><FaWalking/>  Book InClinic Appointment</Link></li>
                     {showClinicSlot === true?
-                        <ShowDoctorInClinicAppointment setSessions = {clinicSession[1]}/>
+                        <ShowDoctorInClinicAppointment clinicId={_id} setSessions = {clinicSession[1]}/>
                     :null}
                 </ul>
             ):"Slots Not Available"} 

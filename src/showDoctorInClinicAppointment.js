@@ -1,34 +1,49 @@
 import React,{ useState , useEffect} from "react";
 import { AiOutlineArrowRight ,AiOutlineArrowLeft } from "react-icons/ai";
 import Carousel from "react-bootstrap/Carousel";
-import { Link } from "react-router-dom";
-import {ShowInClinicAppointSlots}  from "./showavailableslots";
+import { Link ,useParams } from "react-router-dom";
+import { ShowInClinicAppointSlots}  from "./showavailableslots";
 import { FaRupeeSign } from "react-icons/fa";
 
 function ShowDoctorInClinicAppointment(props){
-    const {setSessions} = props;
-    const [showText, setShowText] = useState(false);
-    const [dayMonth , setDayMonth]=  useState([])
-    console.log(dayMonth)
-    const handleChange = (e) => {
+    const { doctorId } =  useParams()
+    const { clinicId } = props;
+    const { setSessions} = props;
+    const [ showSlot, setShowSlot] = useState([]);
+    const [ showFeesBySlot, setShowFeesBySlot ] = useState([]);
+    const [ dayMonth , setDayMonth]=  useState([])
+
+    const handleChange = (e , item) => {
         e.preventDefault();
-        setShowText(true);
+        fetch(`http://localhost:9000/api/fetchDaysSlots`,{
+            method: 'POST',
+            headers:{
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                doctorId:doctorId,
+                clinicId:clinicId,
+                day: item.day,
+                Appointment:"InClinicAppointment" ,
+            })      
+        })
+        .then(res=>res.json())
+        .then(response =>{
+            setShowSlot(response.showSelectedSlots)
+            setShowFeesBySlot(response)
+        }) 
     };
 
     useEffect(()=>{
         showDateMonth();
         getNextSevenDays();
     },[])
-
+    
     const showDateMonth =(days) =>{
-        //var date = new Date();
-        //var month = new Date().getMonth();
-        //var month = new Date().getMonth()+1;
-        
+        var month = new Date().getMonth();
         var m = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
            "Jul", "Aug", "Sept", "Oct", "Nov", "Dec" ];
-        //return days + ' ' + m[month] 
-        return  m[days]
+        return days + ' ' + m[month] 
     }
 
     const getStringDay = (dayId) => {
@@ -41,38 +56,39 @@ function ShowDoctorInClinicAppointment(props){
         for(let i=0; i<7;i++) {
             let d = new Date();
             let apochDate = d.setDate(d.getDate()+i)
+            let apochMonth = d.setDate(d.getDate())
+            let month = showDateMonth(new Date(apochMonth).getDate())
             const day = getStringDay(new Date(apochDate).getDay())
-            sevenDates.push({"date": new Date(apochDate).getDate(apochDate), "day":day, "fullDate": new Date(apochDate), "dayMonth": showDateMonth(new Date(apochDate).getDate(new Date(apochDate)))})
+            sevenDates.push({"date": new Date(apochDate).getDate(), "day":day, "fullDate": new Date(apochDate), "dayMonth":month })
         }
         setDayMonth(sevenDates)
-        console.log(sevenDates)
     }
     
     return(
         <>
         <div>
             <div className="row">
-                {setSessions ? 
-                <>
-                <div style={{width: "100%"}}>
-                    <Carousel interval={null} controls={true} nextIcon={<div className="AiArrowIcon"><AiOutlineArrowRight/></div>} prevIcon={<div className="AiArrowIcon"><AiOutlineArrowLeft/></div>}>
-                        {dayMonth.map((item ,index) => (
-                            <Carousel.Item key={index}>
-                                <div style={{ height: 100, background: "white", color: "black" }}>
-                                    <Carousel.Caption>
-                                    <div><b>{item.day} {item.dayMonth} <FaRupeeSign/> {setSessions[0].fees}</b></div>
-                                    <Link to="#" onClick={handleChange}>Show Available Slots</Link>
-                                    </Carousel.Caption>
-                                </div>
-                            </Carousel.Item>
-                        ))}
-                    </Carousel>
-                </div>
-                {showText? 
-                    <ShowInClinicAppointSlots sessionSlot={setSessions}/>
-                :null} 
-                </>
-                :null}
+                {setSessions ? (
+                    <>
+                    <div style={{width: "100%"}}>
+                        <Carousel interval={null} controls={true} nextIcon={<div className="AiArrowIcon"><AiOutlineArrowRight/></div>} prevIcon={<div className="AiArrowIcon"><AiOutlineArrowLeft/></div>}>
+                            {dayMonth.map((item ,index) => (
+                                <Carousel.Item key={index}>
+                                    <div style={{ height: 100, background: "white", color: "black" }}>
+                                        <Carousel.Caption>
+                                        <div><b>{item.day} {item.dayMonth}</b></div>
+                                        <Link to="#" onClick={(e)=> handleChange(e,item)}>Show Available Slots</Link>
+                                        </Carousel.Caption>
+                                    </div>
+                                </Carousel.Item>
+                            ))}
+                        </Carousel>
+                    </div>
+                    {showSlot.length > 0? 
+                        <ShowInClinicAppointSlots showFeesBySlot={showFeesBySlot} sessionSlot={showSlot}/>
+                    :null} 
+                    </>
+                ):null}
             </div>    
         </div>
         </>

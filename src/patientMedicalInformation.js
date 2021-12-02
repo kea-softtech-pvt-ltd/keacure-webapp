@@ -14,7 +14,7 @@ function PatientMedicalInformation(props){
         <>
             <FetchPatientMedicalInfo patientId={patientId}/>
             {showMedicalInfo === false ?
-            <AddPatientMedicalInfo patientId={patientId} addRecord ={handleRecordAdded}/>
+            <AddPatientMedicalInfo patientId={patientId} addMedicalRecord ={handleRecordAdded}/>
             :
             null}
 
