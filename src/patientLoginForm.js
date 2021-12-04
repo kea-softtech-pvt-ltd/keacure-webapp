@@ -7,6 +7,7 @@ import { MainInput} from "./mainComponent/mainInput";
 import { MainButtonInput} from "./mainComponent/mainButtonInput";
 import { setNewPatientId} from "./recoil/atom/setNewPatientId";
 import { useRecoilState } from "recoil";
+import axios from "axios";
 
 function PatientLoginForm(props){
     const { redirection } = props
@@ -17,31 +18,25 @@ function PatientLoginForm(props){
     const [patientData , setPatientData] = useRecoilState(setNewPatientId);
     const history = useHistory()
 
-    const getOTPSection = (e) => {
+    const getOTPSection = async (e) => {
         e.preventDefault()
         if(mobile.length < 10) { 
             setIsError('Please Enter valid mobile number.')
         }
         else{
             try{
-                fetch("http://localhost:9000/api/patientLogin",{
-                    method: 'POST',
-                    headers:{
-                    'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                    mobile: mobile,
-                    })       
+                const res = await axios.post("http://localhost:9000/api/patientLogin",{
+                    mobile: mobile
                 })
-                .then(res=>res.json())
                 .then(data=>{
-                    setPatientId(data._id)
-                    if(data.isLoggedIn){
-                       setPatientData(data._id)
+                    console.log(data)
+                    setPatientId(data.data._id)
+                    if(data.data.isLoggedIn){
+                       setPatientData(data.data._id)
                         if(redirection == "dashboard") {
-                            history.push(`/patientdashboard/${data._id}`)
+                            history.push(`/patientdashboard/${data.data._id}`)
                         } else {
-                        history.push(`/getLoginPatientProfile/${data._id}`)
+                            history.push(`/getLoginPatientProfile/${data.data._id}`)
                        }
                     }else{
                         setShowOTP(true) 

@@ -45,7 +45,7 @@ export default function PatientProfile() {
           <PatientMedicalInformation Medical={goToLifestyle} patientId={patientId} />
         </TabPanel>
 
-        <TabPanel>
+        <TabPanel value={value} index={2}>
           <PatientLifestyle patientId={patientId} />
         </TabPanel>
       </div>

@@ -1,23 +1,20 @@
-import { Link ,useParams} from "react-router-dom";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import avatarImage from "./img/profile.png";
 
 function FetchPatientInfo(props){
-    const {patientId} = props;
+    const { patientId} = props;
     const [fetchPatientData ,setFetchPatientData] = useState([])
-    
+    console.log(fetchPatientData)
     useEffect(()=>{
         getAllPatientData()
     },[])
 
-    function getAllPatientData(){
-		fetch(`http://localhost:9000/api/patientById/${patientId}`).then(res =>{
-			if(res){
-				return res.json()
-            }
-        }).then(jsonRes => {
-            setFetchPatientData(jsonRes)
-        });
+    async function getAllPatientData(){
+        const result = await axios.get(`http://localhost:9000/api/patientById/${patientId}`)
+        .then(function(response){
+            setFetchPatientData(response.data)
+        })
     }
      
     return(

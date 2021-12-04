@@ -5,7 +5,6 @@ import {FetchPatientInfo} from "./fetchPatientInfo";
 export default function GetLoginPatientProfile(){
     const {doctorId} = useParams()
     const {patientId} = useParams()
-    console.log(patientId)
     return(
         <>
         <main>

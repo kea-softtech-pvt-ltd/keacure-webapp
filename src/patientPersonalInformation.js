@@ -11,29 +11,10 @@ function PatientPersonalInformation(props){
     const { patientId } = props;
     //update data
     const [updateData ,setUpdateData]= useState({})
+    console.log(updateData)
     const [patientPhoto, setPatientPhoto] = useState(avatarImage);
     useEffect(()=>{
-        fetch(`http://localhost:9000/api/patientById/${patientId}`).then(res =>{
-            if(res){
-                return res.json()
-                    }
-                }).then(jsonRes => {
-                    const allKeys = Object.keys(jsonRes)
-                    allKeys.map(function(k,v) {
-                        if(k === 'photo' && typeof jsonRes[k] === "object") {
-                            setValue(k, jsonRes[k])
-                            setUpdateData({...updateData, k: jsonRes[k]});
-                        } 
-                        else if((k !== 'photo')) {
-                            setValue(k, jsonRes[k])
-                            setUpdateData({...updateData, k: jsonRes[k]});
-                        }
-                    })
-                    setUpdateData(jsonRes)
-                    if(jsonRes.photo) {
-                        setPatientPhoto(`../patientImages/${jsonRes.photo}`)
-                    }
-                }); 
+        getPatientPersonalInfo();
         register("name", { required: true });
         register("gender", { required: true });
         register("email", { required: true });
@@ -48,6 +29,26 @@ function PatientPersonalInformation(props){
         register("address", { required: true });
     },[])
     
+    function getPatientPersonalInfo(){
+        axios.get(`http://localhost:9000/api/patientById/${patientId}`).then(jsonRes => {
+            console.log(jsonRes)
+            const allKeys = Object.keys(jsonRes)
+            allKeys.map(function(k,v) {
+                if(k === 'photo' && typeof jsonRes[k] === "object") {
+                    setValue(k, jsonRes[k])
+                    setUpdateData({...updateData, k: jsonRes[k]});
+                } 
+                else if((k !== 'photo')) {
+                    setValue(k, jsonRes[k])
+                    setUpdateData({...updateData, k: jsonRes[k]});
+                }
+            })
+            setUpdateData(jsonRes)
+            if(jsonRes.photo) {
+                setPatientPhoto(`../patientImages/${jsonRes.photo}`)
+            }
+        }); 
+    }
     //location 
     const handleChangeAddress =(address) =>{
         setUpdateData(prevInput =>{
@@ -103,6 +104,7 @@ function PatientPersonalInformation(props){
         
         axios.post(`http://localhost:9000/api/insertPatientDetails/${patientId}`, formData)
         .then(function(response){
+            console.log(response)
             props.personal();
         })
     }  

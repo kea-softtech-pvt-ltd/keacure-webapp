@@ -25,7 +25,7 @@ function AddPatientMedicalInfo(props){
     //for fetch allergirs
     const [allergy ,setAllergy] = useState([])
     useEffect(()=>{
-        getAllergies()
+        //getAllergies()
         //register("allergies", { required: true });'
         register("cmedication", { required: true });
         register("pmedication", { required: true });
@@ -34,15 +34,15 @@ function AddPatientMedicalInfo(props){
         register("surgeries", { required: true });
     },[])
 
-    const getAllergies =()=>{
-        fetch('http://localhost:9000/api/getAllergies').then(res =>{
-            if(res){
-                return res.json()
-            }
-        }).then(jsonRes => {
-            setAllergy(jsonRes)
-        });
-    }
+    // const getAllergies =()=>{
+    //     fetch('http://localhost:9000/api/getAllergies').then(res =>{
+    //         if(res){
+    //             return res.json()
+    //         }
+    //     }).then(jsonRes => {
+    //         setAllergy(jsonRes)
+    //     });
+    // }
 
     //autoselected
     const [selected, setSelected] = useState([]);

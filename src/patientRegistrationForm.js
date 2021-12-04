@@ -25,8 +25,11 @@ function PatientRegistrationForm(props){
     },[])
 
     async function getPatientDetails() {
-        const result = await axios.get(`http://localhost:9000/api/patientById/${patientId}`);
-        setUpdatePatientData(result.data)
+        const result = await axios.get(`http://localhost:9000/api/patientById/${patientId}`)
+        .then(function(response){
+            console.log(response.data)
+            setUpdatePatientData(response.data)
+        })
     }
 
     const { register, handleSubmit ,setValue, formState: { errors } } = useForm();
@@ -40,10 +43,11 @@ function PatientRegistrationForm(props){
         }
         axios.post(`http://localhost:9000/api/insertPatientDetails/${patientId}`, newPatientData)
         .then(function(response){
+            console.log(response)
             props.handalChange()
         })
     }
-   
+
     return(
         <>
         <div className="message">
@@ -62,7 +66,7 @@ function PatientRegistrationForm(props){
                         value={updatePatientData.name} 
                         onChange={handleInputChange} 
                         placeholder="Jhon">
-                    </MainInput>
+                    </MainInput> 
                     {errors.name && <span className="validation">Please enter your full name</span>}                                            
                 </div>
             </div>
@@ -107,6 +111,7 @@ function PatientRegistrationForm(props){
             <div className="text-center add_top_30">
                 <MainButtonInput>Verify & Save</MainButtonInput>
             </div>
+
         </form>
         </>
     )

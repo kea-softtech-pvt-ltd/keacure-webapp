@@ -8,9 +8,6 @@ export default function CreatePatientProfile(){
     const { doctorId } = useParams();
     const { patientId } = useParams()
 
-    useEffect(() => {
-        console.log(patientId)
-    })
     function handalChange(){
         history.push(`/getLoginPatientProfile/${patientId}`)
     }

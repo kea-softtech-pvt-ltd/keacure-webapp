@@ -4,53 +4,42 @@ import { MainButtonInput } from "./mainComponent/mainButtonInput";
 import { MainInput } from "./mainComponent/mainInput";
 import { setNewPatientId} from "./recoil/atom/setNewPatientId";
 import { useRecoilState } from "recoil";
+import axios from "axios";
 
 function LoginPatientOtp(props){
     const history = useHistory()
     const { patientId, redirection} = props;
+    console.log(patientId)
     const [ patientData , setPatientData] = useRecoilState(setNewPatientId);
     const [ loginotp ,setLoginOtp] = useState('');
     
     const [ errormessage, setErrormessage] = useState(false);
 
-    const handleSubmit =(e) => {
-        const loggedIn = true;
+    const handleSubmit = (e) => {
         const loginOtp = loginotp
         e.preventDefault();
         if ( loginotp.length < 6  ) { 
             setErrormessage('Please Enter valid OTP.')
         } else {
-            fetch("http://localhost:9000/api/patientLoginOtp",{
-                method: 'POST',
-                headers:{
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    otp: loginotp,
-                    _id: patientId
-                })       
+            axios.post("http://localhost:9000/api/patientLoginOtp",{
+                otp: loginotp,
+                _id: patientId
             })
-            .then(res=>res.json())
             .then(function(response){
-                if(response.otp !== loginOtp){
+                if(response.data.otp !== loginOtp){
                     setErrormessage("wrong OTP");
                 }else{
-                    fetch(`http://localhost:9000/api/patientOtpIsLoggedIn/${patientId}`,{
-                        method: 'POST',
-                        headers:{
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                        isLoggedIn : loggedIn
-                    })       
+                   axios.post(`http://localhost:9000/api/patientOtpIsLoggedIn/${patientId}`,{
+                        isLoggedIn : true
                     })
-                    .then(res=>res.json())
                     .then(response =>{
+                        console.log(response)
                         setPatientData(patientId)
                         if(redirection == "dashboard") {
-                            history.push(`/PatientProfile/${response._id}`);
+                            history.push(`/PatientProfile/${response.data._id}`);
                         } else {
-                            history.push(`/createpatientprofile/${response._id}`);
+                            console.log(response.data._id)
+                            history.push(`/createpatientprofile/${response.data._id}`);
                         }
                     })  
                 }

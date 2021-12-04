@@ -13,14 +13,11 @@ export default function DoctorDetail () {
     const [fetchProfileData , setFetchProfileData] = useState([]);
 
     useEffect(()=>{
-        console.log("hiiii")
         getDoctorPersonalInfo();
-        console.log("hiiii")
     },[])
     
     async function getDoctorPersonalInfo(){
         const result = await axios.get(`http://localhost:9000/api/doctor/${doctorId}`); 
-        console.log(result)
         setFetchProfileData(result.data[0]);   
     }
     return(

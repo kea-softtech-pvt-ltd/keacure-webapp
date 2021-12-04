@@ -37,7 +37,7 @@ function HomePageTitle(){
 				<form>
 					<div id="custom-search-input">
 						<div className="input-group">
-							<input type="text" className="search-query" value={value} placeholder="Ex. Name, Specialization ...."/>
+							<input type="text" className="search-query" onChange={handleChange} value={value} placeholder="Ex. Name, Specialization ...."/>
 							<input type="submit" className="btn_search" value="Search"/>
 							
 							<div>
