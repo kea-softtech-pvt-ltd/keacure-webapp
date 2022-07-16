@@ -8966,7 +8966,7 @@ function LoginDoctor() {
     if (loginotp.length < 6) {
       setErrormessage('Please Enter valid OTP.');
     } else {
-      fetch("http://localhost:9000/otp", {
+      fetch(`${API}/otp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

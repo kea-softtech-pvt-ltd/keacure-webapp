@@ -1,6 +1,6 @@
 import React from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
-import { handleSelect } from '../googlemap';
+import { handleSelect } from '../common/googlemap';
 
 const PlacesAutocompleteInput = (props) =>{
     return(

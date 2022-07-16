@@ -2,7 +2,6 @@
   "name": "health-app",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:9000",
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^26.0.0",
     "@ckeditor/ckeditor5-react": "^3.0.2",
@@ -27,6 +26,7 @@
     "date-fns": "^2.22.1",
     "express": "^4.17.1",
     "input-group": "^0.1.5",
+    "moment": "^2.29.1",
     "mongoose": "^5.12.14",
     "mui-autocomplete": "^2.0.1",
     "pagination": "^0.4.6",

@@ -1,29 +1,29 @@
 import {Switch,Route} from "react-router-dom";
-import Home from "./Home";
-import DoctorList from "./DoctorList";
-import DoctorDetail from "./DoctorDetail";
-import DoctorBookingWithPatientLogin from "./DoctorBookingWithPatientLogin";
-import BookingConfirm from "./BookingConfirm";
-import LoginDoctor from "./LoginDoctor";
-import LoginPatient from "./LoginPatient";
-import RegisterPatient from "./RegisterPatient";
-import DoctorProfile from "./DoctorProfile";
-import EditDoctorProfile from "./EditDoctorProfile";
-import PatientList from "./PatientList";
-import Dashboard from './Dashboard';
-import PatientDashboard from "./PatientDashboard";
-import OPD from "./OPD";
-import MedicineHistory from "./MedicineHistory";
-import PatientInfo from "./PatientInfo";
-import PatientProfile from "./PatientProfile";
-import PatientsPaymentHistory from "./PatientsPaymentHistory";
-import PatientsClinicHistory from "./PatientsClinicHistory";
-import Appointment from "./Appointment";
-import SearchLocationInput from "./demo";
-import CreatePatientProfile from "./createPatientProfile";
-import GetLoginPatientProfile from "./getLoginPatientProfile";
+import Home from "./common/Home";
+import DoctorList from "./doctor/DoctorList";
+import DoctorDetail from "./doctor/DoctorDetail";
+import DoctorBookingWithPatientLogin from "./patient/DoctorBookingWithPatientLogin";
+import BookingConfirm from "./patient/BookingConfirm";
+import LoginDoctor from "./doctor/LoginDoctor";
+import LoginPatient from "./patient/LoginPatient";
+//import RegisterPatient from "./RegisterPatient";
+import DoctorProfile from "./patient/DoctorProfile";
+import EditDoctorProfile from "./doctor/EditDoctorProfile";
+import PatientList from "./patient/PatientList";
+import Dashboard from './doctor/Dashboard';
+import PatientDashboard from "./patient/PatientDashboard";
+import OPD from "./patient/OPD";
+import MedicineHistory from "./patient/MedicineHistory";
+import PatientInfo from "./patient/PatientInfo";
+import PatientProfile from "./patient/PatientProfile";
+import PatientsPaymentHistory from "./patient/PatientsPaymentHistory";
+import PatientsClinicHistory from "./patient/PatientsClinicHistory";
+import Appointment from "./patient/Appointment";
+import SearchLocationInput from "./common/demo";
+import CreatePatientProfile from "./patient/createPatientProfile";
+import GetLoginPatientProfile from "./patient/getLoginPatientProfile";
 import User from "./user";
-import PatientLogoutForm from "./patientLogoutForm";
+import PatientLogoutForm from "./patient/patientLogoutForm";
 
 function MainContainer() {
     return (
@@ -52,9 +52,9 @@ function MainContainer() {
           <Route path="/loginpatient">
             <LoginPatient />
           </Route>
-          <Route exact path="/registerpatient">
+          {/* <Route exact path="/registerpatient">
             <RegisterPatient />
-          </Route>
+          </Route> */}
           <Route path="/patientprofile/:patientId">
             < PatientProfile />
           </Route>
