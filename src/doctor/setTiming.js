@@ -20,8 +20,7 @@ function SetTiming(props){
     const [ coilSessionTimining ,setCoilSessionTimining] = useRecoilState(SetDoctorSessionTiming)
     const [ selectedSlots ,setSelectedSlots] = useState([])
     const [showSelectedSlots ,setShowSelectedSlots] = useState([])
-
-    console.log(showSelectedSlots)
+    
     const [ sessionTime ,setSessionTime]= useState({
         clinicId:clinicId,
         doctorId:doctorId,
@@ -40,7 +39,6 @@ function SetTiming(props){
 
     const handleChange = (event) =>{
         console.log(event.target.checked)
-
         let temp = []
         temp = showSelectedSlots
         const { name, value } = event.target;
@@ -51,22 +49,13 @@ function SetTiming(props){
             })
             
         } else {
-            let abc = temp.filter(function(item, index){
+            let time = temp.filter(function(item, index){
                 return (item.slotTime != value)
             })
-            temp = abc
+            temp = time
         }
         setShowSelectedSlots(temp)
-        //setShowSelectedSlots({ ...showSelectedSlots});
     }
-    // function checkTime(from, to) {
-    //     if(from.getTime() >= to.getTime()) {
-    //         setError("please select valid time")
-    //     }
-    //     else{
-    //         setError("")
-    //     }
-    // }
 
     const handleFromTimeSelection =(time)=> {
         setSessionTime(sessionTime =>{
@@ -78,7 +67,6 @@ function SetTiming(props){
     }
 
     const handleToTimeSelection =(time)=>{
-        //checkTime(sessionTime.toTime, time)
         setSessionTime(sessionTime =>{
             return{
                 ...sessionTime,

@@ -28,7 +28,7 @@ function EditEducation(props){
         let tempEduImages = drDocument.filter((item, key) => {
             return  key !== index
         })
-        setDrDocument(tempEduImages)     
+        setDrDocument(tempEduImages)
         axios.post(`${API}/deleteDocument/${EduId}`,{
             document: tempEduImages
         })
@@ -88,7 +88,7 @@ function EditEducation(props){
                 }
             })
             setEduData(newEduData);
-            props.onSubmit()       
+            props.onSubmit() 
         });
     }
 
@@ -99,7 +99,7 @@ function EditEducation(props){
                     <label><b>Doctor Degree</b></label>
                     <MainSelect 
                         name="degree" 
-                        value={updateEducation.degree} 
+                        value={updateEducation.degree}
                         onChange={handleInputChange} >
                         <option value="" >Select Degree</option>
                         {drdegrees.map((item , index) =>(
@@ -118,11 +118,11 @@ function EditEducation(props){
                     
                     <label><b>Complition Year</b></label>
                     <MainSelect 
-                        value={updateEducation.comYear} 
+                        value={updateEducation.comYear}
                         name="comYear" 
                         onChange={handleInputChange}>
                         <option value="" >Select Year</option>
-                        {options.map((option ,index) =>(
+                       {options.map((option, index) =>(
                             <option key={index}>{option}</option>
                         ))}
                     </MainSelect>
@@ -139,7 +139,6 @@ function EditEducation(props){
                             <option key={index}>{special.specialization}</option>
                         ))}
                     </MainSelect>
-
                     <label><b>Qualification document Photo</b></label>
                     <MainInput 
                         type="file" 

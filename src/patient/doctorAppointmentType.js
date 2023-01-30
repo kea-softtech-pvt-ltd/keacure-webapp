@@ -12,6 +12,8 @@ const DoctorAppointmentType = (props)=>{
     const [showClinicSlot ,setShowClinicSlot ] = useState(false)
     const [clinicSession , setClinicSession] = useState([[],[]])
 
+    console.log("clinicSession=====",clinicSession)
+    
     const getVideoSlot =(e)=>{
         e.preventDefault();
         setShowVideoSlot(true)

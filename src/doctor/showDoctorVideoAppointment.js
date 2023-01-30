@@ -10,6 +10,7 @@ function ShowDoctorVideoAppointment(props){
     const { doctorId } =  useParams()
     const { clinicId } = props;
     const { setSessions } = props;
+    console.log("setSessions====",setSessions)
     const [ showSlot, setShowSlot ] = useState([]);
     const [ showFeesBySlot, setShowFeesBySlot ] = useState([]);
     const [ dayMonth , setDayMonth ] =  useState([])
@@ -25,13 +26,12 @@ function ShowDoctorVideoAppointment(props){
                 doctorId:doctorId,
                 clinicId:clinicId,
                 day: item.day,
-                //fees:setSessions.item.fees,
                 Appointment:"VideoAppointment" ,
             })      
         })
-        //console.log(setSessions.item.fees)
         .then(res=>res.json())
         .then(response =>{
+            console.log("-response----------",response)
             setShowSlot(response.showSelectedSlots)
             setShowFeesBySlot(response)
         })  

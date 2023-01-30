@@ -13,10 +13,13 @@ import axios from "axios";
 function PatientLoginForm(props){
     const { redirection } = props
     const [patientId , setPatientId] = useState(0);
+    console.log("patientId---",patientId)
+
     const [mobile, setMobile] = useState("");
     const [isError, setIsError] = useState(false);
     const [showOTP ,setShowOTP] = useState(false) 
     const [patientData , setPatientData] = useRecoilState(setNewPatientId);
+    console.log("patientData---",patientData)
     const history = useHistory()
 
     const getOTPSection = async (e) => {
@@ -30,7 +33,6 @@ function PatientLoginForm(props){
                     mobile: mobile
                 })
                 .then(data=>{
-                    console.log(data)
                     setPatientId(data.data._id)
                     if(data.data.isLoggedIn){
                        setPatientData(data.data._id)

@@ -19,6 +19,10 @@ function AddDoctorProfessionalExperience(props){
     const [ experienceData ,setExperienceData]  = useState([]);
     
     const handleStartYearChange =(date) =>{
+        // const splitDate = date.split("")
+        // const year = splitDate[0]
+        // const month = splitDate[1]
+        // const dateString =`${year}-${month}`
         setStartYear(date)
     } 
     const handleEndYearChange =(date) =>{
