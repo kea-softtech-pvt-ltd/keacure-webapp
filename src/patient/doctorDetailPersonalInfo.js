@@ -1,32 +1,17 @@
 import { Link } from "react-router-dom";
-import { API } from "./config";
-import react, { useState ,useEffect } from "react";
 import Experience from "../doctor/Profile/Partial/totalExperience";
-import axios from "axios";
-import { DoctorDetailsProfessionalStatement} from "./doctorDetailsProfessionalStatement";
-import { DoctorDetailsEducationalStatement} from "./doctorDetailsEducationalStatement";
 
-function GetDoctorDetails(props){
-    const doctorId = props.doctorId;
-    const [fetchProfileData , setFetchProfileData] = useState([]);
-    
-    useEffect(()=>{
-        getDoctorPersonalInfo();
-    },[])
-    
-    async function getDoctorPersonalInfo(){
-        const result = await axios.get(`${API}/doctor/${doctorId}`); 
-        setFetchProfileData(result.data[0]);   
-    } 
+function DoctorDetailPersonalInfo(props){
+    const educationData =  props.educationData
     
     return (
-        <div className="box_general_3">
-            <div className="profile modal-border">
+        <div className="profile modal-border">
+            <div className="profile">
                 <div className="row">
                     <div className="col-lg-5 col-md-6">
                         <figure>
                             <img 
-                                src={`../images/${fetchProfileData.photo}`} 
+                                src={`../images/${educationData.photo}`} 
                                 alt="profileImage" 
                                 className="img-fluid"
                             />
@@ -34,9 +19,9 @@ function GetDoctorDetails(props){
                     </div>
                     <div className="col-lg-7 col-md-4">
                         <small>Primary care - Internist</small>
-                        <h1>DR.{fetchProfileData.name}</h1>
-                        {fetchProfileData["experienceList"]?
-                            (<Experience experienceData={fetchProfileData.experienceList}></Experience>)
+                        <h1>DR.{educationData.name}</h1>
+                        {educationData["experienceList"]?
+                            (<Experience experienceData={educationData.experienceList}></Experience>)
                         :null}   
                         <span className="rating">
                             <i className="icon_star voted"></i>
@@ -53,28 +38,20 @@ function GetDoctorDetails(props){
                         </ul>
                         <ul className="contacts">
                             <li>
-                                <h6>Address</h6>{fetchProfileData.address}
+                                <h6>Address</h6>{educationData.address}
                                 <Link to="#" target="_blank"> <strong>View on map</strong></Link>
                             </li>
                             <li>
-                                <h6>Phone</h6> <Link to="tel://000434323342">{fetchProfileData.mobile}</Link>
+                                <h6>Phone</h6> <Link to="tel://000434323342">{educationData.mobile}</Link>
                             </li>
                             <li>
-                                <h6>Email</h6> <Link to="tel://000434323342">{fetchProfileData.personalEmail}</Link>
+                                <h6>Email</h6> <Link to="tel://000434323342">{educationData.personalEmail}</Link>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-
-            {fetchProfileData["educationList"]?
-            (<>
-                <DoctorDetailsProfessionalStatement educationData={fetchProfileData.educationList}/>
-
-                <DoctorDetailsEducationalStatement educationData={fetchProfileData.educationList}/>
-            </>)
-            :null}
-        </div>
+        </div>    
     )
 }
-export{GetDoctorDetails}
+export{DoctorDetailPersonalInfo}

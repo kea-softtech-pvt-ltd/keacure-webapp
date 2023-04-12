@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { API } from "../config";
 import { Link } from "react-router-dom";
 import { FaVideo, FaWalking} from "react-icons/fa";
-import {ShowDoctorVideoAppointment} from "../doctor/showDoctorVideoAppointment";
-import {ShowDoctorInClinicAppointment} from "../doctor/showDoctorInClinicAppointment";
+import {ShowDoctorVideoAppointment} from "./showDoctorVideoAppointment";
+import {ShowDoctorInClinicAppointment} from "./showDoctorInClinicAppointment";
 import axios from "axios";
 
 const DoctorAppointmentType = (props)=>{

@@ -2,13 +2,8 @@ import './App.css';
 import Header from './common/Header';
 import Footer from './common/Footer';
 import MainContainer from './MainContainer';
-import {
-  BrowserRouter as Router,
-  Route
-} from "react-router-dom";
-import {
-  RecoilRoot
-} from 'recoil';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { RecoilRoot } from 'recoil';
 
 function App() {
   return (
@@ -17,7 +12,7 @@ function App() {
         <Router>
           <Route>
             <Header></Header>
-              <MainContainer></MainContainer>
+            <MainContainer></MainContainer>
             <Footer></Footer>
           </Route>
         </Router>

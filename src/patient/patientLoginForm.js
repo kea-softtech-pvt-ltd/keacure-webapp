@@ -36,7 +36,7 @@ function PatientLoginForm(props){
                     setPatientId(data.data._id)
                     if(data.data.isLoggedIn){
                        setPatientData(data.data._id)
-                        if(redirection == "dashboard") {
+                        if(redirection === "dashboard") {
                             history.push(`/patientdashboard/${data.data._id}`)
                         } else {
                             history.push(`/getLoginPatientProfile/${data.data._id}`)

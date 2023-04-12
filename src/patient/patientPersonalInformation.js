@@ -2,7 +2,7 @@ import { API } from "../config";
 import React,{ useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { PlacesAutocompleteInput} from "../mainComponent/placesAutocomplete"
+import { PlacesAutocompleteInput} from "../doctor/Profile/Clinic/Partial/placesAutocomplete"
 import { MainRadioGroup } from "../mainComponent/mainRadioGroup";
 import { MainInput } from '../mainComponent/mainInput';
 import avatarImage from "../img/profile.png";

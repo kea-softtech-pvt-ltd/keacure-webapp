@@ -35,14 +35,14 @@
 		white-space: nowrap
 	}
 	.main-menu>ul>li span>a {
-		color: #00c5fb;
+		color: #1a3c8b;
 		padding: 0 8px 17px;
 		font-size: 14px;
 		font-size: .875rem;
 		font-weight: 500
 	}
 	.main-menu>ul>li span:hover>a {
-		color: #3f4079
+		color: #00c5fb
 	}
 	.main-menu ul ul {
 		position: absolute;

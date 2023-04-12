@@ -10,4 +10,4 @@ const MainButtonInput =(props)=>{
     )
 }
 
-export {MainButtonInput}
+export {MainButtonInput} 

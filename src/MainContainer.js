@@ -1,30 +1,31 @@
 import {Switch,Route} from "react-router-dom";
 import Home from "./common/Home";
-import DoctorList from "./doctor/DoctorList";
-import DoctorDetail from "./doctor/DoctorDetail";
+import DoctorList from "./patient/DoctorList";
+import DoctorDetail from "./doctor/Dashboard-card/DoctorDetail";
 import DoctorBookingWithPatientLogin from "./patient/DoctorBookingWithPatientLogin";
 import BookingConfirm from "./patient/BookingConfirm";
-import LoginDoctor from "./doctor/LoginDoctor";
+import LoginDoctor from "./doctor/Profile/LoginDoctor";
 import LoginPatient from "./patient/LoginPatient";
 //import RegisterPatient from "./RegisterPatient";
-import DoctorProfile from "./patient/DoctorProfile";
-import EditDoctorProfile from "./doctor/EditDoctorProfile";
-import PatientList from "./patient/PatientList";
-import Dashboard from './doctor/Dashboard';
+import DoctorProfile from "./doctor/Profile/DoctorProfile";
+import EditDoctorProfile from "./doctor/Profile/EditDoctorProfile";
+import PatientList from "./doctor/Dashboard-card/PatientList";
+import Dashboard from './doctor/Dashboard-card/Dashboard';
 import PatientDashboard from "./patient/PatientDashboard";
-import OPD from "./patient/OPD";
+import OPD from "./doctor/Report/OPD";
 import MedicineHistory from "./patient/MedicineHistory";
 import PatientInfo from "./patient/PatientInfo";
 import PatientProfile from "./patient/PatientProfile";
 import PatientsPaymentHistory from "./patient/PatientsPaymentHistory";
-import PatientsClinicHistory from "./patient/PatientsClinicHistory";
+import PatientsClinicHistory from "./doctor/Dashboard-card/PatientsClinicHistory";
 import Appointment from "./patient/Appointment";
 import SearchLocationInput from "./common/demo";
 import CreatePatientProfile from "./patient/createPatientProfile";
 import GetLoginPatientProfile from "./patient/getLoginPatientProfile";
+import Calender from './doctor/Dashboard-card/Calender';
 import User from "./user";
 import PatientLogoutForm from "./patient/patientLogoutForm";
-
+import SetUpdateTime from "./doctor/Profile/Clinic/Session/setUpdateTime";
 function MainContainer() {
     return (
         <Switch>
@@ -58,22 +59,29 @@ function MainContainer() {
           <Route path="/patientprofile/:patientId">
             < PatientProfile />
           </Route>
+          <Route path="/updatesessiontime/:doctorId/:clinicId/:ItemId">
+            <SetUpdateTime />
+          </Route>
           <Route path="/doctorprofile/:doctorId">
             <DoctorProfile />
+          </Route>
+          <Route path="/calender/:doctorId">
+            < Calender />
           </Route>
           <Route exact path="/logindoctor">
             <LoginDoctor />
           </Route>
+
           <Route path="/editdoctorprofile/:doctorId">
             <EditDoctorProfile />
           </Route>
           <Route exact path="/patientlist/:doctorId">
             <PatientList />
           </Route>
-          <Route path="/patientlist">
+          {/* <Route path="/patientlist">
             <OPD/>
-          </Route>
-          <Route path="/Appointment/:patientId">
+          </Route> */}
+          <Route path="/patientlist/OPD/:patientId">
             <OPD/>
           </Route>
           <Route path="/dashboard/:doctorId">
