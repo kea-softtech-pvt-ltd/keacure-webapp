@@ -38,13 +38,13 @@ function FetchDoctorPersonalDetails(props) {
                         <i className="icon_star voted"></i>
                         <i className="icon_star"></i>
                         <small>(145)</small>
-                        <Link to="badges.html"
+                        {/* <Link to="badges.html"
                             data-toggle="tooltip"
                             data-placement="top"
                             data-original-title="Badge Level"
                             className="badge_list_1">
                             <img src="img/badges/badge_1.svg" width="15" height="15" alt="" />
-                        </Link>
+                        </Link> */}
                     </span>
                     <ul className="statistic">
                         <li>854 Views</li>

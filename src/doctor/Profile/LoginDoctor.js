@@ -1,17 +1,17 @@
-import { API } from "../../config";
+// import { API } from "../../config";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ShowLoginOtp } from "./Partial/showLoginOtp";
-import { useRecoilState } from "recoil";
-import { setDoctorId } from "../../recoil/atom/setDoctorId"
+// import { useRecoilState } from "recoil";
+// import { setDoctorId } from "../../recoil/atom/setDoctorId"
 import { MainButtonInput } from "../../mainComponent/mainButtonInput";
 import { MainInput } from "../../mainComponent/mainInput";
 import AuthApi from "../../services/AuthApi";
 
 export default function LoginDoctor() {
     //for show otp input
-    let history = useHistory()
+    // let history = useHistory()
     const [mobile, setMobile] = useState("");
     const [loginData, setLoginData] = useState([]);
     const [isError, setIsError] = useState(false);

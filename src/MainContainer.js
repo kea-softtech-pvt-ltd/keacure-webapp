@@ -26,6 +26,7 @@ import Calender from './doctor/Dashboard-card/Calender';
 import User from "./user";
 import PatientLogoutForm from "./patient/patientLogoutForm";
 import SetUpdateTime from "./doctor/Profile/Clinic/Session/setUpdateTime";
+import CalendarModalBox from "./doctor/Dashboard-card/partial/CalendarModalBox"
 function MainContainer() {
     return (
         <Switch>
@@ -68,6 +69,9 @@ function MainContainer() {
           <Route path="/calender/:doctorId">
             < Calender />
           </Route>
+          {/* <Route path="/calendarModalBox/:patientId">
+            <CalendarModalBox/>
+          </Route> */}
           <Route exact path="/logindoctor">
             <LoginDoctor />
           </Route>

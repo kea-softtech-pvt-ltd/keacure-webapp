@@ -3250,6 +3250,14 @@ section > div {
 	cursor: pointer;
 }
 
+.patientModalName{
+	font-size: large;
+	font-weight: bold;
+	/* padding-top: 10px; */
+}
+.patientModal{
+	font-weight: bold;
+}
 .checkbutton input[type="checkbox"] {
 	display: none;
 }
@@ -3260,7 +3268,6 @@ section > div > label {
 	display: block;
 	width: 100px;
 	background: #1a3c8b;
-
 	border-radius: 5px;
 	text-align: center;
 	position: relative;

@@ -53,7 +53,7 @@ export default function PatientsClinicHistory() {
         const data = patientDetails.filter((patientData) => {
             const selectedDate = moment(patientData.selectedDate)
             .format('YYYY-MM-DD').toString()
-            if (selectedDate <= newDate) {
+            if (patientData.status === "Completed") {
                 return patientDetails;
             }
         })

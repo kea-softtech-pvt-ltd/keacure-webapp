@@ -2,7 +2,8 @@ import { useHistory ,useParams } from "react-router-dom";
 import { MainCards } from '../../mainComponent/mainCards';
 import { MainNav } from "../../mainComponent/mainNav";
 import { MainWrapper } from "../../mainComponent/mainWrapper";
-
+// import 'react-big-calendar/lib/sass/styles';
+// import 'react-big-calendar/lib/addons/dragAndDrop/styles';
 export default function Dashboard(){
     const { doctorId } = useParams();
     let history = useHistory();

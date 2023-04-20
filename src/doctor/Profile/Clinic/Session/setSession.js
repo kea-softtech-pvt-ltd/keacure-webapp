@@ -20,7 +20,6 @@ function SetSession(props) {
     const [showtime, setShowTime] = useState(false);
     const [updateTime, setUpdateTime] = useState(false);
     const [fetchTime, setfetchTime] = useRecoilState(SetDoctorSessionTiming);
-    console.log("fetchTime===========", fetchTime)
     const [fetchUpdateTime, setfetchUpdateTime] = useRecoilState(updateSession);
     const [updateItem, setUpdateItem] = useState();
     const { allSessions } = AuthApi()
@@ -46,18 +45,14 @@ function SetSession(props) {
     //setTiming component
     const handleTimeClick = () => {
         handleClose();
-        console.log(">>>>>>>>>>>>>>>")
     };
 
     const handleUpdateClose = () => setUpdateTime(false);
 
     const handleUpdate = (e, item) => {
-        console.log("item------------", item)
-        // console.log("fetchTime--------", fetchT=[ime[item][0])
         e.preventDefault();
         setUpdateTime(true);
         setUpdateItem(item)
-        console.log('item---', item)
     }
     const handleUpdateTimeClick = () => {
         handleUpdateClose();
@@ -74,11 +69,7 @@ function SetSession(props) {
         }
         await allSessions(dataId)
             .then(jsonRes => {
-
                 let byDay = jsonRes.reduce((allDayData, singleDayData) => {
-                    console.log("allDayDataallDayData",allDayData)
-                    // console.log("allDayData==============", allDayData)
-                    // console.log("singleDayData===========", singleDayData)
                     allDayData[singleDayData.day] = [...allDayData[singleDayData.day] || [], singleDayData];
                     return allDayData;
                 }, {});
@@ -98,7 +89,7 @@ function SetSession(props) {
                                 </div>
                                 {fetchUpdateTime[item]
                                     ? <div className="col-md-10">
-                                    {console.log("fetchUpdateTime[item]",fetchUpdateTime[item])}
+                                    {/* {console.log("fetchUpdateTime[item]",fetchUpdateTime[item])} */}
                                         <Link onClick={(e) => handleUpdate(e, fetchUpdateTime[item])} >
                                             <span>
                                                 {new Date(fetchUpdateTime[item][0].fromTime).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' })}

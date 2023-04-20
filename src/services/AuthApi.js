@@ -48,7 +48,6 @@ export default function AuthApi() {
     }
     const fetchDrDegree = async () => {
         const result = await axios.get(`${API}/drdegrees`)
-        // console.log("---------??????????--",result)
         return result.data
     }
     const fetchEditEducationData = async ({ EduId }) => {
@@ -57,7 +56,7 @@ export default function AuthApi() {
     }
     const getAllDrInfo = async ({ doctorId }) => {
         const result = await axios.get(`${API}/doctor/${doctorId}`);
-        console.log("+++++++++++", result)
+        // console.log("+++++++++++", result)
         return result.data;
 
     }
@@ -67,12 +66,10 @@ export default function AuthApi() {
     }
     const allSessions = async (dataId) => {
         const result = await axios.post(`${API}/fetchtime`, dataId)
-        console.log("dataId=============", dataId)
         return result.data;
     }
     const setSessionTimeData = async (setTimeData) => {
         const result = await axios.post(`${API}/setSession`, setTimeData)
-        // console.log("hsffjdshfkjshfkjhskfjhskjf", result)
         return result
     }
     // const setUpdateTimeData = async ({ doctorId, clinicId, _id }, setTimeData) => {
@@ -81,9 +78,7 @@ export default function AuthApi() {
     //     return result
     // }
     const insertDrExperience = async (newDoctorData) => {
-        // console.log(">>>>>>>>>>>>>>>>>>>>>", newDoctorData)
         const result = await axios.post(`${API}/insertExperience`, newDoctorData)
-        // console.log("==================+++++++++", result)
         return result.data
     }
     const editExperienceData = async ({ ExId }, updateExperienceData) => {
@@ -94,9 +89,18 @@ export default function AuthApi() {
         const result = await axios.get(`${API}/fetchExData/${doctorId}`)
         return result.data
     }
-    const getAllExperienceData = async({ ExId }) => {
+    const getAllExperienceData = async ({ ExId }) => {
         const result = await axios.get(`${API}/fetchUpdateExperience/${ExId}`)
-        // console.log("@@@@@@@@@@@@@@@@@@@@@@@",result)
+        return result.data
+    }
+    const calendarEvent = async ({ doctorId }) => {
+        const result = await axios.get(`${API}/getBookingData/${doctorId}`)
+        return result.data
+    }
+    const patientDetailsData = async ({patientIdData}) => {
+        console.log("========patientIdData",patientIdData)
+        const result = await axios.get(`${API}/patientById/${patientIdData}`)
+        console.log("----------result",result.data)
         return result.data
     }
     return {
@@ -120,6 +124,8 @@ export default function AuthApi() {
         insertDrExperience,
         editExperienceData,
         fetchExperienceData,
-        getAllExperienceData
+        getAllExperienceData,
+        calendarEvent,
+        patientDetailsData
     }
 }

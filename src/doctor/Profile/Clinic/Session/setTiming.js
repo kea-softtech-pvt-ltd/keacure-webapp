@@ -47,12 +47,13 @@ function SetTiming(props) {
                 slotTime: value,
                 status: 0
             })
-
         } else {
             let time = temp.filter(function (item, index) {
+                console.log("item, indexitem, index",item)
                 return (item.slotTime !== value)
             })
             temp = time
+            console.log("temptemptemptemp",temp)
         }
         setShowSelectedSlots(temp)
     }
@@ -64,8 +65,7 @@ function SetTiming(props) {
                 ...sessionTime,
                 ['fromTime']: time
             }
-        })
-     
+        })     
     }
       const handleToTimeSelection = (time) => {
         setSessionTime(sessionTime => {
@@ -78,12 +78,9 @@ function SetTiming(props) {
         //for time slots
         const interval = sessionTime.timeSlot;
         const fromTime = sessionTime.fromTime;
-        const toTime = sessionTime.time;
-        console.log("fromTime", fromTime)
-        console.log("totime", time)
-
+        // const toTime = sessionTime.time;
         const startTime = moment(fromTime, "HH:mm");
-        const endTime = moment(time, "HH:mm")
+        // const endTime = moment(time, "HH:mm")
 
         const allTimes = [];
         //Loop over the times - only pushes time with 20 or 30 minutes interval
@@ -110,7 +107,6 @@ function SetTiming(props) {
         if (sessionTime.fromTime < sessionTime.toTime) {
             await setSessionTimeData(setTimeData)
                 .then(res => {
-                    console.log("res-----------", res)
                     let setTime = {}
                     setTime[sessionTime.day] = [res.data]
                     setCoilSessionTimining({ ...coilSessionTimining, ...setTime })
@@ -119,12 +115,6 @@ function SetTiming(props) {
         } else {
             setError("Please enter valid time");
         }
-        // .then(res =>{
-        //     let setTime = {}
-        //     setTime[sessionTime.day] = [res.data]
-        //     setCoilSessionTimining({...coilSessionTimining, ...setTime}) 
-        //     props.onSubmit();
-        // });
     }
 
     return (
@@ -196,13 +186,13 @@ function SetTiming(props) {
                 <div className="options">
                     <div className="row">
                         <div className="col-lg-6">
-                            <MainInputBox type="checkbox" name="Appointment" value="VideoAppointment" onChange={handleInputChange} label="Video Appointment">
+                            <MainInputBox type="radio" name="Appointment" value="VideoAppointment" onChange={handleInputChange} label="Video Appointment">
                                 <b>Video Appointment</b>
                             </MainInputBox>
                         </div>
 
                         <div className="col-lg-6">
-                            <MainInputBox type="checkbox" name="Appointment" value="InClinicAppointment" onChange={handleInputChange} label="In Clinic Appointment">
+                            <MainInputBox type="radio" name="Appointment" value="InClinicAppointment" onChange={handleInputChange} label="In Clinic Appointment">
                                 <b>In Clinic Appointment</b>
                             </MainInputBox>
                         </div>

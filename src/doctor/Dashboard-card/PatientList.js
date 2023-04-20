@@ -65,7 +65,7 @@ export default function PatientList() {
             day = '0' + day
         const newDate = [year, month, day].join('-');
         const data = patientList.filter((patient) => {
-            if (patient.selectedDate >= newDate) {
+            if (patient.status === "Ongoing") {
                 return patientList;
             }
         })
@@ -84,7 +84,6 @@ export default function PatientList() {
                             </nav>
                             <div className="box_form">
                                 <div className="row">
-
                                     <div className="col-lg-2 ">
                                         <label>From Date</label>
                                         <DatePicker

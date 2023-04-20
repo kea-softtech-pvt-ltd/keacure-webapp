@@ -184,13 +184,13 @@ function SetUpdateTime(props){
                 <div className="options">
                     <div className="row">
                         <div className="col-lg-6">
-                            <MainInputBox type="checkbox"  name="Appointment"  value="VideoAppointment" onChange={handleInputChange} label="Video Appointment">
+                            <MainInputBox type="radio"  name="Appointment"  value="VideoAppointment" onChange={handleInputChange} label="Video Appointment">
                                 <b>Video Appointment</b>
                             </MainInputBox>
                         </div>
 
                         <div className="col-lg-6">
-                            <MainInputBox type="checkbox"  name="Appointment"  value="InClinicAppointment" onChange={handleInputChange} label="In Clinic Appointment">
+                            <MainInputBox type="radio"  name="Appointment"  value="InClinicAppointment" onChange={handleInputChange} label="In Clinic Appointment">
                                 <b>In Clinic Appointment</b>
                             </MainInputBox>
                         </div>
