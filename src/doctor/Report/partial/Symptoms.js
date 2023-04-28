@@ -1,13 +1,12 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
+import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import constants from "../../../common/constant";
 
-export default function LabPrescription(props) {
-    //for add new fiels (priscription)
+export default function Symptoms(props) {
     const { onChange } = props
     const [fields, setFields] = useState([{ id: 1 }]);
 
@@ -24,13 +23,13 @@ export default function LabPrescription(props) {
             minWidth: 650,
         },
     }));
-    const classes = useStyles();
-    function handleAdd() {
-        const values = [...fields];
-        let last_record = fields.slice(-1);
-        values.push({ id: last_record.id + 1 });
-        setFields(values);
-    }
+    // const classes = useStyles();
+    // function handleAdd() {
+    //     const values = [...fields];
+    //     let last_record = fields.slice(-1);
+    //     values.push({ id: last_record.id + 1 });
+    //     setFields(values);
+    // }
     //for autoComplete(medicin list)
     let [medicineData, setMedicineData] = useState([])
     useEffect(() => {
@@ -39,19 +38,10 @@ export default function LabPrescription(props) {
         );
         setMedicineData(result.data)
     }, [])
-
-    //for autoComplete(medicin weight)
-    let [medicineWeight, setMedicineWeight] = useState([])
-    useEffect(() => {
-        const result = axios(
-            constants.MEDICINEWEIGHT_DATA
-        );
-        setMedicineWeight(result.data)
-    }, [])
     return (
         <div>
             <div onChange={onChange}>
-                <label>Test Name</label>
+                <label>Choose Symptoms</label>
                 <Autocomplete
                     onChange={(event, newValues) => {
                     }}
@@ -65,14 +55,16 @@ export default function LabPrescription(props) {
                     )}
                     renderInput={(params) => (<TextField {...params} label="Choose a medicine" />)}
                 />
-
-
             </div>
-            {/* <div className="btn-dropdown"> */}
-            <div className="text-center add_top_30 btn-dropdown">
-                <input type="submit" onClick={onChange} className="btn_1" value="Add" />
+            <div >
+                <div className="vital-signInput symptomsInput">
+                    <label className='mb-2'>Other</label>
+                    <input type="text" className="form-control " placeholder="Enter your symptoms" />
+                </div>
+                <div className="text-center add_top_30 symptomsBtn">
+                    <input type="submit" className="btn_1 patientinfo" value="Save" />
+                </div>
             </div>
-            {/* </div> */}
         </div>
     )
 }

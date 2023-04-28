@@ -46,6 +46,15 @@ ul#cat_nav {
 	margin-right: 5px;
 	font-size: 20px;
 }
+.consultationbtn{
+	background-color: #1a3c8b;
+	color:#fdf2f2; ;
+	font-size: small;
+}
+.consultationbtn:focus,
+.consultationbtn:hover{
+	background-color: rgb(24, 31, 68)
+}
 /* #preloader {
 	position: fixed;
 	top: 0;
@@ -375,7 +384,7 @@ a {
 	float: left;
 }
 .patientlistlink {
-	color: rgb(10, 176, 241);
+	/* color: rgb(10, 176, 241); */
 	text-decoration: none;
 	color: #1a3c8b;
 	padding: 10px;
@@ -427,6 +436,27 @@ a.btn_1 {
 	-ms-border-radius: 25px;
 	border-radius: 3px;
 	font-weight: 500;
+}
+.btn-dropdown{
+	position: relative;
+    left: 212%;
+}
+.medicinebtn{
+	position: relative;
+	left: 79px;
+}
+.symptomsBtn{
+	position: relative;
+    right: 110px;
+}
+.symptomsInput{
+	position: relative;
+    left: 285px;
+    bottom: 80px;
+}
+.patientInfobtn{
+	display: flex;
+	align-items:flex-end;
 }
 .iconbutton {
 	border: none;
@@ -2157,7 +2187,7 @@ a.wish_bt:hover:after {
 	padding: 8px;
 }
 .linklist :hover {
-	color: tomato;
+	/* color: tomato; */
 }
 
 .row-height {
@@ -3149,7 +3179,9 @@ a.social_bt {
 	margin: 0;
 }
 .patientinfo {
-	float: left;
+	position: relative;
+    left: 145px;
+	
 }
 .datepicker {
 	text-decoration: none;
@@ -4506,11 +4538,23 @@ a.box_feat_about h3 {
 .bg_color_2 {
 	background: url(../img/hero_bg_1.svg) fixed #3f4079;
 }
+
+.vital-signInput{
+	width: 200px;
+	margin: 10px;
+}
 .form-control {
 	font-size: 14px;
 	font-size: 0.875rem;
 	min-height: 40px;
-	border-color: #e1e8ed;
+	border-color:  #1a3c8b;
+}
+.medicine-checkbox{
+	font-size:100px;
+	min-height: 20px
+}
+.reports-input{
+	width:150px;
 }
 .tablecell b {
 	padding-right: 15px;

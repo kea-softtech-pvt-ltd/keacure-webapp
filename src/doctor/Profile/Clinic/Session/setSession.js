@@ -92,9 +92,9 @@ function SetSession(props) {
                                     {/* {console.log("fetchUpdateTime[item]",fetchUpdateTime[item])} */}
                                         <Link onClick={(e) => handleUpdate(e, fetchUpdateTime[item])} >
                                             <span>
-                                                {new Date(fetchUpdateTime[item][0].fromTime).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' })}
+                                                {fetchUpdateTime[item][0].fromTime}
                                                 -
-                                                {new Date(fetchUpdateTime[item][0].toTime).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' })}
+                                                {fetchUpdateTime[item][0].toTime}
                                                 <FaRupeeSign />
                                                 {fetchUpdateTime[item][0].fees}/-  {(fetchUpdateTime[item][0].Appointment === "VideoAppointment")
                                                     ? <FaVideo />
@@ -108,9 +108,9 @@ function SetSession(props) {
                                                 ? <div className="col-md-10">
                                                     <Link onClick={(e) => handleUpdate(e, fetchTime[item])} >
                                                         <span>
-                                                            {new Date(fetchTime[item][0].fromTime).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' })}
+                                                            {fetchTime[item][0].fromTime}
                                                             -
-                                                            {new Date(fetchTime[item][0].toTime).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' })}
+                                                            {fetchTime[item][0].toTime}
                                                             <FaRupeeSign />
                                                             {fetchTime[item][0].fees}/-  {(fetchTime[item][0].Appointment === "VideoAppointment")
                                                                 ? <FaVideo />
@@ -118,6 +118,7 @@ function SetSession(props) {
                                                         </span>
                                                     </Link>
                                                 </div>
+                                                   
                                                 : <Link to="#" onClick={(e) => handleShow(e, item)} className="sessionlistlink">
                                                     Set Session Timing
                                                 </Link>

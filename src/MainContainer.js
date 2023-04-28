@@ -12,7 +12,7 @@ import EditDoctorProfile from "./doctor/Profile/EditDoctorProfile";
 import PatientList from "./doctor/Dashboard-card/PatientList";
 import Dashboard from './doctor/Dashboard-card/Dashboard';
 import PatientDashboard from "./patient/PatientDashboard";
-import OPD from "./doctor/Report/OPD";
+import PatientMedicalReport from "./doctor/Report/PatientMedicalReport";
 import MedicineHistory from "./patient/MedicineHistory";
 import PatientInfo from "./patient/PatientInfo";
 import PatientProfile from "./patient/PatientProfile";
@@ -85,8 +85,8 @@ function MainContainer() {
           {/* <Route path="/patientlist">
             <OPD/>
           </Route> */}
-          <Route path="/patientlist/OPD/:patientId">
-            <OPD/>
+          <Route path="/patientlist/consultation/:appointmentId">
+            <PatientMedicalReport/>
           </Route>
           <Route path="/dashboard/:doctorId">
             <Dashboard />

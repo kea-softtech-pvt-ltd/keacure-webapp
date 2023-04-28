@@ -16,6 +16,7 @@ import NativeSelect from "@material-ui/core/NativeSelect";
 import DatePicker from 'react-date-picker';
 import { CSVLink } from "react-csv";
 import { Link, useRouteMatch, useParams } from "react-router-dom";
+import moment from 'moment';
 import { getMonth } from "date-fns";
 import AuthApi from "../../services/AuthApi";
 //for table
@@ -48,7 +49,7 @@ export default function PatientList() {
     useEffect(() => {
         getPatientDetails();
         date();
-    }, [])
+    }, [patientList])
 
     async function getPatientDetails() {
         const result = await getPatientListDetails({doctorId});
@@ -82,7 +83,7 @@ export default function PatientList() {
                                     <span>Appointment</span>
                                 </div>
                             </nav>
-                            <div className="box_form">
+                            {/* <div className="box_form">
                                 <div className="row">
                                     <div className="col-lg-2 ">
                                         <label>From Date</label>
@@ -112,7 +113,7 @@ export default function PatientList() {
                                                 <option>Thirty</option>
                                             </NativeSelect>
                                         </FormControl>
-                                    </div>
+                                    </div> */}
                                     {/*                                     
                                     <div className="col-lg-2 ">
                                         <label>Appointment Date</label>
@@ -124,15 +125,15 @@ export default function PatientList() {
                                     <div className="col-lg-2 ">
                                     <label>Mode of Appointment</label>
                                     </div> */}
-                                    <div className="col-lg-3 ">
+                                    {/* <div className="col-lg-3 ">
                                         <CSVLink data={patientList} filename={"my-file.csv"}
                                             className="btn_1"
                                         >
                                             Export CSV
                                         </CSVLink>
-                                    </div>
-                                </div>
-                            </div>
+                                    </div> */}
+                                {/* </div> */}
+                            {/* </div> */}
                         </div>
                         <div className="col-lg-12 ml-auto">
                             <div className="box_form">
@@ -146,7 +147,7 @@ export default function PatientList() {
                                                 <TableCell align="center"><b>Age</b></TableCell>
                                                 <TableCell align="center"><b>Clinic Name</b></TableCell>
                                                 <TableCell align="center"><b>Paid Fees</b></TableCell>
-                                                <TableCell align="center"><b>view Details</b></TableCell>
+                                                <TableCell align="center"><b>Consultation</b></TableCell>
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
@@ -155,14 +156,14 @@ export default function PatientList() {
                                                 return (
                                                     <TableRow key={i}>
                                                         <TableCell align="center">{details['patientDetails'][0].name}</TableCell>
-                                                        <TableCell align="center">{details.selectedDate},{details.slotTime}</TableCell>
+                                                        <TableCell align="center">{moment(details.selectedDate).format('YYYY-MM-DD').toString()},{details.slotTime}</TableCell>
                                                         <TableCell align="center">{details['patientDetails'][0].mobile}</TableCell>
                                                         <TableCell align="center">{details['patientDetails'][0].age}</TableCell>
                                                         <TableCell align="center">{details['clinicList'][0].clinicName}</TableCell>
                                                         <TableCell align="center">{details.fees}</TableCell>
                                                         <TableCell align="center">
                                                             <div className="linklist">
-                                                                <Link className="patientlistlink" to={`/patientlist/OPD/${details.patientId}`}>{<i align='center' className="icon_pencil-edit" title="print"></i>}</Link>
+                                                                <Link className="patientlistlink" to={`/patientlist/consultation/${details._id}`}>{<button  className="consultationbtn btn btn-primary"> Consultation Add</button>}</Link>
                                                             </div>
                                                         </TableCell>
                                                     </TableRow>

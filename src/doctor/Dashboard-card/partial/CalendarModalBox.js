@@ -3,7 +3,7 @@ import AuthApi from "../../../services/AuthApi";
 import PatientProfile from "../../../img/profile.png"
 function CalendarModalBox(props) {
     const { patientIdData } = props
-    const [patientDetails, setPatientDetails] = useState();
+    const [ patientDetails, setPatientDetails] = useState();
     const { patientDetailsData } = AuthApi()
     useEffect(() => {
         getPatientInfoById();

@@ -51,7 +51,7 @@ function AddDoctorProfessionalExperience(props) {
             startYear: startYear,
             description: data.description
         }
-        if (endYear.getTime() < startYear.getTime()) {
+        if (endYear < startYear) {
             setError("end year should be greater than start year")
         }
         else {
@@ -66,6 +66,7 @@ function AddDoctorProfessionalExperience(props) {
     }
 
     function manipulateExperience(data) {
+        console.log("================", data)
         const experiences = monthDiff(new Date(data.startYear), new Date(data.endYear))
         const month = experiences % 12
         let year = 0
@@ -73,8 +74,11 @@ function AddDoctorProfessionalExperience(props) {
             const exYear = experiences / 12
             year = exYear.toFixed(0)
         }
+
         data.totalExperience = `${year}.${month}`;
+        console.log("////////////////////", data)
         return data;
+
     }
 
     function monthDiff(start, end) {
@@ -86,7 +90,7 @@ function AddDoctorProfessionalExperience(props) {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className="my-2" onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
                 <div className="col-md-3 ">
                     <MainMuiPickers
@@ -94,11 +98,12 @@ function AddDoctorProfessionalExperience(props) {
                         value={startYear}
                         onChange={handleStartYearChange}>Start year
                     </MainMuiPickers>
+                    {error && <span className="validation">select valid year</span>}
                 </div>
 
                 <div className="col-md-3">
                     <MainMuiPickers
-                        name="startYear"
+                        name="endYear"
                         value={endYear}
                         onChange={handleEndYearChange}>End Year
                     </MainMuiPickers>

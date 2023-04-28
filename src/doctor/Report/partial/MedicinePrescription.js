@@ -13,12 +13,15 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import constants from "../../../common/constant";
-
+import Meal from '../../../data/Meal';
 export default function MedicinePrescription(props) {
+    console.log("=================", Meal)
+
     //for add new fiels (priscription)
-    const {onChange} = props
+    const { onChange } = props
     const [fields, setFields] = useState([{ id: 1 }]);
-    
+    const [mealData, setMealData] = useState('');
+
     //for table
     const useStyles = makeStyles((theme) => ({
         formControl: {
@@ -39,33 +42,31 @@ export default function MedicinePrescription(props) {
         values.push({ id: last_record.id + 1 });
         setFields(values);
     }
-    //for autoComplete(medicin list)
-    let [medicineData, setMedicineData] = useState([])
     useEffect(() => {
-        const result = axios(
-            constants.MEDICINELIST_DATA
-        );
-        setMedicineData(result.data)
+
+        mealD();
     }, [])
 
-    //for autoComplete(medicin weight)
-    let [medicineWeight, setMedicineWeight] = useState([])
-    useEffect(() => {
-        const result = axios(
-            constants.MEDICINEWEIGHT_DATA
-        );
-        setMedicineWeight(result.data)
-    }, [])
+    const mealD = () => {
+        const result = axios(constants.MEAL_DATA
+            )
+
+        .then((res) => {
+            console.log("++++++++++++++++", res)
+           // setMealData(result.data)
+        })
+    }
+
     return (
         <div onChange={onChange}>
             <TableContainer component={Paper}>
                 <Table className={classes.table} size="medium" aria-label="a dense table">
                     <TableHead>
                         <TableRow>
-                            <TableCell align="right"><b>Medicine Name</b></TableCell>
-                            <TableCell align="right"><b>mg/gm</b></TableCell>
-                            <TableCell align="right"><b>days</b></TableCell>
-                            <TableCell align="right" className="tablecell">
+                            <TableCell align="center"><b>Medicine Name</b></TableCell>
+                            <TableCell align="center"><b>Take</b></TableCell>
+                            <TableCell align="center"><b>Duration</b></TableCell>
+                            <TableCell align="center" className="tablecell">
                                 <b>Morning</b>
                                 <b>Afternoon</b>
                                 <b>Evening</b>
@@ -75,17 +76,17 @@ export default function MedicinePrescription(props) {
                     </TableHead>
                     <TableBody>
                         {/* {fields.map((field) => { */}
-                        
+
                         <TableRow>
                             <TableCell align="right">
                                 <Autocomplete
                                     onChange={(event, newValues) => {
                                     }}
-                                    options={medicineData}
+                                    // options={medicineData}
                                     style={{ width: 200 }}
                                     getOptionLabel={(option) => option.medicineName}
                                     renderOption={(option) => (
-                                        <React.Fragment>
+                                        <React.Fragment>-po
                                             <span>{option.medicineName}</span>
                                         </React.Fragment>
                                     )}
@@ -94,19 +95,22 @@ export default function MedicinePrescription(props) {
                             </TableCell>
 
                             <TableCell align="right">
+
                                 <Autocomplete
                                     onChange={(event, newValues) => {
                                     }}
-                                    options={medicineWeight}
+                                    //options={setMealData}
                                     style={{ width: 150 }}
-                                    getOptionLabel={(option) => option.weight}
+                                    getOptionLabel={(option) => option}
                                     renderOption={(option) => (
                                         <React.Fragment>
-                                            <span>{option.weight}</span>
+                                            <span>{option}</span>
                                         </React.Fragment>
                                     )}
-                                    renderInput={(params) => <TextField {...params} label="Weight" />}
+                                    renderInput={(params) => <TextField {...params} label="select" />}
                                 />
+
+
                             </TableCell>
 
                             <TableCell align="right">
@@ -115,20 +119,25 @@ export default function MedicinePrescription(props) {
                                 </div>
                             </TableCell>
 
-                            <TableCell align="right" className="checkbox">
-                                <input type="checkbox" className="form-control" value="Morning" name="intake[]" />
-                                <input type="checkbox" className="form-control" value="Afternoon" name="intake[]" />
-                                <input type="checkbox" className="form-control" value="Evening" name="intake[]" />
-                                <input type="checkbox" className="form-control" value="Night" name="intake[]" />
+                            <TableCell align="right" className="checkbox ">
+                                <input type="checkbox" className="medicine-checkbox" value="Morning" name="Morning" />
+                                <input type="checkbox" className="medicine-checkbox" value="Afternoon" name="Afternoon" />
+                                <input type="checkbox" className="medicine-checkbox" value="Evening" name="Evening" />
+                                <input type="checkbox" className="medicine-checkbox" value="Night" name="Night" />
                             </TableCell>
                         </TableRow>
-                    
+
                         {/* })} */}
                     </TableBody>
                 </Table>
             </TableContainer>
-            <div className="iconbutton" onClick={() => handleAdd()}><Icon style={{ fontSize: 20 }}>add</Icon>
+            {/* <div className="iconbutton" onClick={() => handleAdd()}><Icon style={{ fontSize: 20 }}>Save</Icon> */}
+
+            <div className="text-center add_top_30 medicinebtn ">
+                <input type="submit" onClick={onChange} className="btn_1" value="Save" />
             </div>
+
+
 
         </div>
     )

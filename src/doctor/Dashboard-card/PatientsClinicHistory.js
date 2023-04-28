@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/styles";
 import axios from 'axios';
 import { TableContainer, TableHead, TableRow, Table, TableCell } from "@material-ui/core";
 import moment from 'moment';
+import Paper from '@material-ui/core/Paper';
 import AuthApi from "../../services/AuthApi";
 // import { useRecoilState } from 'recoil';
 // import { setPatientListHistory } from '../../recoil/atom/setPatientListHistory'
@@ -30,11 +31,13 @@ export default function PatientsClinicHistory() {
 
     useEffect(() => {
         getPatientHistory();
+        console.log("useEfect=====")
         date();
-    }, [])
+    }, [patientDetails])
 
     async function getPatientHistory() {
         const result = await getPatientListDetails({doctorId});
+        console.log("result--------", result)
         setPatientDetails(result)
     }
     const date = () => {
@@ -71,7 +74,7 @@ export default function PatientsClinicHistory() {
                             </div>
                         </nav>
                         <div className="box_form">
-                            <TableContainer >
+                            <TableContainer component={Paper}>
                                 <Table className={classes.table} >
                                     <TableHead>
                                         <TableRow>
@@ -84,8 +87,7 @@ export default function PatientsClinicHistory() {
                                             <TableCell align="center"><b>Veiw Details</b></TableCell>
                                         </TableRow>
                                     </TableHead>
-                                    {patientHistoryData.map((details, id) => {
-                                        console.log("patientHistoryData++++++++++++++++", patientHistoryData)
+                                    {patientHistoryData && patientHistoryData.map((details, id) => {
                                         return (
                                             <TableRow key={id}>
                                                 <TableCell align="center">{details['patientDetails'][0].name}</TableCell>
@@ -98,8 +100,7 @@ export default function PatientsClinicHistory() {
                                             </TableRow>
                                         )
                                     })
-                                    }
-
+                                }
                                 </Table>
                             </TableContainer>
                         </div>

@@ -22,7 +22,7 @@ function DoctorEducation(props){
             <FetchEducation/>
             
             <Link onClick={() => handleAdd()}>
-                <Icon className="addiconbutton" style={{ fontSize: 25 }}>add</Icon>
+                <Icon className="addiconbutton my-5 " style={{ fontSize: 50 }}>add</Icon>
             </Link> 
         
             {showEducation === false ?(

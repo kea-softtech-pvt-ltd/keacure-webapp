@@ -49,25 +49,22 @@ function SetTiming(props) {
             })
         } else {
             let time = temp.filter(function (item, index) {
-                console.log("item, indexitem, index",item)
                 return (item.slotTime !== value)
             })
             temp = time
-            console.log("temptemptemptemp",temp)
         }
         setShowSelectedSlots(temp)
     }
 
     const handleFromTimeSelection = (time) => {
-        console.log("time",time)
         setSessionTime(sessionTime => {
             return {
                 ...sessionTime,
                 ['fromTime']: time
             }
-        })     
+        })
     }
-      const handleToTimeSelection = (time) => {
+    const handleToTimeSelection = (time) => {
         setSessionTime(sessionTime => {
             return {
                 ...sessionTime,
@@ -96,8 +93,8 @@ function SetTiming(props) {
         const setTimeData = {
             clinicId: clinicId,
             doctorId: sessionTime.doctorId,
-            fromTime: sessionTime.fromTime,
-            toTime: sessionTime.toTime,
+            fromTime: moment(sessionTime.fromTime).format("HH:mm"),
+            toTime: moment(sessionTime.toTime).format("HH:mm"),
             timeSlot: sessionTime.timeSlot,
             showSelectedSlots: showSelectedSlots,
             Appointment: sessionTime.Appointment,

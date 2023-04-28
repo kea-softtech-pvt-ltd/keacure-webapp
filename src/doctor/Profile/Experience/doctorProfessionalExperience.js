@@ -21,7 +21,7 @@ return(
     <>
         <FetchExperience/>           
         <Link to="#" onClick={() => handleAdd()}>
-            <Icon className="addiconbutton" style={{ fontSize: 25 }}>add</Icon>
+            <Icon className="addiconbutton mt-4" style={{ fontSize: 25 }}>add</Icon>
         </Link>
         
         {showExperience === false ?(

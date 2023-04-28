@@ -80,7 +80,6 @@ function DoctorPersonalInformation(props) {
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const onSubmit = async(data) => {
-        console.log(".........................", data)
         const formData = new FormData();
         //formData.append('photo', (data.photo) ? data.photo : []);
         formData.append('name', data.name);
@@ -92,7 +91,6 @@ function DoctorPersonalInformation(props) {
         const result = await axios.post(`${API}/insertPersonalInfo/${doctorId}`, formData)
         setUpdateData(result)
             .then(function (response) {
-                console.log("-----------", response)
             })
             props.data();
 

@@ -98,9 +98,7 @@ export default function AuthApi() {
         return result.data
     }
     const patientDetailsData = async ({patientIdData}) => {
-        console.log("========patientIdData",patientIdData)
         const result = await axios.get(`${API}/patientById/${patientIdData}`)
-        console.log("----------result",result.data)
         return result.data
     }
     return {

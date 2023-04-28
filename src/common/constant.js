@@ -1,13 +1,14 @@
 const constants ={
     VIEWDOCTOR_DATA: "../data/viewdoctor.json",
     PATIENTLIST_DATA: "../data/patientlist.json",
-    OPDSCREEN_DATA:"../data/opdscreen.json",
+    // OPDSCREEN_DATA:"../data/opdscreen.json",
     MEDICINELIST_DATA:"../data/medicinelist.json",
     MEDICINEWEIGHT_DATA:"../data/medicineWeight.json",
     SLOTOFDAYS_DATA:"../data/slotOfDays.json",
     PATIENTINFO_DATA:"../data/patientInfo.json",
     PATIENTPAYMENT_DATA:"../data/patientpayment.json",
-    SLIDER_DATA:"../data/silder.json"
+    SLIDER_DATA:"../data/silder.json",
+    MEAL_DATA:"./data/Meal.json"
 }
 export const slots = [
     {

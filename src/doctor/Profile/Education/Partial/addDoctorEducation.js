@@ -89,7 +89,7 @@ function AddDoctorEducation(props) {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
+        <form onSubmit={handleSubmit(onSubmit)} className="my-4" encType='multipart/form-data'>
             <div className="row">
                 <div className="col-md-6 ">
                     <label><b>Doctor Degree</b></label>
@@ -140,7 +140,7 @@ function AddDoctorEducation(props) {
                     </MainSelect>
                     {errors.specialization && <span className="validation">Please select your specialization</span>}
 
-                    <label><b>Qualification Document Photo</b></label>
+                    {/* <label><b>Qualification Document Photo</b></label> */}
                     {/* <MainInput 
                         type="file" 
                         name="document"

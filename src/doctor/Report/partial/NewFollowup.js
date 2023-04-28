@@ -25,6 +25,7 @@ export default function NewFollowup(props) {
                 </div>
             </div>
             <div className="text-center add_top_30"><input type="submit" onClick={onChange} className="btn_1" value="Add" /></div>
+            <div className="text-center add_top_30"><input type="submit" className="btn_1" value="Consultation Completed" /></div>
         </div>
     )
 }
