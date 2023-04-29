@@ -63,10 +63,13 @@ export default function PatientMedicalReport() {
     //for tab
     const [value, setValue] = useState(0);
     const handleChange = (event, newValue) => {
-        console.log("tabIndex-------------",  newValue)
-
+        
         setValue(newValue);
     };
+    const handleClick=(newValue)=>{
+        console.log("tabIndex-------------",  newValue)
+        setValue(newValue)
+    }
 
     function changeTab(tabIndex) {
         setValue(tabIndex);
@@ -101,30 +104,30 @@ export default function PatientMedicalReport() {
                                 </Paper>
                                 <div className="tablecontent">
                                 <TabPanel value={value} index={0}>
-                                        <Symptoms onChange={()=>changeTab(1)} />
+                                        <Symptoms onClick={handleClick} onChange={()=>changeTab(1)} />
                                     </TabPanel>
                                     <TabPanel value={value} index={1}>
-                                        <Investigation onChange={()=>changeTab(2)} />
+                                        <Investigation onClick={handleClick} onChange={()=>changeTab(2)} />
                                     </TabPanel>
 
                                     <TabPanel value={value} index={2}>
-                                        <Premedication onChange={()=>changeTab(3)} />
+                                        <Premedication onClick={handleClick} onChange={()=>changeTab(3)} />
                                     </TabPanel>
 
 
                                     <div className="row">
                                         <TabPanel value={value} index={3}>
-                                            <MedicinePrescription onChange={()=>changeTab(4)} />
+                                            <MedicinePrescription onClick={handleClick} onChange={()=>changeTab(4)} />
                                         </TabPanel>
                                     </div>
 
                                     <div className="row">
                                         <TabPanel value={value} index={4}>
-                                            <LabPrescription onChange={()=>changeTab(5)} />
+                                            <LabPrescription onClick={handleClick} onChange={()=>changeTab(5)} />
                                         </TabPanel>
                                     </div>
                                     <TabPanel value={value} index={5}>
-                                        <NewFollowup onChange={()=>changeTab(6)} />
+                                        <NewFollowup onClick={handleClick} onChange={()=>changeTab(6)}  />
                                     </TabPanel >
 
                                     {/* <div className="row">

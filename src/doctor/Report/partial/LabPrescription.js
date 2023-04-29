@@ -2,77 +2,48 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
+import { API } from '../../../config';
 import axios from 'axios';
-import constants from "../../../common/constant";
-
+import AuthApi from '../../../services/AuthApi';
 export default function LabPrescription(props) {
-    //for add new fiels (priscription)
+    //for add new files (priscription)
     const { onChange } = props
-    const [fields, setFields] = useState([{ id: 1 }]);
+    const { getLabData } = AuthApi()
+    const [labTestData, setLabTestData] = useState([]);
+    console.log("&&&&&&&&&&&&&7", labTestData)
 
-    //for table
-    const useStyles = makeStyles((theme) => ({
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 120
-        },
-        selectEmpty: {
-            marginTop: theme.spacing(2)
-        },
-        table: {
-            minWidth: 650,
-        },
-    }));
-    const classes = useStyles();
-    function handleAdd() {
-        const values = [...fields];
-        let last_record = fields.slice(-1);
-        values.push({ id: last_record.id + 1 });
-        setFields(values);
-    }
-    //for autoComplete(medicin list)
-    let [medicineData, setMedicineData] = useState([])
+    // function handleAdd() {
+    //     const values = [...fields];
+    //     let last_record = fields.slice(-1);
+    //     values.push({ id: last_record.id + 1 });
+    //     setFields(values);
+    // }
     useEffect(() => {
-        const result = axios(
-            constants.MEDICINELIST_DATA
-        );
-        setMedicineData(result.data)
+        getLabTestData();
     }, [])
+    const getLabTestData = async () => {
+        const result = await getLabData()
+        setLabTestData(result)
+    };
 
-    //for autoComplete(medicin weight)
-    let [medicineWeight, setMedicineWeight] = useState([])
-    useEffect(() => {
-        const result = axios(
-            constants.MEDICINEWEIGHT_DATA
-        );
-        setMedicineWeight(result.data)
-    }, [])
     return (
         <div>
             <div onChange={onChange}>
                 <label>Test Name</label>
                 <Autocomplete
-                    onChange={(event, newValues) => {
-                    }}
-                    options={medicineData}
                     style={{ width: 200 }}
-                    getOptionLabel={(option) => option.medicineName}
-                    renderOption={(option) => (
-                        <React.Fragment>
-                            <span>{option.medicineName}</span>
-                        </React.Fragment>
-                    )}
-                    renderInput={(params) => (<TextField {...params} label="Choose a medicine" />)}
+                    id={labTestData.lab_test_id}
+                    options={labTestData.map((option) => option.test_name)}
+                    renderInput={(params) => <TextField {...params} label="Choose 
+                    Test Name"/>}
                 />
 
-
             </div>
-            {/* <div className="btn-dropdown"> */}
+
             <div className="text-center add_top_30 btn-dropdown">
                 <input type="submit" onClick={onChange} className="btn_1" value="Add" />
             </div>
-            {/* </div> */}
+
         </div>
     )
 }

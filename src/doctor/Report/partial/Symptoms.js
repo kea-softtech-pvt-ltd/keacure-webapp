@@ -2,58 +2,35 @@ import React from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { API } from '../../../config';
 import axios from 'axios';
-import constants from "../../../common/constant";
+import AuthApi from '../../../services/AuthApi';
 
 export default function Symptoms(props) {
     const { onChange } = props
-    const [fields, setFields] = useState([{ id: 1 }]);
-
-    //for table
-    const useStyles = makeStyles((theme) => ({
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 120
-        },
-        selectEmpty: {
-            marginTop: theme.spacing(2)
-        },
-        table: {
-            minWidth: 650,
-        },
-    }));
-    // const classes = useStyles();
-    // function handleAdd() {
-    //     const values = [...fields];
-    //     let last_record = fields.slice(-1);
-    //     values.push({ id: last_record.id + 1 });
-    //     setFields(values);
-    // }
-    //for autoComplete(medicin list)
-    let [medicineData, setMedicineData] = useState([])
-    useEffect(() => {
-        const result = axios(
-            constants.MEDICINELIST_DATA
-        );
-        setMedicineData(result.data)
-    }, [])
+    const [symptoms, setSymptoms]=useState([])
+    console.log("symptoms==========", symptoms)
+    const {symptomsData}=AuthApi();
+    useEffect(()=>{
+        getSymptomsData();
+    },[])
+    const getSymptomsData = async () => {
+        const result = await symptomsData()
+        console.log("getSymptomsData-----", result)
+        setSymptoms(result)
+      };
+  
+  
+  
     return (
         <div>
             <div onChange={onChange}>
                 <label>Choose Symptoms</label>
                 <Autocomplete
-                    onChange={(event, newValues) => {
-                    }}
-                    options={medicineData}
                     style={{ width: 200 }}
-                    getOptionLabel={(option) => option.medicineName}
-                    renderOption={(option) => (
-                        <React.Fragment>
-                            <span>{option.medicineName}</span>
-                        </React.Fragment>
-                    )}
-                    renderInput={(params) => (<TextField {...params} label="Choose a medicine" />)}
+                    id={symptoms._id}
+                    options={symptoms.map((option)=>option.name)}
+                    renderInput={(params) => (<TextField {...params} label="Choose a Symptoms" />)}
                 />
             </div>
             <div >

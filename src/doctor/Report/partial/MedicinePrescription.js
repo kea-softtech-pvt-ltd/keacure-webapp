@@ -11,16 +11,37 @@ import Icon from '@material-ui/core/Icon';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from 'axios';
-import constants from "../../../common/constant";
-import Meal from '../../../data/Meal';
+import AuthApi from '../../../services/AuthApi';
 export default function MedicinePrescription(props) {
-    console.log("=================", Meal)
 
     //for add new fiels (priscription)
-    const { onChange } = props
+    const { onChange,onClick } = props
     const [fields, setFields] = useState([{ id: 1 }]);
-    const [mealData, setMealData] = useState('');
+    const [mealData, setMealData] = useState([]);
+    const [tabletName, setTabletName] = useState([]);
+    const [duration, setDuration]=useState();
+    const {getMedicine} = AuthApi()
+    const meal = [
+        {
+            "id": 1,
+            "name": "Before Meal"
+        },
+        {
+            "id": 2,
+            "name": "After Meal"
+        }
+    ]
+    useEffect(() => {
+        setMealData(meal)
+        getMedicineData()
+    },[])
+
+
+    const getMedicineData = async () => {
+        const result = await getMedicine()
+        console.log("/>>>>>>>>>>>>>>>>>>", result)
+        setTabletName(result)
+    };
 
     //for table
     const useStyles = makeStyles((theme) => ({
@@ -42,20 +63,6 @@ export default function MedicinePrescription(props) {
         values.push({ id: last_record.id + 1 });
         setFields(values);
     }
-    useEffect(() => {
-
-        mealD();
-    }, [])
-
-    const mealD = () => {
-        const result = axios(constants.MEAL_DATA
-            )
-
-        .then((res) => {
-            console.log("++++++++++++++++", res)
-           // setMealData(result.data)
-        })
-    }
 
     return (
         <div onChange={onChange}>
@@ -75,47 +82,29 @@ export default function MedicinePrescription(props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {/* {fields.map((field) => { */}
 
                         <TableRow>
                             <TableCell align="right">
                                 <Autocomplete
-                                    onChange={(event, newValues) => {
-                                    }}
-                                    // options={medicineData}
                                     style={{ width: 200 }}
-                                    getOptionLabel={(option) => option.medicineName}
-                                    renderOption={(option) => (
-                                        <React.Fragment>-po
-                                            <span>{option.medicineName}</span>
-                                        </React.Fragment>
-                                    )}
-                                    renderInput={(params) => (<TextField {...params} label="Choose a medicine" />)}
+                                    id={tabletName._id}
+                                    options={tabletName.map((option) => option.medicineName)}
+                                    renderInput={(params) => <TextField {...params} label="Medicine Name" />}
                                 />
                             </TableCell>
 
                             <TableCell align="right">
-
                                 <Autocomplete
-                                    onChange={(event, newValues) => {
-                                    }}
-                                    //options={setMealData}
                                     style={{ width: 150 }}
-                                    getOptionLabel={(option) => option}
-                                    renderOption={(option) => (
-                                        <React.Fragment>
-                                            <span>{option}</span>
-                                        </React.Fragment>
-                                    )}
-                                    renderInput={(params) => <TextField {...params} label="select" />}
+                                    id={mealData.id}
+                                    options={mealData.map((option) => option.name)}
+                                    renderInput={(params) => <TextField {...params} label="Select" />}
                                 />
-
-
                             </TableCell>
 
                             <TableCell align="right">
                                 <div className="input">
-                                    <input className="form-control" type="text" />
+                                    <input className="form-control" value={duration} type="text" onchange={(e)=>{setDuration(e.target.value)}} />
                                 </div>
                             </TableCell>
 
@@ -134,7 +123,7 @@ export default function MedicinePrescription(props) {
             {/* <div className="iconbutton" onClick={() => handleAdd()}><Icon style={{ fontSize: 20 }}>Save</Icon> */}
 
             <div className="text-center add_top_30 medicinebtn ">
-                <input type="submit" onClick={onChange} className="btn_1" value="Save" />
+                <input type="submit" onClick={onClick} className="btn_1" value="Save" />
             </div>
 
 

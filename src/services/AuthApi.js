@@ -97,10 +97,23 @@ export default function AuthApi() {
         const result = await axios.get(`${API}/getBookingData/${doctorId}`)
         return result.data
     }
-    const patientDetailsData = async ({patientIdData}) => {
+    const patientDetailsData = async ({ patientIdData }) => {
         const result = await axios.get(`${API}/patientById/${patientIdData}`)
         return result.data
     }
+    const getLabData = async () => {
+        const result = await axios.get(`${API}/fetch_lab_test`)
+        return result.data
+    }
+    const symptomsData = async () => {
+        const result = await axios.get(`${API}/fetchsymptoms`)
+        return result.data
+    }
+    const getMedicine = async () => {
+        const result = await axios.get(`${API}/fetchmedicines`)
+        console.log("]]]]]]]]", result)
+        return result.data
+    } 
     return {
         login,
         loginOtp,
@@ -124,6 +137,9 @@ export default function AuthApi() {
         fetchExperienceData,
         getAllExperienceData,
         calendarEvent,
-        patientDetailsData
+        patientDetailsData,
+        getLabData,
+        symptomsData,
+        getMedicine
     }
 }
