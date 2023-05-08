@@ -3179,8 +3179,9 @@ a.social_bt {
 	margin: 0;
 }
 .patientinfo {
-	position: relative;
-    left: 145px;
+	/* position: relative;
+    right:100px;
+	top:100px; */
 	
 }
 .datepicker {
@@ -4540,7 +4541,7 @@ a.box_feat_about h3 {
 }
 
 .vital-signInput{
-	width: 200px;
+	width: 150px;
 	margin: 10px;
 }
 .form-control {
@@ -4567,6 +4568,8 @@ a.box_feat_about h3 {
 }
 textarea.form-control {
 	height: 120px;
+	margin-top:31px;
+	width: 350px;;
 }
 .tablecontent {
 	padding: 25px;

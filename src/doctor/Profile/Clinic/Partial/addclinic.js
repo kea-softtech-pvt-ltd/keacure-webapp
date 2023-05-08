@@ -50,7 +50,7 @@ const AddClinic = (props) => {
         }
         // const res = await axios.post(`${API}/insertclinic`, newClinicData)
         
-        insertClinicData(newClinicData )
+       await insertClinicData(newClinicData )
         .then((res) => {
             setCoilDoctorClinicData(coilDoctorClinicData.concat(res.data))
                 props.onSubmit()

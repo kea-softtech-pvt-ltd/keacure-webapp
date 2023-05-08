@@ -7,20 +7,20 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Icon from '@material-ui/core/Icon';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import { Box } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import AuthApi from '../../../services/AuthApi';
 export default function MedicinePrescription(props) {
 
     //for add new fiels (priscription)
-    const { onChange,onClick } = props
-    const [fields, setFields] = useState([{ id: 1 }]);
+    const { onChange } = props
     const [mealData, setMealData] = useState([]);
     const [tabletName, setTabletName] = useState([]);
-    const [duration, setDuration]=useState();
-    const {getMedicine} = AuthApi()
+    const[medicineSave, setMedicineSave]=useState()
+    const [duration, setDuration]=useState()
+    const { getMedicine } = AuthApi()
     const meal = [
         {
             "id": 1,
@@ -31,19 +31,21 @@ export default function MedicinePrescription(props) {
             "name": "After Meal"
         }
     ]
+
+
     useEffect(() => {
         setMealData(meal)
         getMedicineData()
-    },[])
+    }, [])
 
 
     const getMedicineData = async () => {
-        const result = await getMedicine()
-        console.log("/>>>>>>>>>>>>>>>>>>", result)
-        setTabletName(result)
+        await getMedicine()
+            .then((res) => {
+                setTabletName(res)
+            })
     };
 
-    //for table
     const useStyles = makeStyles((theme) => ({
         formControl: {
             margin: theme.spacing(1),
@@ -57,15 +59,24 @@ export default function MedicinePrescription(props) {
         },
     }));
     const classes = useStyles();
-    function handleAdd() {
-        const values = [...fields];
-        let last_record = fields.slice(-1);
-        values.push({ id: last_record.id + 1 });
-        setFields(values);
+    const handleChange = ( selectedValue) => {
+        setMedicineSave(selectedValue)
+        console.log("-------------", selectedValue)
     }
+    const handleDurationValue=(e)=>{
+        e.preventDefault();
+        setDuration(e.target.value)
+        
+    }
+    // function handleAdd() {
+    //     const values = [...fields];
+    //     let last_record = fields.slice(-1);
+    //     values.push({ id: last_record.id + 1 });
+    //     setFields(values);
+    // }
 
     return (
-        <div onChange={onChange}>
+        <div >
             <TableContainer component={Paper}>
                 <Table className={classes.table} size="medium" aria-label="a dense table">
                     <TableHead>
@@ -85,18 +96,39 @@ export default function MedicinePrescription(props) {
 
                         <TableRow>
                             <TableCell align="right">
+
                                 <Autocomplete
                                     style={{ width: 200 }}
                                     id={tabletName._id}
-                                    options={tabletName.map((option) => option.medicineName)}
+                                    disablePortal={true}
+                                    disableClearable
+                                    disableCloseOnSelect
+                                    value={medicineSave}
+                                    getOptionLabel={(tabletName) => `${tabletName.medicineName}`}
+                                    options={tabletName}
+                                    isoptionequaltovalue={(option, value) =>
+                                        option.medicineName === value.medicineName
+                                    }
+                                    noOptionsText={"Medicine not available"}
+                                    onChange={handleChange}
+                                    // renderOption={(props) => (
+                                    //     <Box {...props} key={tabletName._id}>
+                                    //         {props.medicineName}
+                                    //     </Box>
+                                    // )}
                                     renderInput={(params) => <TextField {...params} label="Medicine Name" />}
                                 />
+
                             </TableCell>
 
                             <TableCell align="right">
                                 <Autocomplete
+                                    disablePortal={true}
+                                    disableClearable
+                                    disableCloseOnSelect
                                     style={{ width: 150 }}
                                     id={mealData.id}
+                                    onChange={handleChange}
                                     options={mealData.map((option) => option.name)}
                                     renderInput={(params) => <TextField {...params} label="Select" />}
                                 />
@@ -104,7 +136,7 @@ export default function MedicinePrescription(props) {
 
                             <TableCell align="right">
                                 <div className="input">
-                                    <input className="form-control" value={duration} type="text" onchange={(e)=>{setDuration(e.target.value)}} />
+                                    <input type="text" value={duration} onChange={handleDurationValue} className="form-control" name="duration" />
                                 </div>
                             </TableCell>
 
@@ -123,10 +155,8 @@ export default function MedicinePrescription(props) {
             {/* <div className="iconbutton" onClick={() => handleAdd()}><Icon style={{ fontSize: 20 }}>Save</Icon> */}
 
             <div className="text-center add_top_30 medicinebtn ">
-                <input type="submit" onClick={onClick} className="btn_1" value="Save" />
+                <input type="submit" onClick={"onChange"} className="btn_1" value="Save" />
             </div>
-
-
 
         </div>
     )

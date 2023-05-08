@@ -17,7 +17,6 @@ function DoctorBookingConfirmation(props){
 
     useEffect(()=>{
         getDoctorName();
-       // getBookingData();
     },[])
 
     const getDoctorName = async () =>{

@@ -15,7 +15,6 @@ import Premedication from './partial/Premedication'
 import MedicinePrescription from './partial/MedicinePrescription';
 import NewFollowup from './partial/NewFollowup';
 import Symptoms from './partial/Symptoms';
-import MedicineHistory from './partial/MedicineHistory';
 import LabPrescription from './partial/LabPrescription';
 function TabPanel(props) {
     const { children, value, index } = props;
@@ -45,6 +44,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PatientMedicalReport() {
+    const { reportId, appointmentId } = useParams();
+    console.log('??????????????????????', appointmentId)
     const classes = useStyles();
 
     //fetch opd data 
@@ -56,20 +57,14 @@ export default function PatientMedicalReport() {
         setRow(result.data)
     }, [])
 
-    //fetch patient data
-    let { patientId } = useParams();
-    // console.log("patientId--------------------", patientId)
 
     //for tab
     const [value, setValue] = useState(0);
-    const handleChange = (event, newValue) => {
-        
+    const handleChange = (e, newValue) => {
+        e.preventDefault();
         setValue(newValue);
     };
-    const handleClick=(newValue)=>{
-        console.log("tabIndex-------------",  newValue)
-        setValue(newValue)
-    }
+
 
     function changeTab(tabIndex) {
         setValue(tabIndex);
@@ -88,7 +83,7 @@ export default function PatientMedicalReport() {
                             </nav>
                             <div className="box_form">
 
-                                <PatientPersonalInfo />
+                                <PatientPersonalInfo reportId={reportId} appointmentId={appointmentId} />
                                 <Paper square>
                                     <Tabs value={value} onChange={handleChange}
                                         indicatorColor="primary"
@@ -99,42 +94,37 @@ export default function PatientMedicalReport() {
                                         <Tab label="Medicine-Prescription" />
                                         <Tab label="Lab-Prescription" />
                                         <Tab label="New follow-up" />
-                                        {/* <Tab label="Medicine Histroy" /> */}
                                     </Tabs>
                                 </Paper>
                                 <div className="tablecontent">
-                                <TabPanel value={value} index={0}>
-                                        <Symptoms onClick={handleClick} onChange={()=>changeTab(1)} />
+                                    <TabPanel value={value} index={0}>
+                                        <Symptoms reportId={reportId} onChange={() => changeTab(1)} />
                                     </TabPanel>
                                     <TabPanel value={value} index={1}>
-                                        <Investigation onClick={handleClick} onChange={()=>changeTab(2)} />
+                                        <Investigation reportId={reportId} onChange={() => changeTab(2)} />
                                     </TabPanel>
 
                                     <TabPanel value={value} index={2}>
-                                        <Premedication onClick={handleClick} onChange={()=>changeTab(3)} />
+                                        <Premedication reportId={reportId} onChange={() => changeTab(3)} />
                                     </TabPanel>
 
 
                                     <div className="row">
                                         <TabPanel value={value} index={3}>
-                                            <MedicinePrescription onClick={handleClick} onChange={()=>changeTab(4)} />
+                                            <MedicinePrescription reportId={reportId} appointmentId={appointmentId} onChange={() => changeTab(4)} />
                                         </TabPanel>
                                     </div>
 
                                     <div className="row">
                                         <TabPanel value={value} index={4}>
-                                            <LabPrescription onClick={handleClick} onChange={()=>changeTab(5)} />
+                                            <LabPrescription reportId={reportId} onChange={() => changeTab(5)} />
                                         </TabPanel>
                                     </div>
                                     <TabPanel value={value} index={5}>
-                                        <NewFollowup onClick={handleClick} onChange={()=>changeTab(6)}  />
+                                        <NewFollowup reportId={reportId} onChange={() => changeTab(6)} />
                                     </TabPanel >
 
-                                    {/* <div className="row">
-                                        <TabPanel value={value} index={5}>
-                                            <MedicineHistory onChange={()=>changeTab(6)} />
-                                        </TabPanel>
-                                    </div> */}
+
                                 </div>
                                 {/* <div className="text-right add_top_30"><input type="submit" className="btn_1" value="save" /></div> */}
                             </div>

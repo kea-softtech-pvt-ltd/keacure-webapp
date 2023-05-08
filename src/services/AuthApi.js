@@ -109,11 +109,42 @@ export default function AuthApi() {
         const result = await axios.get(`${API}/fetchsymptoms`)
         return result.data
     }
+ 
     const getMedicine = async () => {
         const result = await axios.get(`${API}/fetchmedicines`)
-        console.log("]]]]]]]]", result)
         return result.data
-    } 
+    }
+    const MedicineReportData = async (bodyData) => {
+        const result = await axios.post(`${API}/medicine_report`, bodyData)
+        return result.data
+    };
+    const insertPatientVitalSignsData = async ({ reportId }, bodyData) => {
+        const result = await axios.post(`${API}/add_vital_signs/${reportId}`, bodyData)
+        return result.data
+    };
+    const insertNewFollowUpDate = async ({ reportId }, bodyData) => {
+        const result = await axios.post(`${API}/new_follw_up_date/${reportId}`, bodyData)
+        return result.data
+    };
+    const insertInvestigationNote = async ({ reportId }, bodyData) => {
+        const result = await axios.post(`${API}/add_investigation_note/${reportId}`, bodyData)
+        return result.data
+    };
+    const insertPremedicationNote = async ({ reportId }, bodyData) => {
+        const result = await axios.post(`${API}/add_premedication_note/${reportId}`, bodyData)
+        return result.data
+    };
+    const insertSymptoms = async ({ reportId }, bodyData) => {
+        const result = await axios.post(`${API}/add_symptoms/${reportId}`, bodyData)
+        console.log("///////////////insertSymptoms", result)
+        return result.data
+    };
+    const insertSymptom_masterTable = async (bodyData) => {
+        const result = await axios.post(`${API}/addsymptoms`, bodyData)
+        console.log("============insertSymptom_masterTable", result)
+        return result.data
+    };
+
     return {
         login,
         loginOtp,
@@ -140,6 +171,13 @@ export default function AuthApi() {
         patientDetailsData,
         getLabData,
         symptomsData,
-        getMedicine
+        getMedicine,
+        MedicineReportData,
+        insertPatientVitalSignsData,
+        insertNewFollowUpDate,
+        insertInvestigationNote,
+        insertPremedicationNote,
+        insertSymptoms,
+        insertSymptom_masterTable
     }
 }

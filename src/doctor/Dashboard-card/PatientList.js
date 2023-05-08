@@ -1,6 +1,5 @@
-import { API } from "../../config";
-import { useEffect, useState } from "react";
 import React from 'react';
+import { useEffect, useState } from "react";
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,15 +8,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { makeStyles } from '@material-ui/core/styles';
-import axios from "axios";
-import constants from "../../common/constant";
-import FormControl from "@material-ui/core/FormControl";
-import NativeSelect from "@material-ui/core/NativeSelect";
-import DatePicker from 'react-date-picker';
-import { CSVLink } from "react-csv";
-import { Link, useRouteMatch, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import moment from 'moment';
-import { getMonth } from "date-fns";
 import AuthApi from "../../services/AuthApi";
 //for table
 const useStyles = makeStyles((theme) => ({
@@ -36,24 +28,39 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PatientList() {
     // const {patientId} = useParams()
+    // console.log("PatientId---------",patientId)
     const { doctorId } = useParams()
     //for datepicker
     const [value, onChange] = useState(new Date());
-
+    let history = useHistory();
     const classes = useStyles();
     //for fetch json data
     const [patientList, setPatientList] = useState([]);
     // let { url } = useRouteMatch();
     const [patientListHistory, setPatientListHistory] = useState([]);
-    const { getPatientListDetails } = AuthApi()
+    const { getPatientListDetails, MedicineReportData } = AuthApi()
     useEffect(() => {
         getPatientDetails();
         date();
     }, [patientList])
 
     async function getPatientDetails() {
-        const result = await getPatientListDetails({doctorId});
+        const result = await getPatientListDetails({ doctorId });
         setPatientList(result)
+    }
+
+    async function saveData(item) {
+        const bodyData = {
+            "doctorId": doctorId,
+            "patientId": item.patientId,
+            'patientAppointmentId': item._id,
+            'clinicId': item.clinicId
+        }
+        console.log("--------------------------", bodyData)
+        await MedicineReportData(bodyData)
+            .then((res) => {
+                history.push(`/patientlist/consultation/${item._id}/${res._id}`)
+            })
     }
     const date = () => {
         let d = new Date(),
@@ -83,57 +90,7 @@ export default function PatientList() {
                                     <span>Appointment</span>
                                 </div>
                             </nav>
-                            {/* <div className="box_form">
-                                <div className="row">
-                                    <div className="col-lg-2 ">
-                                        <label>From Date</label>
-                                        <DatePicker
-                                            className="datepicker"
-                                            onChange={onChange}
-                                            value={value}
-                                            clearIcon={null}
-                                        />
-                                    </div>
-                                    <div className="col-lg-2">
-                                        <label>To Date</label>
-                                        <DatePicker
-                                            className="datepicker"
-                                            onChange={onChange}
-                                            value={value}
-                                            clearIcon={null}
-                                        />
-                                    </div>
-                                    <div className="col-lg-3 ">
-                                        <FormControl
-                                            className={classes.formControl} >
-                                            <NativeSelect className={classes.selectEmpty}>
-                                                <option>Walk-In</option>
-                                                <option>Ten</option>
-                                                <option>Twenty</option>
-                                                <option>Thirty</option>
-                                            </NativeSelect>
-                                        </FormControl>
-                                    </div> */}
-                                    {/*                                     
-                                    <div className="col-lg-2 ">
-                                        <label>Appointment Date</label>
-                                        
-                                    </div> 
-                                    <div>
-                                        <text> {patientList.data.date} </text>
-                                        </div>
-                                    <div className="col-lg-2 ">
-                                    <label>Mode of Appointment</label>
-                                    </div> */}
-                                    {/* <div className="col-lg-3 ">
-                                        <CSVLink data={patientList} filename={"my-file.csv"}
-                                            className="btn_1"
-                                        >
-                                            Export CSV
-                                        </CSVLink>
-                                    </div> */}
-                                {/* </div> */}
-                            {/* </div> */}
+
                         </div>
                         <div className="col-lg-12 ml-auto">
                             <div className="box_form">
@@ -163,7 +120,7 @@ export default function PatientList() {
                                                         <TableCell align="center">{details.fees}</TableCell>
                                                         <TableCell align="center">
                                                             <div className="linklist">
-                                                                <Link className="patientlistlink" to={`/patientlist/consultation/${details._id}`}>{<button  className="consultationbtn btn btn-primary"> Consultation Add</button>}</Link>
+                                                                <Link onClick={() => saveData(details)} className="patientlistlink">{<button className="consultationbtn btn btn-primary">Start Consultation </button>}</Link>
                                                             </div>
                                                         </TableCell>
                                                     </TableRow>

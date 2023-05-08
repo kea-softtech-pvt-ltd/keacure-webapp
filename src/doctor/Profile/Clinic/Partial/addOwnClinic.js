@@ -35,7 +35,7 @@ const AddOwnClinic = (onSubmit) => {
             services: ownClinicInfo.services
         }
         // const res = await axios.post(`${API}/insertownclinic` , newClinicData)
-        insertOwnClinics(newClinicData)
+        await insertOwnClinics(newClinicData)
             .then(res => {
                 setCoilDoctorOwnClinicInfo(coilDoctorOwnClinicInfo.concat(res.data))
                 onSubmit.onSubmit()
