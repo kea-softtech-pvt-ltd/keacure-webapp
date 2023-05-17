@@ -31,14 +31,12 @@ function SetTiming(props) {
         day: day,
         Appointment: " "
     })
-    // console.log("sessionTime",sessionTime)
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setSessionTime({ ...sessionTime, [name]: value });
     };
 
     const handleChange = (event) => {
-        // console.log("===========handleChange",event.target.checked)
         let temp = []
         temp = showSelectedSlots
         const { name, value } = event.target;
@@ -174,7 +172,16 @@ function SetTiming(props) {
                     <section className="borderSlots">
                         {selectedSlots.map((item, index) => (
                             <div key={index}>
-                                <MainInputBox type="checkbox" onChange={handleChange} value={item} name="selectedSlots" ><label className="btn_1">{item}</label></MainInputBox>
+                                <MainInputBox
+                                    type="checkbox"
+                                    onChange={handleChange}
+                                    value={item}
+                                    name="selectedSlots"
+                                >
+                                    <label className="btn_1">
+                                        {item}
+                                    </label>
+                                </MainInputBox>
                             </div>
                         ))}
                     </section>

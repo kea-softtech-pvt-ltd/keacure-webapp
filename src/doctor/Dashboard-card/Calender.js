@@ -30,8 +30,6 @@ export default function Calender() {
     const result = await calendarEvent({ doctorId })
     const calendarData = []
     result.map((item) => {
-      //const d = moment(item.startDate, "hh:mm").add(parseInt(item.timeSlot), 'minutes');
-      // console.log(moment(item.startDate, "hh:mm"), "------", moment(item.startDate).add({ hours: 0, minutes: 20 }).toString())
       calendarData.push({
         id: item._id,
         title: item.patientDetails[0].name,

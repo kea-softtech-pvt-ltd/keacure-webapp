@@ -66,7 +66,6 @@ function AddDoctorProfessionalExperience(props) {
     }
 
     function manipulateExperience(data) {
-        console.log("================", data)
         const experiences = monthDiff(new Date(data.startYear), new Date(data.endYear))
         const month = experiences % 12
         let year = 0
@@ -76,7 +75,6 @@ function AddDoctorProfessionalExperience(props) {
         }
 
         data.totalExperience = `${year}.${month}`;
-        console.log("////////////////////", data)
         return data;
 
     }

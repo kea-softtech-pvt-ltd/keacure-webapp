@@ -8,27 +8,27 @@ export default function Symptoms(props) {
     const { onChange, reportId, onClick } = props
     const [symptoms, setSymptoms] = useState([])
     const [saveSymptoms, setSaveSymptoms] = useState([])
-    console.log("saveSymptoms---------", saveSymptoms)
-    const [otherSymptom, setOtherSymptoms] = useState([])
+    const [otherSymptom, setOtherSymptoms] = useState('')
 
     // const [value, setValue]=useState();
     const { symptomsData, insertSymptoms, insertSymptom_masterTable } = AuthApi();
+
     useEffect(() => {
         getSymptomsData();
-
     }, [])
     const getSymptomsData = async () => {
         const result = await symptomsData()
         setSymptoms(result)
     };
 
-    const handleChange = ( selectedValue) => {
+    const handleChange = (e, selectedValue) => {
+        e.preventDefault()
         setSaveSymptoms(selectedValue)
     }
-    const handleOtherChangeValue=(e)=>{
+
+    const handleOtherChangeValue = (e) => {
         e.preventDefault();
         setOtherSymptoms(e.target.value)
-        
     }
 
 
@@ -37,24 +37,15 @@ export default function Symptoms(props) {
         const bodyData = {
             "symptoms": saveSymptoms,
         }
-        console.log("res----===-----", bodyData)
 
         await insertSymptoms({ reportId }, bodyData)
-            .then((res) => {
-                console.log("=============thenres", res)
-            })
-
         const other = {
             "symptoms": otherSymptom,
         }
-        console.log("other--------", other)
         await insertSymptom_masterTable(other)
-        .then((res)=>{
-            console.log("=========", res)
-        })
-        onChange()
-          
+
     }
+
 
     return (
         <div>
@@ -82,6 +73,7 @@ export default function Symptoms(props) {
                 <div className="text-center add_top_30 symptomsBtn">
                     <input type="submit" onClick={addSymptoms} className="btn_1 patientinfo" value="Save" />
                 </div>
+
             </div>
         </div>
     )

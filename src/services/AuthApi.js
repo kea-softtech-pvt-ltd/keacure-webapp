@@ -14,7 +14,6 @@ export default function AuthApi() {
 
     const fetchAllEducations = async ({ doctorId }) => {
         const result = await axios.get(`${API}/fetchEduData/${doctorId}`);
-        // console.log('result', result)
         return result;
     }
     const addDoctorInformation = async ({ doctorId }) => {
@@ -56,7 +55,6 @@ export default function AuthApi() {
     }
     const getAllDrInfo = async ({ doctorId }) => {
         const result = await axios.get(`${API}/doctor/${doctorId}`);
-        // console.log("+++++++++++", result)
         return result.data;
 
     }
@@ -74,7 +72,6 @@ export default function AuthApi() {
     }
     // const setUpdateTimeData = async ({ doctorId, clinicId, _id }, setTimeData) => {
     //     const result = await axios.post(`${API}/setSession/${doctorId}/${clinicId}/${_id}`, setTimeData)
-    //     console.log("----------------", result)
     //     return result
     // }
     const insertDrExperience = async (newDoctorData) => {
@@ -109,7 +106,7 @@ export default function AuthApi() {
         const result = await axios.get(`${API}/fetchsymptoms`)
         return result.data
     }
- 
+
     const getMedicine = async () => {
         const result = await axios.get(`${API}/fetchmedicines`)
         return result.data
@@ -136,15 +133,35 @@ export default function AuthApi() {
     };
     const insertSymptoms = async ({ reportId }, bodyData) => {
         const result = await axios.post(`${API}/add_symptoms/${reportId}`, bodyData)
-        console.log("///////////////insertSymptoms", result)
-        return result.data
+        return result
     };
     const insertSymptom_masterTable = async (bodyData) => {
         const result = await axios.post(`${API}/addsymptoms`, bodyData)
-        console.log("============insertSymptom_masterTable", result)
+        return result.data
+    };
+    const insertMedicinePrescriptionData = async (bodyData) => {
+        const result = await axios.post(`${API}/add_medicinePrescription`, bodyData)
         return result.data
     };
 
+    const insertLabPrescriptionData = async (bodyData) => {
+        const result = await axios.post(`${API}/add_Labprescription`, bodyData)
+        return result.data
+    }
+    const UpdateStatusBookingdata = async ({ appointmentId }, bodyData) => {
+        const result = await axios.post(`${API}/updateStatus/${appointmentId}`, bodyData)
+        console.log("--------", result)
+        return result.data
+    }
+    const getMedicinePrescriptionData = async ({ appointmentId }) => {
+        const result = await axios.get(`${API}/fetchmedicinePrescription/${appointmentId}`)
+        return result.data
+
+    };
+    const getLabTestPrescriptionData = async ({ appointmentId }) => {
+        const result = await axios.get(`${API}/fetch_LabTest_Prescription/${appointmentId}`)
+        return result.data
+    };
     return {
         login,
         loginOtp,
@@ -178,6 +195,11 @@ export default function AuthApi() {
         insertInvestigationNote,
         insertPremedicationNote,
         insertSymptoms,
-        insertSymptom_masterTable
+        insertSymptom_masterTable,
+        insertMedicinePrescriptionData,
+        insertLabPrescriptionData,
+        UpdateStatusBookingdata,
+        getMedicinePrescriptionData,
+        getLabTestPrescriptionData
     }
 }

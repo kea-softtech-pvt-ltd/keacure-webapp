@@ -11,10 +11,7 @@ function DoctorBookingConfirmation(props){
     const {time} = props;
     const {doctorId} = props;
     const [doctorName ,setDoctorName] = useState({})
-    const [bookingData ,setBookingData] = useRecoilValue(doctorBookingState);
     const patientId = useRecoilValue(patientIdState)
-    console.log(time)
-
     useEffect(()=>{
         getDoctorName();
     },[])

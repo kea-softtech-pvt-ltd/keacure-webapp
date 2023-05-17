@@ -1,10 +1,8 @@
 import React, {useState ,useEffect } from "react";
-import { API } from "../../config";
 import { Link , useParams} from "react-router-dom";
 import { DoctorDetailSection2} from "../../patient/doctorDetailsSection2";
 import { AppointmentBookingSection} from "../../patient/appointmentBookingSection";
 import { MainNav } from '../../mainComponent/mainNav';
-import axios from 'axios';
 import { DoctorDetailPersonalInfo } from '../../patient/doctorDetailPersonalInfo';
 import { DoctorDetailsProfessionalStatement} from "../../patient/doctorDetailsProfessionalStatement";
 import { DoctorDetailsEducationalStatement} from "../../patient/doctorDetailsEducationalStatement";

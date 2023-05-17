@@ -21,7 +21,6 @@ function AddPatientMedicalInfo(props){
     const [ coilPatientMedical , setCoilPatientMedical] = useRecoilState(setPatientMedical)
     //update data
     const [updateData ,setUpdateData]= useState([])
-    //console.log(updateData)
     const classes = useStyles();
     //for fetch allergirs
     const [allergy ,setAllergy] = useState([])

@@ -6,7 +6,6 @@ import avatarImage from "../img/profile.png";
 function FetchPatientInfo(props){
     const { patientId} = props;
     const [fetchPatientData ,setFetchPatientData] = useState([])
-    console.log(fetchPatientData)
     useEffect(()=>{
         getAllPatientData()
     },[])

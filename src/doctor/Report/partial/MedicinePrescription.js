@@ -8,44 +8,20 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { Box } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import AuthApi from '../../../services/AuthApi';
+import GetMedicinePriscription from './GetMedicinePrescription';
 export default function MedicinePrescription(props) {
-
     //for add new fiels (priscription)
-    const { onChange } = props
-    const [mealData, setMealData] = useState([]);
+    const { onChange, reportId, appointmentId } = props
     const [tabletName, setTabletName] = useState([]);
-    const[medicineSave, setMedicineSave]=useState()
-    const [duration, setDuration]=useState()
-    const { getMedicine } = AuthApi()
-    const meal = [
-        {
-            "id": 1,
-            "name": "Before Meal"
-        },
-        {
-            "id": 2,
-            "name": "After Meal"
-        }
-    ]
-
-
-    useEffect(() => {
-        setMealData(meal)
-        getMedicineData()
-    }, [])
-
-
-    const getMedicineData = async () => {
-        await getMedicine()
-            .then((res) => {
-                setTabletName(res)
-            })
-    };
-
+    const [medicineSave, setMedicineSave] = useState()
+    const [duration, setDuration] = useState('')
+    const [selectedSchedule, setSelectedSchedule] = useState([]);
+    const [checked, setChecked] = useState([]);
+    const [saveMealData, setSaveMealData] = useState([])
+    const { getMedicine, insertMedicinePrescriptionData } = AuthApi()
     const useStyles = makeStyles((theme) => ({
         formControl: {
             margin: theme.spacing(1),
@@ -58,26 +34,89 @@ export default function MedicinePrescription(props) {
             minWidth: 650,
         },
     }));
+    const meal = [
+        {
+            "_id": 0,
+            "name": "Before Meal"
+        },
+        {
+            "_id": 1,
+            "name": "After Meal"
+        }
+    ]
+    const medicineSchedule = [
+        "Morning",
+        "Afternoon",
+        "Evening",
+        "Night"
+    ]
+
+    useEffect(() => {
+        getMedicineData()
+    }, [])
+
+    const getMedicineData = async () => {
+        await getMedicine()
+            .then((res) => {
+                setTabletName(res)
+            })
+    };
+
     const classes = useStyles();
-    const handleChange = ( selectedValue) => {
-        setMedicineSave(selectedValue)
-        console.log("-------------", selectedValue)
+    const handleMealData = ((e, selectedValue) => {
+        e.preventDefault()
+        setSaveMealData(selectedValue.name)
+    })
+
+
+    const handleChange = (event, selectedValue) => {
+        event.preventDefault()
+        setMedicineSave(selectedValue.medicineName)
     }
-    const handleDurationValue=(e)=>{
+
+    const handleFrequencyChange = (index) => {
+        let newState = [...checked]
+        newState[index] = !checked[index]
+        setChecked(newState)
+        let time = []
+        time = [...selectedSchedule];
+        let value = newState[index];
+        if (value) {
+            time.push({
+                schedule: medicineSchedule[index],
+            })
+        } else {
+            let schTime = time.filter((item, i) => {
+                return (item.schedule !== (medicineSchedule[index]))
+            })
+            time = schTime
+        }
+        setSelectedSchedule(time)
+    }
+
+    const handleDurationValue = (e) => {
         e.preventDefault();
         setDuration(e.target.value)
-        
+
     }
-    // function handleAdd() {
-    //     const values = [...fields];
-    //     let last_record = fields.slice(-1);
-    //     values.push({ id: last_record.id + 1 });
-    //     setFields(values);
-    // }
+    const saveData = async () => {
+        const bodyData = {
+            "reportId": reportId,
+            'patientAppointmentId': appointmentId,
+            "medicineName": medicineSave,
+            "days": duration,
+            "timing": saveMealData,
+            "frequency": selectedSchedule
+        }
+        await insertMedicinePrescriptionData(bodyData)
+            .then((res) => {
+            })
+    }
 
     return (
         <div >
-            <TableContainer component={Paper}>
+            <GetMedicinePriscription appointmentId={appointmentId} />
+            <TableContainer component={Paper} className='mx-auto w-100'>
                 <Table className={classes.table} size="medium" aria-label="a dense table">
                     <TableHead>
                         <TableRow>
@@ -85,18 +124,13 @@ export default function MedicinePrescription(props) {
                             <TableCell align="center"><b>Take</b></TableCell>
                             <TableCell align="center"><b>Duration</b></TableCell>
                             <TableCell align="center" className="tablecell">
-                                <b>Morning</b>
-                                <b>Afternoon</b>
-                                <b>Evening</b>
-                                <b>Night</b>
+                                <b>Slots</b>
                             </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-
                         <TableRow>
                             <TableCell align="right">
-
                                 <Autocomplete
                                     style={{ width: 200 }}
                                     id={tabletName._id}
@@ -104,21 +138,15 @@ export default function MedicinePrescription(props) {
                                     disableClearable
                                     disableCloseOnSelect
                                     value={medicineSave}
+                                    onChange={handleChange}
                                     getOptionLabel={(tabletName) => `${tabletName.medicineName}`}
                                     options={tabletName}
-                                    isoptionequaltovalue={(option, value) =>
-                                        option.medicineName === value.medicineName
-                                    }
                                     noOptionsText={"Medicine not available"}
-                                    onChange={handleChange}
-                                    // renderOption={(props) => (
-                                    //     <Box {...props} key={tabletName._id}>
-                                    //         {props.medicineName}
-                                    //     </Box>
-                                    // )}
-                                    renderInput={(params) => <TextField {...params} label="Medicine Name" />}
+                                    renderInput={(params) =>
+                                        <TextField {...params}
+                                            label="Medicine Name"
+                                        />}
                                 />
-
                             </TableCell>
 
                             <TableCell align="right">
@@ -127,37 +155,46 @@ export default function MedicinePrescription(props) {
                                     disableClearable
                                     disableCloseOnSelect
                                     style={{ width: 150 }}
-                                    id={mealData.id}
-                                    onChange={handleChange}
-                                    options={mealData.map((option) => option.name)}
+                                    id={saveMealData._id}
+                                    value={saveMealData.name}
+                                    onChange={handleMealData}
+                                    getOptionLabel={(meal) => `${meal.name}`}
+                                    options={meal}
                                     renderInput={(params) => <TextField {...params} label="Select" />}
                                 />
                             </TableCell>
 
                             <TableCell align="right">
                                 <div className="input">
-                                    <input type="text" value={duration} onChange={handleDurationValue} className="form-control" name="duration" />
+                                    <input type="text" value={duration || ''} onChange={handleDurationValue} className="form-control" name="duration" />
                                 </div>
                             </TableCell>
 
-                            <TableCell align="right" className="checkbox ">
-                                <input type="checkbox" className="medicine-checkbox" value="Morning" name="Morning" />
-                                <input type="checkbox" className="medicine-checkbox" value="Afternoon" name="Afternoon" />
-                                <input type="checkbox" className="medicine-checkbox" value="Evening" name="Evening" />
-                                <input type="checkbox" className="medicine-checkbox" value="Night" name="Night" />
+                            <TableCell className="d-flex">
+                                {medicineSchedule.map((item, i) => {
+                                    return (
+                                        <div className="" key={i}>
+                                            <span className="d-flex p-1">{item}</span>
+                                            <input
+                                                type="checkbox"
+                                                onChange={() => handleFrequencyChange(i)}
+                                                className="mx-3"
+                                                value={item}
+                                            />
+                                        </div>
+                                    )
+                                })
+                                }
                             </TableCell>
                         </TableRow>
-
-                        {/* })} */}
                     </TableBody>
                 </Table>
             </TableContainer>
-            {/* <div className="iconbutton" onClick={() => handleAdd()}><Icon style={{ fontSize: 20 }}>Save</Icon> */}
-
-            <div className="text-center add_top_30 medicinebtn ">
-                <input type="submit" onClick={"onChange"} className="btn_1" value="Save" />
+            <div className="text-center add_top_30 medicinebtn">
+                <input type="submit" onClick={saveData} className="btn_1 medicinebtn" value="Save" />
+                <input type="submit" onClick={onChange} className="btn_1 medicinebtn" value="Next" />
             </div>
-
         </div>
     )
 }
+

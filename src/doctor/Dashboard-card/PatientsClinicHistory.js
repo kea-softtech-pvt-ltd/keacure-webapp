@@ -31,13 +31,11 @@ export default function PatientsClinicHistory() {
 
     useEffect(() => {
         getPatientHistory();
-        console.log("useEfect=====")
         date();
     }, [patientDetails])
 
     async function getPatientHistory() {
         const result = await getPatientListDetails({doctorId});
-        console.log("result--------", result)
         setPatientDetails(result)
     }
     const date = () => {
@@ -45,14 +43,11 @@ export default function PatientsClinicHistory() {
             month = '' + (d.getMonth() + 1),
             day = '' + (d.getDate()),
             year = '' + (d.getFullYear());
-        console.log('day', day);
         if (month.length < 2)
             month = '0' + month;
         if (day.length < 2)
             day = '0' + day;
         const newDate = [year, month, day].join('-');
-        console.log('newDate', newDate);
-
         const data = patientDetails.filter((patientData) => {
             const selectedDate = moment(patientData.selectedDate)
             .format('YYYY-MM-DD').toString()

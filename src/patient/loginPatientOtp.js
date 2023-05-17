@@ -10,7 +10,6 @@ import axios from "axios";
 function LoginPatientOtp(props){
     const history = useHistory()
     const { patientId, redirection} = props;
-    console.log(patientId)
     const [ patientData , setPatientData] = useRecoilState(setNewPatientId);
     const [ loginotp ,setLoginOtp] = useState('');
     
@@ -34,12 +33,10 @@ function LoginPatientOtp(props){
                         isLoggedIn : true
                     })
                     .then(response =>{
-                        console.log(response)
                         setPatientData(patientId)
                         if(redirection == "dashboard") {
                             history.push(`/PatientProfile/${response.data._id}`);
                         } else {
-                            console.log(response.data._id)
                             history.push(`/createpatientprofile/${response.data._id}`);
                         }
                     })  

@@ -7,7 +7,6 @@ function FetchImages(props){
     useEffect(()=>{
         setDrDocument(props.imageData)
     },[props])
-    // console.log("drDocument----------------", drDocument)
 
 
     return(

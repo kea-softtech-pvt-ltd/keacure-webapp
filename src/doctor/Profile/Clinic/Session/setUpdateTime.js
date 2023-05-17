@@ -19,11 +19,9 @@ function SetUpdateTime(props) {
     const { doctorId, clinicId, _id, day } = props.update[0];
     const [error, setError] = useState("");
     const [updateSessionTime, setUpdateSessionTime] = useRecoilState(updateSession)
-    // console.log("updateSessionTime===========",updateSessionTime)
 
     const [selectedSlots, setSelectedSlots] = useState([])
     const [sessionTime, setSessionTime] = useState(update)
-    // console.log("sessionTime=====================",sessionTime)
     const [showSelectedSlots, setShowSelectedSlots] = useState([])
 
     const handleInputChange = event => {
@@ -32,7 +30,6 @@ function SetUpdateTime(props) {
     };
 
     const handleChange = (event) => {
-        // console.log(event.target.checked)
         let temp = []
         temp = showSelectedSlots
         const { name, value } = event.target;
@@ -72,8 +69,6 @@ function SetUpdateTime(props) {
         const interval = sessionTime.timeSlot;
         const fromTime = sessionTime.fromTime;
         const toTime = sessionTime.time;
-        // console.log("fromTime",fromTime)
-        // console.log("totime",time)
 
         const startTime = moment(fromTime, "HH:mm");
         const endTime = moment(time, "HH:mm")

@@ -12,7 +12,6 @@ function PatientPersonalInformation(props){
     const { patientId } = props;
     //update data
     const [updateData ,setUpdateData]= useState({})
-    console.log(updateData)
     const [patientPhoto, setPatientPhoto] = useState(avatarImage);
     useEffect(()=>{
         getPatientPersonalInfo();
@@ -32,7 +31,6 @@ function PatientPersonalInformation(props){
     
     function getPatientPersonalInfo(){
         axios.get(`${API}/patientById/${patientId}`).then(jsonRes => {
-            console.log(jsonRes)
             const allKeys = Object.keys(jsonRes)
             allKeys.map(function(k,v) {
                 if(k === 'photo' && typeof jsonRes[k] === "object") {
@@ -105,7 +103,6 @@ function PatientPersonalInformation(props){
         
         axios.post(`${API}/insertPatientDetails/${patientId}`, formData)
         .then(function(response){
-            console.log(response)
             props.personal();
         })
     }  

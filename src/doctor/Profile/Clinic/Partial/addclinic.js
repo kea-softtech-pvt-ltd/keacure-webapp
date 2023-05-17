@@ -12,7 +12,6 @@ import AuthApi from "../../../../services/AuthApi";
 const AddClinic = (props) => {
     const { doctorId } = useParams();
     const [coilDoctorClinicData, setCoilDoctorClinicData] = useRecoilState(setDoctorClinic)
-    // console.log("coilDoctorClinicData.concat(res.data)", coilDoctorClinicData)
 
     //for fetch specialization data
     const [drspecialization, setDrSpecialization] = useState([])

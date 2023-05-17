@@ -26,13 +26,14 @@ import Calender from './doctor/Dashboard-card/Calender';
 import User from "./user";
 import PatientLogoutForm from "./patient/patientLogoutForm";
 import SetUpdateTime from "./doctor/Profile/Clinic/Session/setUpdateTime";
+import ViewMedicalReport from './doctor/Report/ViewMedicalReport';
 import CalendarModalBox from "./doctor/Dashboard-card/partial/CalendarModalBox"
 function MainContainer() {
   return (
     <Switch>
-      <Route exact path="/">
+      {/* <Route exact path="/">
         <Home />
-      </Route>
+      </Route> */}
       <Route path="/home">
         <Home />
       </Route>
@@ -72,7 +73,7 @@ function MainContainer() {
       {/* <Route path="/calendarModalBox/:patientId">
             <CalendarModalBox/>
           </Route> */}
-      <Route exact path="/logindoctor">
+      <Route exact path="/">
         <LoginDoctor />
       </Route>
 
@@ -87,6 +88,9 @@ function MainContainer() {
           </Route> */}
       <Route path="/patientlist/consultation/:appointmentId/:reportId">
         <PatientMedicalReport />
+      </Route>
+      <Route path="/patient-history/:appointmentId/:reportId">
+        <ViewMedicalReport/>
       </Route>
       <Route path="/dashboard/:doctorId">
         <Dashboard />

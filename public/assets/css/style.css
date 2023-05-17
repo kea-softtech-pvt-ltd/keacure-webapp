@@ -436,19 +436,25 @@ a.btn_1 {
 	-ms-border-radius: 25px;
 	border-radius: 3px;
 	font-weight: 500;
+	
+
 }
 .btn-dropdown{
 	position: relative;
-    left: 212%;
+    bottom: 35px;
+    left: 200px;
+}
+.labData{
+	position: relative;
+	left:200px;
 }
 .medicinebtn{
-	position: relative;
-	left: 79px;
+	margin: 10px;
 }
-.symptomsBtn{
+/* .symptomsBtn{
 	position: relative;
-    right: 110px;
-}
+    right: 150px;
+} */
 .symptomsInput{
 	position: relative;
     left: 285px;
@@ -4551,9 +4557,13 @@ a.box_feat_about h3 {
 	border-color:  #1a3c8b;
 }
 .medicine-checkbox{
-	font-size:100px;
-	min-height: 20px
+	font-size:100px; 
+	height: 25%;
 }
+/* inputmedicine-checkbox{
+	width:100px;
+	height: 25px;
+} */
 .reports-input{
 	width:150px;
 }
@@ -4791,9 +4801,7 @@ ul.bullets li:before {
 .add_top_20 {
 	margin-top: 20px;
 }
-.add_top_30 {
-	margin-top: 30px;
-}
+
 .add_top_60 {
 	margin-top: 60px;
 }

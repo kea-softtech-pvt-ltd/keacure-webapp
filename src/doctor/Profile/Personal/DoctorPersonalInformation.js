@@ -87,7 +87,6 @@ function DoctorPersonalInformation(props) {
         formData.append('officialEmail', data.officialEmail);
         formData.append('personalEmail', data.personalEmail);
         formData.append('address', data.address);
-        console.log("......////////////", formData)
         const result = await axios.post(`${API}/insertPersonalInfo/${doctorId}`, formData)
         setUpdateData(result)
             .then(function (response) {

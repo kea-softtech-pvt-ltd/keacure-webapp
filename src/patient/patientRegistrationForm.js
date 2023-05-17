@@ -8,9 +8,7 @@ import { Link ,useParams } from "react-router-dom";
 
 function PatientRegistrationForm(props){
     const { patientId } = props;
-    console.log(props)
     const [updatePatientData ,setUpdatePatientData] = useState({})
-    console.log(updatePatientData)
     //for all input onchange method
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -28,7 +26,6 @@ function PatientRegistrationForm(props){
     async function getPatientDetails() {
         const result = await axios.get(`${API}/patientById/${patientId}`)
         .then(function(response){
-            console.log(response.data)
             setUpdatePatientData(response.data)
         })
     }
@@ -44,7 +41,6 @@ function PatientRegistrationForm(props){
         }
         axios.post(`${API}/insertPatientDetails/${patientId}`, newPatientData)
         .then(function(response){
-            console.log(response)
             props.handalChange()
         })
     }

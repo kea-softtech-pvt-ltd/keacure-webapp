@@ -27,11 +27,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PatientList() {
-    // const {patientId} = useParams()
-    // console.log("PatientId---------",patientId)
     const { doctorId } = useParams()
     //for datepicker
-    const [value, onChange] = useState(new Date());
+    // const [value, onChange] = useState(new Date());
     let history = useHistory();
     const classes = useStyles();
     //for fetch json data
@@ -42,7 +40,7 @@ export default function PatientList() {
     useEffect(() => {
         getPatientDetails();
         date();
-    }, [patientList])
+    },[patientList])
 
     async function getPatientDetails() {
         const result = await getPatientListDetails({ doctorId });
@@ -56,7 +54,6 @@ export default function PatientList() {
             'patientAppointmentId': item._id,
             'clinicId': item.clinicId
         }
-        console.log("--------------------------", bodyData)
         await MedicineReportData(bodyData)
             .then((res) => {
                 history.push(`/patientlist/consultation/${item._id}/${res._id}`)
@@ -108,7 +105,6 @@ export default function PatientList() {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {/* {patientList.map((row) => ( */}
                                             {patientListHistory.map((details, i) => {
                                                 return (
                                                     <TableRow key={i}>
@@ -120,14 +116,19 @@ export default function PatientList() {
                                                         <TableCell align="center">{details.fees}</TableCell>
                                                         <TableCell align="center">
                                                             <div className="linklist">
-                                                                <Link onClick={() => saveData(details)} className="patientlistlink">{<button className="consultationbtn btn btn-primary">Start Consultation </button>}</Link>
+                                                                <Link
+                                                                    onClick={() => saveData(details)}
+                                                                    className="patientlistlink">
+                                                                    <button className="consultationbtn btn btn-primary">
+                                                                        Start Consultation
+                                                                    </button>
+                                                                </Link>
                                                             </div>
                                                         </TableCell>
                                                     </TableRow>
                                                 )
                                             })}
 
-                                            {/* ))} */}
                                         </TableBody>
                                     </Table>
                                 </TableContainer>

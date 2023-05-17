@@ -4,7 +4,6 @@ import AuthApi from '../../../services/AuthApi';
 export default function Investigation(props) {
 
     const [investigation_note, setInvestigation_note] = useState("")
-    console.log("==============", investigation_note)
     const { onChange, reportId } = props;
     const { insertInvestigationNote } = AuthApi();
 
@@ -27,7 +26,7 @@ export default function Investigation(props) {
                 <span >Doctor Investigation Note</span>
                 <textarea
                     type="text"
-                    value={investigation_note}
+                    value={investigation_note || ''}
                     onChange={handleChange}
                     style={{ width: 950 }}
                     className="form-control"
@@ -36,15 +35,14 @@ export default function Investigation(props) {
                 />
             </div>
 
-            {/* <CKEditor
-                id='edit'
-                onChange={handleChange}
-                name="investigation_note"
-                onSelectionChange={handleChange}
-            /> */}
-
-
-            <div className="text-center add_top_30"><input type="button" onClick={addNode} className="btn_1" value="Add Note" /></div>
+            <div className="text-center mt-15 medicinebtn add_top_30">
+                <input
+                    type="button"
+                    onClick={addNode}
+                    className="btn_1"
+                    value="Add Note"
+                />
+            </div>
         </div>
     )
 }

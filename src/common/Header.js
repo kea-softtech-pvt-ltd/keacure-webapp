@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React from "react";
 import {Link,} from "react-router-dom";
 // import { patientIdState }from "../recoil/selector/patientIdState"
 // import { useRecoilValue } from "recoil";
@@ -27,14 +27,14 @@ export default function Header(){
                             <ul id="top_access">
                                 <li><span><Link to="#"><i className="pe-7s-user"></i></Link></span>
                                     <ul>
-                                        <Link to="/dashboard">Dashboard</Link>
+                                        {/* <Link to="/dashboard">Dashboard</Link> */}
                                         <Link to="/logout">Logout</Link>
                                     </ul>
                                 </li>
                             </ul>
                             <ul>
-                                <li><span><Link to="/logindoctor">Doctor</Link></span></li>
-                                <li><span><Link to="/loginpatient">Patients</Link></span></li>
+                                {/* <li><span><Link to="/logindoctor">Doctor</Link></span></li> */}
+                                {/* <li><span><Link to="/loginpatient">Patients</Link></span></li> */}
                             </ul>
                         </nav>
                     </div>

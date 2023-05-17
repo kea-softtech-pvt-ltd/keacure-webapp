@@ -26,7 +26,6 @@ function EditMedicalData(props){
                 return res.json()
             }
         }).then(jsonRes => {
-            console.log(jsonRes)
             setEditPatientData(jsonRes)
         }); 
     }

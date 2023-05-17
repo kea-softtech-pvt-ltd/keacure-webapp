@@ -37,7 +37,6 @@ function SetSession(props) {
     const handleClose = () => setShowTime(false);
 
     const handleShow = (e, day) => {
-        console.log("day----------", day)
         e.preventDefault();
         setShowTime(true)
         setDayNames(day)
@@ -89,7 +88,6 @@ function SetSession(props) {
                                 </div>
                                 {fetchUpdateTime[item]
                                     ? <div className="col-md-10">
-                                    {/* {console.log("fetchUpdateTime[item]",fetchUpdateTime[item])} */}
                                         <Link onClick={(e) => handleUpdate(e, fetchUpdateTime[item])} >
                                             <span>
                                                 {fetchUpdateTime[item][0].fromTime}

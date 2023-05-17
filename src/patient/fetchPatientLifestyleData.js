@@ -10,8 +10,6 @@ import { setPatientLifestyle}  from "../recoil/atom/setPatientLifestyle";
 function FetchPatientLifestyleData(props){
     const { patientId} = props;
     const [ fetchPatientdata , setFetchPatientData] = useRecoilState(setPatientLifestyle)
-    //const [ fetchPatientdata , setFetchPatientData] = useState([])
-    console.log(fetchPatientdata)
     const [ activeModal, setActiveModal] = useState()
 
     const handleClose = () =>{
@@ -68,10 +66,6 @@ function FetchPatientLifestyleData(props){
                         <div><b>Occupation</b></div>
                         <div>{item.occupation}</div>
                     </div>
-                    {/* <div className="fetchedudata">
-                        <div><b>ActivityLevel</b></div>
-                        <div>{item.activityLevel}</div>
-                    </div> */}
                 </div>
             </div>
         </div> 

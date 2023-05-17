@@ -48,7 +48,6 @@ function AddDoctorOwnClinicInfo(){
     const getaAllOwnClinics=()=>{
         getAllOwnClinic({doctorId})
         .then(jsonRes => {
-            // console.log("jsonRes============",jsonRes)
             setOwnClinicList(jsonRes)
         });
     }

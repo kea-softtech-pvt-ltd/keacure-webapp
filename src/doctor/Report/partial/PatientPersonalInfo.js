@@ -5,7 +5,6 @@ import AuthApi from '../../../services/AuthApi';
 export default function PatientPersonalInfo(props) {
     const { insertPatientVitalSignsData } = AuthApi()
     // const [patientId, setPatientId] = useState();
-    // console.log("===========result", patientId)
 
     const [changeData, setChangeData] = useState({
         age: "",
@@ -22,7 +21,6 @@ export default function PatientPersonalInfo(props) {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        console.log("++++++++++++++//////////", name)
         setChangeData({ ...changeData, [name]: value })
     }
     const saveData = async (e) => {
@@ -39,7 +37,6 @@ export default function PatientPersonalInfo(props) {
         }
         await insertPatientVitalSignsData({ reportId }, bodyData)
             .then((res) => {
-                console.log("++++++++++++++res", res)
                 setSavingData(res)
                 // setPatientId(res.patientId)
             })

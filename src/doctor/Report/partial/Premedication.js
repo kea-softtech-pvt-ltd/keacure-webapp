@@ -18,7 +18,7 @@ export default function Premedication(props) {
     return (
         <>
             <div className=" container mx-3" >
-                <span >Doctor Investigation Note</span>
+                <span >Doctor Premedication Note</span>
                 <textarea
                     type="text"
                     value={premedication_note}
@@ -26,22 +26,18 @@ export default function Premedication(props) {
                     style={{ width: 950 }}
                     className="form-control"
                     name="investigation_note"
-                    placeholder=""
+                    placeholder="Write Something"
                 />
             </div>
-            {/* <CKEditor
-                editor={ClassicEditor}
-                data="<div>Something write here...</div>"
-                onReady={editor => ('Editor is ready to use!' ,  editor)
-                }
-                onChange={(event, editor) => {
-                    const data = editor.getData();
-                }}
-                onBlur={(event, editor) => ({ event, editor })}
 
-                onFocus={(event, editor) => ({ event, editor })}
-            /> */}
-            <div className="text-center add_top_30"><input type="submit" onClick={addNode} className="btn_1" value="Add Note" /></div>
+            <div className="text-center medicinebtn mt-15 add_top_30">
+                <input
+                    type="submit"
+                    onClick={addNode}
+                    className="btn_1"
+                    value="Add Note"
+                />
+            </div>
         </>
     )
 }

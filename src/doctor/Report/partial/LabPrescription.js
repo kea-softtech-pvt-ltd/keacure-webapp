@@ -3,18 +3,17 @@ import { useState, useEffect } from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import AuthApi from '../../../services/AuthApi';
+import GetLabPrescription from './getLabPrescription';
+
 export default function LabPrescription(props) {
     //for add new files (priscription)
-    const { onChange } = props
-    const { getLabData } = AuthApi()
+    const { onChange, reportId, appointmentId } = props
+    const { getLabData, insertLabPrescriptionData } = AuthApi()
+    //for whole data
     const [labTestData, setLabTestData] = useState([]);
+    //for Selected data
+    const [saveLabData, setSaveLabData] = useState('')
 
-    // function handleAdd() {
-    //     const values = [...fields];
-    //     let last_record = fields.slice(-1);
-    //     values.push({ id: last_record.id + 1 });
-    //     setFields(values);
-    // }
     useEffect(() => {
         getLabTestData();
     }, [])
@@ -23,24 +22,48 @@ export default function LabPrescription(props) {
         const result = await getLabData()
         setLabTestData(result)
     };
+    const handleDataSave = (e, selectedData) => {
+        e.preventDefault()
+        setSaveLabData(selectedData)
+    }
+    const labDataSave = async () => {
+        const bodyData = {
+            "reportId": reportId,
+            'patientAppointmentId': appointmentId,
+            "test_name": saveLabData.test_name
+        }
+        await insertLabPrescriptionData(bodyData)
+            .then((res) => {
+            })
+    }
 
     return (
-        <div>
-            <div>
-                <label>Test Name</label>
-                <Autocomplete
-                    disablePortal={true}
-                    disableClearable
-                    disableCloseOnSelect
-                    style={{ width: 200 }}
-                    id={labTestData.lab_test_id}
-                    options={labTestData.map((option) => option.test_name)}
-                    renderInput={(params) => <TextField {...params} label="Choose 
-                    Test Name"/>}
-                />
+        <div className='d-flex' >
+            <div >
+                <div className='align-left w-50'>
+                    <label>Test Name</label>
+                    <Autocomplete
+                        style={{ width: 200 }}
+                        id={labTestData._id}
+                        disablePortal={true}
+                        disableClearable
+                        disableCloseOnSelect
+                        onChange={handleDataSave}
+                        getOptionLabel={(option) => `${option.test_name}`}
+                        options={labTestData || null}
+                        renderInput={(params) =>
+                        (<TextField {...params}
+                            label="Choose Test Name"
+                        />)}                       
+                    />
+                </div>
+                <div className="text-center add_top_30 btn-dropdown">
+                    <input type="submit" onClick={labDataSave} className="btn_1" value="Add" />
+                </div>
             </div>
-            <div className="text-center add_top_30 btn-dropdown">
-                <input type="submit" onClick={onChange} className="btn_1" value="Add" />
+
+            <div className='align-right w-50 labData'>
+                <GetLabPrescription appointmentId={appointmentId} />
             </div>
 
         </div>

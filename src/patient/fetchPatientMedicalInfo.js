@@ -10,7 +10,6 @@ import {setPatientMedical}  from "../recoil/atom/setPatientMedical";
 function FetchPatientMedicalInfo(props){
     const { patientId} = props;
     const [ fetchPatientdata , setFetchPatientData] = useRecoilState(setPatientMedical)
-    console.log(fetchPatientdata)
     const [ activeModal, setActiveModal] = useState()
 
     const handleClose = () =>{

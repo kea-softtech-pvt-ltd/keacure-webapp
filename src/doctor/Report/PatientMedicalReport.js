@@ -45,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PatientMedicalReport() {
     const { reportId, appointmentId } = useParams();
-    console.log('??????????????????????', appointmentId)
     const classes = useStyles();
 
     //fetch opd data 
@@ -115,13 +114,13 @@ export default function PatientMedicalReport() {
                                         </TabPanel>
                                     </div>
 
-                                    <div className="row">
+                                    <div>
                                         <TabPanel value={value} index={4}>
-                                            <LabPrescription reportId={reportId} onChange={() => changeTab(5)} />
+                                            <LabPrescription reportId={reportId} appointmentId={appointmentId} onChange={() => changeTab(5)} />
                                         </TabPanel>
                                     </div>
                                     <TabPanel value={value} index={5}>
-                                        <NewFollowup reportId={reportId} onChange={() => changeTab(6)} />
+                                        <NewFollowup reportId={reportId} appointmentId={appointmentId} onChange={() => changeTab(6)} />
                                     </TabPanel >
 
 

@@ -26,12 +26,10 @@ function EditLifeStyleData(props){
                 return res.json()
             }
         }).then(jsonRes => {
-            console.log(jsonRes)
             setEditPatientData(jsonRes)
         }); 
     }
     
-
     const UpdatePatientData = async(event)=>{
         event.preventDefault();
         

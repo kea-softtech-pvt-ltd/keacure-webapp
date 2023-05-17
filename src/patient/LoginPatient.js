@@ -6,7 +6,6 @@ import { useRecoilValue } from "recoil";
 
 export default function LoginPatient(){
     const patientId = useRecoilValue(patientIdState)
-    console.log(patientId)
     return(
         <div>
             {patientId ? 

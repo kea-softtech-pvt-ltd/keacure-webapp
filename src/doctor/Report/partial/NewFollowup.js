@@ -2,13 +2,13 @@ import React from 'react';
 import DatePicker from 'react-date-picker';
 import { useState } from 'react';
 import AuthApi from '../../../services/AuthApi';
+import { useHistory } from 'react-router-dom';
 export default function NewFollowup(props) {
     //for datepicker
-    const { insertNewFollowUpDate } = AuthApi()
-    const { onChange, reportId } = props
+    const { insertNewFollowUpDate, UpdateStatusBookingdata } = AuthApi()
+    const { onChange, reportId, appointmentId } = props
     const [date, setDate] = useState();
-
-    console.log("======new_follow_up_Date", date)
+    let history = useHistory()
     const addDatePicker = (date) => {
         setDate(date)
     }
@@ -16,10 +16,20 @@ export default function NewFollowup(props) {
         const bodyData = {
             "new_follow_up": date,
         }
-        console.log("bodyData===", bodyData)
         await insertNewFollowUpDate({ reportId }, bodyData)
         alert("Save successfully")
     }
+    const getPrescriptionData = async () => {
+        const bodyData = {
+            "status": "Completed",
+            "medicalReportId": reportId
+        }
+        await UpdateStatusBookingdata({ appointmentId }, bodyData)
+            .then((res) => {
+                history.push(`/dashboard/${res.doctorId}`)
+            })
+
+    };
     return (
         <div >
             <div className="row">
@@ -39,8 +49,20 @@ export default function NewFollowup(props) {
                     </div>
                 </div>
             </div>
-            <div className="text-center add_top_30"><input type="submit" onClick={addNode} className="btn_1" value="Add" /></div>
-            <div className="text-center add_top_30"><input type="submit" onClick={onChange} className="btn_1" value="Consultation Completed" /></div>
+            <div className="text-center add_top_30">
+                <input
+                    type="submit"
+                    onClick={addNode}
+                    className="btn_1 medicinebtn"
+                    value="Add"
+                />
+                <input
+                    type="submit"
+                    onClick={getPrescriptionData}
+                    className="btn_1 medicinebtn"
+                    value="Consultation Completed"
+                />
+            </div>
         </div>
     )
 }

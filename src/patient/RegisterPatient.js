@@ -41,13 +41,7 @@ export default function RegisterPatient(){
             }else {
                 history.push(`/patientprofile/${response.data._id}`);
             }},(error) =>{
-                console.log(error);
             });
-    
-    //log encrypted data
-    console.log('Encrypt Data -')
-    console.log(ciphertext);
-  
     }
 
     return(

@@ -10,7 +10,6 @@ function ShowDoctorVideoAppointment(props){
     const { doctorId } =  useParams()
     const { clinicId } = props;
     const { setSessions } = props;
-    console.log("setSessions====",setSessions)
     const [ showSlot, setShowSlot ] = useState([]);
     const [ showFeesBySlot, setShowFeesBySlot ] = useState([]);
     const [ dayMonth , setDayMonth ] =  useState([])
@@ -31,7 +30,6 @@ function ShowDoctorVideoAppointment(props){
         })
         .then(res=>res.json())
         .then(response =>{
-            console.log("-response----------",response)
             setShowSlot(response.showSelectedSlots)
             setShowFeesBySlot(response)
         })  

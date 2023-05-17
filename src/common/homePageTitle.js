@@ -8,7 +8,6 @@ import FilterResults  from 'react-filter-search';
 function HomePageTitle(){
     //const [loading, setLoading] = useState(false);
 	const [value ,setValue ] = useState({});
-	console.log(value)
     let history = useHistory();
     const handleButtonClick = () => {
 		// if (!loading) {
