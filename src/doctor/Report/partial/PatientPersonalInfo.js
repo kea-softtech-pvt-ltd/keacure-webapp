@@ -39,6 +39,7 @@ export default function PatientPersonalInfo(props) {
             .then((res) => {
                 setSavingData(res)
                 // setPatientId(res.patientId)
+                alert("Save Successfully")
             })
     }
 

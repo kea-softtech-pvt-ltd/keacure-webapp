@@ -13,7 +13,6 @@ export default function LabPrescription(props) {
     const [labTestData, setLabTestData] = useState([]);
     //for Selected data
     const [saveLabData, setSaveLabData] = useState('')
-
     useEffect(() => {
         getLabTestData();
     }, [])
@@ -33,10 +32,10 @@ export default function LabPrescription(props) {
             "test_name": saveLabData.test_name
         }
         await insertLabPrescriptionData(bodyData)
-            .then((res) => {
-            })
+        alert("Save Successfully")
+        onChange()
     }
-
+  
     return (
         <div className='d-flex' >
             <div >
@@ -54,7 +53,7 @@ export default function LabPrescription(props) {
                         renderInput={(params) =>
                         (<TextField {...params}
                             label="Choose Test Name"
-                        />)}                       
+                        />)}
                     />
                 </div>
                 <div className="text-center add_top_30 btn-dropdown">

@@ -110,6 +110,7 @@ export default function MedicinePrescription(props) {
         }
         await insertMedicinePrescriptionData(bodyData)
             .then((res) => {
+                alert("Save Successfully")
             })
     }
 

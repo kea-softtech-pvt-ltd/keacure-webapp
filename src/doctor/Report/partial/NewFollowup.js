@@ -5,7 +5,7 @@ import AuthApi from '../../../services/AuthApi';
 import { useHistory } from 'react-router-dom';
 export default function NewFollowup(props) {
     //for datepicker
-    const { insertNewFollowUpDate, UpdateStatusBookingdata } = AuthApi()
+    const { insertNewFollowUpDate, UpdateStatusBookingdata, createPDF } = AuthApi()
     const { onChange, reportId, appointmentId } = props
     const [date, setDate] = useState();
     let history = useHistory()
@@ -29,7 +29,7 @@ export default function NewFollowup(props) {
             .then((res) => {
                 history.push(`/dashboard/${res.doctorId}`)
             })
-
+            await createPDF({reportId})
     };
     return (
         <div >
