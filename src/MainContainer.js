@@ -28,6 +28,8 @@ import PatientLogoutForm from "./patient/patientLogoutForm";
 import SetUpdateTime from "./doctor/Profile/Clinic/Session/setUpdateTime";
 import ViewMedicalReport from './doctor/Report/ViewMedicalReport';
 import CalendarModalBox from "./doctor/Dashboard-card/partial/CalendarModalBox"
+import Logout from "./doctor/Profile/LogoutForm";
+import Demo from './doctor/Dashboard-card/Demo';
 function MainContainer() {
   return (
     <Switch>
@@ -73,10 +75,12 @@ function MainContainer() {
       {/* <Route path="/calendarModalBox/:patientId">
             <CalendarModalBox/>
           </Route> */}
+      <Route exact path="/logindoctor">
+        <LoginDoctor />
+      </Route>
       <Route exact path="/">
         <LoginDoctor />
       </Route>
-
       <Route path="/editdoctorprofile/:doctorId">
         <EditDoctorProfile />
       </Route>
@@ -89,7 +93,7 @@ function MainContainer() {
       <Route path="/patientlist/consultation/:appointmentId/:reportId">
         <PatientMedicalReport />
       </Route>
-      <Route path="/patient-history/:appointmentId/:reportId">
+      <Route path="/patient-history/:appointmentId">
         <ViewMedicalReport/>
       </Route>
       <Route path="/dashboard/:doctorId">
@@ -122,8 +126,14 @@ function MainContainer() {
       <Route path="/user">
         < User />
       </Route>
-      <Route path="/logout">
+      {/* <Route path="/logout">
         < PatientLogoutForm />
+      </Route> */}
+      <Route path="/logout">
+        < Logout />
+      </Route>
+      <Route path='/demoform'>
+        <Demo/>
       </Route>
     </Switch>
   );

@@ -46,14 +46,14 @@ ul#cat_nav {
 	margin-right: 5px;
 	font-size: 20px;
 }
-.consultationbtn{
+.consultationbtn {
 	background-color: #1a3c8b;
-	color:#fdf2f2; ;
+	color: #fdf2f2;
 	font-size: small;
 }
 .consultationbtn:focus,
-.consultationbtn:hover{
-	background-color: rgb(24, 31, 68)
+.consultationbtn:hover {
+	background-color: rgb(24, 31, 68);
 }
 /* #preloader {
 	position: fixed;
@@ -436,33 +436,49 @@ a.btn_1 {
 	-ms-border-radius: 25px;
 	border-radius: 3px;
 	font-weight: 500;
-	
-
 }
-.btn-dropdown{
+.btn-dropdown {
 	position: relative;
-    bottom: 35px;
-    left: 200px;
+	bottom: 35px;
+	left: 200px;
 }
-.labData{
+.labData {
 	position: relative;
-	left:200px;
+	left: 200px;
 }
-.medicinebtn{
+.medicinebtn {
 	margin: 10px;
 }
 /* .symptomsBtn{
 	position: relative;
     right: 150px;
 } */
-.symptomsInput{
-	position: relative;
-    left: 285px;
-    bottom: 80px;
+.symptomsInput {
+	/* position: relative;
+	left: 285px;
+	bottom: 80px; */
+	/* float:right; */
+	margin-left: 30px
+	
 }
-.patientInfobtn{
+.symptomsData{
 	display: flex;
-	align-items:flex-end;
+    /* margin-right: -15px; */
+    /* margin-left: -15px; */
+
+
+}
+.getSymptoms {
+	margin-left: 80px;
+	/* position: relative;
+	left: 200px;
+	bottom: 150px; */
+	/* float:right; */
+}
+
+.patientInfobtn {
+	display: flex;
+	align-items: flex-end;
 }
 .iconbutton {
 	border: none;
@@ -2987,9 +3003,9 @@ label.css-label strong {
 		margin: 25px auto;
 	}
 }
-.icon-icon{
-	color:#1a3c8b;
-	padding-right:10px;
+.icon-icon {
+	color: #1a3c8b;
+	padding-right: 10px;
 }
 .box_profile .rating {
 	margin-bottom: 20px;
@@ -3070,7 +3086,7 @@ a.social_bt {
 }
 .profile p {
 	color: #999;
- } 
+}
 /* .profile ul.statistic {
 	padding-bottom: 5px;
 	margin-bottom: 15px
@@ -3188,7 +3204,6 @@ a.social_bt {
 	/* position: relative;
     right:100px;
 	top:100px; */
-	
 }
 .datepicker {
 	text-decoration: none;
@@ -3289,12 +3304,12 @@ section > div {
 	cursor: pointer;
 }
 
-.patientModalName{
+.patientModalName {
 	font-size: large;
 	font-weight: bold;
 	/* padding-top: 10px; */
 }
-.patientModal{
+.patientModal {
 	font-weight: bold;
 }
 .checkbutton input[type="checkbox"] {
@@ -4363,7 +4378,7 @@ input[type="file"]::-webkit-file-upload-button {
 	border-bottom: 1px #d2d0cd solid;
 	padding: 20px;
 }
-.whiteBox{
+.whiteBox {
 	background-color: white;
 }
 .addiconbutton {
@@ -4546,7 +4561,7 @@ a.box_feat_about h3 {
 	background: url(../img/hero_bg_1.svg) fixed #3f4079;
 }
 
-.vital-signInput{
+.vital-signInput {
 	width: 150px;
 	margin: 10px;
 }
@@ -4554,18 +4569,18 @@ a.box_feat_about h3 {
 	font-size: 14px;
 	font-size: 0.875rem;
 	min-height: 40px;
-	border-color:  #1a3c8b;
+	border-color: #1a3c8b;
 }
-.medicine-checkbox{
-	font-size:100px; 
+.medicine-checkbox {
+	font-size: 100px;
 	height: 25%;
 }
 /* inputmedicine-checkbox{
 	width:100px;
 	height: 25px;
 } */
-.reports-input{
-	width:150px;
+.reports-input {
+	width: 150px;
 }
 .tablecell b {
 	padding-right: 15px;
@@ -4578,8 +4593,8 @@ a.box_feat_about h3 {
 }
 textarea.form-control {
 	height: 120px;
-	margin-top:31px;
-	width: 350px;;
+	margin-top: 31px;
+	width: 350px;
 }
 .tablecontent {
 	padding: 25px;

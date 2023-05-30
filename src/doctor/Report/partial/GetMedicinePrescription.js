@@ -27,9 +27,9 @@ const GetMedicinePriscription = (props) => {
     }
 
     return (
-        <div>
+        <div className='whiteBox'>
             {showMedicineData.length > 0 ?
-            <TableContainer component={Paper}>
+            <TableContainer>
                 <Table>
                     <TableHead>
                         <TableRow>

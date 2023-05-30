@@ -27,7 +27,10 @@ export default function Dashboard(){
         e.preventDefault()
         history.push(`/PatientsClinicHistory/${doctorId}`);
     }
-
+function handleDemoClick(e){
+    e.preventDefault()
+    history.push(`/demoform`)
+}
     return(
         <MainWrapper>
             <MainNav>Dashboard</MainNav>
@@ -63,6 +66,14 @@ export default function Dashboard(){
                             // Typography1={"-history"} 
                             Typography2={"well meaning and kindly."} 
                             onClick={handleCalenderClick}>Calender
+                        </MainCards>
+                    </div>
+                    <div className="col-lg-4 ">
+                        <MainCards 
+                            Typography={"Demo"} 
+                            // Typography1={"-history"} 
+                            Typography2={"Demo session."} 
+                            onClick={handleDemoClick}>Demo
                         </MainCards>
                     </div>
                 </div>

@@ -150,7 +150,6 @@ export default function AuthApi() {
     }
     const UpdateStatusBookingdata = async ({ appointmentId }, bodyData) => {
         const result = await axios.post(`${API}/updateStatus/${appointmentId}`, bodyData)
-        console.log("--------", result)
         return result.data
     }
     const getMedicinePrescriptionData = async ({ appointmentId }) => {
@@ -162,6 +161,16 @@ export default function AuthApi() {
         const result = await axios.get(`${API}/fetch_LabTest_Prescription/${appointmentId}`)
         return result.data
     };
+    const getMedicineReport = async (appointmentId) => {
+        const result = await axios.get(`${API}/fetchMedicalReport/${appointmentId}`)
+        return result.data
+    };
+    const createPDF = async ({reportId}) => {
+        console.log("-------------reportId",reportId)
+        const result = await axios.get(`${API}/createprescriptionpdf/${reportId}`)
+        console.log("==================", result)
+        return result.data
+      };
     return {
         login,
         loginOtp,
@@ -200,6 +209,9 @@ export default function AuthApi() {
         insertLabPrescriptionData,
         UpdateStatusBookingdata,
         getMedicinePrescriptionData,
-        getLabTestPrescriptionData
+        getLabTestPrescriptionData,
+        getMedicineReport,
+        createPDF
+
     }
 }

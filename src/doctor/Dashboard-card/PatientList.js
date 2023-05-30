@@ -27,20 +27,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PatientList() {
+
     const { doctorId } = useParams()
-    //for datepicker
-    // const [value, onChange] = useState(new Date());
     let history = useHistory();
     const classes = useStyles();
-    //for fetch json data
     const [patientList, setPatientList] = useState([]);
-    // let { url } = useRouteMatch();
     const [patientListHistory, setPatientListHistory] = useState([]);
     const { getPatientListDetails, MedicineReportData } = AuthApi()
+    //For Pagination
+    const [activePageNo, setActivePageNo] = useState(1)
+    const recordsPerPage = 5;
+    const lastIndex = activePageNo * recordsPerPage;
+    const firstIndex = lastIndex - recordsPerPage;
+    const records = patientListHistory.slice(firstIndex, lastIndex)
+    const nPage = Math.ceil(patientListHistory.length / recordsPerPage)
+    const number = [...Array(nPage + 1).keys()].slice(1)
+
     useEffect(() => {
         getPatientDetails();
         date();
-    },[patientList])
+    }, [patientList])
 
     async function getPatientDetails() {
         const result = await getPatientListDetails({ doctorId });
@@ -60,21 +66,27 @@ export default function PatientList() {
             })
     }
     const date = () => {
-        let d = new Date(),
-            month = '' + (d.getMonth() + 1),
-            day = '' + d.getDay(),
-            year = '' + d.getFullYear();
-        if (month.length < 2)
-            month = '0' + month
-        if (day.length < 2)
-            day = '0' + day
-        const newDate = [year, month, day].join('-');
         const data = patientList.filter((patient) => {
             if (patient.status === "Ongoing") {
                 return patientList;
             }
         })
         setPatientListHistory(data)
+    }
+    //For Pagination
+    function prePage() {
+        if (activePageNo !== 1) {
+            setActivePageNo(activePageNo - 1)
+        }
+    }
+    function changeCPage(id) {
+        setActivePageNo(id)
+    }
+    function nextPage() {
+        if (activePageNo !== nPage) {
+            setActivePageNo(activePageNo + 1)
+
+        }
     }
     return (
         <div>
@@ -105,7 +117,7 @@ export default function PatientList() {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {patientListHistory.map((details, i) => {
+                                            {records.map((details, i) => {
                                                 return (
                                                     <TableRow key={i}>
                                                         <TableCell align="center">{details['patientDetails'][0].name}</TableCell>
@@ -132,17 +144,30 @@ export default function PatientList() {
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
-
                                 <nav aria-label="" className="add_top_20">
                                     <ul className="pagination pagination-sm">
-                                        <li className="page-item disabled">
-                                            <Link className="page-link" to="#" tabIndex="-1">Previous</Link>
-                                        </li>
-                                        <li className="page-item active"><Link className="page-link" to="#">1</Link></li>
-                                        <li className="page-item"><Link className="page-link" to="#">2</Link></li>
-                                        <li className="page-item"><Link className="page-link" to="#">3</Link></li>
                                         <li className="page-item">
-                                            <Link className="page-link" to="#">Next</Link>
+                                            <Link className="page-link"
+                                                to="#" onClick={prePage}>
+                                                Previous
+                                            </Link>
+                                        </li>
+                                        {
+                                            number.map((n, i) => {
+                                                return (
+                                                    <li className={`page-item ${activePageNo === n ? 'active' : ""}`} key={i}>
+                                                        <Link className="page-link"
+                                                            to="#" onClick={() => changeCPage(n)}>
+                                                            {n}</Link>
+                                                    </li>
+                                                )
+                                            })
+                                        }
+                                        <li className="page-item">
+                                            <Link className="page-link"
+                                                to="#" onClick={nextPage}>
+                                                Next
+                                            </Link>
                                         </li>
                                     </ul>
                                 </nav>

@@ -97,7 +97,7 @@ export default function PatientMedicalReport() {
                                 </Paper>
                                 <div className="tablecontent">
                                     <TabPanel value={value} index={0}>
-                                        <Symptoms reportId={reportId} onChange={() => changeTab(1)} />
+                                        <Symptoms reportId={reportId} appointmentId={appointmentId} onChange={() => changeTab(1)} />
                                     </TabPanel>
                                     <TabPanel value={value} index={1}>
                                         <Investigation reportId={reportId} onChange={() => changeTab(2)} />

@@ -41,24 +41,24 @@ export default function PatientPersonalInfo(props) {
                 // setPatientId(res.patientId)
             })
     }
-  
+
 
     return (
         <div>
             <div className="row">
                 <div className="col-lg-5">
-                    {/* <div className="datalist">
-                        <dl>
-                            <dd><b>Patient Name:</b>{savingData.name}</dd>
-                            <dd><b>Mob         :</b>9999999999</dd>
-                            <dd><b>Age         :</b>24</dd>
-                        </dl>
-                    </div> */}
                     <div className="row">
-                    <div className="mx-3">
-                        <label>Message</label>
-                        <textarea type="text" value={changeData.problem} onChange={handleChange} className="form-control" name="problem" placeholder="problem" />
-                    </div>
+                        <div className="mx-3">
+                            <label>Message</label>
+                            <textarea
+                                type="text"
+                                value={changeData.problem}
+                                onChange={handleChange}
+                                className="form-control"
+                                name="problem"
+                                placeholder="problem"
+                            />
+                        </div>
                     </div>
 
                 </div>
@@ -67,30 +67,77 @@ export default function PatientPersonalInfo(props) {
                     <div className="row">
                         <div className="vital-signInput">
                             <label >Weight (kg)</label>
-                            <input type="text" value={changeData.weight} className="form-control" name="weight" placeholder="weight" onChange={handleChange} ></input>
+                            <input
+                                type="text"
+                                value={changeData.weight}
+                                className="form-control"
+                                name="weight"
+                                placeholder="weight"
+                                onChange={handleChange}
+                            />
                         </div>
                         <div className="vital-signInput">
                             <label >Height (feet)</label>
-                            <input type="text" className="form-control" value={changeData.height} name="height" placeholder="height" onChange={handleChange} ></input>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={changeData.height}
+                                name="height"
+                                placeholder="height"
+                                onChange={handleChange}
+                            />
                         </div>
                         <div className="vital-signInput">
-                            <label >BMI     </label>
-                            <input type="text" className="form-control " value={changeData.BMI} name="BMI" placeholder="bmi" onChange={handleChange} ></input>
+                            <label >BMI</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={changeData.BMI}
+                                name="BMI"
+                                placeholder="bmi"
+                                onChange={handleChange}
+                            />
                         </div>
                         <div className="vital-signInput">
-                            <label >BP     </label>
-                            <input type="text" className="form-control " value={changeData.bp} name="bp" placeholder="Bp" onChange={handleChange} ></input>
+                            <label >BP</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={changeData.bp}
+                                name="bp"
+                                placeholder="Bp"
+                                onChange={handleChange}
+                            />
                         </div>
                         <div className="vital-signInput">
                             <label >Temprature</label>
-                            <input type="text" className="form-control " value={changeData.temp} name="temp" placeholder="Tempreture" onChange={handleChange} ></input>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={changeData.temp}
+                                name="temp"
+                                placeholder="Tempreture"
+                                onChange={handleChange}
+                            />
                         </div>
                         <div className="vital-signInput">
                             <label >Pulse</label>
-                            <input type="text" className="form-control " value={changeData.pulse} name="pulse" placeholder="Pulse" onChange={handleChange} ></input>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={changeData.pulse}
+                                name="pulse"
+                                placeholder="Pulse"
+                                onChange={handleChange}
+                            />
                         </div>
                         <div className="text-center add_top_30 patientinfo">
-                            <input type="submit" className="btn_1 patientinfo" value="Save" onClick={saveData} />
+                            <input
+                                type="submit"
+                                className="btn_1 patientinfo"
+                                value="Save"
+                                onClick={saveData}
+                            />
                         </div>
                     </div>
                 </div>

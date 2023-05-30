@@ -10,6 +10,7 @@ import AuthApi from "../../../services/AuthApi";
 function ShowLoginOtp(props) {
     const { otp, _id, mobile, isLoggedIn } = props.loginData;
     const [id, setId] = useRecoilState(setDoctorId)
+    console.log("id---------------", _id)
     const { loginOtp } = AuthApi()
     let history = useHistory()
     const [loginotp, setLoginOtp] = useState('');
@@ -19,14 +20,15 @@ function ShowLoginOtp(props) {
         e.preventDefault();
         await loginOtp({ otp, _id }) //axios call
             .then(response => {
+                console.log("===============>",response)
                 setId(response.data._id)
                 if (otp !== loginotp) {
                     setErrormessage("Please enter correct OTP");
                 } else {
                     if (isLoggedIn === true) {
-                        history.push(`/dashboard/${response.data._id}`)
+                        history.push(`/dashboard/${_id}`)
                     } else {
-                        history.push(`/editdoctorprofile/${response.data._id}`);
+                        history.push(`/editdoctorprofile/${_id}`);
                     }
                 }
             })

@@ -13,6 +13,7 @@ export default function NewFollowup(props) {
         setDate(date)
     }
     const addNode = async () => {
+        console.log("----------", date)
         const bodyData = {
             "new_follow_up": date,
         }

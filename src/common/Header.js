@@ -1,13 +1,12 @@
 import React from "react";
-import {Link,} from "react-router-dom";
-// import { patientIdState }from "../recoil/selector/patientIdState"
-// import { useRecoilValue } from "recoil";
+import { Link, } from "react-router-dom";
+import { doctorIdState } from "../recoil/selector/doctorIdState"
+import { useRecoilValue } from "recoil";
+export default function Header() {
+    const doctorId = useRecoilValue(doctorIdState)
 
-export default function Header(){
-   // const patientId = useRecoilValue(patientIdState)
-   
-    return(
-        <header className="header_sticky">	
+    return (
+        <header className="header_sticky">
             <Link to="#menu" className="btn_mobile">
                 <div className="hamburger hamburger--spin" id="hamburger">
                     <div className="hamburger-box">
@@ -24,16 +23,21 @@ export default function Header(){
                     </div>
                     <div className="col-lg-9 col-6">
                         <nav id="menu" className="main-menu">
-                            <ul id="top_access">
+                            {/* <ul id="top_access">
                                 <li><span><Link to="#"><i className="pe-7s-user"></i></Link></span>
                                     <ul>
-                                        {/* <Link to="/dashboard">Dashboard</Link> */}
+                                        <Link to="/dashboard">Dashboard</Link> 
                                         <Link to="/logout">Logout</Link>
                                     </ul>
                                 </li>
-                            </ul>
+                            </ul> */}
+                            {doctorId ?
+                                <li><span><Link to="/logout">Logout</Link></span></li>
+                                :
+                                <li><span><Link to="/logindoctor">Login</Link></span></li>
+                            }
                             <ul>
-                                {/* <li><span><Link to="/logindoctor">Doctor</Link></span></li> */}
+
                                 {/* <li><span><Link to="/loginpatient">Patients</Link></span></li> */}
                             </ul>
                         </nav>
