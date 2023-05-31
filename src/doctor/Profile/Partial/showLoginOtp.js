@@ -21,7 +21,7 @@ function ShowLoginOtp(props) {
         await loginOtp({ otp, _id }) //axios call
             .then(response => {
                 console.log("===============>",response)
-                setId(response.data._id)
+                setId(_id)
                 if (otp !== loginotp) {
                     setErrormessage("Please enter correct OTP");
                 } else {

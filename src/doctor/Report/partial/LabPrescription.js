@@ -33,7 +33,7 @@ export default function LabPrescription(props) {
         }
         await insertLabPrescriptionData(bodyData)
         alert("Save Successfully")
-        onChange()
+        // onChange()
     }
   
     return (
@@ -49,7 +49,7 @@ export default function LabPrescription(props) {
                         disableCloseOnSelect
                         onChange={handleDataSave}
                         getOptionLabel={(option) => `${option.test_name}`}
-                        options={labTestData || null}
+                        options={labTestData}
                         renderInput={(params) =>
                         (<TextField {...params}
                             label="Choose Test Name"

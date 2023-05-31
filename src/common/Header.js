@@ -4,6 +4,7 @@ import { doctorIdState } from "../recoil/selector/doctorIdState"
 import { useRecoilValue } from "recoil";
 export default function Header() {
     const doctorId = useRecoilValue(doctorIdState)
+    console.log("--------------", doctorId)
 
     return (
         <header className="header_sticky">
@@ -34,7 +35,7 @@ export default function Header() {
                             {doctorId ?
                                 <li><span><Link to="/logout">Logout</Link></span></li>
                                 :
-                                <li><span><Link to="/logindoctor">Login</Link></span></li>
+                                <li><span><Link to="/">Login</Link></span></li>
                             }
                             <ul>
 
