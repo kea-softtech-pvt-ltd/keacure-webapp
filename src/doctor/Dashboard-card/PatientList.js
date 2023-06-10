@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link, useParams, useHistory } from "react-router-dom";
 import moment from 'moment';
 import AuthApi from "../../services/AuthApi";
+import { MainNav } from '../../mainComponent/mainNav';
 //for table
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -32,25 +33,24 @@ export default function PatientList() {
     let history = useHistory();
     const classes = useStyles();
     const [patientList, setPatientList] = useState([]);
-    const [patientListHistory, setPatientListHistory] = useState([]);
     const { getPatientListDetails, MedicineReportData } = AuthApi()
+
     //For Pagination
     const [activePageNo, setActivePageNo] = useState(1)
     const recordsPerPage = 5;
     const lastIndex = activePageNo * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
-    const records = patientListHistory.slice(firstIndex, lastIndex)
-    const nPage = Math.ceil(patientListHistory.length / recordsPerPage)
+    const records = patientList.slice(firstIndex, lastIndex)
+    const nPage = Math.ceil(patientList.length / recordsPerPage)
     const number = [...Array(nPage + 1).keys()].slice(1)
 
     useEffect(() => {
         getPatientDetails();
-        date();
-    }, [patientList])
+    }, [])
 
     async function getPatientDetails() {
         const result = await getPatientListDetails({ doctorId });
-        setPatientList(result)
+        date(result)
     }
 
     async function saveData(item) {
@@ -62,16 +62,17 @@ export default function PatientList() {
         }
         await MedicineReportData(bodyData)
             .then((res) => {
-                history.push(`/patientlist/consultation/${item._id}/${res._id}`)
+                history.push(`/consultation/${res._id}`)
             })
     }
-    const date = () => {
-        const data = patientList.filter((patient) => {
+    const date = (list) => {
+        console.log(3)
+        const data = list.filter((patient) => {
             if (patient.status === "Ongoing") {
-                return patientList;
+                return patient;
             }
         })
-        setPatientListHistory(data)
+        setPatientList(data)
     }
     //For Pagination
     function prePage() {
@@ -94,12 +95,16 @@ export default function PatientList() {
                 <div className="container margin_120_95">
                     <div className="row">
                         <div className="col-lg-12 ml-auto">
-                            <nav id="secondary_nav">
-                                <div className="container">
-                                    <span>Appointment</span>
-                                </div>
-                            </nav>
-
+                            <MainNav>
+                                <ul className="clearfix">
+                                    <li>
+                                        <Link to={`/dashboard/${doctorId}`}>
+                                            <i className="arrow_back backArrow" title="back button"></i>
+                                        </Link>
+                                    </li>
+                                    <li className='float-none' style={{ fontSize: 'inherit' }}>Appoinment</li>
+                                </ul>
+                            </MainNav>
                         </div>
                         <div className="col-lg-12 ml-auto">
                             <div className="box_form">

@@ -16,7 +16,10 @@ export default function PatientPersonalInfo(props) {
         pulse: "",
         problem: ""
     })
+    console.log("----------------changeData", changeData)
     const [savingData, setSavingData] = useState([])
+    console.log("----------------savingData", savingData)
+
     const { reportId } = props;
 
     const handleChange = (event) => {
@@ -39,7 +42,6 @@ export default function PatientPersonalInfo(props) {
             .then((res) => {
                 setSavingData(res)
                 // setPatientId(res.patientId)
-                alert("Save Successfully")
             })
     }
 

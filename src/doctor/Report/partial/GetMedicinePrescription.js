@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 
 const GetMedicinePriscription = (props) => {
-    const { appointmentId } = props;
+    const { reportId } = props;
     const { getMedicinePrescriptionData } = AuthApi();
 
     const [showMedicineData, setShowMedicineData] = useState([])
@@ -21,7 +21,7 @@ const GetMedicinePriscription = (props) => {
     }, [showMedicineData])
 
     async function getMedicineData() {
-        const result = await getMedicinePrescriptionData({ appointmentId })
+        const result = await getMedicinePrescriptionData({ reportId })
         setShowMedicineData(result);
 
     }

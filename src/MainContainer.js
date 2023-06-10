@@ -24,12 +24,11 @@ import CreatePatientProfile from "./patient/createPatientProfile";
 import GetLoginPatientProfile from "./patient/getLoginPatientProfile";
 import Calender from './doctor/Dashboard-card/Calender';
 import User from "./user";
-import PatientLogoutForm from "./patient/patientLogoutForm";
 import SetUpdateTime from "./doctor/Profile/Clinic/Session/setUpdateTime";
 import ViewMedicalReport from './doctor/Report/ViewMedicalReport';
-import CalendarModalBox from "./doctor/Dashboard-card/partial/CalendarModalBox"
 import Logout from "./doctor/Profile/LogoutForm";
 import Demo from './doctor/Dashboard-card/Demo';
+import Subscription from "./doctor/Profile/Subscription";
 function MainContainer() {
   return (
     <Switch>
@@ -75,9 +74,9 @@ function MainContainer() {
       {/* <Route path="/calendarModalBox/:patientId">
             <CalendarModalBox/>
           </Route> */}
-      <Route exact path="/logindoctor">
+      {/* <Route  path="/logindoctor">
         <LoginDoctor />
-      </Route>
+      </Route> */}
       <Route exact path="/">
         <LoginDoctor />
       </Route>
@@ -90,14 +89,17 @@ function MainContainer() {
       {/* <Route path="/patientlist">
             <OPD/>
           </Route> */}
-      <Route path="/patientlist/consultation/:appointmentId/:reportId">
+      <Route path="/consultation/:reportId">
         <PatientMedicalReport />
       </Route>
-      <Route path="/patient-history/:appointmentId">
+      <Route path="/patient-history/:reportId">
         <ViewMedicalReport/>
       </Route>
       <Route path="/dashboard/:doctorId">
         <Dashboard />
+      </Route>
+      <Route path="/subscription/:doctorId">
+        <Subscription/>
       </Route>
       <Route path="/patientdashboard/:patientId">
         <PatientDashboard />

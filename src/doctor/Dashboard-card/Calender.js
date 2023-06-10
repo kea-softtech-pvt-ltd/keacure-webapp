@@ -12,7 +12,7 @@ export default function Calender() {
   const { calendarEvent } = AuthApi()
   const [getData, setGetData] = useState([])
   const [show, setShow] = useState(false);
-  const [patientIdDetails, setPatientIdDetails] = useState()
+  const [patientIdDetails, setPatientIdDetails] = useState([])
   useEffect(() => {
     handleOnSelectSlot();
   }, [])
@@ -22,6 +22,7 @@ export default function Calender() {
   }
 
   const handleModalButtonClick = (item) => {
+    console.log("-//////--...//",item)
     const patientId = item.patientId
     setShow(true)
     setPatientIdDetails(patientId)
@@ -88,7 +89,7 @@ export default function Calender() {
             <Modal.Title >Patient Details</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <CalendarModalBox patientIdData={patientIdDetails} onSubmit={handleModalButtonClick} />
+            <CalendarModalBox patientId={patientIdDetails} onSubmit={handleModalButtonClick} />
           </Modal.Body>
         </Modal>
       </div>

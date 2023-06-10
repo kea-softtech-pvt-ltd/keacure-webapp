@@ -11,7 +11,7 @@ function FetchExperience() {
     const { doctorId } = useParams();
     const [fetchExperience, setFetchExperience] = useRecoilState(setDoctorExperience)
     const [activeModal, setActiveModal] = useState()
-    const {fetchExperienceData}=AuthApi();
+    const { fetchExperienceData } = AuthApi();
     const handleClose = () => {
         setActiveModal(null)
     }
@@ -24,16 +24,16 @@ function FetchExperience() {
         handleClose(true);
     };
 
-    useEffect(() => { 
+    useEffect(() => {
         getAllExperience()
-    }, [])
+    }, [fetchExperience])
 
-    const getAllExperience =  () => {
-         fetchExperienceData({doctorId})
-        .then(jsonRes => {
-            const exp = manipulateExperience(jsonRes)
-            setFetchExperience(exp)
-        });
+    const getAllExperience = () => {
+        fetchExperienceData({ doctorId })
+            .then(jsonRes => {
+                const exp = manipulateExperience(jsonRes)
+                setFetchExperience(exp)
+            });
     }
 
     function manipulateExperience(data) {

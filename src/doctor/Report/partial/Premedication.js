@@ -13,7 +13,6 @@ export default function Premedication(props) {
             "premedication_note": premedication_note,
         }
         await insertPremedicationNote({ reportId }, bodyData)
-        alert("successfully done")
         onChange()
     }
     return (

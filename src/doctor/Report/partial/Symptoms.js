@@ -5,11 +5,11 @@ import { useState, useEffect } from 'react';
 import AuthApi from '../../../services/AuthApi';
 import GetSymptomsData from './GetSymptomsData'
 export default function Symptoms(props) {
-    const { onChange, reportId, onClick, appointmentId } = props
-    console.log("appointmentId", appointmentId)
+    const { onChange, reportId } = props
     const [symptoms, setSymptoms] = useState([])
     const [saveSymptoms, setSaveSymptoms] = useState([])
-    const [otherSymptom, setOtherSymptoms] = useState([])
+    const [otherSymptom, setOtherSymptoms] = useState('')
+    console.log("--------symc", saveSymptoms)
 
     // const [value, setValue]=useState();
     const { symptomsData, insertSymptoms, insertSymptom_masterTable } = AuthApi();
@@ -38,14 +38,14 @@ export default function Symptoms(props) {
         const bodyData = {
             "symptoms": saveSymptoms,
         }
-
+        console.log("----bodyData----", bodyData)
         await insertSymptoms({ reportId }, bodyData)
         const other = {
             "symptoms": otherSymptom,
         }
+        console.log("----other----", other)
         await insertSymptom_masterTable(other)
-        alert('add successfully')
-        onChange()
+        // onChange()
 
     }
 
@@ -81,8 +81,8 @@ export default function Symptoms(props) {
                     </span>
                 </div>
 
-                <div className='getSymptoms w-30' >
-                    <GetSymptomsData appointmentId={appointmentId} />
+                <div className='getSymptoms w-30'  >
+                    <GetSymptomsData reportId={reportId} />
                 </div>
             </div>
             <div className="text-center add_top_30 symptomsBtn">
@@ -92,6 +92,13 @@ export default function Symptoms(props) {
                     className="btn_1 patientinfo"
                     value="Save"
                 />
+                <input
+                    type="submit"
+                    onClick={onChange}
+                    className="btn_1 medicinebtn"
+                    value="Next"
+                />
+
             </div>
         </div>
     )

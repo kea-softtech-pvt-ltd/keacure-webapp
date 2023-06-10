@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import AuthApi from '../../../services/AuthApi';
 
 export default function GetLabPrescription(props) {
-    const { appointmentId } = props;
+    const { reportId } = props;
     const [getLabData, setGetLabData] = useState([]);
     const { getLabTestPrescriptionData } = AuthApi();
     useEffect(() => {
@@ -10,7 +10,7 @@ export default function GetLabPrescription(props) {
     }, [getLabData])
 
     const getLabPrescriptionData = async () => {
-        const result = await getLabTestPrescriptionData({ appointmentId })
+        const result = await getLabTestPrescriptionData({ reportId })
         setGetLabData(result)
     }
     return (

@@ -13,9 +13,11 @@ import AuthApi from '../../../../services/AuthApi';
 function AddDoctorEducation(props) {
     const { doctorId } = useParams();
     const [updateEduData, setUpdateEduData] = useState([])
+    console.log("--updateEduData-----", doctorId)
     const [coilDoctorEducationData, setCoilDoctorEducationData] = useRecoilState(setDoctorEducation)
     //for fetch specialization data
     const [drspecialization, setDrSpecialization] = useState([])
+    console.log("drspecialization", drspecialization)
     // for fetch degrees
     const [drdegrees, setDrdegrees] = useState([])
     const { fetchDrSpecialization, fetchDrDegree } = AuthApi();
@@ -26,17 +28,21 @@ function AddDoctorEducation(props) {
         register("collage", { required: true });
         register("comYear", { required: true });
         register("specialization", { required: true });
-        // register("document", { required: true });            
+        register("document", { required: true });
     }, [])
 
     const fetchSpecializations = async () => {
-        const result = await fetchDrSpecialization();
-        setDrSpecialization(result);
+        await fetchDrSpecialization()
+            .then((res) => {
+                setDrSpecialization(res);
+            })
     }
 
     const fetchDegrees = async () => {
-        const result = await fetchDrDegree();
-        setDrdegrees(result);
+        await fetchDrDegree()
+            .then((res) => {
+                setDrdegrees(res);
+            })
     }
 
     //for Year dropdownlist
@@ -49,26 +55,18 @@ function AddDoctorEducation(props) {
         x++;
     }
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
-    const onSubmit = async (data) => {
-        const formData = new FormData();
-        formData.append('doctorId', doctorId);
-        formData.append('degree', data.degree);
-        formData.append('collage', data.collage);
-        formData.append('comYear', data.comYear);
-        formData.append('specialization', data.specialization);
-        //let doclist = 0;
-        // if(data.document) {
-        //     doclist = Object.keys(data.document).length
-        // }
-        // if(doclist > 0) {
-        //     for (const key of Object.keys(data.document)) {
-        //         formData.append('document', data.document[key]);
-        //     }
-        // }
-        // else {
-        //     formData.append('document', "");
-        // }
-        const res = await axios.post(`${API}/education`, formData)
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        const bodyData = {
+            doctorId:doctorId,
+            degree: updateEduData.degree,
+            collage: updateEduData.collage,
+            comYear: updateEduData.comYear,
+            specialization: updateEduData.specialization,
+            // document:document
+        }
+        console.log("--------------bodyData", bodyData)
+        await axios.post(`${API}/education`, bodyData)
             .then(res => {
                 setCoilDoctorEducationData(coilDoctorEducationData.concat(res.data))
                 props.recordAdded();
@@ -89,7 +87,8 @@ function AddDoctorEducation(props) {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="my-4" encType='multipart/form-data'>
+        // <form onSubmit={handleSubmit(onSubmit)} className="my-4" encType='multipart/form-data'>
+        <>
             <div className="row">
                 <div className="col-md-6 ">
                     <label><b>Doctor Degree</b></label>
@@ -140,21 +139,22 @@ function AddDoctorEducation(props) {
                     </MainSelect>
                     {errors.specialization && <span className="validation">Please select your specialization</span>}
 
-                    {/* <label><b>Qualification Document Photo</b></label> */}
-                    {/* <MainInput 
-                        type="file" 
+                    <label><b>Qualification Document Photo</b></label>
+                    <MainInput
+                        type="file"
                         name="document"
-                        onChange={onFileChange} 
-                        placeholder="Document" 
+                        onChange={onFileChange}
+                        placeholder="Document"
                         multiple={true}>
                         {errors.document && <span className="validation">Please upload your document</span>}
-                    </MainInput> */}
+                    </MainInput>
                 </div>
             </div>
             <div className="text-center add_top_30">
-                <MainButtonInput>Save</MainButtonInput>
+                <MainButtonInput onClick={onSubmit}>Save</MainButtonInput>
             </div>
-        </form>
+            {/* </form> */}
+        </>
     )
 }
 export { AddDoctorEducation }

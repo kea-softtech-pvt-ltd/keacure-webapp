@@ -32,10 +32,9 @@ export default function LabPrescription(props) {
             "test_name": saveLabData.test_name
         }
         await insertLabPrescriptionData(bodyData)
-        alert("Save Successfully")
         // onChange()
     }
-  
+
     return (
         <div className='d-flex' >
             <div >
@@ -57,12 +56,23 @@ export default function LabPrescription(props) {
                     />
                 </div>
                 <div className="text-center add_top_30 btn-dropdown">
-                    <input type="submit" onClick={labDataSave} className="btn_1" value="Add" />
+                    <input
+                        type="submit"
+                        onClick={labDataSave}
+                        className="btn_1"
+                        value="Add"
+                    />
+                    <input
+                        type="submit"
+                        onClick={onChange}
+                        className="btn_1 medicinebtn"
+                        value="Next"
+                    />
                 </div>
             </div>
 
             <div className='align-right w-50 labData'>
-                <GetLabPrescription appointmentId={appointmentId} />
+                <GetLabPrescription reportId={reportId} />
             </div>
 
         </div>

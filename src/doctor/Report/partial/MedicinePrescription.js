@@ -110,13 +110,12 @@ export default function MedicinePrescription(props) {
         }
         await insertMedicinePrescriptionData(bodyData)
             .then((res) => {
-                alert("Save Successfully")
             })
     }
 
     return (
         <div >
-            <GetMedicinePriscription appointmentId={appointmentId} />
+            <GetMedicinePriscription reportId={reportId} />
             <TableContainer component={Paper} className='mx-auto w-100'>
                 <Table className={classes.table} size="medium" aria-label="a dense table">
                     <TableHead>
@@ -167,19 +166,19 @@ export default function MedicinePrescription(props) {
 
                             <TableCell align="right">
                                 <div className="input">
-                                    <input type="text" value={duration || ''} onChange={handleDurationValue} className="form-control" name="duration" />
+                                    <input type="text" value={duration} onChange={handleDurationValue} className="form-control" name="duration" />
                                 </div>
                             </TableCell>
 
-                            <TableCell className="d-flex">
+                            <TableCell className=" d-flex">
                                 {medicineSchedule.map((item, i) => {
                                     return (
-                                        <div className="" key={i}>
-                                            <span className="d-flex p-1">{item}</span>
+                                        <div  key={i} >
+                                            <span className="d-flex  p-1">{item}</span>
                                             <input
                                                 type="checkbox"
                                                 onChange={() => handleFrequencyChange(i)}
-                                                className="mx-3"
+                                                className="mx-3 medicineCheckbox"
                                                 value={item}
                                             />
                                         </div>

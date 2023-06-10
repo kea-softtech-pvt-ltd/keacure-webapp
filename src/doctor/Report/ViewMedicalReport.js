@@ -5,29 +5,31 @@ import GetMedicinePriscription from './partial/GetMedicinePrescription';
 import GetLabPrescription from './partial/getLabPrescription';
 import GetSymptomsData from './partial/GetSymptomsData';
 export default function ViewMedicalReport() {
-    const { appointmentId } = useParams();
+    const { reportId } = useParams();
+    // console.log("-------reportId", reportId)
     const { getMedicineReport, patientDetailsData } = AuthApi();
-
     const [viewData, setViewData] = useState([]);
-    const [patientIdData, setpatientIdData] = useState([]);
+    // console.log("-------viewData", viewData)
+    // const [patientIdData, setpatientIdData] = useState([]);
+    // console.log("0--patientIdData------==", patientIdData)
     const [patientDetails, setPatientDetails] = useState([]);
+    // console.log("-==patientDetails=--", patientDetails)
     useEffect(() => {
         getMedicineReportData()
-        getPatientDetails()
-    }, [patientIdData])
+    }, [])
 
     const getMedicineReportData = async () => {
-        await getMedicineReport(appointmentId)
-            .then((res) => {
+        await getMedicineReport({ reportId })
+            .then(async(res) => {
                 setViewData(res[0])
-                setpatientIdData(res[0].patientId)
+                const patientIdData =res[0].patientId
+            await patientDetailsData({ patientIdData })
+
             })
-    }
-    const getPatientDetails = async () => {
-        await patientDetailsData({ patientIdData })
-            .then((response) => {
-                setPatientDetails(response[0])
-            })
+            // .then((response) => {
+            //     console.log("=========.......re", response)
+            //     setPatientDetails(response)
+            // })
     }
 
     return (
@@ -65,30 +67,56 @@ export default function ViewMedicalReport() {
                                     <div className='mx-1'>
                                         <div >
                                             <b>BMI :</b>
-                                            <span>{viewData.BMI}</span>
+                                            {viewData.BMI ?
+                                                <span>{viewData.BMI}</span>
+                                                :
+                                                <span>{"-"}</span>
+                                            }
                                         </div>
 
                                         <div >
                                             <b> Bp :</b>
-                                            <span>{viewData.bp}</span>
+                                            {viewData.bp ?
+                                                <span>{viewData.bp}</span>
+                                                :
+                                                <span>{'-'}</span>
+                                            }
                                         </div>
                                         <div >
                                             <b>Height :</b>
-                                            <span>{viewData.height}</span>
+                                            {viewData.height ?
+                                                <span>{viewData.height}</span>
+                                                :
+                                                <span>{'-'}</span>
+                                            }
                                         </div>
                                     </div>
                                     <div className='mx-1'>
                                         <div>
                                             <b>Weight :</b>
-                                            <span>{viewData.weight}</span>
+                                            {viewData.weight ?
+                                                <span>{viewData.weight}</span>
+                                                :
+                                                <span>{'-'}</span>
+                                            }
                                         </div>
                                         <div>
                                             <b>Pulse :</b>
-                                            <span>{viewData.pulse}</span>
+                                            {
+                                                viewData.pulse ?
+                                                    <span>{viewData.pulse}</span>
+                                                    :
+                                                    <span>{'-'}</span>
+                                            }
                                         </div>
                                         <div>
                                             <b>Temprature :</b>
-                                            <span>{viewData.temp}</span>
+                                            {
+                                                viewData.temp ?
+                                                    <span>{viewData.temp}</span>
+                                                    :
+                                                    <span>{'-'}</span>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -98,26 +126,35 @@ export default function ViewMedicalReport() {
 
                     <label><h6><b>Medicine</b></h6></label>
                     <div className='whiteBox mt-5'>
-                        <GetMedicinePriscription appointmentId={appointmentId} />
+                        <GetMedicinePriscription reportId={reportId} />
                     </div>
 
                     <div className='whiteBox d-flex mt-3' align='left'>
                         <div className='col-lg-5 '>
-                            <GetLabPrescription appointmentId={appointmentId} />
+                            <GetLabPrescription reportId={reportId} />
                         </div>
                         <div className="col-lg-5 ">
-                            <GetSymptomsData appointmentId={appointmentId} />
+                            <GetSymptomsData reportId={reportId} />
                         </div>
                     </div>
                     <div className="whiteBox p-3 mt-3">
                         <div align="left">
                             <b>Investigation :</b>
-                            {viewData.investigation_note}
+                            {
+                                viewData.investigation_note ?
+                                    <span>{viewData.investigation_note}</span>
+                                    :
+                                    <span>{'-'}</span>
+                            }
                         </div>
 
                         <div align="left">
                             <b>Premedication :</b>
-                            {viewData.premedication_note}
+                            {viewData.premedication_note ?
+                                <span>{viewData.premedication_note}</span>
+                                :
+                                <span>{'-'}</span>
+                            }
                         </div>
                     </div>
                 </div>

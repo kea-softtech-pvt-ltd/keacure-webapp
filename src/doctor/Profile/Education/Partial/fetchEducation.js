@@ -8,14 +8,13 @@ import { useState, useEffect } from "react";
 import { FetchImages } from "./fetchImages";
 import { useRecoilState } from "recoil";
 import { setDoctorEducation } from "../../../../recoil/atom/setDoctorEducation";
-import axios from 'axios';
 import AuthApi from '../../../../services/AuthApi';
 
 function FetchEducation() {
     const { doctorId } = useParams();
     const [eduData, setEduData] = useRecoilState(setDoctorEducation);
     const [activeModal, setActiveModal] = useState();
-    const {fetchAllEducations}=AuthApi();
+    const { fetchAllEducations } = AuthApi();
     const handleClose = () => {
         setActiveModal(null)
     }
@@ -32,8 +31,11 @@ function FetchEducation() {
     }, [])
 
     const getAllEducations = async () => {
-        const result = await fetchAllEducations({doctorId}, eduData)
-        setEduData(result.data);
+        await fetchAllEducations({ doctorId })
+            .then((res) => {
+                console.log("-eduData-", res)
+                setEduData(res.data);
+            })
     }
 
     return (
@@ -72,8 +74,8 @@ function FetchEducation() {
                                         <div className="fetchedudata">
                                             <div>
                                                 <span className="icon-icon">
-                                                <i className="icon_calendar" title="calendar"></i>
-                                            </span>
+                                                    <i className="icon_calendar" title="calendar"></i>
+                                                </span>
                                                 <b>Complition Year</b>
                                             </div>
                                             <div>{education.comYear}</div>

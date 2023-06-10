@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import AuthApi from "../../../services/AuthApi";
 import PatientProfile from "../../../img/profile.png"
 function CalendarModalBox(props) {
-    const { patientIdData } = props
+    const { patientId } = props
+    console.log(patientId)
     const [ patientDetails, setPatientDetails] = useState();
     const { patientDetailsData } = AuthApi()
     useEffect(() => {
@@ -10,8 +11,9 @@ function CalendarModalBox(props) {
     }, [])
 
     const getPatientInfoById = async () => {
-        await patientDetailsData({ patientIdData })
+        await patientDetailsData({ patientId })
             .then(jsonRes => {
+                console.log("-------json", jsonRes)
                 setPatientDetails(jsonRes)
             })
     };

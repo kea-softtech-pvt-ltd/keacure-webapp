@@ -4,9 +4,7 @@ import { makeStyles } from "@material-ui/styles";
 import moment from 'moment';
 import Paper from '@material-ui/core/Paper';
 import AuthApi from "../../services/AuthApi";
-import axios from 'axios';
-import { API } from '../../config';
-import FileDownload from 'js-file-download';
+import { MainNav } from '../../mainComponent/mainNav';
 
 import {
     TableContainer,
@@ -27,13 +25,12 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function PatientsClinicHistory() {
-    const { doctorId } = useParams()
+    const { doctorId } = useParams();
+    console.log("--doctorId-----",doctorId)
     const classes = useStyles()
     const history = useHistory()
-    const [patientDetails, setPatientDetails] = useState([]);
     const [patientHistoryData, setPatientHistoryData] = useState([])
     const { getPatientListDetails } = AuthApi()
-    const [reportId, setReportId]=useState()
     //For Pagination
     const [activePageNo, setActivePageNo] = useState(1)
     const recordsPerPage = 5;
@@ -45,27 +42,23 @@ export default function PatientsClinicHistory() {
 
     useEffect(() => {
         getPatientHistory();
-        date();
-    }, [patientDetails])
+    }, [])
 
     async function getPatientHistory() {
         const result = await getPatientListDetails({ doctorId });
-        setPatientDetails(result)
-        setReportId(result[0].medicalReportId)
-    }
-    const date = () => {
-        const data = patientDetails.filter((patientData) => {
+        const data = result.filter((patientData) => {
             if (patientData.status === "Completed") {
-                return patientDetails;
+                return result;
             }
         })
         setPatientHistoryData(data)
     }
 
     const patientHistory = (details) => {
-        history.push(`/patient-history/${details._id}`)
+        console.log("---details", details)
+        // const reportId = details[0].medicalReportId;
+        history.push(`/patient-history/${details.medicalReportId}`)
     }
-
 
     //For Pagination
     function prePage() {
@@ -82,31 +75,21 @@ export default function PatientsClinicHistory() {
 
         }
     }
-    //for PDF Download
-
-    const download =async (e) => {
-        e.preventDefault();
-        const result = await axios({
-            url:(`${API}/createprescriptionpdf/${reportId}`),
-            method:'GET',
-            responseType:"blob"
-        }).then((res)=>{
-            console.log("-----res-======", res)
-           FileDownload(res.data,'invoice.pdf')
-        })
-        return result;
-        console.log("------======", result)
-    }
     return (
         <main>
             <div className="container margin_120_95">
                 <div className="row">
                     <div className="col-lg-12 ml-auto">
-                        <nav id="secondary_nav">
-                            <div className="container">
-                                <span>Patient History</span>
-                            </div>
-                        </nav>
+                        <MainNav>
+                            <ul className="clearfix">
+                                <li>
+                                    <Link to={`/Patientsclinichistory/${doctorId}`}>
+                                        <i className="arrow_back backArrow" title="back button"></i>
+                                    </Link>
+                                </li>
+                                <li className='float-none' style={{ fontSize: 'inherit' }}>Patient History</li>
+                            </ul>
+                        </MainNav>
                         <div className="box_form">
                             <TableContainer component={Paper}>
                                 <Table className={classes.table} >
@@ -125,7 +108,10 @@ export default function PatientsClinicHistory() {
                                         return (
                                             <TableRow key={id}>
                                                 <TableCell align="center">{details['patientDetails'][0].name}</TableCell>
-                                                <TableCell align="center">{moment(details.selectedDate).format('YYYY-MM-DD').toString()},{details.slotTime}</TableCell>
+                                                <TableCell align="center">
+                                                    {moment(details.selectedDate).format('YYYY-MM-DD').toString()},
+                                                    {details.slotTime}
+                                                </TableCell>
                                                 <TableCell align="center">{details['patientDetails'][0].mobile}</TableCell>
                                                 <TableCell align="center">{details['patientDetails'][0].age}</TableCell>
                                                 <TableCell align="center">{details["clinicList"][0].clinicName}</TableCell>
@@ -136,7 +122,7 @@ export default function PatientsClinicHistory() {
                                                         {() => patientHistory(details)}>
                                                         <button className="consultationbtn btn btn-primary mx-3" title="print">View</button>
                                                     </Link>
-                                                    <a target="blank" href="http://localhost:9000/storage/invoice-123123.pdf" download>
+                                                    <a target="blank" href={`http://localhost:9000/storage/invoice-${details.medicalReportId}.pdf`} download>
                                                         Download
                                                     </a>
                                                 </TableCell>

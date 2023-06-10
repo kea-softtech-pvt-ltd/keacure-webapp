@@ -136,7 +136,7 @@ function AddDoctorProfessionalExperience(props) {
             </div>
 
             <div className="text-center add_top_30">
-                <MainButtonInput>Verify & Save</MainButtonInput>
+                <MainButtonInput>Save</MainButtonInput>
             </div>
         </form>
     )

@@ -1,33 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import AuthApi from '../../../services/AuthApi';
 export default function GetSymptomsData(props) {
-    const { appointmentId } = props
+    const { reportId } = props
+    console.log("----reoportid", reportId)
     const { getMedicineReport } = AuthApi();
-    const [fetchSymptomsData, setFetchSymptomsData] = useState([])
-    const [symptomData, setSymptomData] = useState([])
-
+    // const [fetchSymptomsData, setFetchSymptomsData] = useState([])
+    // console.log("fetchSymptomsData", fetchSymptomsData)
+    const [symptomDataInfo, setSymptomDataInfo] = useState([])
+    console.log("----symptomDataInfo", symptomDataInfo)
     useEffect(() => {
         symptomsData()
-    }, [fetchSymptomsData])
+    }, [])
 
     const symptomsData = async () => {
-        await getMedicineReport(appointmentId)
+        await getMedicineReport({ reportId })
             .then((res) => {
-                setFetchSymptomsData(res)
-                setSymptomData(res[0].symptoms)
+                // setFetchSymptomsData(res)
+                setSymptomDataInfo(res[0].symptoms)
             })
     }
 
     return (
         <>
-            {symptomData.length > 0 ?
+            {symptomDataInfo.length > 0 ?
 
                 <div>
                     <h6><b>List of Symptoms</b></h6>
-                    {fetchSymptomsData && symptomData.map((item, i) => {
+                    {symptomDataInfo && symptomDataInfo.map((item, i) => {
                         return (
                             <span key={i}>
-                                    {item}<br/>
+                                {item}<br />
                             </span>
                         )
                     })}

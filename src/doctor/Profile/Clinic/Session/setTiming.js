@@ -40,9 +40,10 @@ function SetTiming(props) {
         let temp = []
         temp = showSelectedSlots
         const { name, value } = event.target;
+        console.log("value-------------",value)
         if (event.target.checked) {
             temp.push({
-                slotTime: value,
+                time: value,
                 status: 0
             })
         } else {

@@ -14,7 +14,7 @@ function DoctorPersonalInformation(props) {
     //const { data } = props
     const { doctorId } = useParams();
     const [updateData, setUpdateData] = useState([]);
-    console.log("updateData---------",updateData)
+    console.log("===updateData=====", updateData)
     const { addDoctorInformation, submitDoctorInformation } = AuthApi()
     //for google map api autocomplete onChange method
     function handleChangeAddress(address) {
@@ -67,7 +67,9 @@ function DoctorPersonalInformation(props) {
                         setUpdateData({ ...updateData, k: jsonRes[k] });
                     }
                 })
+
                 setUpdateData(jsonRes)
+
                 if (jsonRes.photo) {
                     setDoctorPhoto(`../images/${jsonRes.photo}`)
                 }
@@ -77,67 +79,74 @@ function DoctorPersonalInformation(props) {
         register("officialEmail", { required: true });
         register("personalEmail", { required: true });
         register("address", { required: true });
+        register("photo", { required: true });
     }, [])
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
-    const onSubmit = async(data) => {
-        console.log("data=========",data)
-        const formData = new FormData();
-        formData.append('photo', (data.photo) ? data.photo : []);
-        formData.append('name', data.name);
-        formData.append('gender', data.gender);
-        formData.append('officialEmail', data.officialEmail);
-        formData.append('personalEmail', data.personalEmail);
-        formData.append('address', data.address);
-        const result = await axios.post(`${API}/insertPersonalInfo/${doctorId}`, formData)
-        setUpdateData(result)
+    const onSubmit = async (e) => {
+        e.preventDefault()
+        const bodyData = {
+            name: updateData.name,
+            gender: updateData.gender,
+            personalEmail: updateData.personalEmail,
+            address: updateData.address,
+            photo: doctorPhoto
+        }
+        await axios.post(`${API}/insertPersonalInfo/${doctorId}`, bodyData)
             .then(function (response) {
-                console.log("-----------------", response)
+                //  setUpdateData(response.data)
+
             })
-            props.data();
+        // props.data();
 
     }
     return (
         <>
-            <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'>
-                <div className="row">
-                    <div className="col-md-6 ">
-                        <div className="row">
-                            <div className="col-4">
-                                <div className="doctorphoto">
+            {/* <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'> */}
+            <div className="row">
+                <div className="col-md-6 ">
+                    <div className="row">
+                        <div className="col-4">
+                            <div className="doctorphoto">
+                                {updateData.photo > 0 ?
                                     <img
-                                        ref={uploadedImage}
-                                        src={doctorPhoto}
+                                        src={updateData.photo}
                                         className="doctorphotoStyle"
                                         alt="doctorPhoto"
                                     />
-                                </div>
-                            </div>
-                            <div className="col-8">
-                                <label><b>Doctor photo</b></label>
-                                <MainInput
-                                    type="file"
-                                    accept=".png, .jpg, .jpeg"
-                                    onChange={handlePhoto}
-                                    name="photo">
-                                </MainInput>
+                                    : <img
+                                        ref={uploadedImage}
+                                        src={doctorPhoto}
+                                        alt="doctorPhoto"
+                                        className="doctorphotoStyle"
+                                    />
+                                }
                             </div>
                         </div>
-
-                        <label><b>Full Name</b></label>
-                        <MainInput
-                            name="name"
-                            value={updateData.name}
-                            onChange={handleInputChange}
-                            placeholder="Name">
-                            {errors.name && <span className="validation">Please enter your first name</span>}
-                        </MainInput>
-
-
+                        <div className="col-8">
+                            <label><b>Doctor photo</b></label>
+                            <MainInput
+                                type="file"
+                                accept=".png, .jpg, .jpeg"
+                                onChange={handlePhoto}
+                                name="photo">
+                            </MainInput>
+                        </div>
                     </div>
 
-                    <div className="col-md-6 ">
-                        {/* <label><b>Official EmailId</b></label>
+                    <label><b>Full Name</b></label>
+                    <MainInput
+                        name="name"
+                        value={updateData.name}
+                        onChange={handleInputChange}
+                        placeholder="Name">
+                        {errors.name && <span className="validation">Please enter your first name</span>}
+                    </MainInput>
+
+                </div>
+
+                <div className="col-md-6 ">
+                    {/* <label><b>Official EmailId</b></label>
                     <MainInput 
                         type="email" 
                         name="officialEmail" 
@@ -146,48 +155,51 @@ function DoctorPersonalInformation(props) {
                         placeholder="Official EmailId">
                         {errors.officialEmail && <span className="validation">Please enter your official Email</span>}
                     </MainInput> */}
+                    <div className="form-group">
+                        <label><b>Gender</b></label>
+                    </div>
+                    <div className="row">
                         <div className="form-group">
-                            <label><b>Gender</b></label>
-                        </div>
-                        <div className="row">
-                            <div className="form-group">
-                                <div className="col-6">
-                                    <MainRadioGroup
-                                        name="gender"
-                                        value="female"
-                                        value1="male"
-                                        value2="other"
-                                        onChange={handleInputChange}
-                                        label="Female"
-                                        label1="male"
-                                        label2="other">
-                                    </MainRadioGroup>
-                                    {errors.gender && <span className="validation">Please Select your gender</span>}
-                                </div>
+                            <div className="col-6">
+                                <MainRadioGroup
+                                    name="gender"
+                                    value="female"
+                                    value1="male"
+                                    value2="other"
+                                    onChange={handleInputChange}
+                                    label="Female"
+                                    label1="male"
+                                    label2="other">
+                                </MainRadioGroup>
+                                {errors.gender && <span className="validation">Please Select your gender</span>}
                             </div>
                         </div>
-                        <label><b>Personal EmailId</b></label>
-                        <MainInput
-                            type="email"
-                            value={updateData.personalEmail}
-                            name="personalEmail"
-                            onChange={handleInputChange}
-                            placeholder="Personal EmailId">
-                            {errors.personalEmail && <span className="validation">Please enter your personal Email</span>}
-                        </MainInput>
-
-                        <PlacesAutocompleteInput
-                            value={updateData.address}
-                            onChange={handleChangeAddress}><b>City & Area</b>
-                        </PlacesAutocompleteInput>
-                        {errors.address && <span className="validation">Please enter your location</span>}
                     </div>
-                </div>
+                    <label><b>Personal EmailId</b></label>
+                    <MainInput
+                        type="email"
+                        value={updateData.personalEmail}
+                        name="personalEmail"
+                        onChange={handleInputChange}
+                        placeholder="Personal EmailId">
+                        {errors.personalEmail && <span className="validation">Please enter your personal Email</span>}
+                    </MainInput>
 
-                <div className="text-center add_top_30">
-                    <MainButtonInput>Verify & Save</MainButtonInput>
+                    <PlacesAutocompleteInput
+                        value={updateData.address}
+                        onChange={handleChangeAddress}><b>City & Area</b>
+                    </PlacesAutocompleteInput>
+                    {errors.address && <span className="validation">Please enter your location</span>}
                 </div>
-            </form>
+            </div>
+
+            <div className="text-center add_top_30">
+                <MainButtonInput onClick={onSubmit}> Save</MainButtonInput>
+            </div>
+            <div className="text-right add_top_30">
+                <MainButtonInput onClick={props.data}>Next</MainButtonInput>
+            </div>
+            {/* </form> */}
         </>
     )
 }

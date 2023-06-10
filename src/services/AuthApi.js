@@ -14,10 +14,12 @@ export default function AuthApi() {
 
     const fetchAllEducations = async ({ doctorId }) => {
         const result = await axios.get(`${API}/fetchEduData/${doctorId}`);
+        console.log("----result-0--", result)
         return result;
     }
     const addDoctorInformation = async ({ doctorId }) => {
         const result = await axios.get(`${API}/fetchData/${doctorId}`);
+        console.log('addDoctorInformation----------', result)
         return result.data;
     }
 
@@ -25,7 +27,7 @@ export default function AuthApi() {
         const result = await axios.post(`${API}/insertPersonalInfo/${doctorId}`, { formData })
         return result
     }
-    const insertClinicData = async (newClinicData) => {
+    const insertClinicData = async ({newClinicData}) => {
         const result = await axios.post(`${API}/insertclinic`, newClinicData)
         return result
     }
@@ -43,6 +45,7 @@ export default function AuthApi() {
     }
     const fetchDrSpecialization = async () => {
         const result = await axios.get(`${API}/drspecialization`);
+        console.log("---rsauth",result)
         return result.data
     }
     const fetchDrDegree = async () => {
@@ -94,8 +97,11 @@ export default function AuthApi() {
         const result = await axios.get(`${API}/getBookingData/${doctorId}`)
         return result.data
     }
-    const patientDetailsData = async ({ patientIdData }) => {
-        const result = await axios.get(`${API}/patientById/${patientIdData}`)
+    const patientDetailsData = async ({ patientId }) => {
+        console.log("patienhjjjjjjjjtIdauth--------", patientId)
+        const result = await axios.get(`${API}/patientById/${patientId}`)
+        console.log("patientIdData result====", result)
+
         return result.data
     }
     const getLabData = async () => {
@@ -133,6 +139,7 @@ export default function AuthApi() {
     };
     const insertSymptoms = async ({ reportId }, bodyData) => {
         const result = await axios.post(`${API}/add_symptoms/${reportId}`, bodyData)
+        console.log("--result---", result)
         return result
     };
     const insertSymptom_masterTable = async (bodyData) => {
@@ -152,17 +159,19 @@ export default function AuthApi() {
         const result = await axios.post(`${API}/updateStatus/${appointmentId}`, bodyData)
         return result.data
     }
-    const getMedicinePrescriptionData = async ({ appointmentId }) => {
-        const result = await axios.get(`${API}/fetchmedicinePrescription/${appointmentId}`)
+    const getMedicinePrescriptionData = async ({ reportId }) => {
+        const result = await axios.get(`${API}/fetchmedicinePrescription/${reportId}`)
         return result.data
 
     };
-    const getLabTestPrescriptionData = async ({ appointmentId }) => {
-        const result = await axios.get(`${API}/fetch_LabTest_Prescription/${appointmentId}`)
+    const getLabTestPrescriptionData = async ({ reportId }) => {
+        const result = await axios.get(`${API}/fetch_LabTest_Prescription/${reportId}`)
         return result.data
     };
-    const getMedicineReport = async (appointmentId) => {
-        const result = await axios.get(`${API}/fetchMedicalReport/${appointmentId}`)
+    const getMedicineReport = async ({reportId}) => {
+        console.log("---------", reportId)
+        const result = await axios.get(`${API}/fetchMedicalReport/${reportId}`)
+        console.log("---------", result)
         return result.data
     };
     const createPDF = async ({reportId}) => {

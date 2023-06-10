@@ -16,7 +16,6 @@ export default function Investigation(props) {
             "investigation_note": investigation_note,
         }
         await insertInvestigationNote({ reportId }, bodyData)
-        alert("successfully done")
         onChange()
     }
 
@@ -26,12 +25,12 @@ export default function Investigation(props) {
                 <span >Doctor Investigation Note</span>
                 <textarea
                     type="text"
-                    value={investigation_note || ''}
+                    value={investigation_note}
                     onChange={handleChange}
                     style={{ width: 950 }}
                     className="form-control"
                     name="investigation_note"
-                    placeholder=""
+                    placeholder="write something"
                 />
             </div>
 

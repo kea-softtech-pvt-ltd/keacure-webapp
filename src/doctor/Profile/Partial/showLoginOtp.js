@@ -10,7 +10,6 @@ import AuthApi from "../../../services/AuthApi";
 function ShowLoginOtp(props) {
     const { otp, _id, mobile, isLoggedIn } = props.loginData;
     const [id, setId] = useRecoilState(setDoctorId)
-    console.log("id---------------", _id)
     const { loginOtp } = AuthApi()
     let history = useHistory()
     const [loginotp, setLoginOtp] = useState('');
@@ -28,7 +27,7 @@ function ShowLoginOtp(props) {
                     if (isLoggedIn === true) {
                         history.push(`/dashboard/${_id}`)
                     } else {
-                        history.push(`/editdoctorprofile/${_id}`);
+                        history.push(`/subscription/${_id}`);
                     }
                 }
             })
