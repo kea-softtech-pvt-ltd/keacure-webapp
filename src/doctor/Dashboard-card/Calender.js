@@ -4,9 +4,11 @@ import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Modal } from 'react-bootstrap';
 import AuthApi from '../../services/AuthApi';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import CalendarModalBox from './partial/CalendarModalBox';
+import { MainNav } from '../../mainComponent/mainNav';
 const localizer = momentLocalizer(moment)
+
 export default function Calender() {
   const { doctorId } = useParams();
   const { calendarEvent } = AuthApi()
@@ -22,7 +24,6 @@ export default function Calender() {
   }
 
   const handleModalButtonClick = (item) => {
-    console.log("-//////--...//",item)
     const patientId = item.patientId
     setShow(true)
     setPatientIdDetails(patientId)
@@ -55,11 +56,16 @@ export default function Calender() {
       <div className="container margin_120_95">
         <div className="row">
           <div className="col-lg-12 ml-auto">
-            <nav id="secondary_nav">
-              <div className="container">
-                <span>Calender</span>
-              </div>
-            </nav>
+            <MainNav>
+              <ul className="clearfix">
+                <li>
+                  <Link to={`/dashboard/${doctorId}`}>
+                    <i className="arrow_back backArrow" title="back button"></i>
+                  </Link>
+                </li>
+                <li className='float-none' style={{ fontSize: 'inherit' }}>Calendar</li>
+              </ul>
+            </MainNav>
             <div className="box_form">
               <div className="myCustomHeight">
                 <Calendar

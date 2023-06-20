@@ -11,7 +11,7 @@ export default function NewFollowup(props) {
     const [appointmentId, setAppointmentId] = useState()
     console.log("----appointmentId--------", appointmentId)
     
-    let history = useHistory()
+    const history = useHistory()
     const addDatePicker = (date) => {
         setDate(date)
     }

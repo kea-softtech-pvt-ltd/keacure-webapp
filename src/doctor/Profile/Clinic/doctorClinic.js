@@ -1,21 +1,18 @@
-import {useHistory} from "react-router-dom";
-import {AddDoctorClinicInfo}  from "./Partial/AddDoctorClinicInfo";
-import {AddDoctorOwnClinicInfo} from "./Partial/addDoctorOwnClinicInfo";
-import { useParams} from "react-router-dom";
+import { AddDoctorClinicInfo } from "./Partial/AddDoctorClinicInfo";
+import { AddDoctorOwnClinicInfo } from "./Partial/addDoctorOwnClinicInfo";
 
-function DoctorClinic(){
-    const {doctorId} = useParams()
-  
-    return(
+function DoctorClinic() {
+
+    return (
         <>
             <div className="row">
-                <AddDoctorClinicInfo/>
-                
-                <AddDoctorOwnClinicInfo/>
+                <AddDoctorClinicInfo />
+
+                <AddDoctorOwnClinicInfo />
             </div>
-            
-            
+
+
         </>
     )
 }
-export{DoctorClinic}
+export { DoctorClinic }

@@ -6,7 +6,7 @@ function TabPanel(props) {
     return (
       <div>
         {value === index && (
-          <Box p={3}>
+          <Box p={4}>
             {children}
           </Box>
         )}

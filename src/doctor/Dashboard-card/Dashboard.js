@@ -1,10 +1,13 @@
-import { useHistory ,useParams } from "react-router-dom";
+import { useHistory ,useLocation,useParams } from "react-router-dom";
 import { MainCards } from '../../mainComponent/mainCards';
 import { MainNav } from "../../mainComponent/mainNav";
 import { MainWrapper } from "../../mainComponent/mainWrapper";
 // import 'react-big-calendar/lib/sass/styles';
 // import 'react-big-calendar/lib/addons/dragAndDrop/styles';
 export default function Dashboard(){
+    const {state} = useLocation()
+    const {helperId,accessModule} = state.state
+    console.log("state----------", helperId,accessModule)
     const { doctorId } = useParams();
     let history = useHistory();
     
@@ -27,9 +30,13 @@ export default function Dashboard(){
         e.preventDefault()
         history.push(`/PatientsClinicHistory/${doctorId}`);
     }
-function handleDemoClick(e){
+function handleSubscriptionClick(e){
     e.preventDefault()
-    history.push(`/demoform`)
+    history.push(`/subscriptioncard`)
+}
+function handleAddHelper(e){
+    e.preventDefault()
+    history.push(`/addhelper/${doctorId}`)
 }
     return(
         <MainWrapper>
@@ -70,10 +77,19 @@ function handleDemoClick(e){
                     </div>
                     <div className="col-lg-4 ">
                         <MainCards 
-                            Typography={"Demo"} 
+                            Typography={"subscription"} 
                             // Typography1={"-history"} 
-                            Typography2={"Demo session."} 
-                            onClick={handleDemoClick}>Demo
+                            Typography2={"Subscription"} 
+                            onClick={handleSubscriptionClick}>Subscription
+                        </MainCards>
+                    </div>
+                    <div className="col-lg-4 ">
+                        <MainCards 
+                            Typography={"Add Helper"} 
+                            // Typography1={"-history"} 
+                            Typography2={"Add Helper"} 
+                            onClick={handleAddHelper}
+                            >Add Helper
                         </MainCards>
                     </div>
                 </div>

@@ -2,12 +2,8 @@ import React, { useEffect, useState } from 'react';
 import AuthApi from '../../../services/AuthApi';
 export default function GetSymptomsData(props) {
     const { reportId } = props
-    console.log("----reoportid", reportId)
     const { getMedicineReport } = AuthApi();
-    // const [fetchSymptomsData, setFetchSymptomsData] = useState([])
-    // console.log("fetchSymptomsData", fetchSymptomsData)
     const [symptomDataInfo, setSymptomDataInfo] = useState([])
-    console.log("----symptomDataInfo", symptomDataInfo)
     useEffect(() => {
         symptomsData()
     }, [])

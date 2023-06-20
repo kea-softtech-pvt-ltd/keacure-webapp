@@ -26,9 +26,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PatientsClinicHistory() {
     const { doctorId } = useParams();
-    console.log("--doctorId-----",doctorId)
     const classes = useStyles()
-    const history = useHistory()
+    const  history = useHistory()
     const [patientHistoryData, setPatientHistoryData] = useState([])
     const { getPatientListDetails } = AuthApi()
     //For Pagination
@@ -55,7 +54,6 @@ export default function PatientsClinicHistory() {
     }
 
     const patientHistory = (details) => {
-        console.log("---details", details)
         // const reportId = details[0].medicalReportId;
         history.push(`/patient-history/${details.medicalReportId}`)
     }
@@ -83,7 +81,7 @@ export default function PatientsClinicHistory() {
                         <MainNav>
                             <ul className="clearfix">
                                 <li>
-                                    <Link to={`/Patientsclinichistory/${doctorId}`}>
+                                    <Link to={`/dashboard/${doctorId}`}>
                                         <i className="arrow_back backArrow" title="back button"></i>
                                     </Link>
                                 </li>

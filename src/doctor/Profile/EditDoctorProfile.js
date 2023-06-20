@@ -5,13 +5,11 @@ import { useState } from "react";
 import { DoctorProfessionalExperience } from "./Experience/doctorProfessionalExperience"
 import { DoctorEducation } from "./Education/doctorEducation";
 import { DoctorPersonalInformation } from "./Personal/DoctorPersonalInformation";
-import { doctorIdState } from "../../recoil/selector/doctorIdState";
-import { useRecoilValue } from "recoil";
 import { MainNav } from '../../mainComponent/mainNav';
 import { MainTabs } from '../../mainComponent/mainTabs';
 import { MainWrapper } from '../../mainComponent/mainWrapper';
 import { Link, useParams } from 'react-router-dom';
-
+import AddHelper from '../Dashboard-card/AddHelper';
 export default function EditDoctorProfile() {
     const { doctorId } = useParams();
 
@@ -29,6 +27,9 @@ export default function EditDoctorProfile() {
     }
     const goToClinic = () => {
         setTabValue(3)
+    }
+    const goToAddHelper = () => {
+        setTabValue(4)
     }
 
     return (
@@ -53,7 +54,9 @@ export default function EditDoctorProfile() {
                     label="Personal Information"
                     label1="Educational Details"
                     label2="Professional Experience"
-                    label3="Clinic">
+                    label3="Clinic"
+                    label4="Add Helper"
+                >
                 </MainTabs>
 
                 <TabPanel value={tabValue} index={0}>
@@ -69,7 +72,10 @@ export default function EditDoctorProfile() {
                 </TabPanel>
 
                 <TabPanel value={tabValue} index={3}>
-                    <DoctorClinic />
+                    <DoctorClinic data={goToAddHelper} />
+                </TabPanel>
+                <TabPanel value={tabValue} index={4}>
+                    <AddHelper  />
                 </TabPanel>
             </div>
         </MainWrapper>

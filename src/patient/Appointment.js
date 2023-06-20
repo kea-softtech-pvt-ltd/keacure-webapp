@@ -18,7 +18,7 @@ import { CSVLink } from "react-csv";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import { 
     Link,
-    useRouteMatch
+    // useRouteMatch
    } from "react-router-dom";
 
   //for table
@@ -42,7 +42,7 @@ export default function Appointment(){
     const classes = useStyles();
     //for fetch json data
     let[rows ,setRows] =useState([])
-    let {url } = useRouteMatch();
+    // let {url } = useRouteMatch();
 
 	useEffect(()=>{
 		const result = axios(
@@ -125,7 +125,7 @@ export default function Appointment(){
                                                 <TableCell align="right">
                                                     <div className="linklist">
                                                         <Link className="patientlistlink" >pay</Link>
-                                                        <Link className="patientlistlink"  to={`${url}/${row.id}`}>{<VisibilityIcon style={{ fontSize:20 }}/>}</Link>
+                                                        {/* <Link className="patientlistlink"  to={`${url}/${row.id}`}>{<VisibilityIcon style={{ fontSize:20 }}/>}</Link> */}
                                                         {/* <button  className="btn_1"><i className="pe-7s-print" title="print"></i></button> */}
                                                     </div>
                                                 </TableCell>

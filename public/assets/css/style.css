@@ -452,6 +452,15 @@ a.btn_1 {
 .medicineCheckbox {
 	accent-color: #1a3c8b;
 }
+
+.helperDiv{
+    position: relative;
+    left: 215px;
+}
+.helperCheckbox {
+	 accent-color: #1a3c8b; 
+	 
+}
 .backArrow {
 	font-size: x-large;
 }
@@ -3280,32 +3289,37 @@ a.btn_2 .full-width {
 	color: #0a0a0a;
 	-webkit-transform: scale(1.1);
 }
-.card-list{
+.card-list {
 	text-align: left;
 	padding: 10px;
 }
-.card-list i{
-	color:#1a3c8b;
+.card-list i {
+	color: #1a3c8b;
 }
-.sub-card-btn{
+.sub-card-btn {
 	cursor: pointer;
 	border-radius: 10px;
 	background-color: #1a3c8b;
 }
-.card{
+.disabled-card {
+	background-color: "#dfdfdf";
+	color: "white";
+}
+.radio-input {
+	accent-color: #1a3c8b;
+}
+.card {
 	height: 325px;
-    width: 28%;
-    border-radius: 10px;
-    padding: 25px;
+	width: 28%;
+	border-radius: 10px;
+	padding: 25px;
 	margin: 22px;
-}  
-/* .card-hover :hover{
-	background-color: #90d8ff;
+}
 
-}  */
-/* .cards{
-	margin: 25px;
-} */
+.helperLabel {
+	font-size: 15px;
+	margin-top: 10px;
+}
 .colum {
 	color: black;
 	margin: 25px;
@@ -3508,9 +3522,9 @@ input[type="radio"]:checked + label {
 		margin: 0;
 	}
 }
-.subscription h2{
+.subscription h2 {
 	color: #fff;
-	padding:25px;
+	padding: 25px;
 }
 #login-2 h1 {
 	font-size: 28px;
@@ -3520,7 +3534,7 @@ input[type="radio"]:checked + label {
 }
 .box_login {
 	border-right: 1px solid #e1e8ed;
-	padding: 10px 10px;
+	padding: 15px;
 }
 @media (max-width: 767px) {
 	.box_login {

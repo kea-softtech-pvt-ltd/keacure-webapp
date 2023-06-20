@@ -20,16 +20,15 @@ export default function ViewMedicalReport() {
 
     const getMedicineReportData = async () => {
         await getMedicineReport({ reportId })
-            .then(async(res) => {
+            .then(async (res) => {
                 setViewData(res[0])
-                const patientIdData =res[0].patientId
-            await patientDetailsData({ patientIdData })
-
+                const patientId = res[0].patientId
+                await patientDetailsData({ patientId })
+                .then((response) => {
+                        setPatientDetails(response)
+                    })
             })
-            // .then((response) => {
-            //     console.log("=========.......re", response)
-            //     setPatientDetails(response)
-            // })
+
     }
 
     return (

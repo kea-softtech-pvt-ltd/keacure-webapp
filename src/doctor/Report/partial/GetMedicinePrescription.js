@@ -7,7 +7,6 @@ import {
     TableRow,
     TableCell,
     TableBody,
-    Paper
 } from '@material-ui/core';
 
 const GetMedicinePriscription = (props) => {

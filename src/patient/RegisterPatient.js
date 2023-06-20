@@ -1,6 +1,6 @@
 import { API } from "../config";
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import{useState} from "react";
 import {useRef } from "react";
 import axios from "axios";
@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import CryptoJS from 'crypto-js';
 
 export default function RegisterPatient(){  
-    let history = useHistory();
+    const navigate = useNavigate();
      //insert 
     const [input ,setInput]= useState({})
     function handleChange(event){
@@ -39,7 +39,7 @@ export default function RegisterPatient(){
                 setErr("email already exit");
                 return true;
             }else {
-                history.push(`/patientprofile/${response.data._id}`);
+                navigate(`/patientprofile/${response.data._id}`);
             }},(error) =>{
             });
     }

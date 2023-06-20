@@ -1,46 +1,53 @@
-import React, { useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import AuthApi from "../../services/AuthApi";
-export default function Subscription() {
-    const { subscription } = AuthApi()
-    const [checked, setChecked] = useState('')
+import { useParams } from "react-router-dom";
+export default function SubscriptionCard() {
+    const { updateSubscriptionData, getSubscriptionData } = AuthApi()
+    const [getSubData, setGetSubData] = useState('')
+    const [subscriptionId, setSubscriptionId] = useState([])
     const { doctorId } = useParams();
-    const  history = useHistory()
-
     const handlechecked = (event) => {
-        setChecked(event.target.value)
+        setGetSubData(event.target.value)
+    }
+    useEffect(() => {
+        fetchSubscription()
+    }, [])
+
+    const fetchSubscription = async () => {
+        const result = await getSubscriptionData({ doctorId })
+        setGetSubData(result[0].selected_plan)
+        setSubscriptionId(result[0]._id)
     }
 
     const confirmInputHandler = async () => {
+        const _id = subscriptionId;
         const bodyData = {
             "doctorId": doctorId,
             "date": new Date(),
-            "plan": checked
+            "plan": getSubData,
         }
-        await subscription(bodyData)
-        history.push(`/editdoctorprofile/${doctorId}`)
-
+        await updateSubscriptionData({ _id }, bodyData)
+            
     }
+
+
 
     return (
         <div>
             <main>
                 <div className="bg_color_2">
                     <div className="container ">
-                        <div className="subscription ">
-                            <h2>Ready to get Started?</h2>
-                        </div>
                         <div className="row">
-                            {/* <div className="cards"> */}
                             <div className="card">
                                 <span>
                                     <h4 className=" card-title float-left">Free-Trial</h4>
                                     <input
                                         onChange={handlechecked}
                                         className="float-right radio-input"
-                                        value="free-trial"
-                                        name="checked"
+                                        value='free-trial'
+                                        name="getSubData"
                                         type="radio"
+                                        checked={getSubData === 'free-trial'}
                                     />
                                 </span>
                                 <ul className="card-text" >
@@ -61,7 +68,7 @@ export default function Subscription() {
                                         Try Many Features for FREE!
                                     </li>
                                 </ul>
-                                {checked === 'free-trial' ?
+                                {getSubData === 'free-trial' ?
                                     <button
                                         onClick={confirmInputHandler}
                                         className="sub-card-btn shadow-none btn btn-primary"
@@ -79,10 +86,10 @@ export default function Subscription() {
                                     <input
                                         className="radio-input float-right"
                                         onChange={handlechecked}
-                                        value="6-month"
-                                        name="checked"
+                                        value='6-month'
+                                        name='getSubData'
                                         type="radio"
-
+                                        checked={getSubData === '6-month'}
                                     />
                                 </span>
                                 <ul className="card-text" >
@@ -103,7 +110,7 @@ export default function Subscription() {
                                         Try Many Features for FREE!
                                     </li>
                                 </ul>
-                                {checked === '6-month' ?
+                                {getSubData === '6-month' ?
                                     <button
                                         onClick={confirmInputHandler}
                                         className="sub-card-btn shadow-none btn btn-primary"
@@ -122,8 +129,10 @@ export default function Subscription() {
                                         className=" radio-input float-right"
                                         onChange={handlechecked}
                                         value="yearly"
-                                        name="checked"
+                                        name="getSubData"
                                         type="radio"
+                                        checked={getSubData === "yearly"}
+
                                     />
                                 </span>
                                 <ul className="card-text" >
@@ -144,7 +153,7 @@ export default function Subscription() {
                                         Try Many Features for FREE!
                                     </li>
                                 </ul>
-                                {checked === 'yearly' ?
+                                {getSubData === "yearly" ?
                                     <button
                                         onClick={confirmInputHandler}
                                         className="sub-card-btn shadow-none  btn btn-primary"

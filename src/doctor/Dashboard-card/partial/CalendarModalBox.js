@@ -3,8 +3,7 @@ import AuthApi from "../../../services/AuthApi";
 import PatientProfile from "../../../img/profile.png"
 function CalendarModalBox(props) {
     const { patientId } = props
-    console.log(patientId)
-    const [ patientDetails, setPatientDetails] = useState();
+    const [patientDetails, setPatientDetails] = useState([]);
     const { patientDetailsData } = AuthApi()
     useEffect(() => {
         getPatientInfoById();
@@ -13,29 +12,24 @@ function CalendarModalBox(props) {
     const getPatientInfoById = async () => {
         await patientDetailsData({ patientId })
             .then(jsonRes => {
-                console.log("-------json", jsonRes)
                 setPatientDetails(jsonRes)
             })
     };
 
-        return (
+    return (
         <div>
-            {patientDetails && patientDetails.map((item, id) => {
-                return (
-                    <div  className="d-flex container " key={id}>
+                    <div className="d-flex container " >
                         <div className=" mx-5 align-items-left ">
-                            <img src={PatientProfile} alt="Patient Profile"/>
+                            <img src={PatientProfile} alt="Patient Profile" />
                         </div>
                         <div>
-                            <div className=" patientModalName align-item-right ">{item.name}</div>
-                            <div><b className="patientModal">Email :  </b>{item.email}</div>
-                            <div><b className="patientModal">Gender : </b>{item.gender}</div>
-                            <div><b className="patientModal">Mobile No :  </b>{item.mobile}</div>
-                            <div><b className="patientModal">Age :    </b>{item.age}</div>
-                            </div>
+                            <div className=" patientModalName align-item-right ">{patientDetails.name}</div>
+                            <div><b className="patientModal">Email :  </b>{patientDetails.email}</div>
+                            <div><b className="patientModal">Gender : </b>{patientDetails.gender}</div>
+                            <div><b className="patientModal">Mobile No :  </b>{patientDetails.mobile}</div>
+                            <div><b className="patientModal">Age :    </b>{patientDetails.age}</div>
+                        </div>
                     </div>
-                )
-            })}
         </div>
 
     )

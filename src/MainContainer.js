@@ -27,8 +27,10 @@ import User from "./user";
 import SetUpdateTime from "./doctor/Profile/Clinic/Session/setUpdateTime";
 import ViewMedicalReport from './doctor/Report/ViewMedicalReport';
 import Logout from "./doctor/Profile/LogoutForm";
-import Demo from './doctor/Dashboard-card/Demo';
 import Subscription from "./doctor/Profile/Subscription";
+import AddHelper from "./doctor/Dashboard-card/AddHelper";
+import LoginHelper from "./doctor/Profile/LoginHelper"
+import SubscriptionCard from "./doctor/Dashboard-card/SubscriptionCard"
 function MainContainer() {
   return (
     <Switch>
@@ -93,13 +95,13 @@ function MainContainer() {
         <PatientMedicalReport />
       </Route>
       <Route path="/patient-history/:reportId">
-        <ViewMedicalReport/>
+        <ViewMedicalReport />
       </Route>
       <Route path="/dashboard/:doctorId">
         <Dashboard />
       </Route>
       <Route path="/subscription/:doctorId">
-        <Subscription/>
+        <Subscription />
       </Route>
       <Route path="/patientdashboard/:patientId">
         <PatientDashboard />
@@ -134,8 +136,14 @@ function MainContainer() {
       <Route path="/logout">
         < Logout />
       </Route>
-      <Route path='/demoform'>
-        <Demo/>
+      <Route path="/addhelper/:doctorId">
+        <AddHelper />
+      </Route>
+      <Route path="/loginhelper">
+        <LoginHelper />
+      </Route>
+      <Route path="/subscriptioncard/:doctorId">
+        <SubscriptionCard />
       </Route>
     </Switch>
   );

@@ -15,6 +15,7 @@ const MainTabs = (props) =>{
                 <Tab label={props.label1} />
                 <Tab label={props.label2}  />
                 <Tab label={props.label3}  />
+                <Tab label={props.label4}  />
             </Tabs>
         </Paper>
     )

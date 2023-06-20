@@ -1,17 +1,12 @@
-import { API } from "../../config";
-import { Link } from "react-router-dom";
+import { Link , useHistory} from "react-router-dom";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { ShowLoginOtp } from "./Partial/showLoginOtp";
-import { useRecoilState } from "recoil";
-import { setDoctorId } from "../../recoil/atom/setDoctorId"
 import { MainButtonInput } from "../../mainComponent/mainButtonInput";
 import { MainInput } from "../../mainComponent/mainInput";
 import AuthApi from "../../services/AuthApi";
 
 export default function LoginDoctor() {
     //for show otp input
-    let history = useHistory()
     const [mobile, setMobile] = useState("");
     const [loginData, setLoginData] = useState([]);
     const [isError, setIsError] = useState(false);
@@ -57,10 +52,13 @@ export default function LoginDoctor() {
                                                     placeholder="Phone Number (+XX)">
                                                 </MainInput>
                                                 {<span className="validation">{isError}</span>}
+
+                                                <Link className='float-right' to='/loginhelper'>Login by Helper</Link>
                                             </div>
                                             <div className="col-md-2 ">
                                                 <MainButtonInput onClick={getOTPSection}>Go</MainButtonInput>
                                             </div>
+
                                         </div>
                                         {showOTP === true ?
                                             <ShowLoginOtp loginData={loginData} />
