@@ -9,7 +9,7 @@ import { MainNav } from '../../mainComponent/mainNav';
 import { MainTabs } from '../../mainComponent/mainTabs';
 import { MainWrapper } from '../../mainComponent/mainWrapper';
 import { Link, useParams } from 'react-router-dom';
-import AddHelper from '../Dashboard-card/AddHelper';
+import AddHelper from '../Dashboard-card/Helper';
 export default function EditDoctorProfile() {
     const { doctorId } = useParams();
 
@@ -28,9 +28,9 @@ export default function EditDoctorProfile() {
     const goToClinic = () => {
         setTabValue(3)
     }
-    const goToAddHelper = () => {
-        setTabValue(4)
-    }
+    // const goToAddHelper = () => {
+    //     setTabValue(4)
+    // }
 
     return (
         <MainWrapper>
@@ -55,7 +55,7 @@ export default function EditDoctorProfile() {
                     label1="Educational Details"
                     label2="Professional Experience"
                     label3="Clinic"
-                    label4="Add Helper"
+                    // label4="Add Helper"
                 >
                 </MainTabs>
 
@@ -72,11 +72,11 @@ export default function EditDoctorProfile() {
                 </TabPanel>
 
                 <TabPanel value={tabValue} index={3}>
-                    <DoctorClinic data={goToAddHelper} />
+                    <DoctorClinic  />
                 </TabPanel>
-                <TabPanel value={tabValue} index={4}>
+                {/* <TabPanel value={tabValue} index={4}>
                     <AddHelper  />
-                </TabPanel>
+                </TabPanel> */}
             </div>
         </MainWrapper>
     )

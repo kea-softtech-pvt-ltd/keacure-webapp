@@ -195,9 +195,16 @@ export default function AuthApi() {
         const result = await axios.get(`${API}/accessmodule`)
         return result.data
     }
-    const loginHelperData=async(bodyData)=>{
-        const result=await axios.post(`${API}/helperlogin`, bodyData)
-        console.log("===loginHelperData", result)
+    const loginHelperData = async (bodyData) => {
+        const result = await axios.post(`${API}/helperlogin`, bodyData)
+        return result.data
+    }
+    const getHelper = async (doctorId) => {
+        const result = await axios.get(`${API}/gethelpers/${doctorId}`)
+        return result.data
+    }
+    const removeHelper = async (id) => {
+        const result = await axios.delete(`${API}/deletehelper/${id}`)
         return result.data
     }
     return {
@@ -246,6 +253,8 @@ export default function AuthApi() {
         updateSubscriptionData,
         getAccessModule,
         createHelper,
-        loginHelperData
+        loginHelperData,
+        getHelper,
+        removeHelper
     }
 }

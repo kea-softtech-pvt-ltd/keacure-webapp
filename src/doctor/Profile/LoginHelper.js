@@ -28,7 +28,7 @@ export default function LoginDoctor() {
                     setIsError("Please Enter Valid Username and Password")
                 }
                 else {
-                    history.push(`/dashboard/${res.doctorId}`, { state: { helperId: res._id, accessModule: res.access_module } })
+                    history.push(`/dashboard/${res.doctorId}`, { data: { helperId: res._id, accessModule: res.access_module } })
                 }
             })
 
