@@ -14,12 +14,14 @@ export default function AuthApi() {
 
     const fetchAllEducations = async ({ doctorId }) => {
         const result = await axios.get(`${API}/fetchEduData/${doctorId}`);
-        console.log("----result-0--", result)
+        return result;
+    }
+    const deleteEducationData = async (id) => {
+        const result = await axios.delete(`${API}/deleteeducation/${id}`)
         return result;
     }
     const addDoctorInformation = async ({ doctorId }) => {
         const result = await axios.get(`${API}/fetchData/${doctorId}`);
-        console.log('addDoctorInformation----------', result)
         return result.data;
     }
 
@@ -27,10 +29,12 @@ export default function AuthApi() {
         const result = await axios.post(`${API}/insertPersonalInfo/${doctorId}`, { formData })
         return result
     }
+
     const insertClinicData = async ({ newClinicData }) => {
         const result = await axios.post(`${API}/insertclinic`, newClinicData)
         return result
     }
+
     const getAllClinicsData = async ({ doctorId }) => {
         const result = await axios.get(`${API}/fetchclinic/${doctorId}`)
         return result.data
@@ -39,15 +43,17 @@ export default function AuthApi() {
         const result = await axios.post(`${API}/insertownclinic`, newClinicData)
         return result
     }
+
     const getAllOwnClinic = async ({ doctorId }) => {
         const result = await axios.get(`${API}/fetchownclinic/${doctorId}`)
         return result.data;
     }
+
     const fetchDrSpecialization = async () => {
         const result = await axios.get(`${API}/drspecialization`);
-        console.log("---rsauth", result)
         return result.data
     }
+
     const fetchDrDegree = async () => {
         const result = await axios.get(`${API}/drdegrees`)
         return result.data
@@ -65,6 +71,10 @@ export default function AuthApi() {
         const result = await axios.get(`${API}/getBookingData/${doctorId}`);
         return result.data;
     }
+    // const getPatientFees = async ({ appointmentId }) => {
+    //     const result = await axios.get(`${API}/getBookingData/${ appointmentId }`);
+    //     return result.data;
+    // }
     const allSessions = async (dataId) => {
         const result = await axios.post(`${API}/fetchtime`, dataId)
         return result.data;
@@ -92,6 +102,10 @@ export default function AuthApi() {
     const getAllExperienceData = async ({ ExId }) => {
         const result = await axios.get(`${API}/fetchUpdateExperience/${ExId}`)
         return result.data
+    }
+    const removeExperience = async (id) => {
+        const result = await axios.delete(`${API}/deleteexperience/${id}`)
+        return result
     }
     const calendarEvent = async ({ doctorId }) => {
         const result = await axios.get(`${API}/getBookingData/${doctorId}`)
@@ -136,7 +150,6 @@ export default function AuthApi() {
     };
     const insertSymptoms = async ({ reportId }, bodyData) => {
         const result = await axios.post(`${API}/add_symptoms/${reportId}`, bodyData)
-        console.log("--result---", result)
         return result
     };
     const insertSymptom_masterTable = async (bodyData) => {
@@ -187,8 +200,6 @@ export default function AuthApi() {
     }
     const createHelper = async (bodyData) => {
         const result = await axios.post(`${API}/addhelper`, bodyData)
-        console.log('------>>>>>>>>>', result)
-
         return result.data
     }
     const getAccessModule = async () => {
@@ -206,6 +217,27 @@ export default function AuthApi() {
     const removeHelper = async (id) => {
         const result = await axios.delete(`${API}/deletehelper/${id}`)
         return result.data
+    }
+    const getUpdatedSessionSlotData = async ({ doctorId, clinicId, _id }) => {
+        const result = await axios.get(`${API}/fetchsetSession/${doctorId}/${clinicId}/${_id}`)
+        return result.data
+    };
+    const fetchHelperData = async (helperId) => {
+        const result = await axios.get(`${API}/fetchhelper/${helperId}`)
+        return result.data
+    }
+    const updateHelperData = async (helperId, bodyData) => {
+        const result = await axios.post(`${API}/edithelper/${helperId}`, bodyData)
+        return result.data
+    }
+    const cancelPatientAppointment = async (id) => {
+        const result = await axios.delete(`${API}/cancelappointment/${id}`)
+        return result
+    }
+    const deleteSlot = async (slotId) => {
+        console.log("=======", slotId)
+        const result = await axios.delete(`${API}/deleteSlots/${slotId}`)
+        return result
     }
     return {
         login,
@@ -255,6 +287,14 @@ export default function AuthApi() {
         createHelper,
         loginHelperData,
         getHelper,
-        removeHelper
+        removeHelper,
+        getUpdatedSessionSlotData,
+        fetchHelperData,
+        updateHelperData,
+        // getPatientFees,
+        deleteEducationData,
+        removeExperience,
+        cancelPatientAppointment,
+        deleteSlot
     }
 }

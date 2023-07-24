@@ -1,4 +1,4 @@
-import { Link , useHistory} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useState } from "react";
 import { ShowLoginOtp } from "./Partial/showLoginOtp";
 import { MainButtonInput } from "../../mainComponent/mainButtonInput";
@@ -53,7 +53,6 @@ export default function LoginDoctor() {
                                                 </MainInput>
                                                 {<span className="validation">{isError}</span>}
 
-                                                <Link className='float-right' to='/loginhelper'>Login by Helper</Link>
                                             </div>
                                             <div className="col-md-2 ">
                                                 <MainButtonInput onClick={getOTPSection}>Go</MainButtonInput>
@@ -63,6 +62,7 @@ export default function LoginDoctor() {
                                         {showOTP === true ?
                                             <ShowLoginOtp loginData={loginData} />
                                             : null}
+                                        <Link className='pl-5' to='/loginhelper'>Login by Assistant</Link>
                                     </div>
                                 </div>
                             </form>

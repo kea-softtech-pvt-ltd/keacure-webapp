@@ -16,6 +16,12 @@ import Symptoms from './partial/Symptoms';
 import LabPrescription from './partial/LabPrescription';
 import { MainNav } from '../../mainComponent/mainNav';
 import AuthApi from '../../services/AuthApi';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { Wrapper } from '../../mainComponent/Wrapper';
+import UserLinks from '../Dashboard-card/partial/uselinks';
+import { setHelperData } from "../../recoil/atom/setHelperData";
+import { useRecoilState } from "recoil";
+
 function TabPanel(props) {
     const { children, value, index } = props;
     return (
@@ -47,8 +53,10 @@ export default function PatientMedicalReport() {
     const { reportId } = useParams();
     const { getMedicineReport } = AuthApi()
     const classes = useStyles();
-    const [doctorId, setDoctorId] = useState([])
-    console.log('---------doctorID',doctorId)
+    const [doctorId, setDoctorId] = useState([]);
+    const [helpersData, setHelpersData] = useRecoilState(setHelperData)
+    const { state } = useLocation()
+    const { fees } = state.data
     useEffect(() => {
         medicalReportData()
     }, [])
@@ -63,75 +71,77 @@ export default function PatientMedicalReport() {
         setValue(tabIndex);
     }
     const medicalReportData = async () => {
-        await getMedicineReport({reportId})
+        await getMedicineReport({ reportId })
             .then((res) => {
-                // console.log("-========doctoraid", res)
                 setDoctorId(res[0].doctorId)
             })
     }
 
     return (
-        <div>
-            <main>
-                <div className="container margin_120_95">
-                    <div className="row">
-                        <div className="col-lg-12 ml-auto">
-                            <MainNav>
-                                <ul className="clearfix">
-                                    <li><Link to={`/patientlist/${doctorId}`}><i className="arrow_back backArrow" title="back button"></i></Link></li>
-                                    <li className='float-none' style={{ fontSize: 'inherit' }}>Consultation</li>
-                                </ul>
-                            </MainNav>
-                            <div className="box_form">
-                                <PatientPersonalInfo reportId={reportId} />
-                                <Paper square>
-                                    <Tabs value={value} onChange={handleChange}
-                                        indicatorColor="primary"
-                                        textColor="primary">
-                                        <Tab label="Symptoms" />
-                                        <Tab label="Investigation" />
-                                        <Tab label="Premedication" />
-                                        <Tab label="Medicine-Prescription" />
-                                        <Tab label="Lab-Prescription" />
-                                        <Tab label="New follow-up" />
-                                    </Tabs>
-                                </Paper>
-                                <div className="tablecontent">
-                                    <TabPanel value={value} index={0}>
-                                        <Symptoms reportId={reportId} onChange={() => changeTab(1)} />
-                                    </TabPanel>
-                                    <TabPanel value={value} index={1}>
-                                        <Investigation reportId={reportId} onChange={() => changeTab(2)} />
-                                    </TabPanel>
+        <Wrapper>
+            <MainNav>
+                <ul className="clearfix">
+                    <li><Link to={`/patientlist/${doctorId}`}><i className="arrow_back backArrow" title="back button"></i></Link></li>
+                    <li className='float-none' style={{ fontSize: 'inherit' }}>Consultation</li>
+                </ul>
+            </MainNav>
+            <div className='row'>
+                <UserLinks
+                    doctorId={doctorId}
+                    helperId={helpersData._id}
+                    accessModule={helpersData.access_module}
+                />
+                <div className="common_box">
+                    {/* <PatientPersonalInfo reportId={reportId} /> */}
+                    <Paper square>
+                        <Tabs value={value} onChange={handleChange}
+                            indicatorColor="primary"
+                            textColor="primary">
+                            <Tab label="General Info" />
+                            <Tab label="Symptoms" />
+                            <Tab label="Investigation" />
+                            <Tab label="Premedication" />
+                            <Tab label="Medicine-Prescription" />
+                            <Tab label="Lab-Prescription" />
+                            <Tab label="New follow-up" />
+                        </Tabs>
+                    </Paper>
+                    <div className="tablecontent">
+                    <TabPanel value={value}  index={0}>
+                            <PatientPersonalInfo reportId={reportId} onChange={() => changeTab(1)} />
+                        </TabPanel>
+                        <TabPanel value={value} index={1}>
+                            <Symptoms reportId={reportId} onChange={() => changeTab(2)} />
+                        </TabPanel>
+                        <TabPanel value={value} index={2}>
+                            <Investigation reportId={reportId} onChange={() => changeTab(3)} />
+                        </TabPanel>
 
-                                    <TabPanel value={value} index={2}>
-                                        <Premedication reportId={reportId} onChange={() => changeTab(3)} />
-                                    </TabPanel>
+                        <TabPanel value={value} index={3}>
+                            <Premedication reportId={reportId} onChange={() => changeTab(4)} />
+                        </TabPanel>
 
-
-                                    <div className="row">
-                                        <TabPanel value={value} index={3}>
-                                            <MedicinePrescription reportId={reportId} onChange={() => changeTab(4)} />
-                                        </TabPanel>
-                                    </div>
-
-                                    <div>
-                                        <TabPanel value={value} index={4}>
-                                            <LabPrescription reportId={reportId} onChange={() => changeTab(5)} />
-                                        </TabPanel>
-                                    </div>
-                                    <TabPanel value={value} index={5}>
-                                        <NewFollowup reportId={reportId} onChange={() => changeTab(6)} />
-                                    </TabPanel >
-
-
-                                </div>
-                                {/* <div className="text-right add_top_30"><input type="submit" className="btn_1" value="save" /></div> */}
-                            </div>
+                        <div className="row">
+                            <TabPanel value={value} index={4}>
+                                <MedicinePrescription reportId={reportId} onChange={() => changeTab(5)} />
+                            </TabPanel>
                         </div>
+
+                        <div>
+                            <TabPanel value={value} index={5}>
+                                <LabPrescription reportId={reportId} onChange={() => changeTab(6)} />
+                            </TabPanel>
+                        </div>
+                        <TabPanel value={value} index={6}>
+                            <NewFollowup fees={fees} reportId={reportId} onChange={() => changeTab(7)} />
+                        </TabPanel >
+
+
                     </div>
+                    {/* <div className="text-right add_top_30"><input type="submit" className="btn_1" value="save" /></div> */}
                 </div>
-            </main>
-        </div>
+            </div>
+
+        </Wrapper >
     )
 }

@@ -1,4 +1,3 @@
-import { API } from "../../../config";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
@@ -8,9 +7,8 @@ import { setDoctorId } from "../../../recoil/atom/setDoctorId";
 import AuthApi from "../../../services/AuthApi";
 
 function ShowLoginOtp(props) {
-    const { otp, _id, mobile, isLoggedIn } = props.loginData;
+    const { otp, _id, isLoggedIn } = props.loginData;
     const getOTP = otp
-    console.log('props.loginData', props.loginData)
     const [id, setId] = useRecoilState(setDoctorId)
     const { loginOtp } = AuthApi()
     let history = useHistory()
@@ -21,7 +19,6 @@ function ShowLoginOtp(props) {
         e.preventDefault();
         await loginOtp({ getOTP, _id }) //axios call
             .then(response => {
-                console.log("===============>",response)
                 setId(_id)
                 if (getOTP !== loginotp) {
                     setErrormessage("Please enter correct OTP");
@@ -39,7 +36,13 @@ function ShowLoginOtp(props) {
         <>
             <div className="row">
                 <div className="col-md-6">
-                    <MainInput type="text" name="otp" maxLength={6} onChange={(e) => setLoginOtp(e.target.value)} placeholder="6 digit OTP" ></MainInput>
+                    <MainInput
+                        type="text"
+                        name="otp"
+                        maxLength={6}
+                        onChange={(e) => setLoginOtp(e.target.value)}
+                        placeholder="6 digit OTP" >
+                    </MainInput>
                     {errormessage && (<span className="validation">{errormessage}</span>)}
                 </div>
 

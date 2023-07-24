@@ -13,11 +13,9 @@ import AuthApi from '../../../../services/AuthApi';
 function AddDoctorEducation(props) {
     const { doctorId } = useParams();
     const [updateEduData, setUpdateEduData] = useState([])
-    console.log("--updateEduData-----", doctorId)
     const [coilDoctorEducationData, setCoilDoctorEducationData] = useRecoilState(setDoctorEducation)
     //for fetch specialization data
     const [drspecialization, setDrSpecialization] = useState([])
-    console.log("drspecialization", drspecialization)
     // for fetch degrees
     const [drdegrees, setDrdegrees] = useState([])
     const { fetchDrSpecialization, fetchDrDegree } = AuthApi();
@@ -65,9 +63,8 @@ function AddDoctorEducation(props) {
             specialization: updateEduData.specialization,
             // document:document
         }
-        console.log("--------------bodyData", bodyData)
         await axios.post(`${API}/education`, bodyData)
-            .then(res => {
+        .then(res => {
                 setCoilDoctorEducationData(coilDoctorEducationData.concat(res.data))
                 props.recordAdded();
             });
@@ -90,8 +87,10 @@ function AddDoctorEducation(props) {
         // <form onSubmit={handleSubmit(onSubmit)} className="my-4" encType='multipart/form-data'>
         <>
             <div className="row">
-                <div className="col-md-6 ">
+                <div className="col-md-6 my-2">
+                <div className=" text-left">
                     <label><b>Doctor Degree</b></label>
+                    </div>
                     <MainSelect
                         name="degree"
                         onChange={handleInputChange}
@@ -102,8 +101,9 @@ function AddDoctorEducation(props) {
                         ))}
                     </MainSelect>
                     {errors.degree && <span className="validation">Please Select your degree</span>}
-
+                    <div className=" text-left">
                     <label><b>Doctor Collage/University</b></label>
+                    </div>
                     <MainInput
                         type="text"
                         value={updateEduData.collage}
@@ -111,8 +111,9 @@ function AddDoctorEducation(props) {
                         placeholder="Doctor Collage/University">
                         {errors.collage && <span className="validation">Please enter your collage</span>}
                     </MainInput>
-
+                    <div className=" text-left">
                     <label><b>Complition Year</b></label>
+                    </div>
                     <MainSelect
                         name="comYear"
                         value={updateEduData.comYear}
@@ -125,8 +126,10 @@ function AddDoctorEducation(props) {
                     {errors.comYear && <span className="validation">Please select your complition Year</span>}
                 </div>
 
-                <div className="col-md-6 ">
+                <div className="col-md-6 my-2">
+                <div className=" text-left">
                     <label><b>Specialization</b></label>
+                    </div>
                     <MainSelect
                         name="specialization"
                         className="form-control"
@@ -138,8 +141,9 @@ function AddDoctorEducation(props) {
                         ))}
                     </MainSelect>
                     {errors.specialization && <span className="validation">Please select your specialization</span>}
-
+                    <div className=" text-left">
                     <label><b>Qualification Document Photo</b></label>
+                    </div>
                     <MainInput
                         type="file"
                         name="document"

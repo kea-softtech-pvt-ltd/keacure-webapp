@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { MainInput } from '../../mainComponent/mainInput';
-import { MainButtonInput } from '../../mainComponent/mainButtonInput';
-import AuthApi from '../../services/AuthApi';
+import { MainInput } from '../../../mainComponent/mainInput';
+import { MainButtonInput } from '../../../mainComponent/mainButtonInput';
+import AuthApi from '../../../services/AuthApi';
 import { useHistory } from 'react-router-dom';
 export default function AddHelper(props) {
     const { getAccessModule, createHelper } = AuthApi();
@@ -9,28 +9,14 @@ export default function AddHelper(props) {
     const [selectedModule, setSelectedModule] = useState([]);
     const [checked, setChecked] = useState([]);
     const [loginData, setLoginData] = useState([]);
-    // const [passwordType, setPasswordType] = useState('password')
-    // const [passwordInput, setPasswordInput] = useState("");
 
-    // const [password, setPassword] = useState([])
     const history = useHistory()
     const handleChange = (e) => {
         e.preventDefault();
         const { name, value } = e.target;
         setLoginData({ ...loginData, [name]: value });
     }
-    // const handlePasswordChange = (event) => {
-    //     setPasswordInput(event.target.value);
 
-    // }
-    // const togglePassword = () => {
-    //     if (passwordType === "password") {
-    //         setPasswordType("text")
-    //         return;
-    // onClick={passwordType === "password" ? <i onClick={togglePassword} className="bi bi-eye-slash"></i> : <i className="bi bi-eye"></i>}
-    //     }
-    //     setPasswordType("password")
-    // }
     useEffect(() => {
         getAccess();
     }, [])
@@ -71,7 +57,6 @@ export default function AddHelper(props) {
             "mobile": loginData.mobile,
             "access_module": selectedModule,
         }
-        console.log("///bodyData////", bodyData)
 
         await createHelper(bodyData)
             .then((res) => {
@@ -81,7 +66,7 @@ export default function AddHelper(props) {
     return (
         <div className='whiteBox'>
             <div className="row p-4">
-                <div className="col-lg-6 AddHelper">
+                <div className="col-lg-5 AddHelper">
                     <label className='helperLabel float-left'><b>User Name</b></label>
                     <MainInput
                         type="text"
@@ -93,14 +78,16 @@ export default function AddHelper(props) {
                     <div>
                         <label className='helperLabel float-left'><b>Password</b></label>
                     </div>
-                    <MainInput
-                        type="password"
-                        name="password"
-                        // value={passwordInput}
-                        onChange={handleChange}
-                        placeholder="Password">
-
-                    </MainInput>
+                    <div>
+                        <MainInput
+                            type="password"
+                            name="password"
+                            // value={passwordInput}
+                            onChange={handleChange}
+                            className=''
+                            placeholder="Password">
+                        </MainInput>
+                    </div>
                     <div>
                         <label className='helperLabel float-left'><b>Email</b></label>
                     </div>
@@ -117,12 +104,14 @@ export default function AddHelper(props) {
                     <MainInput
                         type="mobile"
                         name="mobile"
-                        // value='email'
+                        // value='mobile'
                         onChange={handleChange}
-                        placeholder="Mobile Number">
+                        maxLength={10}
+                        pattern="[+-]?\d+(?:[.,]\d+)?"
+                        placeholder="Phone Number (+XX)">
                     </MainInput>
                 </div>
-                <div className="col-lg-6 ">
+                <div className="col-lg-5">
                     <span><b>Select Access</b></span>
                     <div className='helperDiv'>
                         {accessModule.map((item, index) => {

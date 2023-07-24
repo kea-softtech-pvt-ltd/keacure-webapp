@@ -36,30 +36,40 @@ export default function LabPrescription(props) {
     }
 
     return (
-        <div className='d-flex' >
-            <div >
-                <div className='align-left w-50'>
-                    <label>Test Name</label>
-                    <Autocomplete
-                        style={{ width: 200 }}
-                        id={labTestData._id}
-                        disablePortal={true}
-                        disableClearable
-                        disableCloseOnSelect
-                        onChange={handleDataSave}
-                        getOptionLabel={(option) => `${option.test_name}`}
-                        options={labTestData}
-                        renderInput={(params) =>
-                        (<TextField {...params}
-                            label="Choose Test Name"
-                        />)}
-                    />
+        <>
+            <div className='d-flex' >
+                <div >
+                    <div className='align-left w-50'>
+                        <label  className='left'>Test Name</label>
+                        <Autocomplete
+                            style={{ width: 200 }}
+                            id={labTestData._id}
+                            disablePortal={true}
+                            disableClearable
+                            disableCloseOnSelect
+                            onChange={handleDataSave}
+                            getOptionLabel={(option) => `${option.test_name}`}
+                            options={labTestData}
+                            renderInput={(params) =>
+                            (<TextField {...params}
+                                label="Choose Test Name"
+                            />)}
+                        />
+                    </div>
+
                 </div>
-                <div className="text-center add_top_30 btn-dropdown">
+
+                <div className='align-right w-50 labData'>
+                    <GetLabPrescription reportId={reportId} />
+                </div>
+
+            </div>
+            <div>
+                <div className="text-right add_top_30 ">
                     <input
                         type="submit"
                         onClick={labDataSave}
-                        className="btn_1"
+                        className="btn_1 "
                         value="Add"
                     />
                     <input
@@ -70,11 +80,6 @@ export default function LabPrescription(props) {
                     />
                 </div>
             </div>
-
-            <div className='align-right w-50 labData'>
-                <GetLabPrescription reportId={reportId} />
-            </div>
-
-        </div>
+        </>
     )
 }

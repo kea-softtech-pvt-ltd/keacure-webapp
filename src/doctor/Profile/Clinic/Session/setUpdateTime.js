@@ -19,9 +19,8 @@ function SetUpdateTime(props) {
     const { doctorId, clinicId, _id, day } = props.update[0];
     const [error, setError] = useState("");
     const [updateSessionTime, setUpdateSessionTime] = useRecoilState(updateSession)
-
     const [selectedSlots, setSelectedSlots] = useState([])
-    const [sessionTime, setSessionTime] = useState(update)
+    const [sessionTime, setSessionTime] = useState(update[0])
     const [showSelectedSlots, setShowSelectedSlots] = useState([])
 
     const handleInputChange = event => {
@@ -110,13 +109,18 @@ function SetUpdateTime(props) {
     }
 
     return (
-        <div className="col-lg-12">
+
+        <div className="col-lg-12" >
             <form onSubmit={handleTimeClick}>
                 <h5>{day}</h5>
                 <div className="row">
                     <div className="col-lg-6">
                         <label><b>Select Time Slot</b></label>
-                        <MainSelect name="timeSlot" defaultValue="20 min" onChange={handleInputChange} value={sessionTime.timeslot} >
+                        <MainSelect
+                            name="timeSlot"
+                            defaultValue="20 min"
+                            onChange={handleInputChange}
+                            value={sessionTime.timeSlot} >
                             <option selected="selected" value={20}> 20 min</option>
                             <option value={30}> 30 min</option>
                         </MainSelect>
@@ -124,7 +128,13 @@ function SetUpdateTime(props) {
 
                     <div className="col-lg-6">
                         <label><b>Clinic Fees</b></label>
-                        <MainInput type="text" name="fees" onChange={handleInputChange} value={sessionTime.fees} placeholder="Enter fees" ></MainInput>
+                        <MainInput
+                            type="text"
+                            name="fees"
+                            onChange={handleInputChange}
+                            value={sessionTime.fees}
+                            placeholder="Enter fees">
+                        </MainInput>
                     </div>
                 </div>
 
@@ -153,7 +163,7 @@ function SetUpdateTime(props) {
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                 <TimePicker
                                     renderInput={(props) => <TextField {...props} />}
-                                    value={sessionTime.toTime}
+                                    value={updateSessionTime.toTime}
                                     ampm={false}
                                     name="toTime"
                                     minutesStep={5}
@@ -169,7 +179,12 @@ function SetUpdateTime(props) {
                     <section className="borderSlots">
                         {selectedSlots.map((item, index) => (
                             <div key={index}>
-                                <MainInputBox type="checkbox" onChange={handleChange} value={item} name="selectedSlots" ><label className="btn_1">{item}</label></MainInputBox>
+                                <MainInputBox
+                                    type="checkbox"
+                                    onChange={handleChange}
+                                    value={item} name="selectedSlots">
+                                    <label className="btn_1">{item}</label>
+                                </MainInputBox>
                             </div>
                         ))}
                     </section>
@@ -177,15 +192,25 @@ function SetUpdateTime(props) {
 
                 <div className="options">
                     <div className="row">
-                        <div className="col-lg-6">
-                            <MainInputBox type="radio" name="Appointment" value="VideoAppointment" onChange={handleInputChange} label="Video Appointment">
+                        {/* <div className="col-lg-6">
+                            <MainInputBox
+                                type="radio"
+                                name="Appointment"
+                                value={updateSessionTime.Appointment}
+                                onChange={handleInputChange}
+                                label="Video Appointment">
                                 <b>Video Appointment</b>
                             </MainInputBox>
-                        </div>
+                        </div> */}
 
-                        <div className="col-lg-6">
-                            <MainInputBox type="radio" name="Appointment" value="InClinicAppointment" onChange={handleInputChange} label="In Clinic Appointment">
-                                <b>In Clinic Appointment</b>
+                        <div className="col-lg-6 p-2 ml-2">
+                            <MainInputBox
+                                type="radio"
+                                name="Appointment"
+                                value={updateSessionTime.Appointment}
+                                onChange={handleInputChange}
+                                label="In Clinic Appointment">
+                                <b  className="p-2">In Clinic Appointment</b>
                             </MainInputBox>
                         </div>
                     </div>
@@ -195,7 +220,7 @@ function SetUpdateTime(props) {
                     <MainButtonInput>Set</MainButtonInput>
                 </div>
             </form>
-        </div>
+        </div >
     )
 }
 export default SetUpdateTime;

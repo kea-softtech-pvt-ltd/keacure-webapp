@@ -7,12 +7,14 @@ import { DoctorEducation } from "./Education/doctorEducation";
 import { DoctorPersonalInformation } from "./Personal/DoctorPersonalInformation";
 import { MainNav } from '../../mainComponent/mainNav';
 import { MainTabs } from '../../mainComponent/mainTabs';
-import { MainWrapper } from '../../mainComponent/mainWrapper';
 import { Link, useParams } from 'react-router-dom';
-import AddHelper from '../Dashboard-card/Helper';
+import { Wrapper } from '../../mainComponent/Wrapper';
+import UserLinks from '../Dashboard-card/partial/uselinks';
+import { setHelperData } from "../../recoil/atom/setHelperData";
+import { useRecoilState } from "recoil";
 export default function EditDoctorProfile() {
     const { doctorId } = useParams();
-
+    const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     //for using tab
     const [tabValue, setTabValue] = useState(0);
     const handleChange = (event, newValue) => {
@@ -28,12 +30,10 @@ export default function EditDoctorProfile() {
     const goToClinic = () => {
         setTabValue(3)
     }
-    // const goToAddHelper = () => {
-    //     setTabValue(4)
-    // }
+
 
     return (
-        <MainWrapper>
+        <Wrapper>
             <MainNav>
                 <ul className="clearfix">
                     <li>
@@ -44,40 +44,41 @@ export default function EditDoctorProfile() {
                     <li><Link to="#section_1" className="active">Doctor Information</Link></li>
                     <li><Link to={`/dashboard/${doctorId}`}>Done</Link></li>
                 </ul>
-
             </MainNav>
+            <div className='row'>
+                <UserLinks
+                    doctorId={doctorId}
+                    helperId={helpersData._id}
+                    accessModule={helpersData.access_module}
+                />
+                <div className="common_box">
+                    <MainTabs
+                        value={tabValue}
+                        onChange={handleChange}
+                        label="Personal Information"
+                        label1="Educational Details"
+                        label2="Professional Experience"
+                        label3="Clinic"
+                    >
+                    </MainTabs>
 
-            <div className="box_form">
-                <MainTabs
-                    value={tabValue}
-                    onChange={handleChange}
-                    label="Personal Information"
-                    label1="Educational Details"
-                    label2="Professional Experience"
-                    label3="Clinic"
-                    // label4="Add Helper"
-                >
-                </MainTabs>
+                    <TabPanel value={tabValue} index={0}>
+                        <DoctorPersonalInformation data={goToEducation} doctorId={doctorId} />
+                    </TabPanel>
 
-                <TabPanel value={tabValue} index={0}>
-                    <DoctorPersonalInformation data={goToEducation} doctorId={doctorId} />
-                </TabPanel>
+                    <TabPanel value={tabValue} index={1}>
+                        <DoctorEducation data={goToExperience} doctorId={doctorId} />
+                    </TabPanel>
 
-                <TabPanel value={tabValue} index={1}>
-                    <DoctorEducation data={goToExperience} doctorId={doctorId} />
-                </TabPanel>
+                    <TabPanel value={tabValue} index={2}>
+                        <DoctorProfessionalExperience data={goToClinic} doctorId={doctorId} />
+                    </TabPanel>
 
-                <TabPanel value={tabValue} index={2}>
-                    <DoctorProfessionalExperience data={goToClinic} doctorId={doctorId} />
-                </TabPanel>
-
-                <TabPanel value={tabValue} index={3}>
-                    <DoctorClinic  />
-                </TabPanel>
-                {/* <TabPanel value={tabValue} index={4}>
-                    <AddHelper  />
-                </TabPanel> */}
+                    <TabPanel value={tabValue} index={3}>
+                        <DoctorClinic />
+                    </TabPanel>
+                </div>
             </div>
-        </MainWrapper>
+        </Wrapper>
     )
 }

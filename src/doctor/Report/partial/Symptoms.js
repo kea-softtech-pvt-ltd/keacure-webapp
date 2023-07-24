@@ -9,7 +9,6 @@ export default function Symptoms(props) {
     const [symptoms, setSymptoms] = useState([])
     const [saveSymptoms, setSaveSymptoms] = useState([])
     const [otherSymptom, setOtherSymptoms] = useState('')
-    console.log("--------symc", saveSymptoms)
 
     // const [value, setValue]=useState();
     const { symptomsData, insertSymptoms, insertSymptom_masterTable } = AuthApi();
@@ -31,22 +30,23 @@ export default function Symptoms(props) {
         //e.preventDefault();
         setOtherSymptoms(e.target.value)
     }
-
+    const clearData = () => {
+        setOtherSymptoms('')
+        setSymptoms()
+    }
 
     const addSymptoms = async () => {
         saveSymptoms.push(otherSymptom)
         const bodyData = {
             "symptoms": saveSymptoms,
         }
-        console.log("----bodyData----", bodyData)
         await insertSymptoms({ reportId }, bodyData)
         const other = {
             "symptoms": otherSymptom,
         }
-        console.log("----other----", other)
         await insertSymptom_masterTable(other)
         // onChange()
-
+        clearData()
     }
 
 
@@ -54,7 +54,7 @@ export default function Symptoms(props) {
         <div>
             <div className='symptomsData w-100'>
                 <div className='w-40'>
-                    <label>Choose Symptoms</label>
+                    <label className='left'>Choose Symptoms</label>
                     <Autocomplete
                         style={{ width: 200 }}
                         id={symptoms._id}
@@ -71,7 +71,7 @@ export default function Symptoms(props) {
                 </div>
                 <div className="symptomsInput w-30">
                     <span className="vital-signInput ">
-                        <label className='mb-2'>Other</label>
+                        <label className='left' >Other</label>
                         <input
                             type="text"
                             className="form-control "
@@ -85,7 +85,7 @@ export default function Symptoms(props) {
                     <GetSymptomsData reportId={reportId} />
                 </div>
             </div>
-            <div className="text-center add_top_30 symptomsBtn">
+            <div className="text-right add_top_30 symptomsBtn">
                 <input
                     type="submit"
                     onClick={addSymptoms}

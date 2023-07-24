@@ -1,5 +1,4 @@
 import React from 'react';
-import { API } from "../../../../config";
 import { EditEducation } from "./EditEducation";
 import { Link } from "react-router-dom";
 import { Modal } from "react-bootstrap";
@@ -13,8 +12,9 @@ import AuthApi from '../../../../services/AuthApi';
 function FetchEducation() {
     const { doctorId } = useParams();
     const [eduData, setEduData] = useRecoilState(setDoctorEducation);
+    console.log("------>..", eduData)
     const [activeModal, setActiveModal] = useState();
-    const { fetchAllEducations } = AuthApi();
+    const { fetchAllEducations, deleteEducationData } = AuthApi();
     const handleClose = () => {
         setActiveModal(null)
     }
@@ -33,9 +33,14 @@ function FetchEducation() {
     const getAllEducations = async () => {
         await fetchAllEducations({ doctorId })
             .then((res) => {
-                console.log("-eduData-", res)
                 setEduData(res.data);
             })
+    }
+    const deleteEducation = async (education) => {
+        console.log("---,,,,--->>>>", education)
+        const id = education._id
+        await deleteEducationData(id)
+        getAllEducations()
     }
 
     return (
@@ -46,6 +51,7 @@ function FetchEducation() {
                         return (
                             <div className="whiteBox" key={index}>
                                 <Link onClick={e => handleShow(e, index)} to="#" className="editbutton"><i className="icon_pencil-edit" title="Edit profile"></i></Link>
+                                <Link onClick={e => deleteEducation(education, e)} to="#" className="editbutton"><i className="icon-trash-2" title="delete profile"></i></Link>
                                 <Modal show={activeModal === index} onHide={handleClose} id={`education-${education._id}`} key={education._id}>
                                     <Modal.Header closeButton >
                                         <Modal.Title>Edit Education Data</Modal.Title>
@@ -54,39 +60,40 @@ function FetchEducation() {
                                         <EditEducation imageData={education.document} doctorId={doctorId} EduId={education._id} onClick={handleClose} onSubmit={EditData} />
                                     </Modal.Body>
                                 </Modal>
-
-                                <div className="row" encType='multipart/form-data'>
-                                    <div className="col-md-6 ">
-                                        <div className="fetchedudata">
-                                            <i className="\e6a0" title="Calender profile"></i>
-                                            <div><b>Doctor Degree</b></div>
-                                            <div>{education.degree}</div>
-                                        </div>
-                                        <div className="fetchedudata">
-                                            <div>
-                                                <span className="icon-icon">
-                                                    <i className="icon_building" title="building"></i>
-                                                </span>
-                                                <b>Doctor Collage/University</b>
+                                <div className='bottomBorder'>
+                                    <div className="row"  encType='multipart/form-data'>
+                                        <div className="col-md-6">
+                                            <div className="fetchedudata">
+                                                <i className="\e6a0" title="Calender profile"></i>
+                                                <div><b>Doctor Degree</b></div>
+                                                <div>{education.degree}</div>
                                             </div>
-                                            <div>{education.collage}</div>
-                                        </div>
-                                        <div className="fetchedudata">
-                                            <div>
-                                                <span className="icon-icon">
-                                                    <i className="icon_calendar" title="calendar"></i>
-                                                </span>
-                                                <b>Complition Year</b>
+                                            <div className="fetchedudata">
+                                                <div>
+                                                    <span className="icon-icon">
+                                                        <i className="icon_building" title="building"></i>
+                                                    </span>
+                                                    <b>Doctor Collage/University</b>
+                                                </div>
+                                                <div>{education.collage}</div>
                                             </div>
-                                            <div>{education.comYear}</div>
+                                            <div className="fetchedudata">
+                                                <div>
+                                                    <span className="icon-icon">
+                                                        <i className="icon_calendar" title="calendar"></i>
+                                                    </span>
+                                                    <b>Complition Year</b>
+                                                </div>
+                                                <div>{education.comYear}</div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="col-md-6 ">
-                                        <div className="fetchedudata">
-                                            <div><b>Specialization</b></div>
-                                            <div>{education.specialization}</div>
+                                        <div className="col-md-6 ">
+                                            <div className="fetchedudata">
+                                                <div><b>Specialization</b></div>
+                                                <div>{education.specialization}</div>
+                                            </div>
+                                            <FetchImages imageData={education.document} />
                                         </div>
-                                        <FetchImages imageData={education.document} />
                                     </div>
                                 </div>
                             </div>

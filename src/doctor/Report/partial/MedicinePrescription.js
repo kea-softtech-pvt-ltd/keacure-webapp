@@ -14,14 +14,14 @@ import AuthApi from '../../../services/AuthApi';
 import GetMedicinePriscription from './GetMedicinePrescription';
 export default function MedicinePrescription(props) {
     //for add new fiels (priscription)
-    const { onChange, reportId, appointmentId } = props
+    const { onChange, reportId, appointmentId } = props;
     const [tabletName, setTabletName] = useState([]);
-    const [medicineSave, setMedicineSave] = useState()
-    const [duration, setDuration] = useState('')
+    const [medicineSave, setMedicineSave] = useState();
+    const [duration, setDuration] = useState('');
     const [selectedSchedule, setSelectedSchedule] = useState([]);
     const [checked, setChecked] = useState([]);
-    const [saveMealData, setSaveMealData] = useState([])
-    const { getMedicine, insertMedicinePrescriptionData } = AuthApi()
+    const [saveMealData, setSaveMealData] = useState([]);
+    const { getMedicine, insertMedicinePrescriptionData } = AuthApi();
     const useStyles = makeStyles((theme) => ({
         formControl: {
             margin: theme.spacing(1),
@@ -53,7 +53,7 @@ export default function MedicinePrescription(props) {
 
     useEffect(() => {
         getMedicineData()
-    }, [])
+    }, []);
 
     const getMedicineData = async () => {
         await getMedicine()
@@ -97,7 +97,6 @@ export default function MedicinePrescription(props) {
     const handleDurationValue = (e) => {
         e.preventDefault();
         setDuration(e.target.value)
-
     }
     const saveData = async () => {
         const bodyData = {
@@ -114,10 +113,10 @@ export default function MedicinePrescription(props) {
     }
 
     return (
-        <div >
+        <div style={{width: '100%'}} >
             <GetMedicinePriscription reportId={reportId} />
             <TableContainer component={Paper} className='mx-auto w-100'>
-                <Table className={classes.table} size="medium" aria-label="a dense table">
+                <Table className={classes.table} size="large" aria-label="a dense table">
                     <TableHead>
                         <TableRow>
                             <TableCell align="center"><b>Medicine Name</b></TableCell>
@@ -132,7 +131,7 @@ export default function MedicinePrescription(props) {
                         <TableRow>
                             <TableCell align="right">
                                 <Autocomplete
-                                    style={{ width: 200 }}
+                                    style={{ width: 250 }}
                                     id={tabletName._id}
                                     disablePortal={true}
                                     disableClearable
@@ -154,7 +153,7 @@ export default function MedicinePrescription(props) {
                                     disablePortal={true}
                                     disableClearable
                                     disableCloseOnSelect
-                                    style={{ width: 150 }}
+                                    style={{ width: 250 }}
                                     id={saveMealData._id}
                                     value={saveMealData.name}
                                     onChange={handleMealData}
@@ -174,7 +173,7 @@ export default function MedicinePrescription(props) {
                                 {medicineSchedule.map((item, i) => {
                                     return (
                                         <div  key={i} >
-                                            <span className="d-flex  p-1">{item}</span>
+                                            <span className="d-flex  p-2">{item}</span>
                                             <input
                                                 type="checkbox"
                                                 onChange={() => handleFrequencyChange(i)}
@@ -190,7 +189,7 @@ export default function MedicinePrescription(props) {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <div className="text-center add_top_30 medicinebtn">
+            <div className="text-right add_top_30 medicinebtn">
                 <input type="submit" onClick={saveData} className="btn_1 medicinebtn" value="Save" />
                 <input type="submit" onClick={onChange} className="btn_1 medicinebtn" value="Next" />
             </div>

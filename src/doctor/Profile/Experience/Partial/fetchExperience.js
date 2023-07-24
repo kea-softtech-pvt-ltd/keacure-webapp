@@ -11,7 +11,7 @@ function FetchExperience() {
     const { doctorId } = useParams();
     const [fetchExperience, setFetchExperience] = useRecoilState(setDoctorExperience)
     const [activeModal, setActiveModal] = useState()
-    const { fetchExperienceData } = AuthApi();
+    const { fetchExperienceData, removeExperience } = AuthApi();
     const handleClose = () => {
         setActiveModal(null)
     }
@@ -57,6 +57,11 @@ function FetchExperience() {
         months += end.getMonth();
         return months <= 0 ? 0 : months;
     }
+    const removeExperienceData = async (experience) => {
+        const id = experience._id
+        await removeExperience(id)
+        getAllExperience()
+    }
 
     return (
         <>
@@ -64,6 +69,7 @@ function FetchExperience() {
                 return (
                     <div className="whiteBox" key={index}>
                         <Link to="#" onClick={e => handleShow(e, index)} className="editbutton"><i className="icon_pencil-edit" title="Edit profile"></i></Link>
+                        <Link to="#" onClick={e => removeExperienceData(experience, e)} className="editbutton"><i className="icon-trash-2" title="Delete profile"></i></Link>
                         <Modal show={activeModal === index} onHide={handleClose} id={`experience-${experience._id}`} key={experience._id}>
                             <Modal.Header closeButton>
                                 <Modal.Title>Edit Experience Data</Modal.Title>
@@ -72,54 +78,56 @@ function FetchExperience() {
                                 <EditExperience doctorId={doctorId} ExId={experience._id} onSubmit={EditData} />
                             </Modal.Body>
                         </Modal>
-                        <div className="row">
-                            <div className="col-md-6 ">
-                                <div className="fetchedudata">
-                                    <div>
-                                        <span className="icon-icon">
-                                            <i className="icon_calendar" title="Calender profile"></i>
-                                        </span>
-                                        <b>Start Year</b>
-                                    </div>
-                                    <div>
-                                        {new Date(experience.startYear).toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', timeZone: 'Asia/Kolkata' })}
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-md-6 ">
-                                <div className="fetchedudata">
-                                    <div>
-                                        <span className="icon-icon">
-                                            <i className="icon_calendar" title="Calender profile"></i>
-                                        </span>
-                                        <b>End Year</b>
-                                    </div>
-                                    <div>
-                                        {new Date(experience.endYear).toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', timeZone: 'Asia/Kolkata' })}
+                        <div className='bottomBorder'>
+                            <div className="row">
+                                <div className="col-md-6 ">
+                                    <div className="fetchedudata">
+                                        <div>
+                                            <span className="icon-icon">
+                                                <i className="icon_calendar" title="Calender profile"></i>
+                                            </span>
+                                            <b>Start Year</b>
+                                        </div>
+                                        <div>
+                                            {new Date(experience.startYear).toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', timeZone: 'Asia/Kolkata' })}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="col-md-6 ">
-                                <div className="fetchedudata">
-                                    <div><b>Doctor Experience</b></div>
-                                    <div>{experience.totalExperience} years</div>
-                                </div>
-                            </div>
-                            <div className="col-md-6 ">
-                                <div className="fetchedudata">
-                                    <div>
-                                        <span className="icon-icon">
-                                            <i className="icon_building" title="Clinic"></i>
-                                        </span>
-                                        <b>Clinic/Hospital Name</b>
+                                <div className="col-md-6 ">
+                                    <div className="fetchedudata">
+                                        <div>
+                                            <span className="icon-icon">
+                                                <i className="icon_calendar" title="Calender profile"></i>
+                                            </span>
+                                            <b>End Year</b>
+                                        </div>
+                                        <div>
+                                            {new Date(experience.endYear).toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', timeZone: 'Asia/Kolkata' })}
+                                        </div>
                                     </div>
-                                    <div>{experience.clinicName}</div>
                                 </div>
-                            </div>
-                            <div className="col-lg-12">
-                                <div className="fetchedudata">
-                                    <div><b>Description</b></div>
-                                    <div>{experience.description}</div>
+                                <div className="col-md-6 ">
+                                    <div className="fetchedudata">
+                                        <div><b>Doctor Experience</b></div>
+                                        <div>{experience.totalExperience} years</div>
+                                    </div>
+                                </div>
+                                <div className="col-md-6 ">
+                                    <div className="fetchedudata">
+                                        <div>
+                                            <span className="icon-icon">
+                                                <i className="icon_building" title="Clinic"></i>
+                                            </span>
+                                            <b>Clinic/Hospital Name</b>
+                                        </div>
+                                        <div>{experience.clinicName}</div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-12">
+                                    <div className="fetchedudata">
+                                        <lable><b>Description</b> </lable>
+                                        <div>{experience.description}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

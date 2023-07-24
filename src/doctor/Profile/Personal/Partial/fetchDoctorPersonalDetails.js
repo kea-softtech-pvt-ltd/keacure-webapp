@@ -30,7 +30,7 @@ function FetchDoctorPersonalDetails(props) {
                     </figure>
                 </div>
                 <div className="col-lg-7 col-md-8">
-                    <h1>{fetchPersonalData.name}</h1>
+                    <h1>Dr. {fetchPersonalData.name}</h1>
                     <span className="rating">
                         <i className="icon_star voted"></i>
                         <i className="icon_star voted"></i>
@@ -52,13 +52,10 @@ function FetchDoctorPersonalDetails(props) {
                     </ul> */}
                     <div className="contacts">
                         <address>
-                            {/* <li className="address"> */}
                             <b>Location : </b>
-                            <p>{fetchPersonalData.address}</p>
-                            {/* </li> */}
-
-                            <b>Phone :</b><span>{fetchPersonalData.mobile}</span>
-                            <div><b>Email:</b>{fetchPersonalData.personalEmail}</div>
+                            <p>  {fetchPersonalData.address}</p>
+                            <b>Phone :</b><span>  {fetchPersonalData.mobile}</span>
+                            <div><b>Email  :</b>  {fetchPersonalData.personalEmail}</div>
                             {fetchPersonalData["experienceList"] ?
                                 (
                                     <Experience experienceData={fetchPersonalData.experienceList}></Experience>

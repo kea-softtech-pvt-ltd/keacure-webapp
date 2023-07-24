@@ -1,6 +1,4 @@
-// import { API } from "../../../../config";
 import React from 'react';
-import axios from "axios";
 import DateFnsUtils from '@date-io/date-fns';
 import TextField from "@material-ui/core/TextField";
 import { useState } from "react";
@@ -40,7 +38,6 @@ function SetTiming(props) {
         let temp = []
         temp = showSelectedSlots
         const { name, value } = event.target;
-        console.log("value-------------",value)
         if (event.target.checked) {
             temp.push({
                 time: value,
@@ -190,15 +187,15 @@ function SetTiming(props) {
 
                 <div className="options">
                     <div className="row">
-                        <div className="col-lg-6">
+                        {/* <div className="col-lg-6">
                             <MainInputBox type="radio" name="Appointment" value="VideoAppointment" onChange={handleInputChange} label="Video Appointment">
                                 <b>Video Appointment</b>
                             </MainInputBox>
-                        </div>
+                        </div> */}
 
-                        <div className="col-lg-6">
+                        <div className="col-lg-6 p-2 ml-2">
                             <MainInputBox type="radio" name="Appointment" value="InClinicAppointment" onChange={handleInputChange} label="In Clinic Appointment">
-                                <b>In Clinic Appointment</b>
+                                <b className="p-2">In Clinic Appointment</b>
                             </MainInputBox>
                         </div>
                     </div>

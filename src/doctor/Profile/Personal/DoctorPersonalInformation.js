@@ -14,7 +14,6 @@ function DoctorPersonalInformation(props) {
     //const { data } = props
     const { doctorId } = useParams();
     const [updateData, setUpdateData] = useState([]);
-    console.log("===updateData=====", updateData)
     const { addDoctorInformation, submitDoctorInformation } = AuthApi()
     //for google map api autocomplete onChange method
     function handleChangeAddress(address) {
@@ -100,12 +99,13 @@ function DoctorPersonalInformation(props) {
         // props.data();
 
     }
+
     return (
         <>
             {/* <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'> */}
             <div className="row">
                 <div className="col-md-6 ">
-                    <div className="row">
+                    <div className="">
                         <div className="col-4">
                             <div className="doctorphoto">
                                 {updateData.photo > 0 ?
@@ -124,17 +124,44 @@ function DoctorPersonalInformation(props) {
                             </div>
                         </div>
                         <div className="col-8">
-                            <label><b>Doctor photo</b></label>
-                            <MainInput
-                                type="file"
-                                accept=".png, .jpg, .jpeg"
-                                onChange={handlePhoto}
-                                name="photo">
-                            </MainInput>
+                            <div className="text-left">
+                                <label><b>Doctor photo</b></label>
+                                <MainInput
+                                    type="file"
+                                    accept=".png, .jpg, .jpeg"
+                                    onChange={handlePhoto}
+                                    name="photo">
+                                </MainInput>
+                            </div>
                         </div>
                     </div>
-
-                    <label><b>Full Name</b></label>
+                    <div className="form-group ">
+                        <div className="text-left">
+                            <label><b>Gender</b></label>
+                        </div>
+                    </div>
+                    <div className="">
+                        {/* <div className="form-group"> */}
+                        <div className="col-6">
+                            <MainRadioGroup
+                                name="gender"
+                                value="female"
+                                value1="male"
+                                value2="other"
+                                onChange={handleInputChange}
+                                label="Female"
+                                label1="male"
+                                label2="other">
+                            </MainRadioGroup>
+                            {errors.gender && <span className="validation">Please Select your gender</span>}
+                            {/* </div> */}
+                        </div>
+                    </div>
+                </div>
+                <div className="col-md-6">
+                    <div className="text-left">
+                        <label><b>Full Name</b></label>
+                    </div>
                     <MainInput
                         name="name"
                         value={updateData.name}
@@ -142,40 +169,9 @@ function DoctorPersonalInformation(props) {
                         placeholder="Name">
                         {errors.name && <span className="validation">Please enter your first name</span>}
                     </MainInput>
-
-                </div>
-
-                <div className="col-md-6 ">
-                    {/* <label><b>Official EmailId</b></label>
-                    <MainInput 
-                        type="email" 
-                        name="officialEmail" 
-                        value={updateData.officialEmail} 
-                        onChange={handleInputChange} 
-                        placeholder="Official EmailId">
-                        {errors.officialEmail && <span className="validation">Please enter your official Email</span>}
-                    </MainInput> */}
-                    <div className="form-group">
-                        <label><b>Gender</b></label>
+                    <div className="text-left">
+                        <label><b>Personal EmailId</b></label>
                     </div>
-                    <div className="row">
-                        <div className="form-group">
-                            <div className="col-6">
-                                <MainRadioGroup
-                                    name="gender"
-                                    value="female"
-                                    value1="male"
-                                    value2="other"
-                                    onChange={handleInputChange}
-                                    label="Female"
-                                    label1="male"
-                                    label2="other">
-                                </MainRadioGroup>
-                                {errors.gender && <span className="validation">Please Select your gender</span>}
-                            </div>
-                        </div>
-                    </div>
-                    <label><b>Personal EmailId</b></label>
                     <MainInput
                         type="email"
                         value={updateData.personalEmail}
@@ -184,11 +180,13 @@ function DoctorPersonalInformation(props) {
                         placeholder="Personal EmailId">
                         {errors.personalEmail && <span className="validation">Please enter your personal Email</span>}
                     </MainInput>
-
-                    <PlacesAutocompleteInput
-                        value={updateData.address}
-                        onChange={handleChangeAddress}><b>City & Area</b>
-                    </PlacesAutocompleteInput>
+                    <div align='left'>
+                        <PlacesAutocompleteInput
+                            value={updateData.address}
+                            onChange={handleChangeAddress}>
+                            <label ><b>City & Area</b></label>
+                        </PlacesAutocompleteInput>
+                    </div>
                     {errors.address && <span className="validation">Please enter your location</span>}
                 </div>
             </div>

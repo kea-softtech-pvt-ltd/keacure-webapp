@@ -4,16 +4,17 @@ import { useParams } from 'react-router-dom';
 import GetMedicinePriscription from './partial/GetMedicinePrescription';
 import GetLabPrescription from './partial/getLabPrescription';
 import GetSymptomsData from './partial/GetSymptomsData';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 export default function ViewMedicalReport() {
     const { reportId } = useParams();
-    // console.log("-------reportId", reportId)
     const { getMedicineReport, patientDetailsData } = AuthApi();
     const [viewData, setViewData] = useState([]);
-    // console.log("-------viewData", viewData)
-    // const [patientIdData, setpatientIdData] = useState([]);
-    // console.log("0--patientIdData------==", patientIdData)
     const [patientDetails, setPatientDetails] = useState([]);
-    // console.log("-==patientDetails=--", patientDetails)
+    const { ...state } = useLocation()
+    const { data } = state
+    const doctorId = state.state.data
+    console.log("------->>>>", doctorId)
     useEffect(() => {
         getMedicineReportData()
     }, [])
@@ -24,8 +25,8 @@ export default function ViewMedicalReport() {
                 setViewData(res[0])
                 const patientId = res[0].patientId
                 await patientDetailsData({ patientId })
-                .then((response) => {
-                        setPatientDetails(response)
+                    .then((response) => {
+                        setPatientDetails(response[0])
                     })
             })
 
@@ -37,6 +38,9 @@ export default function ViewMedicalReport() {
                 <div className="row">
                     <div className="col-lg-12 ">
                         <nav id="secondary_nav">
+                            <Link to={`/Patientsclinichistory/${doctorId}`}>
+                                <i className="arrow_back backArrow m-3" title="back button"></i>
+                            </Link>
                             <span><b>Prescription</b></span>
                         </nav>
                     </div>

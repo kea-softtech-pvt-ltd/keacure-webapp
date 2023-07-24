@@ -28,10 +28,10 @@ import SetUpdateTime from "./doctor/Profile/Clinic/Session/setUpdateTime";
 import ViewMedicalReport from './doctor/Report/ViewMedicalReport';
 import Logout from "./doctor/Profile/LogoutForm";
 import Subscription from "./doctor/Profile/Subscription";
-// import AddHelper from "./doctor/Dashboard-card/Helper";
-import LoginHelper from "./doctor/Profile/LoginHelper"
-import SubscriptionCard from "./doctor/Dashboard-card/SubscriptionCard"
-import Helper from "./doctor/Dashboard-card/Helper";
+import LoginHelper from "./doctor/Profile/LoginHelper";
+import SubscriptionCard from "./doctor/Dashboard-card/SubscriptionCard";
+import Helper from "./doctor/helper/Helper";
+import EditHelper from './doctor/helper/EditHelper';
 function MainContainer() {
   return (
     <Switch>
@@ -77,9 +77,6 @@ function MainContainer() {
       {/* <Route path="/calendarModalBox/:patientId">
             <CalendarModalBox/>
           </Route> */}
-      {/* <Route  path="/logindoctor">
-        <LoginDoctor />
-      </Route> */}
       <Route exact path="/">
         <LoginDoctor />
       </Route>
@@ -140,13 +137,17 @@ function MainContainer() {
       <Route path="/helper/:doctorId">
         <Helper/>
       </Route>
+      <Route path="/edithelper/:helperId">
+        <EditHelper/>
+      </Route>
       <Route path="/loginhelper">
         <LoginHelper />
       </Route>
       <Route path="/subscriptioncard/:doctorId">
         <SubscriptionCard />
       </Route>
+     
     </Switch>
-  );
+  )
 }
 export default MainContainer;

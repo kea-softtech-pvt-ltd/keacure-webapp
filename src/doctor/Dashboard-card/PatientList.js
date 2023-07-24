@@ -12,6 +12,10 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import moment from 'moment';
 import AuthApi from "../../services/AuthApi";
 import { MainNav } from '../../mainComponent/mainNav';
+import UserLinks from './partial/uselinks';
+import { Wrapper } from '../../mainComponent/Wrapper';
+import { setHelperData } from "../../recoil/atom/setHelperData";
+import { useRecoilState } from "recoil";
 //for table
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -33,7 +37,9 @@ export default function PatientList() {
     let history = useHistory();
     const classes = useStyles();
     const [patientList, setPatientList] = useState([]);
-    const { getPatientListDetails, MedicineReportData } = AuthApi()
+    const [helpersData, setHelpersData] = useRecoilState(setHelperData)
+
+    const { getPatientListDetails, MedicineReportData, cancelPatientAppointment } = AuthApi()
 
     //For Pagination
     const [activePageNo, setActivePageNo] = useState(1)
@@ -48,31 +54,35 @@ export default function PatientList() {
         getPatientDetails();
     }, [])
 
-    async function getPatientDetails() {
-        const result = await getPatientListDetails({ doctorId });
-        date(result)
-    }
-
     async function saveData(item) {
         const bodyData = {
             "doctorId": doctorId,
             "patientId": item.patientId,
             'patientAppointmentId': item._id,
-            'clinicId': item.clinicId
+            'clinicId': item.clinicId,
+            "fees": item.fees
         }
         await MedicineReportData(bodyData)
             .then((res) => {
-                history.push(`/consultation/${res._id}`)
+                history.push(`/consultation/${res._id}`, { data: { fees: item.fees } })
             })
     }
-    const date = (list) => {
-        console.log(3)
+    async function getPatientDetails() {
+        const result = await getPatientListDetails({ doctorId });
+        patientData(result)
+    }
+    const patientData = (list) => {
         const data = list.filter((patient) => {
             if (patient.status === "Ongoing") {
                 return patient;
             }
         })
         setPatientList(data)
+    }
+    async function cancelAppointment(details) {
+        const id = details._id
+        await cancelPatientAppointment(id)
+        getPatientDetails()
     }
     //For Pagination
     function prePage() {
@@ -90,97 +100,105 @@ export default function PatientList() {
         }
     }
     return (
-        <div>
-            <main>
-                <div className="container margin_120_95">
-                    <div className="row">
-                        <div className="col-lg-12 ml-auto">
-                            <MainNav>
-                                <ul className="clearfix">
-                                    <li>
-                                        <Link to={`/dashboard/${doctorId}`}>
-                                            <i className="arrow_back backArrow" title="back button"></i>
-                                        </Link>
-                                    </li>
-                                    <li className='float-none' style={{ fontSize: 'inherit' }}>Appoinment</li>
-                                </ul>
-                            </MainNav>
-                        </div>
-                        <div className="col-lg-12 ml-auto">
-                            <div className="box_form">
-                                <TableContainer component={Paper}>
-                                    <Table className={classes.table} size="medium" aria-label="a dense table">
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell align="center"><b>Patient Name</b></TableCell>
-                                                <TableCell align="center"><b>Appointment Date & Time</b></TableCell>
-                                                <TableCell align="center"><b>Mobile Number</b></TableCell>
-                                                <TableCell align="center"><b>Age</b></TableCell>
-                                                <TableCell align="center"><b>Clinic Name</b></TableCell>
-                                                <TableCell align="center"><b>Paid Fees</b></TableCell>
-                                                <TableCell align="center"><b>Consultation</b></TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {records.map((details, i) => {
-                                                return (
-                                                    <TableRow key={i}>
-                                                        <TableCell align="center">{details['patientDetails'][0].name}</TableCell>
-                                                        <TableCell align="center">{moment(details.selectedDate).format('YYYY-MM-DD').toString()},{details.slotTime}</TableCell>
-                                                        <TableCell align="center">{details['patientDetails'][0].mobile}</TableCell>
-                                                        <TableCell align="center">{details['patientDetails'][0].age}</TableCell>
-                                                        <TableCell align="center">{details['clinicList'][0].clinicName}</TableCell>
-                                                        <TableCell align="center">{details.fees}</TableCell>
-                                                        <TableCell align="center">
-                                                            <div className="linklist">
-                                                                <Link
-                                                                    onClick={() => saveData(details)}
-                                                                    className="patientlistlink">
-                                                                    <button className="consultationbtn btn btn-primary">
-                                                                        Start Consultation
-                                                                    </button>
-                                                                </Link>
-                                                            </div>
-                                                        </TableCell>
-                                                    </TableRow>
-                                                )
-                                            })}
+        <Wrapper>
+            <MainNav>
+                <ul className="clearfix">
+                    <li>
+                        <Link to={`/dashboard/${doctorId}`}>
+                            <i className="arrow_back backArrow" title="back button"></i>
+                        </Link>
+                    </li>
+                    <li className='float-none' style={{ fontSize: 'inherit' }}>Appoinment</li>
+                </ul>
+            </MainNav>
+            <div className='row'>
+                <UserLinks
+                    doctorId={doctorId}
+                    helperId={helpersData._id}
+                    accessModule={helpersData.access_module}
+                />
+                <div className="common_box">
+                    <TableContainer component={Paper}>
+                        <Table className={classes.table} size="medium" aria-label="a dense table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell align="center"><b>Patient Name</b></TableCell>
+                                    <TableCell align="center"><b>Appointment Date & Time</b></TableCell>
+                                    <TableCell align="center"><b>Mobile Number</b></TableCell>
+                                    <TableCell align="center"><b>Age</b></TableCell>
+                                    <TableCell align="center"><b>Clinic Name</b></TableCell>
+                                    <TableCell align="center"><b>Paid Fees</b></TableCell>
+                                    <TableCell align="center"><b>Consultation</b></TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {records.map((details, i) => {
+                                    return (
+                                        <TableRow key={i}>
+                                            <TableCell align="center">{details['patientDetails'][0].name}</TableCell>
+                                            <TableCell align="center">{moment(details.selectedDate).format('YYYY-MM-DD').toString()},{details.slotTime}</TableCell>
+                                            <TableCell align="center">{details['patientDetails'][0].mobile}</TableCell>
+                                            <TableCell align="center">{details['patientDetails'][0].age}</TableCell>
+                                            <TableCell align="center">{details['clinicList'][0].clinicName}</TableCell>
+                                            <TableCell align="center">{details.fees}</TableCell>
+                                            <TableCell align="center">
+                                                <div className="linklist">
+                                                    <Link
+                                                        onClick={() => cancelAppointment(details)}
+                                                        className="patientlistlink">
+                                                        <button className="consultationbtn btn btn-primary">
+                                                            Cancel
+                                                        </button>
+                                                    </Link>
+                                                </div>
+                                                <div className="linklist">
+                                                    {/* {setPatientFees(details.fees)} */}
+                                                    <Link
+                                                        onClick={() => saveData(details)}
+                                                        className="patientlistlink">
+                                                        <button className="consultationbtn btn btn-primary">
+                                                            Start Consultation
+                                                        </button>
+                                                    </Link>
+                                                </div>
 
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                                <nav aria-label="" className="add_top_20">
-                                    <ul className="pagination pagination-sm">
-                                        <li className="page-item">
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                                })}
+
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <nav aria-label="" className="add_top_20">
+                        <ul className="pagination pagination-sm">
+                            <li className="page-item">
+                                <Link className="page-link"
+                                    to="#" onClick={prePage}>
+                                    Previous
+                                </Link>
+                            </li>
+                            {
+                                number.map((n, i) => {
+                                    return (
+                                        <li className={`page-item ${activePageNo === n ? 'active' : ""}`} key={i}>
                                             <Link className="page-link"
-                                                to="#" onClick={prePage}>
-                                                Previous
-                                            </Link>
+                                                to="#" onClick={() => changeCPage(n)}>
+                                                {n}</Link>
                                         </li>
-                                        {
-                                            number.map((n, i) => {
-                                                return (
-                                                    <li className={`page-item ${activePageNo === n ? 'active' : ""}`} key={i}>
-                                                        <Link className="page-link"
-                                                            to="#" onClick={() => changeCPage(n)}>
-                                                            {n}</Link>
-                                                    </li>
-                                                )
-                                            })
-                                        }
-                                        <li className="page-item">
-                                            <Link className="page-link"
-                                                to="#" onClick={nextPage}>
-                                                Next
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
+                                    )
+                                })
+                            }
+                            <li className="page-item">
+                                <Link className="page-link"
+                                    to="#" onClick={nextPage}>
+                                    Next
+                                </Link>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
-            </main>
-        </div>
+            </div>
+        </Wrapper>
     )
 }

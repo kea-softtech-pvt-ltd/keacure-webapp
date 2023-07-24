@@ -173,6 +173,7 @@ body {
 	line-height: 1.4;
 	font-family: Poppins, Helvetica, sans-serif;
 	color: #555;
+	overflow-x: hidden
 }
 .list_home ul li a:after,
 a.wish_bt:after,
@@ -391,7 +392,7 @@ a {
 	float: right;
 }
 .modalbtn {
-	padding-bottom: 30px;
+	/* padding-bottom: 30px; */
 }
 .sessionlink {
 	padding: 10px;
@@ -453,16 +454,20 @@ a.btn_1 {
 	accent-color: #1a3c8b;
 }
 
-.helperDiv{
-    position: relative;
-    left: 215px;
+.helperDiv {
+	position: relative;
+	left: 215px;
 }
 .helperCheckbox {
-	 accent-color: #1a3c8b; 
-	 
+	accent-color: #1a3c8b;
 }
 .backArrow {
 	font-size: x-large;
+	color: white;
+}
+.bottomBorder{
+	border-bottom: 1px solid rgb(233, 231, 231);
+	margin: 5px;
 }
 /* .symptomsBtn{
 	position: relative;
@@ -3394,7 +3399,7 @@ input[type="radio"]:checked + label {
 .doctorphoto {
 	height: 130px;
 	width: 130px;
-	margin-bottom: 43px;
+	margin-bottom: 15px;
 }
 .doctorphotoStyle {
 	width: 100%;
@@ -4609,14 +4614,25 @@ a.box_feat_about h3 {
 }
 
 .vital-signInput {
-	width: 150px;
+	width: 110px;
 	margin: 10px;
+	margin-bottom: 10px;
+
 }
+.left{
+	float: left;
+}
+
 .form-control {
 	font-size: 14px;
 	font-size: 0.875rem;
 	min-height: 40px;
 	border-color: #1a3c8b;
+}
+.form-textarea{
+	height: 120px;
+	margin-top: 10px;
+	width: 350px;
 }
 .medicine-checkbox {
 	font-size: 100px;
@@ -4638,11 +4654,58 @@ a.box_feat_about h3 {
 .input input[type="text"] {
 	width: 100px;
 }
+.payment {
+	width: 100px;
+	padding: 5px;
+	border-radius: 5px;
+	margin-left: 5px;
+}
+.rupeeSign{
+	margin-left: 10px;	
+}
+.paymentInput {
+	display: flex;
+	margin: 5px;
+}
+.otherFees {
+	margin-right: 32px;
+}
+.otherInput {
+	padding: 10px;
+}
+.paymentbtn {
+	margin: 10px;
+	width: 85px;
+}
+.totalInput {
+	padding: 10px;
+}
+.totalFees {
+	margin-right: 70px;
+}
+.paymentAutocomplete {
+	position: relative;
+	bottom: 35px;
+	left: 20px;
+}
+
 textarea.form-control {
 	height: 120px;
-	margin-top: 31px;
+	margin-top:13px;
 	width: 350px;
 }
+.vital-signInput-txt{
+	height: 125px;
+    width: 330px;
+    padding: 5px;
+    border-radius: 5px;
+	border-color: #1a3c8b;
+
+}
+.vital-signInput label{
+	text-align: left;
+}
+
 .tablecontent {
 	padding: 25px;
 }
@@ -4657,9 +4720,32 @@ textarea.form-control {
 	padding-right: 220px;
 	padding-bottom: 15px;
 }
-/* .AccordionSummary{
-	background-color: grey;
-} */
+.calendar {
+	/* height:200px;
+	width: 1110px; */
+	position: relative;
+    bottom: 68px;
+}
+.dashboard {
+	margin: 20px;
+}
+.wrapperCss{
+	width: 100%;
+}
+.common_box{
+	background-color: #fff;
+	padding: 20px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	margin-bottom: 15px;
+	margin-top: 4px;
+	width: 1140px;
+	border: 1px solid #e1e8ed;
+}
+.containar-nav{
+	margin-left: 20px;
+    margin-right: 20px;
+}
 .MuiAccordionSummary-root.Mui-expanded {
 	min-height: 64px;
 	background-color: #1a3c8b;

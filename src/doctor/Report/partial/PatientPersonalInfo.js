@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import AuthApi from '../../../services/AuthApi';
-// import axios from 'axios';
-// import { API } from '../../../config';
 export default function PatientPersonalInfo(props) {
     const { insertPatientVitalSignsData } = AuthApi()
-    // const [patientId, setPatientId] = useState();
-
     const [changeData, setChangeData] = useState({
         age: "",
         weight: "",
@@ -16,15 +12,27 @@ export default function PatientPersonalInfo(props) {
         pulse: "",
         problem: ""
     })
-    console.log("----------------changeData", changeData)
-    const [savingData, setSavingData] = useState([])
-    console.log("----------------savingData", savingData)
 
     const { reportId } = props;
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setChangeData({ ...changeData, [name]: value })
+    }
+
+    // const changeD = useRef('');
+    const clearData = () => {
+        setChangeData({
+            age: "",
+            weight: "",
+            height: "",
+            BMI: "",
+            temp: "",
+            bp: "",
+            pulse: "",
+            problem: ""
+        })
+
     }
     const saveData = async (e) => {
         e.preventDefault();
@@ -39,10 +47,11 @@ export default function PatientPersonalInfo(props) {
             "problem": changeData.problem,
         }
         await insertPatientVitalSignsData({ reportId }, bodyData)
-            .then((res) => {
-                setSavingData(res)
-                // setPatientId(res.patientId)
-            })
+        // .then((res) => {
+        //     setSavingData(res)
+        //     // setPatientId(res.patientId)
+        // })
+        clearData()
     }
 
 
@@ -51,13 +60,15 @@ export default function PatientPersonalInfo(props) {
             <div className="row">
                 <div className="col-lg-5">
                     <div className="row">
-                        <div className="mx-3">
+                        <div className="">
+                            <div align='left'>
                             <label>Message</label>
+                            </div>
                             <textarea
                                 type="text"
                                 value={changeData.problem}
                                 onChange={handleChange}
-                                className="form-control"
+                                className="vital-signInput-txt"
                                 name="problem"
                                 placeholder="problem"
                             />
@@ -69,7 +80,7 @@ export default function PatientPersonalInfo(props) {
                 <div className="col-lg-7">
                     <div className="row">
                         <div className="vital-signInput">
-                            <label >Weight (kg)</label>
+                            <label className='left'>Weight (kg)</label>
                             <input
                                 type="text"
                                 value={changeData.weight}
@@ -77,10 +88,11 @@ export default function PatientPersonalInfo(props) {
                                 name="weight"
                                 placeholder="weight"
                                 onChange={handleChange}
+
                             />
                         </div>
                         <div className="vital-signInput">
-                            <label >Height (feet)</label>
+                            <label className='left' >Height (feet)</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -88,10 +100,11 @@ export default function PatientPersonalInfo(props) {
                                 name="height"
                                 placeholder="height"
                                 onChange={handleChange}
+
                             />
                         </div>
                         <div className="vital-signInput">
-                            <label >BMI</label>
+                            <label className='left'>BMI</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -99,10 +112,11 @@ export default function PatientPersonalInfo(props) {
                                 name="BMI"
                                 placeholder="bmi"
                                 onChange={handleChange}
+
                             />
                         </div>
                         <div className="vital-signInput">
-                            <label >BP</label>
+                            <label className='left'>BP</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -110,10 +124,11 @@ export default function PatientPersonalInfo(props) {
                                 name="bp"
                                 placeholder="Bp"
                                 onChange={handleChange}
+
                             />
                         </div>
                         <div className="vital-signInput">
-                            <label >Temprature</label>
+                            <label className='left'>Temprature</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -121,10 +136,11 @@ export default function PatientPersonalInfo(props) {
                                 name="temp"
                                 placeholder="Tempreture"
                                 onChange={handleChange}
+
                             />
                         </div>
                         <div className="vital-signInput">
-                            <label >Pulse</label>
+                            <label className='left'>Pulse</label>
                             <input
                                 type="text"
                                 className="form-control"
@@ -134,7 +150,9 @@ export default function PatientPersonalInfo(props) {
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="text-center add_top_30 patientinfo">
+                      
+                    </div>
+                    <div className="text-right add_top_30 patientinfo">
                             <input
                                 type="submit"
                                 className="btn_1 patientinfo"
@@ -142,7 +160,6 @@ export default function PatientPersonalInfo(props) {
                                 onClick={saveData}
                             />
                         </div>
-                    </div>
                 </div>
 
             </div>

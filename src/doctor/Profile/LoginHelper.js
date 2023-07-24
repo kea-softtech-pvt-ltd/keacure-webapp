@@ -1,15 +1,17 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { MainButtonInput } from "../../mainComponent/mainButtonInput";
 import { MainInput } from "../../mainComponent/mainInput";
 import AuthApi from "../../services/AuthApi";
-// import { useNavigate } from "react-router-dom/cjs/react-router-dom.min";
-import {  useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { setHelperData } from "../../recoil/atom/setHelperData";
+import { useRecoilState } from "recoil";
 export default function LoginDoctor() {
     const { loginHelperData } = AuthApi()
     const [loginData, setLoginData] = useState({});
     const [isError, setIsError] = useState(false);
-    const  history = useHistory()
+    const [helpersData, setHelpersData] = useRecoilState(setHelperData)
+    // console.log('helpersData', helpersData)
+    const history = useHistory()
     const handleChange = (e) => {
         e.preventDefault();
         const { name, value } = e.target;
@@ -23,17 +25,16 @@ export default function LoginDoctor() {
         }
         await loginHelperData(bodyData)
             .then((res) => {
-                console.log("=res========>", res)
+                setHelpersData(res)
                 if (res === null) {
                     setIsError("Please Enter Valid Username and Password")
                 }
                 else {
-                    history.push(`/dashboard/${res.doctorId}`, { data: { helperId: res._id, accessModule: res.access_module } })
+                    history.push(`/dashboard/${res.doctorId}`)
                 }
+                // console.log("-----------", res)
             })
-
     }
-
 
     return (
         <div>
@@ -63,7 +64,7 @@ export default function LoginDoctor() {
 
                                             </div>
                                         </div>
-                                        <div className=" ">
+                                        <div>
                                             <MainButtonInput onClick={(e) => saveData(e)} >Login</MainButtonInput>
                                         </div>
                                     </div>

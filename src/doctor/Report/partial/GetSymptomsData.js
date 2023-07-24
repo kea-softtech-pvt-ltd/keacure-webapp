@@ -6,12 +6,11 @@ export default function GetSymptomsData(props) {
     const [symptomDataInfo, setSymptomDataInfo] = useState([])
     useEffect(() => {
         symptomsData()
-    }, [])
+    }, [symptomDataInfo])
 
     const symptomsData = async () => {
         await getMedicineReport({ reportId })
             .then((res) => {
-                // setFetchSymptomsData(res)
                 setSymptomDataInfo(res[0].symptoms)
             })
     }

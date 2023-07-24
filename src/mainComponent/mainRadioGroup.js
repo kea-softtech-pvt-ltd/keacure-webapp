@@ -10,6 +10,7 @@ const MainRadioGroup = (props) =>{
                 <FormControlLabel name={props.name} value={props.value} onChange={props.onChange} control={<StyledRadio />} label={props.label} />
                 <FormControlLabel name={props.name} value={props.value1} onChange={props.onChange}  control={<StyledRadio />} label={props.label1} />
                 <FormControlLabel name={props.name} value={props.value2} onChange={props.onChange}  control={<StyledRadio />} label={props.label2} />
+                {/* <FormControlLabel name={props.name} value={props.value3} onChange={props.onChange}  control={<StyledRadio />} label={props.label3} /> */}
             </RadioGroup>
             {props.children}
         </FormControl>

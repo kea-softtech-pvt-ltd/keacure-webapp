@@ -18,7 +18,7 @@ export default function Premedication(props) {
     return (
         <>
             <div className=" container mx-3" >
-                <span >Doctor Premedication Note</span>
+                <span className='left mb-2'>Doctor Premedication Note</span>
                 <textarea
                     type="text"
                     value={premedication_note}
@@ -30,7 +30,7 @@ export default function Premedication(props) {
                 />
             </div>
 
-            <div className="text-center medicinebtn mt-15 add_top_30">
+            <div className="text-right medicinebtn mt-15 add_top_30">
                 <input
                     type="submit"
                     onClick={addNode}

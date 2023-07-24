@@ -16,7 +16,6 @@ const AddClinic = (props) => {
     //for fetch specialization data
     const [drspecialization, setDrSpecialization] = useState([])
     const [clinicInfo, setClinicInfo] = useState([]);
-    console.log("--------clinicInfo--------",clinicInfo)
     const { insertClinicData, fetchDrSpecialization } = AuthApi()
     //for fetch specialization data
     useEffect(() => {
@@ -25,7 +24,6 @@ const AddClinic = (props) => {
 
     const fetchSpecializations = async () => {
         const result = await fetchDrSpecialization();
-        console.log("--------------result", result)
         setDrSpecialization(result);
     }
 
@@ -49,7 +47,6 @@ const AddClinic = (props) => {
             clinicNumber: clinicInfo.clinicNumber,
             services: clinicInfo.services
         }
-        console.log('======newClinicData',newClinicData)
         // const res = await axios.post(`${API}/insertclinic`, newClinicData)
         
        await insertClinicData({newClinicData} )

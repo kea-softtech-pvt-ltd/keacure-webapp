@@ -45,6 +45,7 @@ function EditExperience(props) {
 
     async function UpdateData(e) {
         e.preventDefault();
+        e.target.reset()
         const updateExperienceData = {
             doctorId: updateExperience.doctorId,
             clinicName: updateExperience.clinicName,
@@ -71,6 +72,8 @@ function EditExperience(props) {
                     props.onSubmit();
                 })
         }
+        // setUpdateExperience({})
+
     }
 
     function manipulateExperience(data) {

@@ -12,19 +12,19 @@ function CalendarModalBox(props) {
     const getPatientInfoById = async () => {
         await patientDetailsData({ patientId })
             .then(jsonRes => {
-                setPatientDetails(jsonRes)
+                setPatientDetails(jsonRes[0])
             })
     };
 
     return (
         <div>
                     <div className="d-flex container " >
-                        <div className=" mx-5 align-items-left ">
+                        <div className=" mx-4 align-items-left ">
                             <img src={PatientProfile} alt="Patient Profile" />
                         </div>
                         <div>
                             <div className=" patientModalName align-item-right ">{patientDetails.name}</div>
-                            <div><b className="patientModal">Email :  </b>{patientDetails.email}</div>
+                            <div><b className="patientModal">Email : </b>{patientDetails.email}</div>
                             <div><b className="patientModal">Gender : </b>{patientDetails.gender}</div>
                             <div><b className="patientModal">Mobile No :  </b>{patientDetails.mobile}</div>
                             <div><b className="patientModal">Age :    </b>{patientDetails.age}</div>

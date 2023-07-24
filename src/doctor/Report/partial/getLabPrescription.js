@@ -3,8 +3,8 @@ import AuthApi from '../../../services/AuthApi';
 
 export default function GetLabPrescription(props) {
     const { reportId } = props;
-    const [getLabData, setGetLabData] = useState([]);
     const { getLabTestPrescriptionData } = AuthApi();
+    const [getLabData, setGetLabData] = useState([]);
     useEffect(() => {
         getLabPrescriptionData()
     }, [getLabData])

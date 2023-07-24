@@ -1,6 +1,4 @@
 import React from 'react';
-import { API } from "../../../../config";
-import axios from 'axios';
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -55,7 +53,6 @@ function AddDoctorProfessionalExperience(props) {
             setError("end year should be greater than start year")
         }
         else {
-            // const res= axios.post(`${API}/insertExperience`, newDoctorData)
             insertDrExperience(newDoctorData)
                 .then((res) => {
                     const reArrangedData = manipulateExperience(res.data)
@@ -90,54 +87,64 @@ function AddDoctorProfessionalExperience(props) {
     return (
         <form className="my-2" onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
-                <div className="col-md-3 ">
-                    <MainMuiPickers
-                        name="startYear"
-                        value={startYear}
-                        onChange={handleStartYearChange}>Start year
-                    </MainMuiPickers>
-                    {error && <span className="validation">select valid year</span>}
-                </div>
-
-                <div className="col-md-3">
-                    <MainMuiPickers
-                        name="endYear"
-                        value={endYear}
-                        onChange={handleEndYearChange}>End Year
-                    </MainMuiPickers>
-                </div>
-
-                <div className="col-md-6 ">
-                    <label><b>Clinic/Hospital Name</b></label>
-                    <MainInput
-                        type="text"
-                        name="clinicName"
-                        value={experienceData.clinicName}
-                        onChange={handleInputChange}
-                        placeholder="clinic name">
-                        {errors.clinicName && <span className="validation">Please enter clinic name</span>}
-                    </MainInput>
-                </div>
-
-                <div className="col-lg-12">
-                    <div className="textarea">
-                        <label><b>Description</b></label>
-                        <textarea
-                            type="text"
-                            name="description"
-                            value={experienceData.description}
-                            onChange={handleInputChange}
-                            className="form-control"
-                            placeholder="description"
-                        />
+                <div className="col-md-6">
+                <div className="row">
+                    <div className="col-md-6 ">
+                    <div className=" text-left">
+                        <MainMuiPickers
+                            name="startYear"
+                            value={startYear}
+                            onChange={handleStartYearChange}>Start year
+                        </MainMuiPickers>
+                        </div>
+                        {error && <span className="validation">select valid year</span>}
                     </div>
-                    {errors.description && <span className="validation">Type something here</span>}
-                </div>
-            </div>
+                    <div className="col-md-6">
+                    <div className=" text-left">
+                        <MainMuiPickers
+                            name="endYear"
+                            value={endYear}
+                            onChange={handleEndYearChange}>End Year
+                        </MainMuiPickers>
+                        </div>
+                    </div>
+                    </div>
+                    <div className="col-md-14 ">
+                    <div className=" text-left">
+                        <label><b>Clinic/Hospital Name</b></label>
+                        </div>
+                        <MainInput
+                            type="text"
+                            name="clinicName"
+                            value={experienceData.clinicName}
+                            onChange={handleInputChange}
+                            placeholder="clinic name">
+                            {errors.clinicName && <span className="validation">Please enter clinic name</span>}
+                        </MainInput>
+                    </div>
+                    </div>
+                    <div className="col-lg-6">
+                        <div className=" text-left">
+                            <label><b>Description</b></label>
+                            <div>
+                            <textarea
+                                type="text"
+                                name="description"
+                                value={experienceData.description}
+                                onChange={handleInputChange}
+                                className="form-textarea p-2"
+                                placeholder="description"
+                            />
+                            </div>
+                        </div>
+                        {errors.description && <span className="validation">Type something here</span>}
+                    </div>
 
-            <div className="text-center add_top_30">
-                <MainButtonInput>Save</MainButtonInput>
-            </div>
+                </div>
+
+                <div className="text-center my-2">
+                    <MainButtonInput>Save</MainButtonInput>
+                </div>
         </form>
     )
 }

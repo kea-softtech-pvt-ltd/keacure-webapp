@@ -22,7 +22,7 @@ export default function Investigation(props) {
     return (
         <div >
             <div className=" container mx-3" >
-                <span >Doctor Investigation Note</span>
+                <span  className='left mb-2'>Doctor Investigation Note</span>
                 <textarea
                     type="text"
                     value={investigation_note}
@@ -34,7 +34,7 @@ export default function Investigation(props) {
                 />
             </div>
 
-            <div className="text-center mt-15 medicinebtn add_top_30">
+            <div className="text-right mt-15 medicinebtn add_top_30">
                 <input
                     type="button"
                     onClick={addNode}

@@ -31,7 +31,6 @@ export default function Subscription() {
                             <h2>Ready to get Started?</h2>
                         </div>
                         <div className="row">
-                            {/* <div className="cards"> */}
                             <div className="card">
                                 <span>
                                     <h4 className=" card-title float-left">Free-Trial</h4>

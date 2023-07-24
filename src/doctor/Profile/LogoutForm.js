@@ -1,11 +1,14 @@
 import { setDoctorId} from "../../recoil/atom/setDoctorId";
 import { useRecoilState } from "recoil";
 import { useEffect } from "react";
-
+import { setHelperData } from "../../recoil/atom/setHelperData";
 function Logout(){
     const [doctorId , setDoctor] = useRecoilState(setDoctorId);
+    const [helpersData, setHelpersData] = useRecoilState(setHelperData)
+
     useEffect(() =>{
         setDoctor("")
+        setHelpersData('')
     }, [])
 
     return(
