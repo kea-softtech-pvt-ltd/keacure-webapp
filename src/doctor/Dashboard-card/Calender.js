@@ -15,12 +15,12 @@ const localizer = momentLocalizer(moment)
 
 export default function Calender() {
   const { doctorId } = useParams();
-  const { calendarEvent } = AuthApi()
+  const { getPatientListDetails } = AuthApi()
   const [getData, setGetData] = useState([])
   const [show, setShow] = useState(false);
   const [patientIdDetails, setPatientIdDetails] = useState([])
   const [helpersData, setHelpersData] = useRecoilState(setHelperData)
-
+  const [patientList, setPatientList] = useState([])
   useEffect(() => {
     handleOnSelectSlot();
   }, [])
@@ -35,19 +35,32 @@ export default function Calender() {
     setPatientIdDetails(patientId)
   }
   const handleOnSelectSlot = async () => {
-    const result = await calendarEvent({ doctorId })
+    const result = await getPatientListDetails({ doctorId })
     const calendarData = []
     result.map((item) => {
-      calendarData.push({
-        id: item._id,
-        title: item.patientDetails[0].name,
-        start: new Date(item.startDate),
-        end: new Date(moment(item.startDate).add({ hours: 0, minutes: item.timeSlot }).toString()),
-        timeslots: item.timeSlot,
-        status: item.status,
-        patientId: item.patientDetails[0]._id
-
-      })
+      setPatientList(item)
+      console.log("item----------", item)
+      if (item.dependentId) {
+        calendarData.push({
+          title: item['dependentDetails'][0].name,
+          patientId: item['dependentDetails'][0]._id,
+          id: item._id,
+          start: new Date(item.startDate),
+          end: new Date(moment(item.startDate).add({ hours: 0, minutes: item.timeSlot }).toString()),
+          timeslots: item.timeSlot,
+          status: item.status,
+        })
+      } else {
+        calendarData.push({
+          title: item.patientDetails[0].name,
+          patientId: item.patientDetails[0]._id,
+          id: item._id,
+          start: new Date(item.startDate),
+          end: new Date(moment(item.startDate).add({ hours: 0, minutes: item.timeSlot }).toString()),
+          timeslots: item.timeSlot,
+          status: item.status,
+        })
+      }
     })
     setGetData(calendarData);
   }
@@ -91,7 +104,7 @@ export default function Calender() {
               selectable={true}
               onSelectEvent={handleModalButtonClick}
               // style={{width:1000, height:500}}
-              style={{ height: 'calc(80vh - 80px)', width: '100%' }}
+              style={{ height: 'calc(80vh - 80px)', width: '100%', cursor: 'pointer' }}
             />
           </div>
         </div>
@@ -101,7 +114,7 @@ export default function Calender() {
           <Modal.Title >Patient Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <CalendarModalBox patientId={patientIdDetails} onSubmit={handleModalButtonClick} />
+          <CalendarModalBox patientList={patientList} doctorId={doctorId} patientId={patientIdDetails} onSubmit={handleModalButtonClick} />
         </Modal.Body>
       </Modal>
     </Wrapper>

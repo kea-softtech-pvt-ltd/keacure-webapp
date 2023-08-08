@@ -10,7 +10,6 @@ export default function LoginDoctor() {
     const [loginData, setLoginData] = useState({});
     const [isError, setIsError] = useState(false);
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
-    // console.log('helpersData', helpersData)
     const history = useHistory()
     const handleChange = (e) => {
         e.preventDefault();
@@ -32,7 +31,6 @@ export default function LoginDoctor() {
                 else {
                     history.push(`/dashboard/${res.doctorId}`)
                 }
-                // console.log("-----------", res)
             })
     }
 

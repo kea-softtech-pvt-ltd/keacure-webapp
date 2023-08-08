@@ -1,6 +1,6 @@
 import { React } from 'react';
 import { Link } from "react-router-dom";
-import { Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { SetTiming } from "./setTiming";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -11,7 +11,6 @@ import { updateSession } from '../../../../recoil/atom/setUpdateSession'
 // import ModalHeader from "react-bootstrap/esm/ModalHeader";
 import SetUpdateTime from "./setUpdateTime";
 import AuthApi from "../../../../services/AuthApi";
-import Confirmation from "../../Confirmation"
 import { Icon } from '@material-ui/core';
 function SetSession(props) {
     const { doctorId } = useParams();
@@ -21,11 +20,12 @@ function SetSession(props) {
     const [showtime, setShowTime] = useState(false);
     const [updateTime, setUpdateTime] = useState(false);
     const [fetchTime, setfetchTime] = useRecoilState(SetDoctorSessionTiming);
-    // console.log("=====fetchTime>>>>", fetchTime)
     const [fetchUpdateTime, setfetchUpdateTime] = useRecoilState(updateSession);
-    // console.log("=====>fetchUpdateTime>>>", fetchUpdateTime)
     const [updateItem, setUpdateItem] = useState();
     const [deleteItem, setDeleteItem] = useState([]);
+    const [Item, setItem] = useState([]);
+    const [showDelete, setShowDelete] = useState(false);
+
     const { allSessions, deleteSlot } = AuthApi()
     const dayList = {
         "sun": "Sunday",
@@ -45,15 +45,18 @@ function SetSession(props) {
         setShowTime(true)
         setDayNames(day)
     };
+    const handleDeleteShow = (item) => {
+        setItem(item)
+        setShowDelete(true)
+    }
     //setTiming component
     const handleTimeClick = () => {
         handleClose();
     };
 
     const handleUpdateClose = () => setUpdateTime(false);
-
+    const handleDeleteClose = () => setShowDelete(false)
     const handleUpdate = (e, item) => {
-        console.log("======item", item)
         e.preventDefault();
         setUpdateTime(true);
         setUpdateItem(item)
@@ -74,7 +77,6 @@ function SetSession(props) {
         }
         await allSessions(dataId)
             .then(jsonRes => {
-                console.log("======json", jsonRes)
                 setDeleteItem(jsonRes)
                 let byDay = jsonRes.reduce((allDayData, singleDayData) => {
                     allDayData[singleDayData.day] = [...allDayData[singleDayData.day] || [], singleDayData];
@@ -87,20 +89,20 @@ function SetSession(props) {
 
 
 
-    const deleteSlotData = async (item) => {
+    const deleteSlotData = async (Item) => {
         const deleteData = deleteItem.filter((i) => {
-            if (i.day === item) {
+            if (i.day === Item) {
                 return i
             }
         })
         const slotId = deleteData[0]._id
         await deleteSlot(slotId)
         getAllSession()
+        handleDeleteClose()
     }
     return (
         <div className="container">
             <ul>
-            <Confirmation/>
                 {daysKeys.map((item, index) =>
                     <li className="" key={index}>
                         <div className="my-2 ">
@@ -117,22 +119,22 @@ function SetSession(props) {
                                                     {fetchUpdateTime[item][0].fromTime}
                                                     -
                                                     {fetchUpdateTime[item][0].toTime}
-                                                    <FaRupeeSign />
-                                                    {fetchUpdateTime[item][0].fees}/- 
-                                                     {/* {(fetchUpdateTime[item][0].Appointment === "VideoAppointment") */}
-                                                        {/* ? <FaVideo /> */}
-                                                         <FaWalking />
+                                                    <span className='ml-3'>
+                                                        <FaRupeeSign />
+                                                    </span>
+                                                    {fetchUpdateTime[item][0].fees}/-
+                                                    {/* {(fetchUpdateTime[item][0].Appointment === "VideoAppointment") */}
+                                                    {/* ? <FaVideo /> */}
+                                                    <FaWalking />
                                                 </span>
                                             </Link>
                                         </div>
-
                                         <span className="col-md-2 ">
-                                            <Link to="#" onClick={() => deleteSlotData(item)}>
+                                            <Link to="#" onClick={() => handleDeleteShow(item)}>
                                                 <Icon className="icon-trash-2" style={{ fontSize: 17 }} ></Icon>
                                             </Link>
                                         </span>
                                     </>
-
 
                                     : (
                                         <>
@@ -145,10 +147,10 @@ function SetSession(props) {
                                                             -
                                                             {fetchTime[item][0].toTime}
                                                             <FaRupeeSign />
-                                                            {fetchTime[item][0].fees}/-  
+                                                            {fetchTime[item][0].fees}/-
                                                             {/* {(fetchTime[item][0].Appointment === "VideoAppointment") */}
-                                                                {/* ? <FaVideo /> */}
-                                                                : <FaWalking />
+                                                            {/* ? <FaVideo /> */}
+                                                            <FaWalking />
                                                         </span>
                                                     </Link>
 
@@ -186,6 +188,25 @@ function SetSession(props) {
                     <SetUpdateTime day={dayName} update={updateItem} onSubmit={handleUpdateTimeClick} />
                 </Modal.Body>
             </Modal>
+            <div>
+                <Modal show={showDelete} onHide={handleDeleteClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Are You Sure?</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="alert alert-danger">You Want To Delete This Session</div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="default" className='appColor' onClick={() => deleteSlotData(Item)}>
+                            Yes
+                        </Button>
+                        <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleDeleteClose}>
+                            No
+                        </Button>
+
+                    </Modal.Footer>
+                </Modal>
+            </div>
         </div>
     )
 }

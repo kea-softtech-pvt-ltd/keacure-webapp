@@ -28,7 +28,6 @@ export default function EditHelper() {
 
     const fetchHelper = async () => {
         const res = await fetchHelperData(helperId)
-        console.log('--->>>>>',res)
         setDoctorId(res[0].doctorId)
         setGetHelperData(res[0])
         setSelectedModule(res[0].access_module)

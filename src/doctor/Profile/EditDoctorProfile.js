@@ -41,8 +41,16 @@ export default function EditDoctorProfile() {
                             <i className="arrow_back backArrow" title="back button"></i>
                         </Link>
                     </li>
-                    <li><Link to="#section_1" className="active">Doctor Information</Link></li>
-                    <li><Link to={`/dashboard/${doctorId}`}>Done</Link></li>
+                    <li>
+                        <Link to="#section_1" className="active">
+                            Doctor Information
+                        </Link>
+                    </li>
+                    <li>
+                        <Link to={`/dashboard/${doctorId}`}>
+                            Done
+                        </Link>
+                    </li>
                 </ul>
             </MainNav>
             <div className='row'>
@@ -63,15 +71,24 @@ export default function EditDoctorProfile() {
                     </MainTabs>
 
                     <TabPanel value={tabValue} index={0}>
-                        <DoctorPersonalInformation data={goToEducation} doctorId={doctorId} />
+                        <DoctorPersonalInformation
+                            data={goToEducation}
+                            doctorId={doctorId}
+                        />
                     </TabPanel>
 
                     <TabPanel value={tabValue} index={1}>
-                        <DoctorEducation data={goToExperience} doctorId={doctorId} />
+                        <DoctorEducation
+                            data={goToExperience}
+                            doctorId={doctorId}
+                        />
                     </TabPanel>
 
                     <TabPanel value={tabValue} index={2}>
-                        <DoctorProfessionalExperience data={goToClinic} doctorId={doctorId} />
+                        <DoctorProfessionalExperience
+                            data={goToClinic}
+                            doctorId={doctorId}
+                        />
                     </TabPanel>
 
                     <TabPanel value={tabValue} index={3}>

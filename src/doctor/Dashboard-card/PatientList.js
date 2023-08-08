@@ -1,12 +1,5 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link, useParams, useHistory } from "react-router-dom";
 import moment from 'moment';
@@ -16,6 +9,9 @@ import UserLinks from './partial/uselinks';
 import { Wrapper } from '../../mainComponent/Wrapper';
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
+import { Button, Modal } from 'react-bootstrap';
+import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
+
 //for table
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -32,18 +28,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PatientList() {
-
     const { doctorId } = useParams()
     let history = useHistory();
     const classes = useStyles();
     const [patientList, setPatientList] = useState([]);
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
-
+    const [showDelete, setShowDelete] = useState(false);
+    const [id, setId] = useState()
     const { getPatientListDetails, MedicineReportData, cancelPatientAppointment } = AuthApi()
 
     //For Pagination
     const [activePageNo, setActivePageNo] = useState(1)
-    const recordsPerPage = 5;
+    const recordsPerPage = 6;
     const lastIndex = activePageNo * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
     const records = patientList.slice(firstIndex, lastIndex)
@@ -53,6 +49,11 @@ export default function PatientList() {
     useEffect(() => {
         getPatientDetails();
     }, [])
+    const handleDeleteShow = (details) => {
+        setId(details._id)
+        setShowDelete(true)
+    }
+    const handleDeleteClose = () => setShowDelete(false)
 
     async function saveData(item) {
         const bodyData = {
@@ -63,9 +64,9 @@ export default function PatientList() {
             "fees": item.fees
         }
         await MedicineReportData(bodyData)
-            .then((res) => {
-                history.push(`/consultation/${res._id}`, { data: { fees: item.fees } })
-            })
+        .then((res) => {
+            history.push(`/consultation/${res._id}`, { data: { fees: item.fees } })
+        })
     }
     async function getPatientDetails() {
         const result = await getPatientListDetails({ doctorId });
@@ -79,10 +80,10 @@ export default function PatientList() {
         })
         setPatientList(data)
     }
-    async function cancelAppointment(details) {
-        const id = details._id
+    async function cancelAppointment(id) {
         await cancelPatientAppointment(id)
         getPatientDetails()
+        handleDeleteClose()
     }
     //For Pagination
     function prePage() {
@@ -118,58 +119,90 @@ export default function PatientList() {
                     accessModule={helpersData.access_module}
                 />
                 <div className="common_box">
-                    <TableContainer component={Paper}>
-                        <Table className={classes.table} size="medium" aria-label="a dense table">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="center"><b>Patient Name</b></TableCell>
-                                    <TableCell align="center"><b>Appointment Date & Time</b></TableCell>
-                                    <TableCell align="center"><b>Mobile Number</b></TableCell>
-                                    <TableCell align="center"><b>Age</b></TableCell>
-                                    <TableCell align="center"><b>Clinic Name</b></TableCell>
-                                    <TableCell align="center"><b>Paid Fees</b></TableCell>
-                                    <TableCell align="center"><b>Consultation</b></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {records.map((details, i) => {
-                                    return (
-                                        <TableRow key={i}>
-                                            <TableCell align="center">{details['patientDetails'][0].name}</TableCell>
-                                            <TableCell align="center">{moment(details.selectedDate).format('YYYY-MM-DD').toString()},{details.slotTime}</TableCell>
-                                            <TableCell align="center">{details['patientDetails'][0].mobile}</TableCell>
-                                            <TableCell align="center">{details['patientDetails'][0].age}</TableCell>
-                                            <TableCell align="center">{details['clinicList'][0].clinicName}</TableCell>
-                                            <TableCell align="center">{details.fees}</TableCell>
-                                            <TableCell align="center">
-                                                <div className="linklist">
-                                                    <Link
-                                                        onClick={() => cancelAppointment(details)}
-                                                        className="patientlistlink">
-                                                        <button className="consultationbtn btn btn-primary">
-                                                            Cancel
-                                                        </button>
-                                                    </Link>
-                                                </div>
-                                                <div className="linklist">
-                                                    {/* {setPatientFees(details.fees)} */}
-                                                    <Link
-                                                        onClick={() => saveData(details)}
-                                                        className="patientlistlink">
-                                                        <button className="consultationbtn btn btn-primary">
-                                                            Start Consultation
-                                                        </button>
-                                                    </Link>
-                                                </div>
+                    <div className='row'>
+                        {records.map((details, i) => {
+                            return (
+                                <>
+                                    {
+                                        details.dependentId ? (
+                                            <div className="col-md-4 ">
+                                                <div className="cardDiv">
+                                                    <span className='cardSpan '>
+                                                        <i className='icon-user color patientListIcon' />
+                                                        <span className='patientName'>{details['dependentDetails'][0].name}</span>
+                                                    </span>
+                                                    <span className='cardSpan'>
+                                                        <i className='icon-mobile-1 color patientListIcon' />
+                                                        <span className='patinetInfo'>{details['dependentDetails'][0].mobile}</span>
+                                                    </span>
+                                                    <span className='cardSpan '>
+                                                        <i className='icon-hospital-1 color patientListIcon' />
+                                                        <span className='patinetInfo'>{details['clinicList'][0].clinicName}</span>
+                                                    </span>
+                                                    <span className='cardSpan time'>
+                                                        <i className='pe-7s-date m-1 color patientListIcon' />
+                                                        <span className='slotTime'>{moment(details.selectedDate).format('YYYY-MM-DD').toString()},{details.slotTime}
+                                                            <span className='timeSlot'>
+                                                                <AccessTimeRoundedIcon style={{ fontSize: 20, color: '#1a3c8b' }} />
+                                                                {details.timeSlot} Min.
+                                                            </span>
+                                                        </span>
+                                                    </span>
 
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                })}
+                                                    <div className='cardSpan appointmentBtn'>
+                                                        <Link to="#" onClick={() => saveData(details)}>
+                                                            <button className="btn appColor helperBtn ">Start Consultation</button>
+                                                        </Link>
+                                                        <Link onClick={() => handleDeleteShow(details)} >
+                                                            <button className='btn btn-default helperBtn ' >Cancel</button>
+                                                        </Link>
 
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <div className="col-md-4 ">
+                                                <div className="cardDiv">
+                                                    <span className='cardSpan '>
+                                                        <i className='icon-user color patientListIcon' />
+                                                        <span className='patientName'>{details['patientDetails'][0].name}</span>
+                                                    </span>
+                                                    <span className='cardSpan'>
+                                                        <i className='icon-mobile-1 color patientListIcon' />
+                                                        <span className='patinetInfo'>{details['patientDetails'][0].mobile}</span>
+                                                    </span>
+                                                    <span className='cardSpan '>
+                                                        <i className='icon-hospital-1 color patientListIcon' />
+                                                        <span className='patinetInfo'>{details['clinicList'][0].clinicName}</span>
+                                                    </span>
+                                                    <span className='cardSpan time'>
+                                                        <i className='pe-7s-date m-1 color patientListIcon' />
+                                                        <span className='slotTime'>{moment(details.selectedDate).format('YYYY-MM-DD').toString()},{details.slotTime}
+                                                            <span className='timeSlot'>
+                                                                <AccessTimeRoundedIcon style={{ fontSize: 20, color: '#1a3c8b' }} />
+                                                                {details.timeSlot} Min.
+                                                            </span>
+                                                        </span>
+                                                    </span>
+
+                                                    <div className='cardSpan appointmentBtn'>
+                                                        <Link to="#" onClick={() => saveData(details)}>
+                                                            <button className="btn appColor helperBtn ">Start Consultation</button>
+                                                        </Link>
+                                                        <Link onClick={() => handleDeleteShow(details)} >
+                                                            <button className='btn btn-default helperBtn ' >Cancel</button>
+                                                        </Link>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )
+                                    }
+                                </>
+                            )
+
+                        })}
+                    </div>
                     <nav aria-label="" className="add_top_20">
                         <ul className="pagination pagination-sm">
                             <li className="page-item">
@@ -197,7 +230,24 @@ export default function PatientList() {
                             </li>
                         </ul>
                     </nav>
-                </div>
+                    <Modal show={showDelete} onHide={handleDeleteClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Are You Sure?</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <div className="alert alert-danger">You Want To Delete This Appoinment. </div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="default" className='appColor' onClick={() => cancelAppointment(id)}>
+                                Yes
+                            </Button>
+                            <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleDeleteClose}>
+                                No
+                            </Button>
+
+                        </Modal.Footer>
+                    </Modal>
+                </div >
             </div>
         </Wrapper>
     )

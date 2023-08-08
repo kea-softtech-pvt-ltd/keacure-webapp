@@ -47,10 +47,10 @@ export default function PatientPersonalInfo(props) {
             "problem": changeData.problem,
         }
         await insertPatientVitalSignsData({ reportId }, bodyData)
-        // .then((res) => {
+        .then((res) => {
         //     setSavingData(res)
         //     // setPatientId(res.patientId)
-        // })
+        })
         clearData()
     }
 
@@ -99,6 +99,18 @@ export default function PatientPersonalInfo(props) {
                                 value={changeData.height}
                                 name="height"
                                 placeholder="height"
+                                onChange={handleChange}
+
+                            />
+                        </div>
+                        <div className="vital-signInput">
+                            <label className='left' >Age</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={changeData.age}
+                                name="age"
+                                placeholder="age"
                                 onChange={handleChange}
 
                             />

@@ -71,10 +71,7 @@ export default function AuthApi() {
         const result = await axios.get(`${API}/getBookingData/${doctorId}`);
         return result.data;
     }
-    // const getPatientFees = async ({ appointmentId }) => {
-    //     const result = await axios.get(`${API}/getBookingData/${ appointmentId }`);
-    //     return result.data;
-    // }
+    
     const allSessions = async (dataId) => {
         const result = await axios.post(`${API}/fetchtime`, dataId)
         return result.data;
@@ -107,10 +104,10 @@ export default function AuthApi() {
         const result = await axios.delete(`${API}/deleteexperience/${id}`)
         return result
     }
-    const calendarEvent = async ({ doctorId }) => {
-        const result = await axios.get(`${API}/getBookingData/${doctorId}`)
-        return result.data
-    }
+    // const calendarEvent = async ({ doctorId }) => {
+    //     const result = await axios.get(`${API}/getBookingData/${doctorId}`)
+    //     return result.data
+    // }
     const patientDetailsData = async ({ patientId }) => {
         const result = await axios.get(`${API}/patientById/${patientId}`)
         return result.data
@@ -261,7 +258,7 @@ export default function AuthApi() {
         editExperienceData,
         fetchExperienceData,
         getAllExperienceData,
-        calendarEvent,
+        // calendarEvent,
         patientDetailsData,
         getLabData,
         symptomsData,

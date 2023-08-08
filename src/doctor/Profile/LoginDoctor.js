@@ -62,11 +62,16 @@ export default function LoginDoctor() {
                                         {showOTP === true ?
                                             <ShowLoginOtp loginData={loginData} />
                                             : null}
-                                        <Link className='pl-5' to='/loginhelper'>Login by Assistant</Link>
+                                        <Link className='pl-5' to='/loginhelper'>Login by Assistant </Link>
                                     </div>
                                 </div>
                             </form>
-                            <div className="text-center link_bright">Do not have an account yet? <Link to="/registerdoctor"><strong>Register now!</strong></Link></div>
+                            <div className="text-center link_bright">
+                                Do not have an account yet? 
+                                <Link to="/registerdoctor">
+                                    <strong style={{color:'#fff'}}>  Register now!</strong>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>

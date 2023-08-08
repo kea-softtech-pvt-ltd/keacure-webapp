@@ -113,87 +113,90 @@ export default function MedicinePrescription(props) {
     }
 
     return (
-        <div style={{width: '100%'}} >
-            <GetMedicinePriscription reportId={reportId} />
-            <TableContainer component={Paper} className='mx-auto w-100'>
-                <Table className={classes.table} size="large" aria-label="a dense table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="center"><b>Medicine Name</b></TableCell>
-                            <TableCell align="center"><b>Take</b></TableCell>
-                            <TableCell align="center"><b>Duration</b></TableCell>
-                            <TableCell align="center" className="tablecell">
-                                <b>Slots</b>
-                            </TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell align="right">
-                                <Autocomplete
-                                    style={{ width: 250 }}
-                                    id={tabletName._id}
-                                    disablePortal={true}
-                                    disableClearable
-                                    disableCloseOnSelect
-                                    value={medicineSave}
-                                    onChange={handleChange}
-                                    getOptionLabel={(tabletName) => `${tabletName.medicineName}`}
-                                    options={tabletName}
-                                    noOptionsText={"Medicine not available"}
-                                    renderInput={(params) =>
-                                        <TextField {...params}
-                                            label="Medicine Name"
-                                        />}
-                                />
-                            </TableCell>
 
-                            <TableCell align="right">
-                                <Autocomplete
-                                    disablePortal={true}
-                                    disableClearable
-                                    disableCloseOnSelect
-                                    style={{ width: 250 }}
-                                    id={saveMealData._id}
-                                    value={saveMealData.name}
-                                    onChange={handleMealData}
-                                    getOptionLabel={(meal) => `${meal.name}`}
-                                    options={meal}
-                                    renderInput={(params) => <TextField {...params} label="Select" />}
-                                />
-                            </TableCell>
+        <div className=''>
+            <div >
+                <GetMedicinePriscription reportId={reportId} />
+                <TableContainer component={Paper} className=''>
+                    <Table className={classes.table} size="large" aria-label="a dense table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="center"><b>Medicine Name</b></TableCell>
+                                <TableCell align="center"><b>Take</b></TableCell>
+                                <TableCell align="center"><b>Duration</b></TableCell>
+                                <TableCell align="center" className="tablecell">
+                                    <b>Slots</b>
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell align="right">
+                                    <Autocomplete
+                                        style={{ width: 250 }}
+                                        id={tabletName._id}
+                                        disablePortal={true}
+                                        disableClearable
+                                        disableCloseOnSelect
+                                        value={medicineSave}
+                                        onChange={handleChange}
+                                        getOptionLabel={(tabletName) => `${tabletName.medicineName}`}
+                                        options={tabletName}
+                                        noOptionsText={"Medicine not available"}
+                                        renderInput={(params) =>
+                                            <TextField {...params}
+                                                label="Medicine Name"
+                                            />}
+                                    />
+                                </TableCell>
+                                <TableCell align="right">
+                                    <Autocomplete
+                                        disablePortal={true}
+                                        disableClearable
+                                        disableCloseOnSelect
+                                        style={{ width: 250 }}
+                                        id={saveMealData._id}
+                                        value={saveMealData.name}
+                                        onChange={handleMealData}
+                                        getOptionLabel={(meal) => `${meal.name}`}
+                                        options={meal}
+                                        renderInput={(params) => <TextField {...params} label="Select" />}
+                                    />
+                                </TableCell>
 
-                            <TableCell align="right">
-                                <div className="input">
-                                    <input type="text" value={duration} onChange={handleDurationValue} className="form-control" name="duration" />
-                                </div>
-                            </TableCell>
+                                <TableCell align="right">
+                                    <div className="input">
+                                        <input type="text" value={duration} onChange={handleDurationValue} className="form-control" name="duration" />
+                                    </div>
+                                </TableCell>
 
-                            <TableCell className=" d-flex">
-                                {medicineSchedule.map((item, i) => {
-                                    return (
-                                        <div  key={i} >
-                                            <span className="d-flex  p-2">{item}</span>
-                                            <input
-                                                type="checkbox"
-                                                onChange={() => handleFrequencyChange(i)}
-                                                className="mx-3 medicineCheckbox"
-                                                value={item}
-                                            />
-                                        </div>
-                                    )
-                                })
-                                }
-                            </TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                                <TableCell className=" d-flex">
+                                    {medicineSchedule.map((item, i) => {
+                                        return (
+                                            <div key={i} >
+                                                <span className="d-flex  p-2">{item}</span>
+                                                <input
+                                                    type="checkbox"
+                                                    onChange={() => handleFrequencyChange(i)}
+                                                    className="mx-3 medicineCheckbox"
+                                                    value={item}
+                                                />
+                                            </div>
+                                        )
+                                    })
+                                    }
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </div>
             <div className="text-right add_top_30 medicinebtn">
                 <input type="submit" onClick={saveData} className="btn_1 medicinebtn" value="Save" />
                 <input type="submit" onClick={onChange} className="btn_1 medicinebtn" value="Next" />
             </div>
         </div>
+
     )
 }
 

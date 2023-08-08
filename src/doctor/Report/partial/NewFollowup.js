@@ -9,7 +9,6 @@ export default function NewFollowup(props) {
     //for datepicker
     const { insertNewFollowUpDate, getMedicineReport } = AuthApi()
     const { onChange, reportId, fees } = props
-    console.log("------->",fees)
     const [date, setDate] = useState();
     const [appointmentId, setAppointmentId] = useState()
     const [doctorId, setDoctorId] = useState()

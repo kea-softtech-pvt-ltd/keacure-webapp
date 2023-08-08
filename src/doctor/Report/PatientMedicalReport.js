@@ -81,8 +81,16 @@ export default function PatientMedicalReport() {
         <Wrapper>
             <MainNav>
                 <ul className="clearfix">
-                    <li><Link to={`/patientlist/${doctorId}`}><i className="arrow_back backArrow" title="back button"></i></Link></li>
-                    <li className='float-none' style={{ fontSize: 'inherit' }}>Consultation</li>
+                    <li>
+                        <Link to={`/patientlist/${doctorId}`}>
+                            <i className="arrow_back backArrow" title="back button"></i>
+                        </Link>
+                    </li>
+                    <li
+                        className='float-none'
+                        style={{ fontSize: 'inherit' }}>
+                        Consultation
+                    </li>
                 </ul>
             </MainNav>
             <div className='row'>
@@ -107,33 +115,55 @@ export default function PatientMedicalReport() {
                         </Tabs>
                     </Paper>
                     <div className="tablecontent">
-                    <TabPanel value={value}  index={0}>
-                            <PatientPersonalInfo reportId={reportId} onChange={() => changeTab(1)} />
+                        <TabPanel value={value} index={0}>
+                            <PatientPersonalInfo
+                                reportId={reportId}
+                                onChange={() => changeTab(1)}
+                            />
                         </TabPanel>
                         <TabPanel value={value} index={1}>
-                            <Symptoms reportId={reportId} onChange={() => changeTab(2)} />
+                            <Symptoms
+                                reportId={reportId}
+                                onChange={() => changeTab(2)}
+                            />
                         </TabPanel>
                         <TabPanel value={value} index={2}>
-                            <Investigation reportId={reportId} onChange={() => changeTab(3)} />
+                            <Investigation
+                                reportId={reportId}
+                                onChange={() => changeTab(3)}
+                            />
                         </TabPanel>
 
                         <TabPanel value={value} index={3}>
-                            <Premedication reportId={reportId} onChange={() => changeTab(4)} />
+                            <Premedication
+                                reportId={reportId}
+                                onChange={() => changeTab(4)}
+                            />
                         </TabPanel>
 
                         <div className="row">
                             <TabPanel value={value} index={4}>
-                                <MedicinePrescription reportId={reportId} onChange={() => changeTab(5)} />
+                                <MedicinePrescription
+                                    reportId={reportId}
+                                    onChange={() => changeTab(5)}
+                                />
                             </TabPanel>
                         </div>
 
                         <div>
                             <TabPanel value={value} index={5}>
-                                <LabPrescription reportId={reportId} onChange={() => changeTab(6)} />
+                                <LabPrescription
+                                    reportId={reportId}
+                                    onChange={() => changeTab(6)}
+                                />
                             </TabPanel>
                         </div>
                         <TabPanel value={value} index={6}>
-                            <NewFollowup fees={fees} reportId={reportId} onChange={() => changeTab(7)} />
+                            <NewFollowup
+                                fees={fees}
+                                reportId={reportId}
+                                onChange={() => changeTab(7)}
+                            />
                         </TabPanel >
 
 

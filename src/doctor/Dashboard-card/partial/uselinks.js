@@ -39,14 +39,13 @@ export default function UserLinks(props) {
     }
     return (
 
-        <div className="col-sm-2" align='left'>
+        <div className="col-sm-2 dashSpace" align='left'>
             {!helperId ?
                 <div className="dashboard">
                     <Link
-                        onClick={handleOnProfileClick}
-                    >
+                        onClick={handleOnProfileClick}>
                         <PersonIcon style={{ fontSize: 20 }} />
-                        Doctor Profile
+                        <b className="fontSize">  Doctor Profile</b>
                     </Link>
                 </div> :
                 <>
@@ -59,7 +58,7 @@ export default function UserLinks(props) {
                                             onClick={handleOnProfileClick}
                                         >
                                             <PersonIcon style={{ fontSize: 20 }} />
-                                            Doctor Profile
+                                            <b className="fontSize">  Doctor Profile</b>
                                         </Link></div> :
                                     null
                             )
@@ -68,11 +67,11 @@ export default function UserLinks(props) {
                 </>
             }
             {!helperId ?
-                <div className="dashboard">
+                <div className="dashboard ">
                     <Link
                         onClick={handleClick}>
                         <AccessTimeRoundedIcon style={{ fontSize: 20 }} />
-                        Appointment
+                        <b className="fontSize">  Appointment</b>
                     </Link>
                 </div> :
                 <>
@@ -84,7 +83,7 @@ export default function UserLinks(props) {
                                         <Link
                                             onClick={handleClick}>
                                             {<AccessTimeRoundedIcon style={{ fontSize: 20 }} />}
-                                            Appointment
+                                            <b className="fontSize">  Appointment</b>
                                         </Link>
                                     </div>
                                     :
@@ -98,8 +97,9 @@ export default function UserLinks(props) {
                 !helperId ?
                     <div className="dashboard">
                         <Link
-                            onClick={handleClinicClick}> <PeopleIcon style={{ fontSize: 20 }} />
-                            Patient History
+                            onClick={handleClinicClick}>
+                            <PeopleIcon style={{ fontSize: 20 }} />
+                            <b className="fontSize">  Appoinment History</b>
                         </Link>
                     </div> :
                     <>
@@ -109,8 +109,9 @@ export default function UserLinks(props) {
                                     (item.moduleName === "Appointment-History") === true ?
                                         <div className="dashboard">
                                             <Link
-                                                onClick={handleClinicClick}><PeopleIcon style={{ fontSize: 20 }} />
-                                                Patient History
+                                                onClick={handleClinicClick}>
+                                                <PeopleIcon style={{ fontSize: 20 }} />
+                                                <b className="fontSize">  Appoinment History</b>
                                             </Link>
                                         </div>
                                         : null
@@ -122,8 +123,9 @@ export default function UserLinks(props) {
 
             <div className="dashboard">
                 <Link
-                    onClick={handleCalenderClick}><CalendarTodayIcon style={{ fontSize: 20 }} />
-                    Calender
+                    onClick={handleCalenderClick}>
+                    <CalendarTodayIcon style={{ fontSize: 20 }} />
+                    <b className="fontSize">  Calender</b>
                 </Link>
             </div>
             {!helperId ?
@@ -131,7 +133,7 @@ export default function UserLinks(props) {
                     <Link
                         onClick={handleSubscriptionClick}>
                         <AttachMoneyRoundedIcon style={{ fontSize: 20 }} />
-                        Subscription
+                        <b className="fontSize"> Subscription</b>
                     </Link>
                 </div> :
                 <>
@@ -143,7 +145,7 @@ export default function UserLinks(props) {
                                         <Link
                                             onClick={handleSubscriptionClick}>
                                             <AttachMoneyRoundedIcon style={{ fontSize: 20 }} />
-                                            Subscription
+                                            <b className="fontSize"> Subscription</b>
                                         </Link>
                                     </div>
                                     :
@@ -159,7 +161,8 @@ export default function UserLinks(props) {
                         <Link
                             onClick={handleAddHelper}
                         >
-                            <ControlPointRoundedIcon style={{ fontSize: 20 }} /> Assistant
+                            <ControlPointRoundedIcon style={{ fontSize: 20 }} />
+                            <b className="fontSize">  Assistant</b>
                         </Link>
                     </div>
 

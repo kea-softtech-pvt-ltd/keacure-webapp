@@ -173,7 +173,7 @@ body {
 	line-height: 1.4;
 	font-family: Poppins, Helvetica, sans-serif;
 	color: #555;
-	overflow-x: hidden
+	overflow-x: hidden;
 }
 .list_home ul li a:after,
 a.wish_bt:after,
@@ -465,7 +465,7 @@ a.btn_1 {
 	font-size: x-large;
 	color: white;
 }
-.bottomBorder{
+.bottomBorder {
 	border-bottom: 1px solid rgb(233, 231, 231);
 	margin: 5px;
 }
@@ -473,6 +473,10 @@ a.btn_1 {
 	position: relative;
     right: 150px;
 } */
+.modalbtn{
+	margin-top: 10px;
+    font-size: 13px;
+}
 .symptomsInput {
 	/* position: relative;
 	left: 285px;
@@ -2808,6 +2812,7 @@ ul.time_select li label {
 	padding: 0;
 	margin-bottom: 30px;
 }
+
 #calendar .datepicker.datepicker-inline,
 #calendar .datepicker.datepicker-inline table {
 	width: 100%;
@@ -3127,6 +3132,7 @@ a.social_bt {
 .profile ul.contacts li {
 	margin-bottom: 15px;
 }
+
 .profile ul.contacts li h6 {
 	font-size: 14px;
 	font-size: 0.875rem;
@@ -3335,6 +3341,14 @@ a.btn_2 .full-width {
 	padding: 8px;
 	align-items: center;
 	padding-left: 20px;
+}
+.cardButton {
+	float: right;
+	position: relative;
+	bottom: 125px;
+}
+.contacts{
+	line-height: 35px;
 }
 /*radio button*/
 section {
@@ -3875,6 +3889,15 @@ ul.treatments.checkout li strong {
 }
 .cards {
 	margin-top: 28px;
+}
+.viewMreport{
+	padding: 10px;
+	margin-top:20px;
+}
+.vitalSign{
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 .step {
 	padding: 20px 0 0 55px;
@@ -4617,11 +4640,69 @@ a.box_feat_about h3 {
 	width: 110px;
 	margin: 10px;
 	margin-bottom: 10px;
-
+	margin-top: 0px;
 }
-.left{
+.left {
 	float: left;
 }
+.mainCards {
+	width: 100%;
+	background-color: #fff;
+	border-radius: 5px;
+	/* box-shadow: 5px 5px 5px rgb(216, 214, 214); */
+	border: 1px solid #ddddf7;
+	padding: 5px
+}
+.cardSpan {
+	display: flex;
+	/* padding: 7px 5px 0px 15px; */
+	line-height: 35px;
+	padding-left: 10px
+}
+.patientListIcon{
+	font-size: 22px;
+}
+.appointmentBtn{
+	border-top: 1px solid #ddddf7;
+}
+.patientName{
+	font-size: 15px;
+	font-weight: 600;
+}
+.helperBtn {
+	margin: 7px;
+	font-size: inherit;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+.fontSize {
+	font-size: 15px;
+}
+.timeSlot{
+	margin-left: 115px;
+}
+.time{
+	font-weight: 600;
+}
+.cardDiv {
+	width: 100%;
+	background-color:  #fff;
+	border-radius: 5px;
+	/* box-shadow: 5px 5px 5px rgb(216, 214, 214); */
+	border: 1px solid #ddddf7;
+	margin-bottom: 30px;
+}
+
+.historyBtn{
+	align-items: left;
+    justify-content: left;
+}
+.MuiCard-root {
+	overflow: hidden !important;
+}
+/* .mainCards:hover {
+	box-shadow: 20px 20px 20px #eff0f3;
+} */
 
 .form-control {
 	font-size: 14px;
@@ -4629,7 +4710,21 @@ a.box_feat_about h3 {
 	min-height: 40px;
 	border-color: #1a3c8b;
 }
-.form-textarea{
+.appColor {
+	background-color: #1a3c8b;
+	color: white;
+}
+.appColor:hover {
+	background-color: rgb(24, 31, 68);
+}
+.color {
+	color: #1a3c8b;
+}
+.underline{
+	border-bottom: 1px solid #e1e8ed;
+	/* margin: 2px 4px; */
+}
+.form-textarea {
 	height: 120px;
 	margin-top: 10px;
 	width: 350px;
@@ -4657,11 +4752,13 @@ a.box_feat_about h3 {
 .payment {
 	width: 100px;
 	padding: 5px;
-	border-radius: 5px;
 	margin-left: 5px;
+	border: 1px solid #e0ecf5;
+    border-radius: 5px;
+
 }
-.rupeeSign{
-	margin-left: 10px;	
+.rupeeSign {
+	margin-left: 10px;
 }
 .paymentInput {
 	display: flex;
@@ -4673,36 +4770,42 @@ a.box_feat_about h3 {
 .otherInput {
 	padding: 10px;
 }
+.border-payment{
+	border-bottom: 1px solid #e0ecf5;
+	margin: 5px;
+}
 .paymentbtn {
 	margin: 10px;
 	width: 85px;
 }
 .totalInput {
 	padding: 10px;
+	font-size: larger;
+	font-weight: 600;
 }
 .totalFees {
 	margin-right: 70px;
+	margin-top: 10px;
 }
 .paymentAutocomplete {
 	position: relative;
-	bottom: 35px;
-	left: 20px;
+	top:10px
 }
 
 textarea.form-control {
 	height: 120px;
-	margin-top:13px;
+	margin-top: 13px;
 	width: 350px;
 }
-.vital-signInput-txt{
+.vital-signInput-txt {
 	height: 125px;
-    width: 330px;
-    padding: 5px;
-    border-radius: 5px;
-	border-color: #1a3c8b;
-
+	width: 330px;
+	padding: 5px;
+	border-radius: 5px;
+	/* border-color: #1a3c8b; */
+	border: 1px solid  #1a3c8b ;
 }
-.vital-signInput label{
+.vital-signInput label {
 	text-align: left;
 }
 
@@ -4724,27 +4827,31 @@ textarea.form-control {
 	/* height:200px;
 	width: 1110px; */
 	position: relative;
-    bottom: 68px;
+	bottom: 68px;
 }
 .dashboard {
-	margin: 20px;
+	/* margin: 20px; */
+	border-bottom: 1px solid #e1e8ed;
 }
-.wrapperCss{
+.dashSpace{
+	line-height: 65px;
+}
+.wrapperCss {
 	width: 100%;
 }
-.common_box{
-	background-color: #fff;
+.common_box {
+	background-color: hsl(0, 7%, 97%);
 	padding: 20px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 	margin-bottom: 15px;
 	margin-top: 4px;
-	width: 1140px;
+	width:  1130px;
 	border: 1px solid #e1e8ed;
 }
-.containar-nav{
+.containar-nav {
 	margin-left: 20px;
-    margin-right: 20px;
+	margin-right: 20px;
 }
 .MuiAccordionSummary-root.Mui-expanded {
 	min-height: 64px;
@@ -5089,10 +5196,17 @@ ul.bullets li:before {
 	transform: scale(1);
 	-webkit-transition: 0.15s ease-in-out;
 	transition: 0.15s ease-in-out;
-	-webkit-transition-property: opacity, -webkit-transform;
-	transition-property: opacity, -webkit-transform;
+	-webkit-transition-property:
+		opacity,
+		-webkit-transform;
+	transition-property:
+		opacity,
+		-webkit-transform;
 	transition-property: transform, opacity;
-	transition-property: transform, opacity, -webkit-transform;
+	transition-property:
+		transform,
+		opacity,
+		-webkit-transform;
 }
 .disabled_badge:hover {
 	-webkit-transform: scale(1.2);

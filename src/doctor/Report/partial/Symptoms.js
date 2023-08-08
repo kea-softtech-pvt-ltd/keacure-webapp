@@ -9,8 +9,6 @@ export default function Symptoms(props) {
     const [symptoms, setSymptoms] = useState([])
     const [saveSymptoms, setSaveSymptoms] = useState([])
     const [otherSymptom, setOtherSymptoms] = useState('')
-
-    // const [value, setValue]=useState();
     const { symptomsData, insertSymptoms, insertSymptom_masterTable } = AuthApi();
 
     useEffect(() => {
@@ -27,13 +25,12 @@ export default function Symptoms(props) {
     }
 
     const handleOtherChangeValue = (e) => {
-        //e.preventDefault();
         setOtherSymptoms(e.target.value)
     }
-    const clearData = () => {
-        setOtherSymptoms('')
-        setSymptoms()
-    }
+    // const clearData = () => {
+    //     setOtherSymptoms('')
+    //     setSymptoms()
+    // }
 
     const addSymptoms = async () => {
         saveSymptoms.push(otherSymptom)
@@ -46,7 +43,7 @@ export default function Symptoms(props) {
         }
         await insertSymptom_masterTable(other)
         // onChange()
-        clearData()
+        // clearData()
     }
 
 
@@ -56,17 +53,20 @@ export default function Symptoms(props) {
                 <div className='w-40'>
                     <label className='left'>Choose Symptoms</label>
                     <Autocomplete
-                        style={{ width: 200 }}
+                        style={{ width: 250 }}
                         id={symptoms._id}
-                        disableCloseOnSelect
-                        value={saveSymptoms}
-                        onChange={handleChange}
-                        options={symptoms.map((option) => option.name)}
-                        noOptionsText={"Sympton not availabel please add"}
-                        renderInput={(params) => (<TextField {...params} label="Choose a Symptoms" />)}
-                        multiple
                         disablePortal={true}
                         disableClearable
+                        multiple={true}
+                        disableCloseOnSelect
+                        value={saveSymptoms.name}
+                        onChange={handleChange}
+                        options={symptoms.map((n)=>`${n.name}`)}
+                        noOptionsText={"Sympton not availabel please add"}
+                        renderInput={(params) =>
+                            <TextField {...params}
+                            label="Choose a Symptoms"
+                            />}
                     />
                 </div>
                 <div className="symptomsInput w-30">

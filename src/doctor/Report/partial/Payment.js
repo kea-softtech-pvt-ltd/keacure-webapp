@@ -7,8 +7,7 @@ export default function Payment(props) {
     const { reportId, appointmentId, fees, doctorId } = props;
     const history = useHistory()
     const [saveMode, setSaveMode] = useState([]);
-    const [patientFees, setPatientFees] = useState();
-    console.log("=====////patientFees////=====", patientFees)
+    const [patientFees, setPatientFees] = useState(fees);
 
     const [otherFees, setOtherFees] = useState();
     const { UpdateStatusBookingdata, createPDF, getPatientListDetails } = AuthApi();
@@ -46,26 +45,27 @@ export default function Payment(props) {
             const totalAmount = fees
             setPatientFees(totalAmount)
         }
-        // console.log("------", totalAmount)
     }
 
-    // const totalFees = () => {
-    // }
+
     const getPrescriptionData = async () => {
         const bodyData = {
             "status": "Completed",
             "payment": "Done",
-            "medicalReportId": reportId
+            "medicalReportId": reportId,
+            "paymentMethod": mode,
+            "total": patientFees
         }
         await UpdateStatusBookingdata({ appointmentId }, bodyData)
             .then((res) => {
                 // setPatientFees(res.fees)
-                //history.push(`/dashboard/${res.doctorId}`)
+                history.push(`/dashboard/${res.doctorId}`)
             })
         await createPDF({ reportId })
     };
     return (
         <>
+
             <div className='row'>
                 <div className='col-lg-6'>
                     <div className='paymentInput'>
@@ -91,16 +91,7 @@ export default function Payment(props) {
                             name="OtherFees"
                         />
                     </div>
-                    <div className='paymentInput'>
-                        <label className='totalFees'><b>Total</b></label>
-                        <input
-                            type="text"
-                            value={patientFees}
-                            // onChange={handleDurationValue}
-                            className="payment totalInput"
-                            name="total"
-                        />
-                    </div>
+
                 </div>
                 <div className='col-lg-6 paymentAutocomplete' >
                     <span className='paymentSpan'><b>Mode of Payment</b></span>
@@ -118,6 +109,19 @@ export default function Payment(props) {
                         renderInput={(params) => <TextField {...params} label="Select" />}
                     />
                 </div>
+
+            </div>
+            <div className=' border-payment' />
+            <div className='paymentInput'>
+                <label className='totalFees'><b>Total</b></label>
+                <span className=" totalInput dashboard">{patientFees}</span>
+                {/* <input
+                        type="text"
+                        value={patientFees}
+                        // onChange={handleDurationValue}
+                        className="payment totalInput"
+                        name="total"
+                    /> */}
             </div>
             <div className="text-center">
                 <input

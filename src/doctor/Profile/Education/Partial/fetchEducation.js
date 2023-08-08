@@ -12,7 +12,6 @@ import AuthApi from '../../../../services/AuthApi';
 function FetchEducation() {
     const { doctorId } = useParams();
     const [eduData, setEduData] = useRecoilState(setDoctorEducation);
-    console.log("------>..", eduData)
     const [activeModal, setActiveModal] = useState();
     const { fetchAllEducations, deleteEducationData } = AuthApi();
     const handleClose = () => {
@@ -37,7 +36,6 @@ function FetchEducation() {
             })
     }
     const deleteEducation = async (education) => {
-        console.log("---,,,,--->>>>", education)
         const id = education._id
         await deleteEducationData(id)
         getAllEducations()

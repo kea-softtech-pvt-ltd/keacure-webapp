@@ -53,7 +53,6 @@ function EditEducation(props){
     }
 
     const fetchUpdateEducation = async () =>{
-        // const result = await axios.get(`${API}/fetchEditEduData/${EduId}`); 
         const result= await fetchEditEducationData({EduId});
         setUpdateEducation(result)
         setDrDocument(props.imageData)  

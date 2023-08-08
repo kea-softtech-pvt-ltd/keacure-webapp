@@ -8,10 +8,10 @@ const MainCards =(props)=>{
     const classes = useStyles();
 
     return(
-        <div className="colum">
-            <Card className={classes.root}>
+        // <div className="cardStyle">
+            <Card >
                 <CardContent>
-                    <Typography variant="h5" component="h2">
+                    <Typography variant="h5" component="h1">
                     {props.Typography}
                     </Typography>
                     <Typography className={classes.pos} color="textSecondary">
@@ -22,11 +22,11 @@ const MainCards =(props)=>{
                     <br />
                     </Typography>
                 </CardContent>
-                <CardActions className="dashbutton">
+                <CardActions className="cardButton">
                     <Button  size="small" onClick={props.onClick}>{props.children}</Button>
                 </CardActions>
             </Card>
-        </div> 
+        // </div> 
     )
 }
 export {MainCards}

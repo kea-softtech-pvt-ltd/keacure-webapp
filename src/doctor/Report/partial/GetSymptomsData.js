@@ -19,7 +19,7 @@ export default function GetSymptomsData(props) {
         <>
             {symptomDataInfo.length > 0 ?
 
-                <div>
+                <div className='whiteBox viewMreport' align='left'>
                     <h6><b>List of Symptoms</b></h6>
                     {symptomDataInfo && symptomDataInfo.map((item, i) => {
                         return (
