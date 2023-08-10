@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AuthApi from '../../services/AuthApi';
-import { useParams, Link, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import GetMedicinePriscription from './partial/GetMedicinePrescription';
 import GetLabPrescription from './partial/getLabPrescription';
 import GetSymptomsData from './partial/GetSymptomsData';
@@ -8,23 +8,17 @@ import GetSymptomsData from './partial/GetSymptomsData';
 export default function ViewMedicalReport() {
     const { reportId } = useParams();
     const { getMedicineReport, patientDetailsData } = AuthApi();
-    // const { state } = useLocation()
-    // const {dependentId} = state.data
-    // console.log('====state>>>>>',dependentId)
     const [viewData, setViewData] = useState([]);
     const [patientDetails, setPatientDetails] = useState([]);
-    console.log("=====<<>>>>>", patientDetails)
-
-    // console.log("======>>>>==doctorId", data)
 
     useEffect(() => {
         getMedicineReportData()
-    }, [])
+
+    },[])
 
     const getMedicineReportData = async () => {
         await getMedicineReport({ reportId })
             .then(async (res) => {
-                console.log("====res==",res )
                 setViewData(res[0])
                 const patientId = res[0].patientId
                 await patientDetailsData({ patientId })
@@ -48,7 +42,6 @@ export default function ViewMedicalReport() {
                         </nav>
                     </div>
                 </div>
-                {}
                 <div className="box_form ">
                     <h6 align="left">
                         <b>Patient Information</b>
@@ -127,19 +120,18 @@ export default function ViewMedicalReport() {
                         </div>
                     </div>
 
-                    <label><h6><b >Medicine</b></h6></label>
-                    <div className='whiteBox viewMreport'>
+                    <div>
                         <GetMedicinePriscription reportId={reportId} />
                     </div>
 
-                    <div >
+                    <div>
                         <GetLabPrescription reportId={reportId} />
                     </div>
-                    
-                     <div >
+
+                    <div>
                         <GetSymptomsData reportId={reportId} />
                     </div>
-                     
+
 
                     <div className="whiteBox viewMreport">
                         <div align="left">

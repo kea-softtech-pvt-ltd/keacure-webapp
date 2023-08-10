@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useHistory } from "react-router-dom";
+import { useParams, Link} from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
 import moment from 'moment';
 import AuthApi from "../../services/AuthApi";
@@ -27,10 +27,9 @@ const useStyles = makeStyles((theme) => ({
 export default function PatientsClinicHistory() {
     const { doctorId } = useParams();
     const classes = useStyles()
-    const history = useHistory()
     const [patientHistoryData, setPatientHistoryData] = useState([])
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
-    const [drId, setDrId]=useState('')
+
     const { getPatientListDetails } = AuthApi()
     //For Pagination
     const [activePageNo, setActivePageNo] = useState(1)
@@ -42,6 +41,7 @@ export default function PatientsClinicHistory() {
     const number = [...Array(nPage + 1).keys()].slice(1)
     initializeApp(config.firebaseConfig);
     const storage = getStorage();
+
     useEffect(() => {
         getPatientHistory();
     }, [])
@@ -90,12 +90,7 @@ export default function PatientsClinicHistory() {
                 console.log("error", error)
             });
     }
-    const patientHistory = (details) => {
-        console.log("========details", details)
-        // console.log("======//////", details)
-        // setReportId(details.medicalReportId)
-        history.push(`/patient-history/${details.medicalReportId}`, { data: { doctorId: details.doctorId } })
-    }
+    
 
     //For Pagination
     function prePage() {
@@ -134,86 +129,49 @@ export default function PatientsClinicHistory() {
                 <div className="common_box">
                     <div className='row'>
                         {/* {records && records} */}
-                        {records.map((details, i) => {
+                        {records && records.map((details, i) => {
                             return (
                                 <>
-                                    {
-                                        details.dependentId ? (
-                                            <div className="col-md-4">
-                                                <div className="cardDiv">
-                                                    <span className='cardSpan'>
-                                                        <i className='icon-user color patientListIcon' />
-                                                        <span className=' patientName'>
-                                                            {details['dependentDetails'][0].name}
-                                                        </span>
-                                                    </span>
-                                                    <span className='cardSpan'>
-                                                        <i className='icon-mobile-1 color patientListIcon' />
-                                                        {details['dependentDetails'][0].mobile}
-                                                    </span>
-                                                    <span className='cardSpan '>
-                                                        <i className='icon-hospital-1 color patientListIcon' />
-                                                        {details['clinicList'][0].clinicName}
-                                                    </span>
-                                                    <span className='cardSpan time'>
-                                                        <i className='pe-7s-date m-1 color patientListIcon' />
-                                                        {moment(details.selectedDate).format('YYYY-MM-DD').toString()},{details.slotTime}
-                                                        <span className=' timeSlot'>
-                                                            <AccessTimeRoundedIcon style={{ fontSize: 20, color: '#1a3c8b' }} />
-                                                            {details.timeSlot} Min.
-                                                        </span>
-                                                    </span>
 
-                                                    <div className='cardSpan appointmentBtn historyBtn'>
-                                                        <Link to="#" onClick={() => patientHistory(details)}>
-                                                            <Button className="appColor helperBtn" > View</Button>
-                                                        </Link>
-                                                        <a className='helperBtn' target="blank" onClick={() => downloadPdf(details)} download>
-                                                            Download
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ) : (
-                                            <div className="col-md-4 ">
-                                                <div className="cardDiv">
-                                                    <span className='cardSpan'>
-                                                        <i className='icon-user color patientListIcon' />
-                                                        <span className=' patientName'>
-                                                            {details['patientDetails'][0].name}
-                                                        </span>
+                                    <div className="col-md-4 ">
+                                        <div className="cardDiv">
+                                            <span className='cardSpan'>
+                                                <i className='icon-user color patientListIcon' />
+                                                <span className=' patientName'>
+                                                    {details['patientDetails'][0].name}
+                                                </span>
+                                            </span>
+                                            <span className='cardSpan'>
+                                                <i className='icon-mobile-1 color patientListIcon' />
+                                                {details['patientDetails'][0].mobile}
+                                            </span>
+                                            <span className='cardSpan '>
+                                                <i className='icon-hospital-1 color patientListIcon' />
+                                                {details['clinicList'][0].clinicName}
+                                            </span>
+                                            <span className='cardSpan time'>
+                                                <i className='pe-7s-date m-1 color patientListIcon' />
+                                                <span className='slotTime'>
+                                                    {moment(details.selectedDate).format('YYYY-MM-DD').toString()},{details.slotTime}
+                                                    <span className=' timeSlot'>
+                                                        <AccessTimeRoundedIcon style={{ fontSize: 20, color: '#1a3c8b' }} />
+                                                        {details.timeSlot} Min.
                                                     </span>
-                                                    <span className='cardSpan'>
-                                                        <i className='icon-mobile-1 color patientListIcon' />
-                                                        {details['patientDetails'][0].mobile}
-                                                    </span>
-                                                    <span className='cardSpan '>
-                                                        <i className='icon-hospital-1 color patientListIcon' />
-                                                        {details['clinicList'][0].clinicName}
-                                                    </span>
-                                                    <span className='cardSpan time'>
-                                                        <i className='pe-7s-date m-1 color patientListIcon' />
-                                                        <span className='slotTime'>
-                                                            {moment(details.selectedDate).format('YYYY-MM-DD').toString()},{details.slotTime}
-                                                            <span className=' timeSlot'>
-                                                                <AccessTimeRoundedIcon style={{ fontSize: 20, color: '#1a3c8b' }} />
-                                                                {details.timeSlot} Min.
-                                                            </span>
-                                                        </span>
-                                                    </span>
+                                                </span>
+                                            </span>
 
-                                                    <div className='cardSpan appointmentBtn historyBtn'>
-                                                        <Link to="#" onClick={(e) => patientHistory(details, e)}>
-                                                            <Button className="appColor helperBtn" > View</Button>
-                                                        </Link>
-                                                        <a className='helperBtn' target="blank" onClick={() => downloadPdf(details)} download>
-                                                            Download
-                                                        </a>
-                                                    </div>
-                                                </div>
+                                            <div className='cardSpan appointmentBtn historyBtn'>
+                                                <Link to={`/patient-history/${details.medicalReportId}`}>
+                                                    <Button className="appColor helperBtn" > View</Button>
+                                                </Link>
+                                                <a className='helperBtn' target="blank" onClick={() => downloadPdf(details)} download>
+                                                    Download
+                                                </a>
                                             </div>
-                                        )
-                                    }
+                                        </div>
+                                    </div>
+
+
                                 </>
                             )
 
