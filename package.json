@@ -29,6 +29,7 @@
     "moment": "^2.29.1",
     "mongoose": "^5.12.14",
     "mui-autocomplete": "^2.0.1",
+    "pdf-lib": "^1.17.1",
     "react": "^17.0.1",
     "react-big-calendar": "^1.6.9",
     "react-bootstrap": "^1.6.1",
@@ -83,7 +84,6 @@
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "index.js",
-  "devDependencies": {},
   "author": "",
   "license": "ISC"
 }

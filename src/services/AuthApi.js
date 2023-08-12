@@ -71,7 +71,11 @@ export default function AuthApi() {
         const result = await axios.get(`${API}/getBookingData/${doctorId}`);
         return result.data;
     }
-    
+    const downloadPrescription = async (id ) => {
+        console.log(id)
+        const result = await axios.get(`${API}/download-prescription/${id}`);
+        return result.data;
+    }
     const allSessions = async (dataId) => {
         const result = await axios.post(`${API}/fetchtime`, dataId)
         return result.data;
@@ -292,6 +296,7 @@ export default function AuthApi() {
         deleteEducationData,
         removeExperience,
         cancelPatientAppointment,
-        deleteSlot
+        deleteSlot,
+        downloadPrescription
     }
 }

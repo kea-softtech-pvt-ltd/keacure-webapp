@@ -30,7 +30,7 @@ export default function PatientsClinicHistory() {
     const [patientHistoryData, setPatientHistoryData] = useState([])
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
 
-    const { getPatientListDetails } = AuthApi()
+    const { getPatientListDetails, downloadPrescription } = AuthApi()
     //For Pagination
     const [activePageNo, setActivePageNo] = useState(1)
     const recordsPerPage = 5;
@@ -58,37 +58,13 @@ export default function PatientsClinicHistory() {
 
     const downloadPdf = async (details) => {
         const reportId = details.medicalReportId
-        await getDownloadURL(ref(storage, `files/invoice-64b8c47f1f0a4e0428803442.pdf`))
-            .then((url) => {
-                // console.log("---->>>>>", url)
-                // This can be downloaded directly:
-                const xhr = new XMLHttpRequest();
-                // console.log("----xhr>>>>>", xhr)
-
-                xhr.responseType = 'blob';
-                xhr.open('GET', url);
-                xhr.onload = function () {
-                    var blob = new Blob([xhr.response], { type: 'application/pdf' });
-                    // console.log("----xhr>>>>>", blob)
-                    // if (this.status == 200) {
-                    //     var blob = new Blob([xhr.response], { type: 'application/pdf' });
-                    //     console.log("----xhr>>>>>", blob)
-
-                    // var link = document.createElement('a');
-                    // link.href = url;
-                    // link.download = "document.pdf";
-                    // link.click();
-                    // console.log("Nice!");
-                    // } else {
-                    //     console.log("Error. Estatus " + this.status + ".");
-                    // }
-                }
-                xhr.open('GET', url);
-                xhr.send()
-            })
-            .catch((error) => {
-                console.log("error", error)
-            });
+        const result = await downloadPrescription(reportId)
+        console.log(result)
+        let alink = document.createElement('a');
+        alink.href = result;
+        alink.setAttribute("target", "_blank")
+        alink.download = 'Prescription.pdf';
+        alink.click();
     }
     
 
@@ -164,9 +140,7 @@ export default function PatientsClinicHistory() {
                                                 <Link to={`/patient-history/${details.medicalReportId}`}>
                                                     <Button className="appColor helperBtn" > View</Button>
                                                 </Link>
-                                                <a className='helperBtn' target="blank" onClick={() => downloadPdf(details)} download>
-                                                    Download
-                                                </a>
+                                                <Button className="appColor helperBtn" onClick={() => downloadPdf(details)}> Download</Button>
                                             </div>
                                         </div>
                                     </div>
