@@ -5,7 +5,7 @@ import DoctorDetail from "./doctor/Dashboard-card/DoctorDetail";
 import DoctorBookingWithPatientLogin from "./patient/DoctorBookingWithPatientLogin";
 import BookingConfirm from "./patient/BookingConfirm";
 import LoginDoctor from "./doctor/Profile/LoginDoctor";
-import LoginPatient from "./patient/LoginPatient";
+// import LoginPatient from "./patient/LoginPatient";
 //import RegisterPatient from "./RegisterPatient";
 import DoctorProfile from "./doctor/Profile/DoctorProfile";
 import EditDoctorProfile from "./doctor/Profile/EditDoctorProfile";
@@ -32,6 +32,8 @@ import LoginHelper from "./doctor/Profile/LoginHelper";
 import SubscriptionCard from "./doctor/Dashboard-card/SubscriptionCard";
 import Helper from "./doctor/helper/Helper";
 import EditHelper from './doctor/helper/EditHelper';
+import Patient from "./patient/patient";
+import { AppointmentBookingSection } from "./patient/appointmentBookingSection";
 function MainContainer() {
   return (
     <Switch>
@@ -56,9 +58,9 @@ function MainContainer() {
       <Route path="/bookingconfirm">
         <BookingConfirm />
       </Route>
-      <Route path="/loginpatient">
+      {/* <Route path="/loginpatient">
         <LoginPatient />
-      </Route>
+      </Route> */}
       {/* <Route exact path="/registerpatient">
             <RegisterPatient />
           </Route> */}
@@ -83,9 +85,9 @@ function MainContainer() {
       <Route path="/editdoctorprofile/:doctorId">
         <EditDoctorProfile />
       </Route>
-      <Route exact path="/patientlist/:doctorId">
+      {/* <Route exact path="/patientlist/:doctorId">
         <PatientList />
-      </Route>
+      </Route> */}
       {/* <Route path="/patientlist">
             <OPD/>
           </Route> */}
@@ -116,7 +118,7 @@ function MainContainer() {
       <Route path="/Patientsclinichistory/:doctorId">
         < PatientsClinicHistory />
       </Route>
-      <Route path="/appointment">
+      <Route path="/appointment/:patientId">
         < Appointment />
       </Route>
       <Route path="/createpatientprofile/:patientId">
@@ -146,7 +148,12 @@ function MainContainer() {
       <Route path="/subscriptioncard/:doctorId">
         <SubscriptionCard />
       </Route>
-     
+      <Route path="/patient/:doctorId">
+        <Patient />
+      </Route>
+      <Route path="/appointmentbookingsection/:patientId">
+        <AppointmentBookingSection />
+      </Route>
     </Switch>
   )
 }

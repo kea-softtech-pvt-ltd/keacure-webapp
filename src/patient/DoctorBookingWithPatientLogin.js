@@ -13,13 +13,6 @@ export default function DoctorBookingWithPatientLogin(){
         <div>
             <main>
                 <div id="breadcrumb">
-                    <div className="container">
-                        <ul>
-                            <li><Link to="#">Home</Link></li>
-                            <li><Link to="#">Category</Link></li>
-                            <li>Page active</li>
-                        </ul>
-                    </div>
                 </div>
                 <div className="container margin_60">
                     <div className="row">

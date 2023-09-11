@@ -4,13 +4,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link, useParams, useHistory } from "react-router-dom";
 import moment from 'moment';
 import AuthApi from "../../services/AuthApi";
-import { MainNav } from '../../mainComponent/mainNav';
-import UserLinks from './partial/uselinks';
-import { Wrapper } from '../../mainComponent/Wrapper';
+// import { MainNav } from '../../mainComponent/mainNav';
+// import UserLinks from './partial/uselinks';
+// import { Wrapper } from '../../mainComponent/Wrapper';
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
 import { Button, Modal } from 'react-bootstrap';
 import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
+import { FaClinicMedical } from 'react-icons/fa';
+// import { Icon } from '@material-ui/core';
 
 //for table
 const useStyles = makeStyles((theme) => ({
@@ -27,14 +29,15 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function PatientList() {
-    const { doctorId } = useParams()
+export default function PatientList(props) {
+    const { doctorId } = props
     let history = useHistory();
     const classes = useStyles();
     const [patientList, setPatientList] = useState([]);
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const [showDelete, setShowDelete] = useState(false);
     const [id, setId] = useState()
+    const [active, setActive] = useState(false)
     const { getPatientListDetails, MedicineReportData, cancelPatientAppointment } = AuthApi()
 
     //For Pagination
@@ -43,16 +46,19 @@ export default function PatientList() {
     const lastIndex = activePageNo * recordsPerPage;
     const firstIndex = lastIndex - recordsPerPage;
     const records = patientList.slice(firstIndex, lastIndex)
+    console.log("===records", records)
     const nPage = Math.ceil(patientList.length / recordsPerPage)
     const number = [...Array(nPage + 1).keys()].slice(1)
 
     useEffect(() => {
         getPatientDetails();
     }, [])
+
     const handleDeleteShow = (details) => {
         setId(details._id)
         setShowDelete(true)
     }
+
     const handleDeleteClose = () => setShowDelete(false)
 
     async function saveData(item) {
@@ -68,8 +74,10 @@ export default function PatientList() {
                 history.push(`/consultation/${res._id}`, { data: { fees: item.fees } })
             })
     }
+
     async function getPatientDetails() {
         const result = await getPatientListDetails({ doctorId });
+        console.log("===>>>>>", result)
         patientData(result)
     }
     const patientData = (list) => {
@@ -101,8 +109,9 @@ export default function PatientList() {
         }
     }
     return (
-        <Wrapper>
-            <MainNav>
+        // <Wrapper>
+            <>
+            {/* <MainNav>
                 <ul className="clearfix">
                     <li>
                         <Link to={`/dashboard/${doctorId}`}>
@@ -110,15 +119,20 @@ export default function PatientList() {
                         </Link>
                     </li>
                     <li className='float-none' style={{ fontSize: 'inherit' }}>Appoinment</li>
+                    <li>
+                        <Link onClick={() => setActive(true)} >
+                            <Icon className="addiconbutton " style={{ fontSize: 50 }}>add</Icon>
+                        </Link>
+                    </li>
                 </ul>
-            </MainNav>
-            <div className='row'>
+            </MainNav> */}
+            {/* <div className='row'>
                 <UserLinks
                     doctorId={doctorId}
                     helperId={helpersData._id}
                     accessModule={helpersData.access_module}
-                />
-                <div className="common_box">
+                /> */}
+                {/* <div className="common_box"> */}
                     <div className='row'>
                         {records.map((details, i) => {
                             return (
@@ -134,8 +148,8 @@ export default function PatientList() {
                                                 <span className='patinetInfo'>{details['patientDetails'][0].mobile}</span>
                                             </span>
                                             <span className='cardSpan '>
-                                                <i className='icon-hospital-1 color patientListIcon' />
-                                                <span className='patinetInfo'>{details['clinicList'][0].clinicName}</span>
+                                                <i className=' color patientListIcon ml-1 mr-2' ><FaClinicMedical /> </i>
+                                                <span className='patinetInfo '> {details['clinicList'][0].clinicName}</span>
                                             </span>
                                             <span className='cardSpan time'>
                                                 <i className='pe-7s-date m-1 color patientListIcon' />
@@ -208,8 +222,9 @@ export default function PatientList() {
 
                         </Modal.Footer>
                     </Modal>
-                </div >
-            </div>
-        </Wrapper>
+                {/* </div > */}
+            {/* </div> */}
+        </>
+        // </Wrapper>
     )
 }

@@ -71,8 +71,7 @@ export default function AuthApi() {
         const result = await axios.get(`${API}/getBookingData/${doctorId}`);
         return result.data;
     }
-    const downloadPrescription = async (id ) => {
-        console.log(id)
+    const downloadPrescription = async (id) => {
         const result = await axios.get(`${API}/download-prescription/${id}`);
         return result.data;
     }
@@ -170,8 +169,10 @@ export default function AuthApi() {
         const result = await axios.post(`${API}/updateStatus/${appointmentId}`, bodyData)
         return result.data
     }
-    const getMedicinePrescriptionData = async ({ reportId }) => {
+    const getMedicinePrescriptionData = async ( reportId ) => {
+        console.log("======reportid", reportId)
         const result = await axios.get(`${API}/fetchmedicinePrescription/${reportId}`)
+        // const result = await axios.get(`${API}/fetchmedicinePrescription/${reportId}`)
         return result.data
 
     };

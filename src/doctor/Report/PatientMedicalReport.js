@@ -82,7 +82,7 @@ export default function PatientMedicalReport() {
             <MainNav>
                 <ul className="clearfix">
                     <li>
-                        <Link to={`/patientlist/${doctorId}`}>
+                        <Link to={`/dashboard/${doctorId}`}>
                             <i className="arrow_back backArrow" title="back button"></i>
                         </Link>
                     </li>
@@ -99,7 +99,7 @@ export default function PatientMedicalReport() {
                     helperId={helpersData._id}
                     accessModule={helpersData.access_module}
                 />
-                <div className="common_box">
+                <div className="white-box">
                     {/* <PatientPersonalInfo reportId={reportId} /> */}
                     <Paper square>
                         <Tabs value={value} onChange={handleChange}

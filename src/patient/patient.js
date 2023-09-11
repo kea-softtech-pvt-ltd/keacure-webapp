@@ -1,37 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import AddHelper from './partial/AddHelper';
-import HelperList from './partial/helperList';
 import { useParams, Link } from 'react-router-dom';
-import AuthApi from '../../services/AuthApi';
-import { MainNav } from '../../mainComponent/mainNav';
+import AuthApi from '../services/AuthApi';
+import { MainNav } from '../mainComponent/mainNav';
 import { Icon } from '@material-ui/core';
-import { Wrapper } from '../../mainComponent/Wrapper';
-import UserLinks from '../Dashboard-card/partial/uselinks';
-import { setHelperData } from "../../recoil/atom/setHelperData";
+import { Wrapper } from '../mainComponent/Wrapper';
+import UserLinks from '../doctor/Dashboard-card/partial/uselinks';
+import { setHelperData } from '../recoil/atom/setHelperData';
 import { useRecoilState } from "recoil";
-export default function Helper() {
-    const [helperList, setHelperList] = useState([]);
+import PatientList from '../doctor/Dashboard-card/PatientList';
+import { PatientLoginForm } from './patientLoginForm';
+export default function Patient() {
+    const [patientList, setPatientList] = useState([]);
     const [active, setActive] = useState(false)
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
+    const { getPatientListDetails } = AuthApi()
+    const { doctorId } = useParams();
 
-    const { doctorId } = useParams()
-    let { getHelper } = AuthApi()
     useEffect(() => {
-        getHelperDetails();
+        getPatientDetails()
     }, [])
-
-    // async function getHelperDetails() {
-    //     const result = await getHelper(doctorId);
-    //     setHelperList(result)
-    // }
-    async function getHelperDetails() {
-        const result = await getHelper(doctorId);
-        const data = result.filter((helper) => {
-            if (helper.isDeleted === false) {
-                return helper
+    async function getPatientDetails() {
+        const result = await getPatientListDetails({ doctorId });
+        patientData(result)
+    }
+    const patientData = (list, e) => {
+        const data = list.filter((patient) => {
+            if (patient.status === "Ongoing") {
+                return patient;
             }
         })
-        setHelperList(data)
+        setPatientList(data)
     }
 
     return (
@@ -43,7 +41,7 @@ export default function Helper() {
                             <i className="arrow_back backArrow" title="back button"></i>
                         </Link>
                     </li>
-                    <li className='float-none' style={{ fontSize: 'inherit' }} >Assistant</li>
+                    <li className='float-none' style={{ fontSize: 'inherit' }} >Appoinment</li>
                     <li>
                         <Link onClick={() => setActive(true)} >
                             <Icon className="addiconbutton " style={{ fontSize: 50 }}>add</Icon>
@@ -59,10 +57,10 @@ export default function Helper() {
                 />
                 <div className="common_box">
                     <>
-                        {!active && helperList.length > 0 ?
-                            <HelperList doctorId={doctorId} />
+                        {!active && patientList.length > 0 ?
+                            <PatientList doctorId={doctorId} />
                             :
-                            <AddHelper doctorId={doctorId} />
+                            <PatientLoginForm doctorId={doctorId} />
                         }
                     </>
                 </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link} from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
 import moment from 'moment';
 import AuthApi from "../../services/AuthApi";
@@ -10,9 +10,9 @@ import { Wrapper } from '../../mainComponent/Wrapper';
 import UserLinks from './partial/uselinks';
 import { Button } from 'react-bootstrap';
 import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
-const { initializeApp } = require("firebase/app");
-const { getStorage, ref, getDownloadURL } = require("firebase/storage");
-const config = require("../../firebase.config");
+// const { initializeApp } = require("firebase/app");
+// const { getStorage, ref, getDownloadURL } = require("firebase/storage");
+// const config = require("../../firebase.config");
 const useStyles = makeStyles((theme) => ({
     formControl: {
         minWidth: 120
@@ -39,8 +39,8 @@ export default function PatientsClinicHistory() {
     const records = patientHistoryData.slice(firstIndex, lastIndex)
     const nPage = Math.ceil(patientHistoryData.length / recordsPerPage)
     const number = [...Array(nPage + 1).keys()].slice(1)
-    initializeApp(config.firebaseConfig);
-    const storage = getStorage();
+    // initializeApp(config.firebaseConfig);
+    // const storage = getStorage();
 
     useEffect(() => {
         getPatientHistory();
@@ -56,17 +56,16 @@ export default function PatientsClinicHistory() {
         setPatientHistoryData(data)
     }
 
-    const downloadPdf = async (details) => {
-        const reportId = details.medicalReportId
-        const result = await downloadPrescription(reportId)
-        console.log(result)
-        let alink = document.createElement('a');
-        alink.href = result;
-        alink.setAttribute("target", "_blank")
-        alink.download = 'Prescription.pdf';
-        alink.click();
-    }
-    
+    // const downloadPdf = async (details) => {
+    //     const reportId = details.medicalReportId
+    //     const result = await downloadPrescription(reportId)
+    //     let alink = document.createElement('a');
+    //     alink.href = result;
+    //     alink.setAttribute("target", "_blank")
+    //     alink.download = 'Prescription.pdf';
+    //     alink.click();
+    // }
+
 
     //For Pagination
     function prePage() {
@@ -140,7 +139,7 @@ export default function PatientsClinicHistory() {
                                                 <Link to={`/patient-history/${details.medicalReportId}`}>
                                                     <Button className="appColor helperBtn" > View</Button>
                                                 </Link>
-                                                <Button className="appColor helperBtn" onClick={() => downloadPdf(details)}> Download</Button>
+                                                {/* <Button className="appColor helperBtn" onClick={() => downloadPdf(details)}> Download</Button> */}
                                             </div>
                                         </div>
                                     </div>

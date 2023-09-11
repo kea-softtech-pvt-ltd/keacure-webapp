@@ -1,4 +1,4 @@
-import { useEffect, useState  } from "react";
+import { useEffect, useState } from "react";
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -16,45 +16,45 @@ import DatePicker from 'react-date-picker';
 import { CSVLink } from "react-csv";
 //import Icon from '@material-ui/core/Icon';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import { 
+import {
     Link,
     // useRouteMatch
-   } from "react-router-dom";
+} from "react-router-dom";
 
-  //for table
-  const useStyles = makeStyles((theme) => ({
+//for table
+const useStyles = makeStyles((theme) => ({
     formControl: {
-      margin: theme.spacing(1),
-      minWidth: 120
+        margin: theme.spacing(1),
+        minWidth: 120
     },
     selectEmpty: {
-      marginTop: theme.spacing(2)
+        marginTop: theme.spacing(2)
     },
     table: {
         minWidth: 650,
-      },
-  }));
-   
-export default function Appointment(){
+    },
+}));
+
+export default function Appointment() {
     //for datepicker
     const [value, onChange] = useState(new Date());
-    
+
     const classes = useStyles();
     //for fetch json data
-    let[rows ,setRows] =useState([])
+    let [rows, setRows] = useState([])
     // let {url } = useRouteMatch();
 
-	useEffect(()=>{
-		const result = axios(
-			constants.PATIENTLIST_DATA
-		);
-		setRows(result.data);
-	},[]);
-
-    return(
+    useEffect(() => {
+        appointmentData()
+    }, []);
+    const appointmentData = () => {
+        const result = axios(constants.PATIENTLIST_DATA);
+        setRows(result.data);
+    }
+    return (
         <div>
             <main>
-                <div className="container margin_120_95">			
+                <div className="container margin_120_95">
                     <div className="row">
                         <div className="col-lg-12 ml-auto">
                             <nav id="secondary_nav">
@@ -64,41 +64,41 @@ export default function Appointment(){
                             </nav>
                             <div className="box_form">
                                 <div className="row">
-                                    <div className="col-lg-2 "> 
-                                    <label>From Date</label>
+                                    <div className="col-lg-2 ">
+                                        <label>From Date</label>
                                         <DatePicker
                                             className="datepicker"
                                             onChange={onChange}
                                             value={value}
-                                            clearIcon= {null} 
-                                          />
+                                            clearIcon={null}
+                                        />
                                     </div>
-                                    <div className="col-lg-2"> 
-                                    <label>To Date</label>
+                                    <div className="col-lg-2">
+                                        <label>To Date</label>
                                         <DatePicker
                                             className="datepicker"
                                             onChange={onChange}
                                             value={value}
-                                            clearIcon= {null}
+                                            clearIcon={null}
                                         />
                                     </div>
                                     <div className="col-lg-3 ">
                                         <FormControl
                                             className={classes.formControl} >
                                             <NativeSelect className={classes.selectEmpty}>
-                                            <option>Walk-In</option>
-                                            <option>Ten</option>
-                                            <option>Twenty</option>
-                                            <option>Thirty</option>
+                                                <option>Walk-In</option>
+                                                <option>Ten</option>
+                                                <option>Twenty</option>
+                                                <option>Thirty</option>
                                             </NativeSelect>
                                         </FormControl>
-                                    </div> 
+                                    </div>
                                     <div className="col-lg-3 ">
                                         <CSVLink data={rows} filename={"my-file.csv"}
-                                        className="btn_1"
+                                            className="btn_1"
                                         >
-                                        Export CSV
-                                    </CSVLink>
+                                            Export CSV
+                                        </CSVLink>
                                     </div>
                                 </div>
                             </div>
@@ -117,24 +117,24 @@ export default function Appointment(){
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                        {rows.map((row) => (
-                                            <TableRow key={row.id}>
-                                                <TableCell align="right">{row.AppointmentDate}</TableCell>
-                                                <TableCell align="right">{row.ModeofAppointment}</TableCell>
-                                                <TableCell align="right">{row.ModeofPayment}</TableCell>
-                                                <TableCell align="right">
-                                                    <div className="linklist">
-                                                        <Link className="patientlistlink" >pay</Link>
-                                                        {/* <Link className="patientlistlink"  to={`${url}/${row.id}`}>{<VisibilityIcon style={{ fontSize:20 }}/>}</Link> */}
-                                                        {/* <button  className="btn_1"><i className="pe-7s-print" title="print"></i></button> */}
-                                                    </div>
-                                                </TableCell>
-                                            </TableRow>
+                                            {rows.map((row) => (
+                                                <TableRow key={row.id}>
+                                                    <TableCell align="right">{row.AppointmentDate}</TableCell>
+                                                    <TableCell align="right">{row.ModeofAppointment}</TableCell>
+                                                    <TableCell align="right">{row.ModeofPayment}</TableCell>
+                                                    <TableCell align="right">
+                                                        <div className="linklist">
+                                                            <Link className="patientlistlink" >pay</Link>
+                                                            {/* <Link className="patientlistlink"  to={`${url}/${row.id}`}>{<VisibilityIcon style={{ fontSize:20 }}/>}</Link> */}
+                                                            {/* <button  className="btn_1"><i className="pe-7s-print" title="print"></i></button> */}
+                                                        </div>
+                                                    </TableCell>
+                                                </TableRow>
                                             ))}
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
-                                     
+
                                 <nav aria-label="" className="add_top_20">
                                     <ul className="pagination pagination-sm">
                                         <li className="page-item disabled">

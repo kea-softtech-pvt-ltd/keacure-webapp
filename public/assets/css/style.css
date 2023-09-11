@@ -473,9 +473,9 @@ a.btn_1 {
 	position: relative;
     right: 150px;
 } */
-.modalbtn{
+.modalbtn {
 	margin-top: 10px;
-    font-size: 13px;
+	font-size: 13px;
 }
 .symptomsInput {
 	/* position: relative;
@@ -1306,6 +1306,9 @@ a.box_cat_home {
 }
 .list_home ul li a:hover:after {
 	color: #fff;
+}
+.radius {
+	border-radius: 5px;
 }
 #reccomended,
 #staff {
@@ -3347,7 +3350,7 @@ a.btn_2 .full-width {
 	position: relative;
 	bottom: 125px;
 }
-.contacts{
+.contacts {
 	line-height: 35px;
 }
 /*radio button*/
@@ -3890,11 +3893,11 @@ ul.treatments.checkout li strong {
 .cards {
 	margin-top: 28px;
 }
-.viewMreport{
+.viewMreport {
 	padding: 10px;
-	margin-top:20px;
+	margin-top: 20px;
 }
-.vitalSign{
+.vitalSign {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -4651,21 +4654,21 @@ a.box_feat_about h3 {
 	border-radius: 5px;
 	/* box-shadow: 5px 5px 5px rgb(216, 214, 214); */
 	border: 1px solid #ddddf7;
-	padding: 5px
+	padding: 5px;
 }
 .cardSpan {
 	display: flex;
 	/* padding: 7px 5px 0px 15px; */
 	line-height: 35px;
-	padding-left: 10px
+	padding-left: 10px;
 }
-.patientListIcon{
+.patientListIcon {
 	font-size: 22px;
 }
-.appointmentBtn{
+.appointmentBtn {
 	border-top: 1px solid #ddddf7;
 }
-.patientName{
+.patientName {
 	font-size: 15px;
 	font-weight: 600;
 }
@@ -4678,24 +4681,24 @@ a.box_feat_about h3 {
 .fontSize {
 	font-size: 15px;
 }
-.timeSlot{
+.timeSlot {
 	margin-left: 115px;
 }
-.time{
+.time {
 	font-weight: 600;
 }
 .cardDiv {
 	width: 100%;
-	background-color:  #fff;
+	background-color: #fff;
 	border-radius: 5px;
 	/* box-shadow: 5px 5px 5px rgb(216, 214, 214); */
 	border: 1px solid #ddddf7;
 	margin-bottom: 30px;
 }
 
-.historyBtn{
+.historyBtn {
 	align-items: left;
-    justify-content: left;
+	justify-content: left;
 }
 .MuiCard-root {
 	overflow: hidden !important;
@@ -4720,7 +4723,7 @@ a.box_feat_about h3 {
 .color {
 	color: #1a3c8b;
 }
-.underline{
+.underline {
 	border-bottom: 1px solid #e1e8ed;
 	/* margin: 2px 4px; */
 }
@@ -4754,8 +4757,7 @@ a.box_feat_about h3 {
 	padding: 5px;
 	margin-left: 5px;
 	border: 1px solid #e0ecf5;
-    border-radius: 5px;
-
+	border-radius: 5px;
 }
 .rupeeSign {
 	margin-left: 10px;
@@ -4770,7 +4772,7 @@ a.box_feat_about h3 {
 .otherInput {
 	padding: 10px;
 }
-.border-payment{
+.border-payment {
 	border-bottom: 1px solid #e0ecf5;
 	margin: 5px;
 }
@@ -4789,7 +4791,7 @@ a.box_feat_about h3 {
 }
 .paymentAutocomplete {
 	position: relative;
-	top:10px
+	top: 10px;
 }
 
 textarea.form-control {
@@ -4803,7 +4805,7 @@ textarea.form-control {
 	padding: 5px;
 	border-radius: 5px;
 	/* border-color: #1a3c8b; */
-	border: 1px solid  #1a3c8b ;
+	border: 1px solid #1a3c8b;
 }
 .vital-signInput label {
 	text-align: left;
@@ -4833,7 +4835,11 @@ textarea.form-control {
 	/* margin: 20px; */
 	border-bottom: 1px solid #e1e8ed;
 }
-.dashSpace{
+.doctorProfile {
+	height: 75%;
+	width: 75%;
+}
+.dashSpace {
 	line-height: 65px;
 }
 .wrapperCss {
@@ -4846,7 +4852,21 @@ textarea.form-control {
 	border-radius: 5px;
 	margin-bottom: 15px;
 	margin-top: 4px;
-	width:  1130px;
+	width: 1130px;
+	border: 1px solid #e1e8ed;
+}
+.MuiAccordionDetails-root reset-style {
+    display: flex;
+    padding: 8px 16px 16px;
+}
+.white-box {
+	background-color: white;
+	padding: 20px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	margin-bottom: 15px;
+	margin-top: 4px;
+	width: 1130px;
 	border: 1px solid #e1e8ed;
 }
 .containar-nav {
@@ -5259,6 +5279,23 @@ ul.bullets li:before {
 .page-item.disabled .page-link {
 	color: #999;
 	border-color: #e1e8ed;
+}
+.disabled-div {
+	background-color: rgb(228, 217, 217);
+	color: #313030;
+	height: 37px;
+	cursor: default;
+	border: none;
+	padding: 7px 20px;
+	display: inline-block;
+	outline: 0;
+	font-size: 0.875rem;
+	transition: all 0.3s ease-in-out;
+	-webkit-border-radius: 25px;
+	-moz-border-radius: 25px;
+	-ms-border-radius: 25px;
+	border-radius: 3px;
+	font-weight: 500;
 }
 .page-link {
 	color: #1a3c8b;

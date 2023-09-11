@@ -13,7 +13,7 @@ export default function PatientPersonalInfo(props) {
         problem: ""
     })
 
-    const { reportId } = props;
+    const { reportId, onChange } = props;
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -47,10 +47,10 @@ export default function PatientPersonalInfo(props) {
             "problem": changeData.problem,
         }
         await insertPatientVitalSignsData({ reportId }, bodyData)
-        .then((res) => {
-        //     setSavingData(res)
-        //     // setPatientId(res.patientId)
-        })
+            .then((res) => {
+                //     setSavingData(res)
+                //     // setPatientId(res.patientId)
+            })
         clearData()
     }
 
@@ -62,7 +62,7 @@ export default function PatientPersonalInfo(props) {
                     <div className="row">
                         <div className="">
                             <div align='left'>
-                            <label>Message</label>
+                                <label>Message</label>
                             </div>
                             <textarea
                                 type="text"
@@ -162,16 +162,22 @@ export default function PatientPersonalInfo(props) {
                                 onChange={handleChange}
                             />
                         </div>
-                      
+
                     </div>
                     <div className="text-right add_top_30 patientinfo">
-                            <input
-                                type="submit"
-                                className="btn_1 patientinfo"
-                                value="Save"
-                                onClick={saveData}
-                            />
-                        </div>
+                        <input
+                            type="submit"
+                            className="btn_1 patientinfo"
+                            value="Save"
+                            onClick={saveData}
+                        />
+                        <input
+                            type="submit"
+                            onClick={onChange}
+                            className="btn_1 medicinebtn"
+                            value="Next"
+                        />
+                    </div>
                 </div>
 
             </div>

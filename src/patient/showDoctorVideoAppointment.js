@@ -84,9 +84,9 @@ function ShowDoctorVideoAppointment(props){
                         </Carousel>
                     </div>
                     
-                    {showSlot.length > 0?
+                    {/* {showSlot.length > 0?
                         <ShowVideoAppointSlots showFeesBySlot={showFeesBySlot} sessionSlot={showSlot}/>
-                    :null} 
+                    :null}  */}
                 </>
             ):null}
         </div>

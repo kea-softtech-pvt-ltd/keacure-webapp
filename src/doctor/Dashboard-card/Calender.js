@@ -4,7 +4,7 @@ import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { Modal } from 'react-bootstrap';
 import AuthApi from '../../services/AuthApi';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import CalendarModalBox from './partial/CalendarModalBox';
 import { MainNav } from '../../mainComponent/mainNav';
 import { Wrapper } from '../../mainComponent/Wrapper';
@@ -21,6 +21,7 @@ export default function Calender() {
   const [patientIdDetails, setPatientIdDetails] = useState([])
   const [helpersData, setHelpersData] = useRecoilState(setHelperData)
   const [patientList, setPatientList] = useState([])
+  console.log("===patientList=>>>",patientList)
   useEffect(() => {
     handleOnSelectSlot();
   }, [])
@@ -39,7 +40,6 @@ export default function Calender() {
     const calendarData = []
     result.map((item) => {
       setPatientList(item)
-      console.log("item----------", item)
       if (item.dependentId) {
         calendarData.push({
           title: item['dependentDetails'][0].name,
@@ -114,7 +114,10 @@ export default function Calender() {
           <Modal.Title >Patient Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <CalendarModalBox patientList={patientList} doctorId={doctorId} patientId={patientIdDetails} onSubmit={handleModalButtonClick} />
+          <CalendarModalBox
+            patientList={patientList}
+            doctorId={doctorId}
+            patientId={patientIdDetails} onSubmit={handleModalButtonClick} />
         </Modal.Body>
       </Modal>
     </Wrapper>

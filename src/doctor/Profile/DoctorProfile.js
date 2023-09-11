@@ -7,7 +7,7 @@ import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
 
 export default function DoctorProfile() {
-    const { doctorId } = useParams()
+    const { doctorId } = useParams();
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     return (
 
@@ -40,7 +40,7 @@ export default function DoctorProfile() {
                     helperId={helpersData._id}
                     accessModule={helpersData.access_module} />
                 <div id="section_1" className="col-lg-10">
-                    <div className="common_box">
+                    <div className="white-box">
                         <FetchDoctorPersonalDetails doctorId={doctorId} />
                     </div>
                 </div>

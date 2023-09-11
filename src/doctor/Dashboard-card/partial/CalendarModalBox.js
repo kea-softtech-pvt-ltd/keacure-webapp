@@ -61,6 +61,11 @@ function CalendarModalBox(props) {
                         <b className="patientModal">Age :    </b>
                         {patientDetails.age}
                     </div>
+                    <div>
+                        <b className="patientModal">Time :    </b>
+                        {patientDetails.slotTime}
+                    </div>
+                    
                         <span className='' align='left'>
                             {patientList.status === "Ongoing" ?
                                 <Link to="#" onClick={() => saveData()}>

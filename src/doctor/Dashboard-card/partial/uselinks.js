@@ -12,7 +12,7 @@ export default function UserLinks(props) {
     let history = useHistory();
     function handleClick(e) {
         e.preventDefault()
-        history.push(`/patientlist/${doctorId}`);
+        history.push(`/patient/${doctorId}`);
     }
 
     function handleOnProfileClick(e) {

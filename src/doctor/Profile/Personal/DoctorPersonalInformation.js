@@ -9,13 +9,19 @@ import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
 import { MainInput } from '../../../mainComponent/mainInput';
 import { PlacesAutocompleteInput } from "../Clinic/Partial/placesAutocomplete"
 import { MainRadioGroup } from "../../../mainComponent/mainRadioGroup";
+import { v4 as uuid } from 'uuid';
+
+import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import AuthApi from "../../../services/AuthApi";
+
 function DoctorPersonalInformation(props) {
     //const { data } = props
     const { doctorId } = useParams();
     const [updateData, setUpdateData] = useState([]);
-    const { addDoctorInformation, submitDoctorInformation } = AuthApi()
-    //for google map api autocomplete onChange method
+    const [doctorPhoto, setDoctorPhoto] = useState(avatarImage);
+    const [selectedImage, setSelectedImage] = useState(null);
+    const { addDoctorInformation, submitDoctorInformation } = AuthApi();
+    // const uuidv4 = require('uuid').v4;
     function handleChangeAddress(address) {
         setUpdateData(prevInput => {
             return {
@@ -23,81 +29,62 @@ function DoctorPersonalInformation(props) {
                 ['address']: address
             }
         })
-        setValue("address", address)
     }
+
 
     //for all input onchange method
     const handleInputChange = event => {
         const { name, value } = event.target;
         setUpdateData({ ...updateData, [name]: value });
-        setValue(name, value)
     };
-
-    //for doctor profilephoto onChange method
-    const [doctorPhoto, setDoctorPhoto] = useState(avatarImage);
-    const uploadedImage = React.useRef(null);
-    const handlePhoto = (e) => {
-        e.preventDefault();
-        const [file] = e.target.files;
-        setUpdateData({ ...updateData, photo: file });
-        setValue("photo", file)
-        if (file) {
-            const reader = new FileReader();
-            const { current } = uploadedImage;
-            current.file = file;
-            reader.onload = (e) => {
-                current.src = e.target.result;
-            }
-            reader.readAsDataURL(file);
+    const handlePhoto = () => {
+        if (selectedImage) {
+            setDoctorPhoto(URL.createObjectURL(selectedImage));
         }
     }
-
     useEffect(() => {
+        handlePhoto()
         addDoctorInformation({ doctorId })
             .then(jsonRes => {
-                const allKeys = Object.keys(jsonRes)
-                allKeys.map(function (k, v) {
-                    if (k === 'photo' && typeof jsonRes[k] === "object") {
-                        setValue(k, jsonRes[k])
-                        setUpdateData({ ...updateData, k: jsonRes[k] });
-                    }
-                    else if ((k !== 'photo')) {
-                        setValue(k, jsonRes[k])
-                        setUpdateData({ ...updateData, k: jsonRes[k] });
-                    }
-                })
-
                 setUpdateData(jsonRes)
-
-                if (jsonRes.photo) {
-                    setDoctorPhoto(`../images/${jsonRes.photo}`)
-                }
             });
-        register("name", { required: true });
-        register("gender", { required: true });
-        register("officialEmail", { required: true });
-        register("personalEmail", { required: true });
-        register("address", { required: true });
-        register("photo", { required: true });
-    }, [])
+    }, [selectedImage])
+    async function uploadImageAsync(uri) {
+        const blob = await new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                resolve(xhr.response);
+            };
+            xhr.onerror = function (e) {
+                console.log(e);
+                reject(new TypeError("Network request failed"));
+            };
+            xhr.responseType = "blob";
+            xhr.open("GET", uri, true);
+            xhr.send(null);
+        });
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+        const fileRef = ref(getStorage(), uuid());
+        const result = await uploadBytes(fileRef, blob);
+        // blob.close();
+        return await getDownloadURL(fileRef);
+    }
+
+
+
+
+    const { formState: { errors } } = useForm();
     const onSubmit = async (e) => {
-        e.preventDefault()
+        const resultUrl = await uploadImageAsync(doctorPhoto)
         const bodyData = {
+            photo: resultUrl,
             name: updateData.name,
             gender: updateData.gender,
             personalEmail: updateData.personalEmail,
             address: updateData.address,
-            photo: doctorPhoto
         }
         await axios.post(`${API}/insertPersonalInfo/${doctorId}`, bodyData)
-            .then(function (response) {
-                //  setUpdateData(response.data)
-
-            })
-        // props.data();
-
+        await axios.post(`${API}/insertPersonalInfo/${doctorId}`, bodyData)
     }
 
     return (
@@ -115,7 +102,6 @@ function DoctorPersonalInformation(props) {
                                         alt="doctorPhoto"
                                     />
                                     : <img
-                                        ref={uploadedImage}
                                         src={doctorPhoto}
                                         alt="doctorPhoto"
                                         className="doctorphotoStyle"
@@ -129,7 +115,7 @@ function DoctorPersonalInformation(props) {
                                 <MainInput
                                     type="file"
                                     accept=".png, .jpg, .jpeg"
-                                    onChange={handlePhoto}
+                                    onChange={(e) => setSelectedImage(e.target.files[0])}
                                     name="photo">
                                 </MainInput>
                             </div>

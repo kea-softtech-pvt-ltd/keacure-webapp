@@ -3,58 +3,59 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { MainButtonInput } from "../mainComponent/mainButtonInput";
 import { MainInput } from "../mainComponent/mainInput";
-import { setNewPatientId} from "../recoil/atom/setNewPatientId";
+import { setNewPatientId } from "../recoil/atom/setNewPatientId";
 import { useRecoilState } from "recoil";
 import axios from "axios";
 
-function LoginPatientOtp(props){
+function LoginPatientOtp(props) {
     const history = useHistory()
-    const { patientId, redirection} = props;
-    const [ patientData , setPatientData] = useRecoilState(setNewPatientId);
-    const [ loginotp ,setLoginOtp] = useState('');
-    
-    const [ errormessage, setErrormessage] = useState(false);
+    const { patientId, loginData } = props;
+    console.log("loginData",loginData)
+    const [patientData, setPatientData] = useRecoilState(setNewPatientId);
+    const [loginotp, setLoginOtp] = useState('');
+    const getOTP= loginData.otp
+    const [errormessage, setErrormessage] = useState(false);
 
     const handleSubmit = (e) => {
-        const loginOtp = loginotp
         e.preventDefault();
-        if ( loginotp.length < 6  ) { 
-            setErrormessage('Please Enter valid OTP.')
-        } else {
-            axios.post(`${API}/patientLoginOtp`,{
-                otp: loginotp,
-                _id: patientId
-            })
-            .then(function(response){
-                if(response.data.otp !== loginOtp){
-                    setErrormessage("wrong OTP");
-                }else{
-                   axios.post(`${API}/patientOtpIsLoggedIn/${patientId}`,{
-                        isLoggedIn : true
-                    })
-                    .then(response =>{
-                        setPatientData(patientId)
-                        if(redirection == "dashboard") {
-                            history.push(`/PatientProfile/${response.data._id}`);
-                        } else {
-                            history.push(`/createpatientprofile/${response.data._id}`);
-                        }
-                    })  
+        const loginOtp = loginotp
+
+        axios.post(`${API}/patientLoginOtp`, {
+            getOTP: loginOtp,
+            _id: patientId
+        })
+            .then((response) => {
+                setPatientData(patientId)
+                const isLoggedIn = loginData.isLoggedIn
+                if (getOTP !== loginOtp) {
+                    setErrormessage("Please Enter Valid OTP");
+                } else {
+                    if (isLoggedIn === true) {
+                        history.push(`/getLoginPatientProfile/${patientId}`);
+                    } else {
+                        history.push(`/createpatientprofile/${patientId}`);
+                    }
                 }
-            }) 
-        }
+            })
     }
-    return(
+    return (
         <div className="row">
-            <div className="col-md-6">    
-                <MainInput type="text" name="otp" maxLength={6} onChange={(e)=>setLoginOtp(e.target.value)}  placeholder="6 digit OTP" ></MainInput>
-                {errormessage&& (<span className="validation">{errormessage}</span>)}
+            <div className="col-md-6">
+                <MainInput
+                    type="text"
+                    name="otp"
+                    maxLength={6}
+                    onChange={(e) => setLoginOtp(e.target.value)}
+                    placeholder="6 digit OTP" >
+                </MainInput>
+                {errormessage && (<span className="validation">{errormessage}</span>)}
             </div>
-            
+
             <div className="col-md-2">
-                <MainButtonInput onClick={handleSubmit}>Login</MainButtonInput>  
+                <MainButtonInput onClick={handleSubmit}>Login</MainButtonInput>
             </div>
         </div>
     )
+
 }
-export {LoginPatientOtp}
+export { LoginPatientOtp }

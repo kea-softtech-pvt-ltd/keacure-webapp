@@ -53,7 +53,7 @@ function AddDoctorClinicInfo() {
             <div className="box_form">
                 <div className="modalbtn">
                     <div className="d-flex align-items-top justify-content-center">
-                        <MainButtonInput onClick={handleShow}>ADD VISITING CLINIC</MainButtonInput>
+                        <MainButtonInput onClick={handleShow}>ADD CLINIC</MainButtonInput>
                     </div>
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>

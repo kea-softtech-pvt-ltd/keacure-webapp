@@ -61,13 +61,12 @@ export default function MedicinePrescription(props) {
                 setTabletName(res)
             })
     };
-
     const classes = useStyles();
+
     const handleMealData = ((e, selectedValue) => {
         e.preventDefault()
         setSaveMealData(selectedValue.name)
     })
-
 
     const handleChange = (event, selectedValue) => {
         event.preventDefault()
@@ -98,6 +97,7 @@ export default function MedicinePrescription(props) {
         e.preventDefault();
         setDuration(e.target.value)
     }
+
     const saveData = async () => {
         const bodyData = {
             "reportId": reportId,
@@ -113,7 +113,6 @@ export default function MedicinePrescription(props) {
     }
 
     return (
-
         <div className=''>
             <div >
                 <GetMedicinePriscription reportId={reportId} />

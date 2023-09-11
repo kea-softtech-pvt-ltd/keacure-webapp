@@ -1,17 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
 import AuthApi from "../../../services/AuthApi";
-import { CardActions, Icon } from '@material-ui/core';
 import { Button, Card, Modal } from 'react-bootstrap';
-import { MainCards } from '../../../mainComponent/mainCards';
 //for table
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -29,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function HelperList(props) {
     const { doctorId } = props;
-    const classes = useStyles();
     const [helperList, setHelperList] = useState([]);
     const [showDelete, setShowDelete] = useState(false);
     const [details, setDetails] = useState([])
@@ -45,6 +35,7 @@ export default function HelperList(props) {
         setShowDelete(true)
     }
     const handleDeleteClose = () => setShowDelete(false)
+    
     async function getHelperDetails() {
         const result = await getHelper(doctorId);
         const data = result.filter((helper) => {

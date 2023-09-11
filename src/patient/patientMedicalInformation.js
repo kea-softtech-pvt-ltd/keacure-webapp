@@ -6,12 +6,12 @@ import {FetchPatientMedicalInfo} from "../patient/fetchPatientMedicalInfo";
 function PatientMedicalInformation(props){
     const { patientId } = props;
     const [ showMedicalInfo , setShowMedicalInfo] = useState(false)
-    
+    console.log("========>>>>", showMedicalInfo)
     function handleRecordAdded(){
         setShowMedicalInfo(true)
     }
     return(
-        <>
+        <>z
             <FetchPatientMedicalInfo patientId={patientId}/>
             {showMedicalInfo === false ?
             <AddPatientMedicalInfo patientId={patientId} addMedicalRecord ={handleRecordAdded}/>

@@ -12,15 +12,14 @@ import {
 const GetMedicinePriscription = (props) => {
     const { reportId } = props;
     const { getMedicinePrescriptionData } = AuthApi();
-
-    const [showMedicineData, setShowMedicineData] = useState([])
+    const [showMedicineData, setShowMedicineData] = useState('')
 
     useEffect(() => {
         getMedicineData()
     }, [showMedicineData])
 
     async function getMedicineData() {
-        const result = await getMedicinePrescriptionData({ reportId })
+        const result = await getMedicinePrescriptionData( reportId )
         setShowMedicineData(result);
 
     }
@@ -43,7 +42,7 @@ const GetMedicinePriscription = (props) => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {showMedicineData.map((item, i) => {
+                                    {showMedicineData && showMedicineData.map((item, i) => {
                                         return (
                                             <TableRow key={i}>
                                                 <TableCell align='center'>{i + 1}</TableCell>

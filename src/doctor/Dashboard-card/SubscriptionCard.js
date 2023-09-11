@@ -69,11 +69,11 @@ export default function SubscriptionCard() {
                                 {getSubData === 'free-trial' ?
                                     <button
                                         onClick={confirmInputHandler}
-                                        className="sub-card-btn shadow-none btn btn-primary"
+                                        className="btn disabled-card shadow-none disabled"
                                     >Get Started
                                     </button>
                                     : <button
-                                        className="btn disabled-card shadow-none disabled">
+                                        className="sub-card-btn shadow-none btn btn-primary">
                                         Get Started
                                     </button>
                                 }
@@ -111,11 +111,11 @@ export default function SubscriptionCard() {
                                 {getSubData === '6-month' ?
                                     <button
                                         onClick={confirmInputHandler}
-                                        className="sub-card-btn shadow-none btn btn-primary"
+                                        className="btn disabled-card shadow-none disabled"
                                     >Get Started
                                     </button>
                                     : <button
-                                        className="btn disabled-card shadow-none disabled">
+                                        className="sub-card-btn shadow-none btn btn-primary">
                                         Get Started
                                     </button>
                                 }
@@ -154,11 +154,11 @@ export default function SubscriptionCard() {
                                 {getSubData === "yearly" ?
                                     <button
                                         onClick={confirmInputHandler}
-                                        className="sub-card-btn shadow-none  btn btn-primary"
+                                        className="btn disabled-card shadow-none disabled"
                                     >Get Started
                                     </button>
                                     : <button
-                                        className="btn disabled-card shadow-none disabled">
+                                        className=" sub-card-btn shadow-none btn btn-primary">
                                         Get Started
                                     </button>
                                 }

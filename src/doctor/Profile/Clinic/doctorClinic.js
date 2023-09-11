@@ -1,5 +1,5 @@
 import { AddDoctorClinicInfo } from "./Partial/AddDoctorClinicInfo";
-import { AddDoctorOwnClinicInfo } from "./Partial/addDoctorOwnClinicInfo";
+// import { AddDoctorOwnClinicInfo } from "./Partial/addDoctorOwnClinicInfo";
 
 function DoctorClinic() {
 
@@ -8,7 +8,7 @@ function DoctorClinic() {
             <div className="row">
                 <AddDoctorClinicInfo />
 
-                <AddDoctorOwnClinicInfo />
+                {/* <AddDoctorOwnClinicInfo /> */}
             </div>
 
 
