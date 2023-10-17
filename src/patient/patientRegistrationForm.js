@@ -6,7 +6,7 @@ import { MainInput } from "../mainComponent/mainInput";
 import { MainButtonInput } from "../mainComponent/mainButtonInput";
 
 function PatientRegistrationForm(props) {
-    const { patientId } = props;
+    const { patientId, handalChange } = props;
     const [updatePatientData, setUpdatePatientData] = useState({})
     //for all input onchange method
     const handleInputChange = event => {
@@ -26,22 +26,23 @@ function PatientRegistrationForm(props) {
     async function getPatientDetails() {
         const result = await axios.get(`${API}/patientById/${patientId}`)
             .then(function (response) {
-                setUpdatePatientData(response.data)
+                setUpdatePatientData(response.data[0])
             })
     }
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
-    const onSubmit = data => {
+    const { register, setValue, formState: { errors } } = useForm();
+    const onSubmit = (e) => {
+        e.preventDefault();
         const newPatientData = {
             mobile: updatePatientData.mobile,
-            name: data.name,
-            gender: data.gender,
-            age: data.age,
-            email: data.email,
+            name: updatePatientData.name,
+            gender: updatePatientData.gender,
+            age: updatePatientData.age,
+            email: updatePatientData.email,
         }
         axios.post(`${API}/insertPatientDetails/${patientId}`, newPatientData)
             .then(function (response) {
-                props.handalChange()
+               handalChange()
             })
     }
 
@@ -50,12 +51,12 @@ function PatientRegistrationForm(props) {
             {/* <div className="message">
                 <div>Exisitng Customer? <Link to={`/patientLoginForm/${patientId}`}>Click here to login</Link></div>
             </div> */}
-            <div className="form_title underline">
-                <h3 className="my-3">Patient Details</h3>
+            <div className="underline">
+                <h3 className="mb-3">Patient Details</h3>
             </div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="row">
-                    <div className="col-md-6 col-sm-6">
+            <form onSubmit={(e)=>onSubmit(e)}>
+                <div className="row mt-3">
+                    <div className="col-sm-6">
                         <div align='left'><label>Full name</label></div>
                         <MainInput
                             type="text"
@@ -73,11 +74,11 @@ function PatientRegistrationForm(props) {
                             name="mobile"
                             value={updatePatientData.mobile}
                             maxLength={10}
-                            pattern="[+-]?\d+(?:[.,]\d+)?"
+                            // pattern="[+-]?\d+(?:[.,]\d+)?"
                             onChange={handleInputChange}
                             placeholder="Mobile Number (+XX)">
                         </MainInput>
-                        {errors.mobile && <span className="validation">Please enter your Mobile Number</span>}
+                        {/* {errors.mobile && <span className="validation">Please enter your Mobile Number</span>} */}
                     </div>
                 </div>
                 <div className="row">

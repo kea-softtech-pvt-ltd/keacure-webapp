@@ -2,21 +2,23 @@ import React from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { useState, useEffect } from 'react';
-import AuthApi from '../../../services/AuthApi';
 import GetSymptomsData from './GetSymptomsData'
+import ReportApi from '../../../services/ReportApi';
 export default function Symptoms(props) {
     const { onChange, reportId } = props
     const [symptoms, setSymptoms] = useState([])
     const [saveSymptoms, setSaveSymptoms] = useState([])
     const [otherSymptom, setOtherSymptoms] = useState('')
-    const { symptomsData, insertSymptoms, insertSymptom_masterTable } = AuthApi();
+    const { symptomsData, insertSymptoms, insertSymptom_masterTable } = ReportApi();
 
     useEffect(() => {
         getSymptomsData();
     }, [])
-    const getSymptomsData = async () => {
-        const result = await symptomsData()
-        setSymptoms(result)
+    const getSymptomsData = () => {
+        symptomsData()
+            .then((result) => {
+                setSymptoms(result)
+            })
     };
 
     const handleChange = (e, selectedValue) => {
@@ -32,16 +34,38 @@ export default function Symptoms(props) {
     //     setSymptoms()
     // }
 
-    const addSymptoms = async () => {
-        saveSymptoms.push(otherSymptom)
+    const addSymptoms = () => {
         const bodyData = {
             "symptoms": saveSymptoms,
         }
-        await insertSymptoms({ reportId }, bodyData)
-        const other = {
-            "symptoms": otherSymptom,
+
+        if (otherSymptom) {
+            saveSymptoms.push(otherSymptom)
+        } else {
+            setOtherSymptoms(null)
         }
-        await insertSymptom_masterTable(other)
+
+        insertSymptoms({ reportId }, bodyData)
+            .then(() => {
+                const other = {
+                    "symptoms": otherSymptom,
+                }
+                insertSymptom_masterTable(other)
+
+            })
+
+        // const data = symptoms.filter((item)=>{
+        //     if(item.name !== other.symptoms){
+        //         return item
+        //     }
+        // })
+        // console.log("===data", data)
+        // symptoms.filter((item) => {
+        //     if (item.name !== otherSymptom) {
+        //         saveSymptoms.push(otherSymptom )
+        //     }
+        //     console.log("===>>", item.name)
+        // })
         // onChange()
         // clearData()
     }
@@ -61,11 +85,11 @@ export default function Symptoms(props) {
                         disableCloseOnSelect
                         value={saveSymptoms.name}
                         onChange={handleChange}
-                        options={symptoms.map((n)=>`${n.name}`)}
+                        options={symptoms.map((n) => `${n.name}`)}
                         noOptionsText={"Sympton not availabel please add"}
                         renderInput={(params) =>
                             <TextField {...params}
-                            label="Choose a Symptoms"
+                                label="Choose a Symptoms"
                             />}
                     />
                 </div>

@@ -48,10 +48,10 @@ function PatientLoginForm(props) {
         <div className="bg_color_2">
             <div className="container margin_60_35">
                 <div id="login-2">
-                    <h1> Please login to KeaCure</h1>
                     <form>
                         <div className="box_form clearfix">
-                            We will send OTP to your mobile number
+                            {/* We will send OTP to your mobile number */}
+                            Please Enter Your Mobile Number
                             <div className="box_login last">
                                 <div className="row">
                                     <div className="col-md-9 ">

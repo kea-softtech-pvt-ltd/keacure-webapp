@@ -8,6 +8,7 @@ import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
 import { MainInput } from '../../../../mainComponent/mainInput';
 import { MainMuiPickers } from '../../../../mainComponent/MainMuiPickers';
 import AuthApi from '../../../../services/AuthApi';
+import ExperienceApi from '../../../../services/ExperienceApi';
 function AddDoctorProfessionalExperience(props) {
     const { doctorId } = useParams();
     const [coilDoctorExperience, setCoilDoctorExperience] = useRecoilState(setDoctorExperience)
@@ -15,7 +16,7 @@ function AddDoctorProfessionalExperience(props) {
     const [startYear, setStartYear] = useState(new Date())
     const [endYear, setEndYear] = useState(new Date())
     const [experienceData, setExperienceData] = useState([]);
-    const { insertDrExperience } = AuthApi();
+    const { insertDrExperience } = ExperienceApi();
     const handleStartYearChange = (date) => {
         // const splitDate = date.split("")
         // const year = splitDate[0]
@@ -88,30 +89,30 @@ function AddDoctorProfessionalExperience(props) {
         <form className="my-2" onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
                 <div className="col-md-6">
-                <div className="row">
-                    <div className="col-md-6 ">
-                    <div className=" text-left">
-                        <MainMuiPickers
-                            name="startYear"
-                            value={startYear}
-                            onChange={handleStartYearChange}>Start year
-                        </MainMuiPickers>
+                    <div className="row">
+                        <div className="col-md-5 ">
+                            <div className=" text-left">
+                                <MainMuiPickers
+                                    name="startYear"
+                                    value={startYear}
+                                    onChange={handleStartYearChange}>Start year
+                                </MainMuiPickers>
+                            </div>
+                            {error && <span className="validation">select valid year</span>}
                         </div>
-                        {error && <span className="validation">select valid year</span>}
-                    </div>
-                    <div className="col-md-6">
-                    <div className=" text-left">
-                        <MainMuiPickers
-                            name="endYear"
-                            value={endYear}
-                            onChange={handleEndYearChange}>End Year
-                        </MainMuiPickers>
+                        <div className="col-md-5">
+                            <div className=" text-left">
+                                <MainMuiPickers
+                                    name="endYear"
+                                    value={endYear}
+                                    onChange={handleEndYearChange}>End Year
+                                </MainMuiPickers>
+                            </div>
                         </div>
                     </div>
-                    </div>
-                    <div className="col-md-14 ">
-                    <div className=" text-left">
-                        <label><b>Clinic/Hospital Name</b></label>
+                    <div className="">
+                        <div className=" text-left">
+                            <label><b>Clinic/Hospital Name</b></label>
                         </div>
                         <MainInput
                             type="text"
@@ -122,29 +123,29 @@ function AddDoctorProfessionalExperience(props) {
                             {errors.clinicName && <span className="validation">Please enter clinic name</span>}
                         </MainInput>
                     </div>
-                    </div>
-                    <div className="col-lg-6">
-                        <div className=" text-left">
-                            <label><b>Description</b></label>
-                            <div>
+                </div>
+                <div className="col-lg-6">
+                    <div className=" text-left">
+                        <label><b>Description</b></label>
+                        <div>
                             <textarea
                                 type="text"
                                 name="description"
                                 value={experienceData.description}
                                 onChange={handleInputChange}
-                                className="form-textarea p-2"
+                                className="form-textarea p-2 "
                                 placeholder="description"
                             />
-                            </div>
                         </div>
-                        {errors.description && <span className="validation">Type something here</span>}
                     </div>
-
+                    {errors.description && <span className="validation">Type something here</span>}
                 </div>
 
-                <div className="text-center my-2">
-                    <MainButtonInput>Save</MainButtonInput>
-                </div>
+            </div>
+
+            <div className="text-center my-2">
+                <MainButtonInput>Save</MainButtonInput>
+            </div>
         </form>
     )
 }

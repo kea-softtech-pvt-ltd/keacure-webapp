@@ -35,6 +35,7 @@ const MainInputBox =(props)=>{
                 placeholder={props.placeholder}
                 accept={props.accept}
                 label={props.label}
+                checked={props.checked}
             />
             {props.children}
         </div>    

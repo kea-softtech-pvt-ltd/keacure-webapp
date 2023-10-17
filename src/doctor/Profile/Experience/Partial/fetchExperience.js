@@ -7,11 +7,12 @@ import { useState, useEffect } from "react";
 import { setDoctorExperience } from "../../../../recoil/atom/setDoctorExperience";
 import { useRecoilState } from 'recoil';
 import AuthApi from '../../../../services/AuthApi';
+import ExperienceApi from '../../../../services/ExperienceApi';
 function FetchExperience() {
     const { doctorId } = useParams();
     const [fetchExperience, setFetchExperience] = useRecoilState(setDoctorExperience)
     const [activeModal, setActiveModal] = useState()
-    const { fetchExperienceData, removeExperience } = AuthApi();
+    const { fetchExperienceData, removeExperience } = ExperienceApi();
     const handleClose = () => {
         setActiveModal(null)
     }
@@ -57,17 +58,19 @@ function FetchExperience() {
         months += end.getMonth();
         return months <= 0 ? 0 : months;
     }
-    const removeExperienceData = async (experience) => {
+    const removeExperienceData =  (experience) => {
         const id = experience._id
-        await removeExperience(id)
-        getAllExperience()
+         removeExperience(id)
+         .then(()=>{
+             getAllExperience()
+         })
     }
 
     return (
         <>
             {fetchExperience.map((experience, index) => {
                 return (
-                    <div className="whiteBox" key={index}>
+                    <div className="" key={index}>
                         <Link to="#" onClick={e => handleShow(e, index)} className="editbutton"><i className="icon_pencil-edit" title="Edit profile"></i></Link>
                         <Link to="#" onClick={e => removeExperienceData(experience, e)} className="editbutton"><i className="icon-trash-2" title="Delete profile"></i></Link>
                         <Modal show={activeModal === index} onHide={handleClose} id={`experience-${experience._id}`} key={experience._id}>
@@ -95,13 +98,13 @@ function FetchExperience() {
                                 </div>
                                 <div className="col-md-6 ">
                                     <div className="fetchedudata">
-                                        <div>
+                                        <div className='marginLeft'>
                                             <span className="icon-icon">
                                                 <i className="icon_calendar" title="Calender profile"></i>
                                             </span>
                                             <b>End Year</b>
                                         </div>
-                                        <div>
+                                        <div className='marginLeft'>
                                             {new Date(experience.endYear).toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', timeZone: 'Asia/Kolkata' })}
                                         </div>
                                     </div>
@@ -114,18 +117,18 @@ function FetchExperience() {
                                 </div>
                                 <div className="col-md-6 ">
                                     <div className="fetchedudata">
-                                        <div>
+                                        <div className='marginLeft'>
                                             <span className="icon-icon">
                                                 <i className="icon_building" title="Clinic"></i>
                                             </span>
                                             <b>Clinic/Hospital Name</b>
-                                        </div>
-                                        <div>{experience.clinicName}</div>
+                                        </div >
+                                        <div className='marginLeft'>{experience.clinicName}</div>
                                     </div>
                                 </div>
                                 <div className="col-lg-12">
                                     <div className="fetchedudata">
-                                        <lable><b>Description</b> </lable>
+                                        <lable ><b>Description</b> </lable>
                                         <div>{experience.description}</div>
                                     </div>
                                 </div>

@@ -8,6 +8,7 @@ import { setHelperData } from "../recoil/atom/setHelperData";
 import { MainNav } from "../mainComponent/mainNav";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { setDoctorId } from "../recoil/atom/setDoctorId";
+import GetDependent from "./getDependent";
 export default function GetLoginPatientProfile() {
     const [doctorId, setDoctorsId] = useRecoilState(setDoctorId);
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
@@ -33,13 +34,12 @@ export default function GetLoginPatientProfile() {
                     />
                     <div className="container margin_60">
                         <div className="row">
-                            <div className=" col-sm-6">
-                                <div className="box_general_3 cart">
+                            <div className="col-sm-6">
+                                <div className="box_general_4 cart patientDetails">
                                     <FetchPatientInfo patientId={patientId} />
                                 </div>
                             </div>
-                            <DoctorBookingConfirmation doctorId={doctorId} patientId={patientId} />
-                            {/* doctorId={doctorId} */}
+                            <GetDependent doctorId={doctorId} patientId={patientId} />
                         </div>
                     </div>
                 </div>

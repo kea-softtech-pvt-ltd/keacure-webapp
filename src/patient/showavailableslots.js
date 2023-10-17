@@ -24,8 +24,7 @@ const ShowInClinicAppointSlots = (props) => {
     }
     const handleDeleteClose = () => setShowDelete(false)
 
-    const handleSelectedSlot = async (item) => {
-        console.log("====>>>>>>>>>>>>>>>>item", item)
+    const handleSelectedSlot = (item) => {
         const startDate = (selectedDate + " " + item.time)
         const transactionData = {
             "DoctorId": session.doctorId,
@@ -46,19 +45,21 @@ const ShowInClinicAppointSlots = (props) => {
             "status": "Ongoing",
             "payment": "hold"
         }
-        await paymentInfo(transactionData)
+        paymentInfo(transactionData)
             .then((res) => {
-                console.log("===>>>res", res)
             })
         handleDeleteClose()
     }
-    const availableSlots = async () => {
-        const result = await getbookedSlots(session.doctorId, session.clinicId)
-        const data = result.filter((item) => {
-            if (item.date === slotDate)
-                return item
-        })
-        setBookingSlots(data)
+    const availableSlots = () => {
+        getbookedSlots(session.doctorId, session.clinicId)
+            .then((result) => {
+                const data = result.filter((item) => {
+                    if (item.date === slotDate)
+                        return item
+                })
+                setBookingSlots(data)
+            })
+
     }
     return (
         <>

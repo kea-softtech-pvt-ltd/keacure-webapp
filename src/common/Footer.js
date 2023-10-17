@@ -1,15 +1,12 @@
-import { 
-    Link,
-   } from "react-router-dom";
+import { Link} from "react-router-dom";
+import appLogo from '../img/small_wecurify_logo@3x.png'
 export default function Footer(){
     return( 
 	<footer>
 		<div className="container margin_60_35">
 			<div className="row">
 				<div className="col-lg-3 col-md-12">
-					<div>
-						<Link className="footerkea" to="/home" title="Findoctor">KeaCure</Link>
-					</div>
+					<img className='appLogo' src={appLogo} alt="Something Went Wrong" />
 				</div>
 				<div className="col-lg-3 col-md-4">
 					<h5>About</h5>
@@ -35,7 +32,7 @@ export default function Footer(){
 					<h5>Contact with Us</h5>
 					<ul className="contacts">
 						<li><Link to="#"><i className="icon_mobile"></i> + 61 23 8093 3400</Link></li>
-						<li><Link to="mailto:info@test.com"><i className="icon_mail_alt"></i> help@keacure.com</Link></li>
+						<li><Link to="mailto:info@test.com"><i className="icon_mail_alt"></i> help@wecurify.com</Link></li>
 					</ul>
 					<div className="follow_us">
 						<h5>Follow us</h5>

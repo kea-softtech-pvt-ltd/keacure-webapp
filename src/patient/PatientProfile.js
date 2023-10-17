@@ -19,7 +19,6 @@ export default function PatientProfile() {
   //for using tab
   const [value, setValue] = useState(0);
   const [helpersData, setHelpersData] = useRecoilState(setHelperData)
-  console.log("===>>>>>", helpersData)
   const [getDoctorId, setGetDoctorId] = useRecoilState(setDoctorId)
 
   const handleChange = (event, newValue) => {

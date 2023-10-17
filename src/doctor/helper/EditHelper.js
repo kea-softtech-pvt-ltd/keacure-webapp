@@ -7,14 +7,15 @@ import { Link } from 'react-router-dom';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { Wrapper } from '../../mainComponent/Wrapper';
 import UserLinks from '../Dashboard-card/partial/uselinks';
+import HelperApi from '../../services/HelperApi';
 export default function EditHelper() {
-    const { getAccessModule, fetchHelperData, updateHelperData } = AuthApi();
+    const { getAccessModule, fetchHelperData, updateHelperData } = HelperApi();
     const [accessModule, setAccessModule] = useState([]);
     const [selectedModule, setSelectedModule] = useState([]);
     const [checked, setChecked] = useState([]);
     const { helperId } = useParams();
     const [getHelperData, setGetHelperData] = useState([]);
-    const[doctorId, setDoctorId]=useState('')
+    const [doctorId, setDoctorId] = useState('')
     const history = useHistory()
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -26,15 +27,18 @@ export default function EditHelper() {
         fetchHelper();
     }, [])
 
-    const fetchHelper = async () => {
-        const res = await fetchHelperData(helperId)
-        setDoctorId(res[0].doctorId)
-        setGetHelperData(res[0])
-        setSelectedModule(res[0].access_module)
+    const fetchHelper = () => {
+        fetchHelperData(helperId)
+            .then((res) => {
+                setDoctorId(res[0].doctorId)
+                setGetHelperData(res[0])
+                setSelectedModule(res[0].access_module)
+            })
+
 
     }
-    const getAccess = async () => {
-        await getAccessModule()
+    const getAccess = () => {
+        getAccessModule()
             .then((res) => {
                 setAccessModule(res)
             })
@@ -65,7 +69,7 @@ export default function EditHelper() {
         return data.filter(item => (item.moduleId === id))
     }
 
-    const saveData = async (e) => {
+    const saveData = (e) => {
         e.preventDefault();
         const bodyData = {
             "doctorId": getHelperData.doctorId,
@@ -75,10 +79,10 @@ export default function EditHelper() {
             "mobile": getHelperData.mobile,
             "access_module": selectedModule,
         }
-        await updateHelperData(helperId, bodyData)
-        // .then((res) => {
-        // })
-        history.push(`/helper/${getHelperData.doctorId}`)
+        updateHelperData(helperId, bodyData)
+            .then(() => {
+                history.push(`/helper/${getHelperData.doctorId}`)
+            })
     }
     return (
         <Wrapper>
@@ -93,7 +97,7 @@ export default function EditHelper() {
                 </ul>
             </MainNav>
             <div className="row ">
-                <UserLinks doctorId={doctorId}  />
+                <UserLinks doctorId={doctorId} />
                 <div className="common_box">
                     <div className='whiteBox'>
                         <div className="row p-4">

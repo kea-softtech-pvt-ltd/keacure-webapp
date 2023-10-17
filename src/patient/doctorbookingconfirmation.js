@@ -11,23 +11,21 @@ import { setDoctorId } from "../recoil/atom/setDoctorId";
 function DoctorBookingConfirmation(props) {
     const { time } = props;
     const { patientId } = props;
-    const [doctorName, setDoctorName] = useState({});
+    const [doctorName, setDoctorName] = useState([]);
     const [doctorId, setDoctorsId] = useRecoilState(setDoctorId);
-    console.log("===///>>>", doctorId)
     useEffect(() => {
         getDoctorName();
     }, [])
 
     const getDoctorName = async () => {
         const result = await axios.get(`${API}/doctor/${doctorId}`);
-        console.log("===>>", result)
         setDoctorName(result.data[0]);
     }
 
 
     return (
-        <aside className="col-xl-4 col-lg-4" id="sidebar">
-            <div className="box_general_3 booking">
+        <aside className="col-xl-4" id="sidebar">
+            <div className="box_general_3 booking patientDetails">
                 <form>
                     <div className="title">
                         <h3>Your booking</h3>
@@ -55,7 +53,7 @@ function DoctorBookingConfirmation(props) {
                             </div>
                             :
                             <div className="disabled-link">
-                                <Link to="#" className="btn_2 full-width">Confirm booking</Link>
+                                <Link to="#" className="btn_2 full-width">Book Appointment</Link>
                             </div>
                     }
 

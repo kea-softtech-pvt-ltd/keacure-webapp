@@ -1,25 +1,27 @@
-import React, {useState ,useEffect } from "react";
-import { Link , useParams} from "react-router-dom";
-import { DoctorDetailSection2} from "../../patient/doctorDetailsSection2";
-import { AppointmentBookingSection} from "../../patient/appointmentBookingSection";
+import React, { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import { DoctorDetailSection2 } from "../../patient/doctorDetailsSection2";
+import { AppointmentBookingSection } from "../../patient/appointmentBookingSection";
 import { MainNav } from '../../mainComponent/mainNav';
 import { DoctorDetailPersonalInfo } from '../../patient/doctorDetailPersonalInfo';
-import { DoctorDetailsProfessionalStatement} from "../../patient/doctorDetailsProfessionalStatement";
-import { DoctorDetailsEducationalStatement} from "../../patient/doctorDetailsEducationalStatement";
+import { DoctorDetailsProfessionalStatement } from "../../patient/doctorDetailsProfessionalStatement";
+import { DoctorDetailsEducationalStatement } from "../../patient/doctorDetailsEducationalStatement";
 import AuthApi from "../../services/AuthApi";
-export default function DoctorDetail () {
-    const { doctorId} = useParams() ;
-    const [fetchProfileData , setFetchProfileData] = useState([]);
-    const {getAllDrInfo}=AuthApi()
-    useEffect(()=>{
+export default function DoctorDetail() {
+    const { doctorId } = useParams();
+    const [fetchProfileData, setFetchProfileData] = useState([]);
+    const { getDrInfo } = AuthApi()
+    useEffect(() => {
         getDoctorPersonalInfo();
-    },[])
-    
-    async function getDoctorPersonalInfo(){
-        const result = await getAllDrInfo({doctorId}); 
-        setFetchProfileData(result.data[0]);   
+    }, [])
+
+    function getDoctorPersonalInfo() {
+        getDrInfo({ doctorId })
+        .then((result) => {
+            setFetchProfileData(result.data[0]);
+        })
     }
-    return(
+    return (
         <main>
             <div id="breadcrumb">
                 <div className="container">
@@ -30,11 +32,11 @@ export default function DoctorDetail () {
                     </ul>
                 </div>
             </div>
-    
+
             <div className="container margin_60">
                 <div className="row">
                     <div className="col-xl-7 col-lg-7">
-                        <MainNav>  
+                        <MainNav>
                             <ul className="clearfix">
                                 <li><Link to="#section_1" className="active">General info</Link></li>
                                 <li><Link to="#section_2">Reviews</Link></li>
@@ -43,25 +45,25 @@ export default function DoctorDetail () {
                         </MainNav>
                         <div id="section_1">
                             <div className="box_general_3">
-                                <DoctorDetailPersonalInfo educationData={fetchProfileData}/>
-                                {fetchProfileData["educationList"]?
+                                <DoctorDetailPersonalInfo educationData={fetchProfileData} />
+                                {fetchProfileData["educationList"] ?
                                     (<>
-                                        <DoctorDetailsProfessionalStatement educationData={fetchProfileData.educationList}/>
-                                        <DoctorDetailsEducationalStatement educationData={fetchProfileData.educationList}/>
+                                        <DoctorDetailsProfessionalStatement educationData={fetchProfileData.educationList} />
+                                        <DoctorDetailsEducationalStatement educationData={fetchProfileData.educationList} />
                                     </>)
-                                :null}
+                                    : null}
                             </div>
                         </div>
 
                         <div id="section_2">
-                            <DoctorDetailSection2/>
+                            <DoctorDetailSection2 />
                         </div>
                     </div>
-                    {fetchProfileData["clinicList"] || fetchProfileData["ownClinicList"]?
-                       ( <AppointmentBookingSection clinicData={fetchProfileData.clinicList} ownClinicData={fetchProfileData.ownClinicList}/>)
-                    :null}
+                    {fetchProfileData["clinicList"] || fetchProfileData["ownClinicList"] ?
+                        (<AppointmentBookingSection clinicData={fetchProfileData.clinicList} ownClinicData={fetchProfileData.ownClinicList} />)
+                        : null}
                 </div>
             </div>
-	    </main>
+        </main>
     )
 }

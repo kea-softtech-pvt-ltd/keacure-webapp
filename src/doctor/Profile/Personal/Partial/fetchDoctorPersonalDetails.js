@@ -8,17 +8,18 @@ function FetchDoctorPersonalDetails(props) {
 
     const doctorId = props.doctorId;
     const [fetchPersonalData, setFetchPersonalData] = useState([]);
-    console.log("======>>>>>>>>",fetchPersonalData )
 
-    const { getAllDrInfo } = AuthApi();
-    
+    const { getDrInfo } = AuthApi();
+
     useEffect(() => {
         getDoctorPersonalDetails();
     }, [props]);
 
-    const getDoctorPersonalDetails = async () => {
-        const result = await getAllDrInfo({ doctorId });
-        setFetchPersonalData(result[0]);
+    const getDoctorPersonalDetails = () => {
+        getDrInfo({ doctorId })
+            .then((result) => {
+                setFetchPersonalData(result[0]);
+            })
     }
 
     return (

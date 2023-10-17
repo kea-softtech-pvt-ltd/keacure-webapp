@@ -37,6 +37,10 @@ export default function UserLinks(props) {
         e.preventDefault()
         history.push(`/helper/${doctorId}`)
     }
+    function handleReport(e) {
+        e.preventDefault()
+        history.push(`/report/${doctorId}`)
+    }
     return (
 
         <div className="col-sm-2 dashSpace" align='left'>
@@ -166,6 +170,33 @@ export default function UserLinks(props) {
                         </Link>
                     </div>
 
+            }
+            {!helperId ?
+                <div className="dashboard">
+                    <Link
+                        onClick={handleReport}>
+                        <i className="icon_datareport" style={{ fontSize: 20 }} />
+                        <b className="fontSize">  Report</b>
+                    </Link>
+                </div> :
+                <>
+                    {
+                        accessModule.map((item) => {
+                            console.log('---item', item)
+                            return (
+                                (item.moduleName === "Report") === true ?
+                                    <div className="dashboard">
+                                        <Link
+                                            onClick={handleReport}>
+                                            <i className="icon_datareport" style={{ fontSize: 20 }} />
+                                            <b className="fontSize">  Report</b>
+                                        </Link>
+                                    </div>
+                                    : null
+                            )
+                        })
+                    }
+                </>
             }
 
         </div>

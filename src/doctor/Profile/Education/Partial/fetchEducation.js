@@ -8,12 +8,13 @@ import { FetchImages } from "./fetchImages";
 import { useRecoilState } from "recoil";
 import { setDoctorEducation } from "../../../../recoil/atom/setDoctorEducation";
 import AuthApi from '../../../../services/AuthApi';
+import EducationalApi from '../../../../services/EducationalApi';
 
 function FetchEducation() {
     const { doctorId } = useParams();
     const [eduData, setEduData] = useRecoilState(setDoctorEducation);
     const [activeModal, setActiveModal] = useState();
-    const { fetchAllEducations, deleteEducationData } = AuthApi();
+    const { fetchAllEducations, deleteEducationData } = EducationalApi();
     const handleClose = () => {
         setActiveModal(null)
     }
@@ -29,16 +30,18 @@ function FetchEducation() {
         getAllEducations()
     }, [])
 
-    const getAllEducations = async () => {
-        await fetchAllEducations({ doctorId })
+    const getAllEducations = () => {
+        fetchAllEducations({ doctorId })
             .then((res) => {
                 setEduData(res.data);
             })
     }
-    const deleteEducation = async (education) => {
+    const deleteEducation = (education) => {
         const id = education._id
-        await deleteEducationData(id)
-        getAllEducations()
+        deleteEducationData(id)
+            .then(() => {
+                getAllEducations()
+            })
     }
 
     return (
@@ -47,7 +50,7 @@ function FetchEducation() {
                 <>
                     {eduData.map((education, index) => {
                         return (
-                            <div className="whiteBox" key={index}>
+                            <div className="" key={index}>
                                 <Link onClick={e => handleShow(e, index)} to="#" className="editbutton"><i className="icon_pencil-edit" title="Edit profile"></i></Link>
                                 <Link onClick={e => deleteEducation(education, e)} to="#" className="editbutton"><i className="icon-trash-2" title="delete profile"></i></Link>
                                 <Modal show={activeModal === index} onHide={handleClose} id={`education-${education._id}`} key={education._id}>
@@ -59,38 +62,34 @@ function FetchEducation() {
                                     </Modal.Body>
                                 </Modal>
                                 <div className='bottomBorder'>
-                                    <div className="row"  encType='multipart/form-data'>
-                                        <div className="col-md-6">
+                                    <div className="row" encType='multipart/form-data'>
+                                        <div className="col-md-6 ">
                                             <div className="fetchedudata">
                                                 <i className="\e6a0" title="Calender profile"></i>
                                                 <div><b>Doctor Degree</b></div>
                                                 <div>{education.degree}</div>
                                             </div>
                                             <div className="fetchedudata">
-                                                <div>
-                                                    <span className="icon-icon">
-                                                        <i className="icon_building" title="building"></i>
-                                                    </span>
-                                                    <b>Doctor Collage/University</b>
-                                                </div>
+                                                <span className="icon-icon">
+                                                    <i className="icon_building" title="building"></i>
+                                                </span>
+                                                <b>Doctor Collage/University</b>
                                                 <div>{education.collage}</div>
                                             </div>
                                             <div className="fetchedudata">
-                                                <div>
-                                                    <span className="icon-icon">
-                                                        <i className="icon_calendar" title="calendar"></i>
-                                                    </span>
-                                                    <b>Complition Year</b>
-                                                </div>
+                                                <span className="icon-icon">
+                                                    <i className="icon_calendar" title="calendar"></i>
+                                                </span>
+                                                <b>Complition Year</b>
                                                 <div>{education.comYear}</div>
                                             </div>
                                         </div>
-                                        <div className="col-md-6 ">
+                                        <div className="col-md-6">
                                             <div className="fetchedudata">
-                                                <div><b>Specialization</b></div>
-                                                <div>{education.specialization}</div>
+                                                <div className='marginLeft'> <label><b>Specialization</b></label></div>
+                                                <div className='marginLeft'>{education.specialization}</div>
                                             </div>
-                                            <FetchImages imageData={education.document} />
+                                            {/* <FetchImages imageData={education.document} /> */}
                                         </div>
                                     </div>
                                 </div>

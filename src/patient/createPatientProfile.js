@@ -7,10 +7,11 @@ import { MainNav } from "../mainComponent/mainNav";
 import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
 import { useRecoilState } from "recoil";
 import { setHelperData } from "../recoil/atom/setHelperData";
+import { setDoctorId } from "../recoil/atom/setDoctorId";
 
 export default function CreatePatientProfile() {
     const history = useHistory()
-    const { doctorId } = useParams();
+    const [doctorId, setDoctorsId] = useRecoilState(setDoctorId);
     const { patientId } = useParams()
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
 
@@ -35,14 +36,14 @@ export default function CreatePatientProfile() {
                     helperId={helpersData._id}
                     accessModule={helpersData.access_module}
                 />
-                <div className="container my-4">
-                    <div className="row">
-                        <div className="col-xl-8 col-lg-8">
-                            <div className="box_general_3 cart">
+                <div className="container margin_60">
+                    <div className="patientFetch">
+                        <div className="Form-data">
+                            <div className="box_general_3">
                                 <PatientRegistrationForm patientId={patientId} handalChange={handalChange} />
                             </div>
                         </div>
-                        <DoctorBookingConfirmation doctorId={doctorId} />
+                        {/* <DoctorBookingConfirmation doctorId={doctorId} /> */}
                     </div>
                 </div>
             </div>

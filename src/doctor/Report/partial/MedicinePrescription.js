@@ -12,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import AuthApi from '../../../services/AuthApi';
 import GetMedicinePriscription from './GetMedicinePrescription';
+import ReportApi from '../../../services/ReportApi';
 export default function MedicinePrescription(props) {
     //for add new fiels (priscription)
     const { onChange, reportId, appointmentId } = props;
@@ -21,7 +22,7 @@ export default function MedicinePrescription(props) {
     const [selectedSchedule, setSelectedSchedule] = useState([]);
     const [checked, setChecked] = useState([]);
     const [saveMealData, setSaveMealData] = useState([]);
-    const { getMedicine, insertMedicinePrescriptionData } = AuthApi();
+    const { getMedicine, insertMedicinePrescriptionData } = ReportApi();
     const useStyles = makeStyles((theme) => ({
         formControl: {
             margin: theme.spacing(1),
@@ -55,8 +56,8 @@ export default function MedicinePrescription(props) {
         getMedicineData()
     }, []);
 
-    const getMedicineData = async () => {
-        await getMedicine()
+    const getMedicineData = () => {
+        getMedicine()
             .then((res) => {
                 setTabletName(res)
             })
@@ -98,7 +99,7 @@ export default function MedicinePrescription(props) {
         setDuration(e.target.value)
     }
 
-    const saveData = async () => {
+    const saveData = () => {
         const bodyData = {
             "reportId": reportId,
             'patientAppointmentId': appointmentId,
@@ -107,7 +108,7 @@ export default function MedicinePrescription(props) {
             "timing": saveMealData,
             "frequency": selectedSchedule
         }
-        await insertMedicinePrescriptionData(bodyData)
+        insertMedicinePrescriptionData(bodyData)
             .then((res) => {
             })
     }
@@ -165,7 +166,12 @@ export default function MedicinePrescription(props) {
 
                                 <TableCell align="right">
                                     <div className="input">
-                                        <input type="text" value={duration} onChange={handleDurationValue} className="form-control" name="duration" />
+                                        <input
+                                            type="text"
+                                            value={duration}
+                                            onChange={handleDurationValue}
+                                            className="form-control"
+                                            name="duration" />
                                     </div>
                                 </TableCell>
 

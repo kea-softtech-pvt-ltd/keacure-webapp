@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import AuthApi from '../../../services/AuthApi';
+import ReportApi from '../../../services/ReportApi';
 export default function PatientPersonalInfo(props) {
-    const { insertPatientVitalSignsData } = AuthApi()
+    const { insertPatientVitalSignsData } = ReportApi()
     const [changeData, setChangeData] = useState({
         age: "",
         weight: "",
@@ -21,20 +22,20 @@ export default function PatientPersonalInfo(props) {
     }
 
     // const changeD = useRef('');
-    const clearData = () => {
-        setChangeData({
-            age: "",
-            weight: "",
-            height: "",
-            BMI: "",
-            temp: "",
-            bp: "",
-            pulse: "",
-            problem: ""
-        })
+    // const clearData = () => {
+    //     setChangeData({
+    //         age: "",
+    //         weight: "",
+    //         height: "",
+    //         BMI: "",
+    //         temp: "",
+    //         bp: "",
+    //         pulse: "",
+    //         problem: ""
+    //     })
 
-    }
-    const saveData = async (e) => {
+    // }
+    const saveData =  (e) => {
         e.preventDefault();
         const bodyData = {
             "age": changeData.age,
@@ -46,12 +47,12 @@ export default function PatientPersonalInfo(props) {
             "pulse": changeData.pulse,
             "problem": changeData.problem,
         }
-        await insertPatientVitalSignsData({ reportId }, bodyData)
+         insertPatientVitalSignsData({ reportId }, bodyData)
             .then((res) => {
                 //     setSavingData(res)
                 //     // setPatientId(res.patientId)
             })
-        clearData()
+        // clearData()
     }
 
 

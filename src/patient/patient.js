@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import AuthApi from '../services/AuthApi';
 import { MainNav } from '../mainComponent/mainNav';
 import { Icon } from '@material-ui/core';
 import { Wrapper } from '../mainComponent/Wrapper';
@@ -9,19 +8,22 @@ import { setHelperData } from '../recoil/atom/setHelperData';
 import { useRecoilState } from "recoil";
 import PatientList from '../doctor/Dashboard-card/PatientList';
 import { PatientLoginForm } from './patientLoginForm';
+import AppointmentsApi from '../services/AppointmentsApi';
 export default function Patient() {
     const [patientList, setPatientList] = useState([]);
     const [active, setActive] = useState(false)
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
-    const { getPatientListDetails } = AuthApi()
+    const { getPatientListDetails } = AppointmentsApi()
     const { doctorId } = useParams();
 
     useEffect(() => {
         getPatientDetails()
     }, [])
-    async function getPatientDetails() {
-        const result = await getPatientListDetails({ doctorId });
-        patientData(result)
+    function getPatientDetails() {
+        getPatientListDetails({ doctorId })
+            .then((result) => {
+                patientData(result)
+            })
     }
     const patientData = (list, e) => {
         const data = list.filter((patient) => {

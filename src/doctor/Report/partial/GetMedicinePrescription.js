@@ -8,19 +8,22 @@ import {
     TableCell,
     TableBody,
 } from '@material-ui/core';
+import ReportApi from '../../../services/ReportApi';
 
 const GetMedicinePriscription = (props) => {
     const { reportId } = props;
-    const { getMedicinePrescriptionData } = AuthApi();
+    const { getMedicinePrescriptionData } = ReportApi();
     const [showMedicineData, setShowMedicineData] = useState('')
 
     useEffect(() => {
         getMedicineData()
     }, [showMedicineData])
 
-    async function getMedicineData() {
-        const result = await getMedicinePrescriptionData( reportId )
-        setShowMedicineData(result);
+     function getMedicineData() {
+        getMedicinePrescriptionData(reportId)
+            .then((result) => {
+                setShowMedicineData(result);
+            })
 
     }
 

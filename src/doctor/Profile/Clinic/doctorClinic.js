@@ -5,7 +5,7 @@ function DoctorClinic() {
 
     return (
         <>
-            <div className="row">
+            <div className="">
                 <AddDoctorClinicInfo />
 
                 {/* <AddDoctorOwnClinicInfo /> */}

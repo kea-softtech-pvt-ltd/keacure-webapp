@@ -3,6 +3,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete/Autocomplete';
 import React, { useEffect, useState } from 'react';
 import AuthApi from '../../../services/AuthApi';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import AppointmentsApi from '../../../services/AppointmentsApi';
 export default function Payment(props) {
     const { reportId, appointmentId, fees, doctorId } = props;
     const history = useHistory()
@@ -10,7 +11,8 @@ export default function Payment(props) {
     const [patientFees, setPatientFees] = useState(fees);
 
     const [otherFees, setOtherFees] = useState();
-    const { UpdateStatusBookingdata, createPDF, getPatientListDetails } = AuthApi();
+    const { } = AuthApi();
+    const { UpdateStatusBookingdata, createPDF } = AppointmentsApi()
     const mode = [
         {
             "_id": 0,
@@ -48,20 +50,23 @@ export default function Payment(props) {
     }
 
 
-    const getPrescriptionData = async () => {
+    const getPrescriptionData = () => {
         const bodyData = {
             "status": "Completed",
-            "payment": "Done",
+            "payment": "done",
             "medicalReportId": reportId,
             "paymentMethod": mode,
             "total": patientFees
         }
-        await UpdateStatusBookingdata({ appointmentId }, bodyData)
+        UpdateStatusBookingdata({ appointmentId }, bodyData)
             .then((res) => {
                 // setPatientFees(res.fees)
                 history.push(`/dashboard/${res.doctorId}`)
             })
-        await createPDF({ reportId })
+            .then(() => {
+                createPDF({ reportId })
+            })
+
     };
     return (
         <>

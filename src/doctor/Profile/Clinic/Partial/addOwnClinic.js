@@ -8,13 +8,15 @@ import { PlacesAutocompleteInput } from "./placesAutocomplete";
 import { MainInput } from "../../../../mainComponent/mainInput";
 import { MainSelect } from "../../../../mainComponent/mainSelect";
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
-import AuthApi from "../../../../services/AuthApi";
+import ClinicApi from "../../../../services/ClinicApi";
+import EducationalApi from "../../../../services/EducationalApi";
 const AddOwnClinic = (onSubmit) => {
     const { doctorId } = useParams();
     const [coilDoctorOwnClinicInfo, setCoilDoctorOwnClinicInfo] = useRecoilState(setDoctorOwnClinic)
     const [drspecialization, setDrSpecialization] = useState([])
     const [ownClinicInfo, setownClinicInfo] = useState({});
-    const { insertOwnClinics, fetchDrSpecialization } = AuthApi();
+    const { fetchDrSpecialization } = EducationalApi();
+    const { insertOwnClinics } = ClinicApi()
     function handleChange(event) {
         const { name, value } = event.target;
         setownClinicInfo(prevInput => {
@@ -24,7 +26,7 @@ const AddOwnClinic = (onSubmit) => {
             }
         })
     }
-    async function sendownClinicInfo(e) {
+     function sendownClinicInfo(e) {
         e.preventDefault();
         const newClinicData = {
             doctorId: doctorId,
@@ -35,7 +37,7 @@ const AddOwnClinic = (onSubmit) => {
             services: ownClinicInfo.services
         }
         // const res = await axios.post(`${API}/insertownclinic` , newClinicData)
-        await insertOwnClinics(newClinicData)
+         insertOwnClinics(newClinicData)
             .then(res => {
                 setCoilDoctorOwnClinicInfo(coilDoctorOwnClinicInfo.concat(res.data))
                 onSubmit.onSubmit()
@@ -55,9 +57,11 @@ const AddOwnClinic = (onSubmit) => {
     useEffect(() => {
         fetchSpecializations()
     }, [])
-    const fetchSpecializations = async () => {
-        const result = await fetchDrSpecialization();
-        setDrSpecialization(result);
+    const fetchSpecializations = () => {
+        fetchDrSpecialization()
+            .then((result) => {
+                setDrSpecialization(result);
+            })
     }
     return (
         <div className="col-lg-12">

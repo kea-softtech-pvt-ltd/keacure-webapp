@@ -12,6 +12,7 @@ import { updateSession } from '../../../../recoil/atom/setUpdateSession'
 import SetUpdateTime from "./setUpdateTime";
 import AuthApi from "../../../../services/AuthApi";
 import { Icon } from '@material-ui/core';
+import SessionApi from '../../../../services/SessionApi';
 function SetSession(props) {
     const { doctorId } = useParams();
     const { clinicId } = props;
@@ -26,7 +27,7 @@ function SetSession(props) {
     const [Item, setItem] = useState([]);
     const [showDelete, setShowDelete] = useState(false);
 
-    const { allSessions, deleteSlot } = AuthApi()
+    const { allSessions, deleteSlot } = SessionApi()
     const dayList = {
         "sun": "Sunday",
         "mon": "Monday",
@@ -55,7 +56,9 @@ function SetSession(props) {
     };
 
     const handleUpdateClose = () => setUpdateTime(false);
-    const handleDeleteClose = () => setShowDelete(false)
+
+    const handleDeleteClose = () => setShowDelete(false);
+
     const handleUpdate = (e, item) => {
         e.preventDefault();
         setUpdateTime(true);
@@ -69,13 +72,13 @@ function SetSession(props) {
         getAllSession()
     }, [])
 
-    async function getAllSession() {
+    function getAllSession() {
         const dataId = {
             doctorId: doctorId,
             clinicId: clinicId,
             isDeleted: false
         }
-        await allSessions(dataId)
+        allSessions(dataId)
             .then(jsonRes => {
                 setDeleteItem(jsonRes)
                 let byDay = jsonRes.reduce((allDayData, singleDayData) => {
@@ -89,23 +92,26 @@ function SetSession(props) {
 
 
 
-    const deleteSlotData = async (Item) => {
+    const deleteSlotData = (Item) => {
         const deleteData = deleteItem.filter((i) => {
             if (i.day === Item) {
                 return i
             }
         })
         const slotId = deleteData[0]._id
-        await deleteSlot(slotId)
-        getAllSession()
-        handleDeleteClose()
+        deleteSlot(slotId)
+            .then(() => {
+                getAllSession()
+                handleDeleteClose()
+            })
+
     }
     return (
         <div className="container">
             <ul>
                 {daysKeys.map((item, index) =>
-                    <li className="" key={index}>
-                        <div className="my-2 ">
+                    <li key={index}>
+                        <div className="my-2">
                             <div className="row">
                                 <div className="col-md-5">
                                     {dayList[item]}
@@ -150,7 +156,7 @@ function SetSession(props) {
                                                             {fetchTime[item][0].fees}/-
                                                             {/* {(fetchTime[item][0].Appointment === "VideoAppointment") */}
                                                             {/* ? <FaVideo /> */}
-                                                            <FaWalking />
+                                                            {/* <FaWalking /> */}
                                                         </span>
                                                     </Link>
 
@@ -162,7 +168,8 @@ function SetSession(props) {
                                                         Set Session Timing
                                                     </Link>
                                                 </div>
-                                            }</>
+                                            }
+                                        </>
                                     )
                                 }
 
@@ -203,7 +210,6 @@ function SetSession(props) {
                         <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleDeleteClose}>
                             No
                         </Button>
-
                     </Modal.Footer>
                 </Modal>
             </div>

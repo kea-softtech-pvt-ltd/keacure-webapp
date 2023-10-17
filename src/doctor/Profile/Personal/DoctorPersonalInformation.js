@@ -9,19 +9,15 @@ import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
 import { MainInput } from '../../../mainComponent/mainInput';
 import { PlacesAutocompleteInput } from "../Clinic/Partial/placesAutocomplete"
 import { MainRadioGroup } from "../../../mainComponent/mainRadioGroup";
-import { v4 as uuid } from 'uuid';
-
-import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import AuthApi from "../../../services/AuthApi";
+import uuid from "uuid";
+import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 function DoctorPersonalInformation(props) {
     //const { data } = props
     const { doctorId } = useParams();
     const [updateData, setUpdateData] = useState([]);
-    const [doctorPhoto, setDoctorPhoto] = useState(avatarImage);
-    const [selectedImage, setSelectedImage] = useState(null);
     const { addDoctorInformation, submitDoctorInformation } = AuthApi();
-    // const uuidv4 = require('uuid').v4;
     function handleChangeAddress(address) {
         setUpdateData(prevInput => {
             return {
@@ -37,18 +33,13 @@ function DoctorPersonalInformation(props) {
         const { name, value } = event.target;
         setUpdateData({ ...updateData, [name]: value });
     };
-    const handlePhoto = () => {
-        if (selectedImage) {
-            setDoctorPhoto(URL.createObjectURL(selectedImage));
-        }
-    }
     useEffect(() => {
-        handlePhoto()
         addDoctorInformation({ doctorId })
             .then(jsonRes => {
                 setUpdateData(jsonRes)
             });
-    }, [selectedImage])
+    }, [])
+ 
     async function uploadImageAsync(uri) {
         const blob = await new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
@@ -64,27 +55,28 @@ function DoctorPersonalInformation(props) {
             xhr.send(null);
         });
 
-        const fileRef = ref(getStorage(), uuid());
+        const fileRef = ref(getStorage(), uuid.v4());
+
         const result = await uploadBytes(fileRef, blob);
+
         // blob.close();
         return await getDownloadURL(fileRef);
     }
 
-
-
-
     const { formState: { errors } } = useForm();
     const onSubmit = async (e) => {
-        const resultUrl = await uploadImageAsync(doctorPhoto)
+       const resultUrl = await uploadImageAsync(updateData.photo)
+
         const bodyData = {
-            photo: resultUrl,
+           photo: resultUrl,
             name: updateData.name,
             gender: updateData.gender,
             personalEmail: updateData.personalEmail,
             address: updateData.address,
         }
-        await axios.post(`${API}/insertPersonalInfo/${doctorId}`, bodyData)
-        await axios.post(`${API}/insertPersonalInfo/${doctorId}`, bodyData)
+
+        const result=await axios.post(`${API}/insertPersonalInfo/${doctorId}`, bodyData)
+        console.log('=====result', result)
     }
 
     return (
@@ -95,14 +87,14 @@ function DoctorPersonalInformation(props) {
                     <div className="">
                         <div className="col-4">
                             <div className="doctorphoto">
-                                {updateData.photo > 0 ?
+                                {updateData.photo ?
                                     <img
                                         src={updateData.photo}
                                         className="doctorphotoStyle"
                                         alt="doctorPhoto"
                                     />
                                     : <img
-                                        src={doctorPhoto}
+                                        src={avatarImage}
                                         alt="doctorPhoto"
                                         className="doctorphotoStyle"
                                     />
@@ -115,7 +107,10 @@ function DoctorPersonalInformation(props) {
                                 <MainInput
                                     type="file"
                                     accept=".png, .jpg, .jpeg"
-                                    onChange={(e) => setSelectedImage(e.target.files[0])}
+                                    onChange={(e) => {
+                                        console.log(e)
+                                        setUpdateData({...updateData, ['photo']: URL.createObjectURL(e.target.files[0])})
+                                    }}
                                     name="photo">
                                 </MainInput>
                             </div>
@@ -144,7 +139,7 @@ function DoctorPersonalInformation(props) {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-5">
                     <div className="text-left">
                         <label><b>Full Name</b></label>
                     </div>

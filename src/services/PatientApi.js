@@ -1,25 +1,53 @@
 import axios from 'axios';
 import { API } from '../config';
 
-export default function PatientApi(){
+export default function PatientApi() {
 
     const fetchSessionSlotsData = async ({ doctorId, clinicId }) => {
-        const result = await axios.get(`${API}/fetcSessionSlots/${doctorId}/${clinicId}`)
-        return result.data
+        try {
+            const result = await axios.get(`${API}/fetcSessionSlots/${doctorId}/${clinicId}`)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
     };
     const paymentInfo = async (transactionData) => {
-        const result = await axios.post(`${API}/payment/order`, transactionData)
-        return result.data
+        try {
+
+            const result = await axios.post(`${API}/payment/order`, transactionData)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
     };
-    const getbookedSlots = async ( doctorId, clinicId ) => {
-        const result = await axios.get(`${API}/getBookingData/${doctorId}/${clinicId}`)
-        return result.data
+    const getbookedSlots = async (doctorId, clinicId) => {
+        try{
+            const result = await axios.get(`${API}/getBookingData/${doctorId}/${clinicId}`)
+            return result.data
+        }
+        catch(err){
+            return err
+        }
     };
-    return{
-        fetchSessionSlotsData,
-        paymentInfo,
-        getbookedSlots
+
+    const patientDetailsData = async ({ patientId }) => {
+        try{
+            const result = await axios.get(`${API}/patientById/${patientId}`)
+            return result.data
+        }
+        catch(err){
+            return err
+        }
     }
 
-    
+    return {
+        fetchSessionSlotsData,
+        paymentInfo,
+        getbookedSlots,
+        patientDetailsData
+    }
+
+
 }

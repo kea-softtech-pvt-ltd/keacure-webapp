@@ -4,11 +4,12 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import AuthApi from '../../../services/AuthApi';
 import GetLabPrescription from './getLabPrescription';
+import ReportApi from '../../../services/ReportApi';
 
 export default function LabPrescription(props) {
     //for add new files (priscription)
     const { onChange, reportId, appointmentId } = props
-    const { getLabData, insertLabPrescriptionData } = AuthApi()
+    const { getLabData, insertLabPrescriptionData } = ReportApi()
     //for whole data
     const [labTestData, setLabTestData] = useState([]);
     //for Selected data
@@ -17,21 +18,23 @@ export default function LabPrescription(props) {
         getLabTestData();
     }, [])
 
-    const getLabTestData = async () => {
-        const result = await getLabData()
-        setLabTestData(result)
+    const getLabTestData = () => {
+        getLabData()
+            .then((result) => {
+                setLabTestData(result)
+            })
     };
     const handleDataSave = (e, selectedData) => {
         e.preventDefault()
         setSaveLabData(selectedData)
     }
-    const labDataSave = async () => {
+    const labDataSave = () => {
         const bodyData = {
             "reportId": reportId,
             'patientAppointmentId': appointmentId,
             "test_name": saveLabData.test_name
         }
-        await insertLabPrescriptionData(bodyData)
+        insertLabPrescriptionData(bodyData)
         // onChange()
     }
 
@@ -40,7 +43,7 @@ export default function LabPrescription(props) {
             <div className='d-flex' >
                 <div >
                     <div className='align-left w-50'>
-                        <label  className='left'>Test Name</label>
+                        <label className='left'>Test Name</label>
                         <Autocomplete
                             style={{ width: 200 }}
                             id={labTestData._id}

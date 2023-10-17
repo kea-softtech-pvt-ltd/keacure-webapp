@@ -1,24 +1,30 @@
 import React, { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import AuthApi from "../../services/AuthApi";
+import SubscriptionApi from '../../../src/services/SubscriptionApi'
+import { Button, Modal } from "react-bootstrap";
 export default function Subscription() {
-    const { subscription } = AuthApi()
-    const [checked, setChecked] = useState('')
+    const { subscription } = SubscriptionApi()
+    const [show, setShow] = useState(false);
+    const [getSubData, setGetSubData] = useState([])
     const { doctorId } = useParams();
-    const  history = useHistory()
+    const history = useHistory()
 
-    const handlechecked = (event) => {
-        setChecked(event.target.value)
+    const handleShow = (item) => {
+        setShow(true)
+        setGetSubData(item)
     }
+    const handleClose = () => setShow(false)
 
-    const confirmInputHandler = async () => {
+    const confirmInputHandler = (plan) => {
         const bodyData = {
             "doctorId": doctorId,
             "date": new Date(),
-            "plan": checked
+            "plan": plan
         }
-        await subscription(bodyData)
-        history.push(`/editdoctorprofile/${doctorId}`)
+        subscription(bodyData)
+            .then(() => {
+                history.push(`/editdoctorprofile/${doctorId}`)
+            })
 
     }
 
@@ -34,13 +40,6 @@ export default function Subscription() {
                             <div className="card">
                                 <span>
                                     <h4 className=" card-title float-left">Free-Trial</h4>
-                                    <input
-                                        onChange={handlechecked}
-                                        className="float-right radio-input"
-                                        value="free-trial"
-                                        name="checked"
-                                        type="radio"
-                                    />
                                 </span>
                                 <ul className="card-text" >
                                     <li className="card-list">
@@ -60,29 +59,17 @@ export default function Subscription() {
                                         Try Many Features for FREE!
                                     </li>
                                 </ul>
-                                {checked === 'free-trial' ?
-                                    <button
-                                        onClick={confirmInputHandler}
-                                        className="sub-card-btn shadow-none btn btn-primary"
-                                    >Get Started
-                                    </button>
-                                    : <button
-                                        className="btn disabled-card shadow-none disabled">
-                                        Get Started
-                                    </button>
-                                }
+
+                                <button
+                                    onClick={() => handleShow('free-trial')}
+                                    className="sub-card-btn shadow-none btn btn-primary">
+                                    Get Started
+                                </button>
+
                             </div>
                             <div className="card">
                                 <span>
                                     <h4 className=" card-title float-left">6-Month</h4>
-                                    <input
-                                        className="radio-input float-right"
-                                        onChange={handlechecked}
-                                        value="6-month"
-                                        name="checked"
-                                        type="radio"
-
-                                    />
                                 </span>
                                 <ul className="card-text" >
                                     <li className="card-list">
@@ -102,28 +89,17 @@ export default function Subscription() {
                                         Try Many Features for FREE!
                                     </li>
                                 </ul>
-                                {checked === '6-month' ?
-                                    <button
-                                        onClick={confirmInputHandler}
-                                        className="sub-card-btn shadow-none btn btn-primary"
-                                    >Get Started
-                                    </button>
-                                    : <button
-                                        className="btn disabled-card shadow-none disabled">
-                                        Get Started
-                                    </button>
-                                }
+
+                                <button
+                                    onClick={() => handleShow('6-month')}
+                                    className="sub-card-btn shadow-none btn btn-primary">
+                                    Get Started
+                                </button>
+
                             </div>
                             <div className="card">
                                 <span>
                                     <h4 className=" card-title float-left">Yearly</h4>
-                                    <input
-                                        className=" radio-input float-right"
-                                        onChange={handlechecked}
-                                        value="yearly"
-                                        name="checked"
-                                        type="radio"
-                                    />
                                 </span>
                                 <ul className="card-text" >
                                     <li className="card-list">
@@ -143,22 +119,33 @@ export default function Subscription() {
                                         Try Many Features for FREE!
                                     </li>
                                 </ul>
-                                {checked === 'yearly' ?
-                                    <button
-                                        onClick={confirmInputHandler}
-                                        className="sub-card-btn shadow-none  btn btn-primary"
-                                    >Get Started
-                                    </button>
-                                    : <button
-                                        className="btn disabled-card shadow-none disabled">
-                                        Get Started
-                                    </button>
-                                }
+                                <button
+                                    onClick={() => handleShow('yearly')}
+                                    className="sub-card-btn shadow-none  btn btn-primary">
+                                    Get Started
+                                </button>
+
                             </div>
                         </div>
 
                     </div>
                 </div>
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Are You Sure?</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="alert alert-danger">You Want To Get This Subscription. </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="default" className='appColor' onClick={() => confirmInputHandler(getSubData)}>
+                            Yes
+                        </Button>
+                        <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleClose}>
+                            No
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </main>
         </div>
     )

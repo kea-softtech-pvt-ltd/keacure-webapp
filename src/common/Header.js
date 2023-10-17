@@ -2,6 +2,7 @@ import React from "react";
 import { Link, } from "react-router-dom";
 import { doctorIdState } from "../recoil/selector/doctorIdState"
 import { useRecoilValue } from "recoil";
+import appLogo from '../img/small_wecurify_logo@3x.png'
 export default function Header() {
     const doctorId = useRecoilValue(doctorIdState)
 
@@ -17,28 +18,18 @@ export default function Header() {
             <div className="container">
                 <div className="row">
                     <div className="col-lg-3 col-6">
-                        <div id="logo_home">
-                            <h1><Link to="/">KeaCure</Link></h1>
+                        <div id="logo_home" align='left'>
+                            <img className='appLogo' src={appLogo} alt="Something Went Wrong" />
                         </div>
                     </div>
                     <div className="col-lg-9 col-6">
                         <nav id="menu" className="main-menu">
-                            {/* <ul id="top_access">
-                                <li><span><Link to="#"><i className="pe-7s-user"></i></Link></span>
-                                    <ul>
-                                        <Link to="/dashboard">Dashboard</Link> 
-                                        <Link to="/logout">Logout</Link>
-                                    </ul>
-                                </li>
-                            </ul> */}
                             {doctorId ?
-                                <li><span><Link to="/logout">Logout</Link></span></li>
+                                <li className="fontSize"><Link to="/logout"><b>Logout </b></Link></li>
                                 :
-                                <li><span><Link to="/">Login</Link></span></li>
+                                <li className="fontSize"><Link to="/"><b>Login</b></Link></li>
                             }
                             <ul>
-
-                                {/* <li><span><Link to="/loginpatient">Patients</Link></span></li> */}
                             </ul>
                         </nav>
                     </div>

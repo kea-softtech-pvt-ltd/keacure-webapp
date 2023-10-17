@@ -10,6 +10,7 @@ import { setDoctorClinic } from "../../../../recoil/atom/setDoctorClinic";
 import { useRecoilState } from "recoil";
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
 import AuthApi from "../../../../services/AuthApi";
+import ClinicApi from "../../../../services/ClinicApi";
 function AddDoctorClinicInfo() {
     const { doctorId } = useParams();
     //for open addclinic session modal form
@@ -17,16 +18,16 @@ function AddDoctorClinicInfo() {
     const [activeModal, setActiveModal] = useState()
     //fetch clinic list
     const [clinicList, setClinicList] = useRecoilState(setDoctorClinic);
-    const { getAllClinicsData } = AuthApi()
+    const { getAllClinicsData } = ClinicApi()
     useEffect(() => {
         getAllClinics();
     }, [])
 
-    const getAllClinics =async () => {
-        await getAllClinicsData({ doctorId })
-        .then(jsonRes => {
-            setClinicList(jsonRes)
-        });
+    const getAllClinics = () => {
+         getAllClinicsData({ doctorId })
+            .then(jsonRes => {
+                setClinicList(jsonRes)
+            });
     }
     const sessionClose = () => {
         setShowSession(null)
@@ -49,43 +50,45 @@ function AddDoctorClinicInfo() {
     };
 
     return (
-        <div className="col-md-6 ">
-            <div className="box_form">
-                <div className="modalbtn">
-                    <div className="d-flex align-items-top justify-content-center">
-                        <MainButtonInput onClick={handleShow}>ADD CLINIC</MainButtonInput>
-                    </div>
-                    <Modal show={show} onHide={handleClose}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Add Clinic</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <AddClinic onSubmit={onClinicFormSubmit} />
-                        </Modal.Body>
-                    </Modal>
-                </div>
-                {clinicList.map((item, index) => (
-                    <div className="row" id={`clinic-item-${item._id}`} key={item._id}>
-                        <div className="col-md-6 ">
-                            <ul className="orderlist">
-                                <li>{item.clinicName}</li>
-                            </ul>
+        <div className="vitalSign">
+            <div className="col-md-6 ">
+                <div className="box_form">
+                    <div className="modalbtn">
+                        <div className="vitalSign">
+                            <MainButtonInput onClick={handleShow}>ADD CLINIC</MainButtonInput>
                         </div>
-                        <div className="col-md-6 ">
-                            <div className="form-group">
-                                <Link to="#" onClick={(e) => sessionShow(e, index)} className="patientlistlink">{<AccessTimeRoundedIcon style={{ fontSize: 25 }} />}</Link>
+                        <Modal show={show} onHide={handleClose}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Add Clinic</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <AddClinic onSubmit={onClinicFormSubmit} />
+                            </Modal.Body>
+                        </Modal>
+                    </div>
+                    {clinicList.map((item, index) => (
+                        <div className="row" id={`clinic-item-${item._id}`} key={item._id}>
+                            <div className="col-md-6 ">
+                                <ul className="orderlist">
+                                    <li>{item.clinicName}</li>
+                                </ul>
                             </div>
-                            <Modal id={`modal-${item._id}`} show={activeModal === index} onHide={sessionClose}>
-                                <Modal.Header closeButton>
-                                    <Modal.Title>Set Session</Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <SetSession clinicId={item._id} onSubmit={onSessionFormSubmit} />
-                                </Modal.Body>
-                            </Modal>
+                            <div className="col-md-6 ">
+                                <div className="form-group">
+                                    <Link to="#" onClick={(e) => sessionShow(e, index)} className="patientlistlink">{<AccessTimeRoundedIcon style={{ fontSize: 25 }} />}</Link>
+                                </div>
+                                <Modal id={`modal-${item._id}`} show={activeModal === index} onHide={sessionClose}>
+                                    <Modal.Header closeButton>
+                                        <Modal.Title>Set Session</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                        <SetSession clinicId={item._id} onSubmit={onSessionFormSubmit} />
+                                    </Modal.Body>
+                                </Modal>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     )

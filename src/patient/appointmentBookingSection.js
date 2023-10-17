@@ -15,15 +15,17 @@ function AppointmentBookingSection() {
     const [doctorId, setDoctorsId] = useRecoilState(setDoctorId)
     const [clinicData, setClinicData] = useState([])
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
-    const { getAllDrInfo } = AuthApi()
+    const [doctorName, setDoctorName] = useState([])
+    const { getDrInfo } = AuthApi()
 
     useEffect(() => {
         doctorData()
     }, [])
 
-    async function doctorData() {
-        await getAllDrInfo({ doctorId })
+     function doctorData() {
+         getDrInfo({ doctorId })
             .then((res) => {
+                setDoctorName(res[0])
                 setClinicData(res[0].clinicList)
             })
     }
@@ -37,6 +39,8 @@ function AppointmentBookingSection() {
                         </Link>
                     </li>
                     <li className='float-none' style={{ fontSize: 'inherit' }}>Clinic List <FaClinicMedical /> </li>
+                    <li style={{ fontSize: 'inherit' }} className="appColor" align='right'>Dr. {doctorName.name}</li>
+
                 </ul>
             </MainNav>
             <div className='row'>
@@ -46,14 +50,13 @@ function AppointmentBookingSection() {
                     accessModule={helpersData.access_module}
                 />
                 <div className="white-box booking">
-
-                    <div className="form_title  ">
+                    {/* <div className="form_title  "> */}
                         {/* <h3 className="m-2"><FaClinicMedical /> Clinic List</h3> */}
-                    </div>
+                    {/* </div> */}
                     {/* <small><h5><FaClinicMedical /> Clinic List</h5></small> */}
                     <div>
                         {clinicData.map((clinicItem, id) => (            
-                                <MainAccordion key={id}  title={clinicItem.clinicName}>
+                                <MainAccordion key={id} icon={<FaClinicMedical />}   title={clinicItem.clinicName}>
                                     <DoctorAppointmentType clinicData={clinicItem} />
                                 </MainAccordion>
                           

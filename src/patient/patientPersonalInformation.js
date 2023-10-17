@@ -12,7 +12,6 @@ function PatientPersonalInformation(props) {
     const { patientId, onChange } = props;
     //update data
     const [updateData, setUpdateData] = useState([])
-    console.log("========>>>>", updateData)
     const [patientPhoto, setPatientPhoto] = useState(avatarImage);
     useEffect(() => {
         getPatientPersonalInfo();
@@ -53,13 +52,14 @@ function PatientPersonalInformation(props) {
     }
     //location 
     const handleChangeAddress = (address) => {
+        console.log("===>>>address", address)
         setUpdateData(prevInput => {
             return {
                 ...prevInput,
                 ['address']: address
             }
         })
-        setValue("address", address)
+        setValue('address', address)
     }
 
     //for doctor profilephoto onChange method
@@ -266,8 +266,7 @@ function PatientPersonalInformation(props) {
                     </MainInput>
                     <div align='left'><b>City & Area</b></div>
                     <MainInput
-                        value={updateData.address}
-                        onChange={handleChangeAddress}>
+                        onChange={(e)=>handleChangeAddress(e.target.value)}>
                     </MainInput>
                     {errors.address && <span className="validation">Please enter your location</span>}
                 </div>

@@ -1,6 +1,4 @@
-import { API } from "../../../../config";
 import React from 'react';
-import axios from "axios";
 import DateFnsUtils from '@date-io/date-fns';
 import TextField from "@material-ui/core/TextField";
 import { useState } from "react";
@@ -12,7 +10,7 @@ import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
 import { MainInput, MainInputBox } from '../../../../mainComponent/mainInput';
 import { MainSelect } from '../../../../mainComponent/mainSelect';
 import moment from 'moment';
-
+import SessionApi from '../../../../services/SessionApi';
 function SetUpdateTime(props) {
     // const { doctorId, clinicId, ItemId } = useParams();
     const { update } = props;
@@ -22,7 +20,7 @@ function SetUpdateTime(props) {
     const [selectedSlots, setSelectedSlots] = useState([])
     const [sessionTime, setSessionTime] = useState(update[0])
     const [showSelectedSlots, setShowSelectedSlots] = useState([])
-
+    const { updateSessionData } = SessionApi()
     const handleInputChange = event => {
         const { name, value } = event.target;
         setSessionTime({ ...sessionTime, [name]: value });
@@ -34,13 +32,13 @@ function SetUpdateTime(props) {
         const { name, value } = event.target;
         if (event.target.checked) {
             temp.push({
-                slotTime: value,
-                status: 0
+                time: value,
+                status: false
             })
 
         } else {
             let time = temp.filter(function (item, index) {
-                return (item.slotTime !== value)
+                return (item.time !== value)
             })
             temp = time
         }
@@ -81,7 +79,7 @@ function SetUpdateTime(props) {
         setSelectedSlots(allTimes)
     }
 
-    async function handleTimeClick(e) {
+     function handleTimeClick(e) {
         e.preventDefault();
         const setTimeData = {
             clinicId: clinicId,
@@ -90,12 +88,12 @@ function SetUpdateTime(props) {
             toTime: moment(sessionTime.toTime).format("HH:mm"),
             timeSlot: sessionTime.timeSlot,
             showSelectedSlots: showSelectedSlots,
-            Appointment: sessionTime.Appointment,
+            Appointment: 'InClinicAppointment',
             fees: sessionTime.fees,
             day: day
         }
         if (sessionTime.fromTime < sessionTime.toTime) {
-            const res = await axios.post(`${API}/setSession/${doctorId}/${clinicId}/${_id}`, setTimeData)
+            updateSessionData(_id, setTimeData)
                 .then((response) => {
                     let setTime = {}
                     setTime[day] = [response.data]
@@ -122,6 +120,7 @@ function SetUpdateTime(props) {
                             onChange={handleInputChange}
                             value={sessionTime.timeSlot} >
                             <option selected="selected" value={20}> 20 min</option>
+                            <option value={15}> 15 min</option>
                             <option value={30}> 30 min</option>
                         </MainSelect>
                     </div>
@@ -163,7 +162,7 @@ function SetUpdateTime(props) {
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                 <TimePicker
                                     renderInput={(props) => <TextField {...props} />}
-                                    value={updateSessionTime.toTime}
+                                    value={sessionTime.toTime}
                                     ampm={false}
                                     name="toTime"
                                     minutesStep={5}
@@ -190,33 +189,22 @@ function SetUpdateTime(props) {
                     </section>
                     : null}
 
-                <div className="options">
+                {/* <div className="options">
                     <div className="row">
-                        {/* <div className="col-lg-6">
-                            <MainInputBox
-                                type="radio"
-                                name="Appointment"
-                                value={updateSessionTime.Appointment}
-                                onChange={handleInputChange}
-                                label="Video Appointment">
-                                <b>Video Appointment</b>
-                            </MainInputBox>
-                        </div> */}
-
                         <div className="col-lg-6 p-2 ml-2">
                             <MainInputBox
                                 type="radio"
                                 name="Appointment"
-                                value={updateSessionTime.Appointment}
+                                value={sessionTime.Appointment}
                                 onChange={handleInputChange}
                                 label="In Clinic Appointment">
                                 <b  className="p-2">In Clinic Appointment</b>
                             </MainInputBox>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
-                <div className="text-center add_top_30">
+                <div className="text-center p-2 add_top_30">
                     <MainButtonInput>Set</MainButtonInput>
                 </div>
             </form>

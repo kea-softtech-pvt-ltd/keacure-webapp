@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
-import { API } from "../../../../config";
-import axios from 'axios';
 import { useState } from "react";
 import { setDoctorExperience } from "../../../../recoil/atom/setDoctorExperience";
 import { useRecoilState } from 'recoil';
 import { MainButtonInput } from '../../../../mainComponent/mainButtonInput';
 import { MainInput } from '../../../../mainComponent/mainInput';
 import { MainMuiPickers } from '../../../../mainComponent/MainMuiPickers';
-import AuthApi from '../../../../services/AuthApi';
+import ExperienceApi from '../../../../services/ExperienceApi';
 function EditExperience(props) {
     const { ExId } = props;
     const [error, setError] = useState('')
@@ -15,7 +13,7 @@ function EditExperience(props) {
     const [endYear, setEndYear] = useState(new Date())
     const [coilExperienceData, setCoilExperienceData] = useRecoilState(setDoctorExperience)
     const [updateExperience, setUpdateExperience] = useState({});
-    const { editExperienceData, getAllExperienceData } = AuthApi()
+    const { editExperienceData, getAllExperienceData } = ExperienceApi()
     //for all input onchange method
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -34,8 +32,8 @@ function EditExperience(props) {
         getAllExperience()
     }, [])
 
-    const getAllExperience =  () => {
-         getAllExperienceData({ ExId })
+    const getAllExperience = () => {
+        getAllExperienceData({ ExId })
             .then(jsonRes => {
                 setStartYear(jsonRes.startYear)
                 setEndYear(jsonRes.endYear)
@@ -43,7 +41,7 @@ function EditExperience(props) {
             });
     }
 
-    async function UpdateData(e) {
+    function UpdateData(e) {
         e.preventDefault();
         e.target.reset()
         const updateExperienceData = {
@@ -58,7 +56,7 @@ function EditExperience(props) {
         }
         else {
             // const res = await axios.post(`${API}/updateExperience/${ExId}` , updateExperienceData)
-            await editExperienceData({ ExId }, updateExperienceData)
+            editExperienceData({ ExId }, updateExperienceData)
                 .then((res) => {
                     const editExperience = coilExperienceData.map(function (e, index) {
                         if (ExId === e._id) {

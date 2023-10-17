@@ -5,8 +5,9 @@ import AuthApi from "../../services/AuthApi";
 import { useHistory } from "react-router-dom";
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
+import HelperApi from "../../services/HelperApi";
 export default function LoginDoctor() {
-    const { loginHelperData } = AuthApi()
+    const { loginHelperData } = HelperApi()
     const [loginData, setLoginData] = useState({});
     const [isError, setIsError] = useState(false);
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
@@ -16,13 +17,13 @@ export default function LoginDoctor() {
         const { name, value } = e.target;
         setLoginData({ ...loginData, [name]: value });
     }
-    const saveData = async (e) => {
+    const saveData =  (e) => {
         e.preventDefault();
         const bodyData = {
             "username": loginData.username,
             "password": loginData.password
         }
-        await loginHelperData(bodyData)
+         loginHelperData(bodyData)
             .then((res) => {
                 setHelpersData(res)
                 if (res === null) {

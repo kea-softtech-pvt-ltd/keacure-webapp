@@ -5,9 +5,10 @@ import AuthApi from '../../../services/AuthApi';
 // import { useHistory } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import Payment from './Payment';
+import ReportApi from '../../../services/ReportApi';
 export default function NewFollowup(props) {
     //for datepicker
-    const { insertNewFollowUpDate, getMedicineReport } = AuthApi()
+    const { insertNewFollowUpDate, getMedicineReport } = ReportApi()
     const { onChange, reportId, fees } = props
     const [date, setDate] = useState();
     const [appointmentId, setAppointmentId] = useState()
@@ -22,18 +23,18 @@ export default function NewFollowup(props) {
     const addDatePicker = (date) => {
         setDate(date)
     }
-    const addNode = async () => {
+    const addNode =  () => {
         const bodyData = {
             "new_follow_up": date,
         }
-        await insertNewFollowUpDate({ reportId }, bodyData)
+         insertNewFollowUpDate({ reportId }, bodyData)
     }
     useEffect(() => {
         medicalReportData()
     }, [])
 
-    const medicalReportData = async () => {
-        await getMedicineReport({ reportId })
+    const medicalReportData =  () => {
+         getMedicineReport({ reportId })
             .then((res) => {
                 setDoctorId(res[0].doctorId)
                 setAppointmentId(res[0].patientAppointmentId)

@@ -8,15 +8,11 @@ import { ShowInClinicAppointSlots } from "./showavailableslots";
 function ShowDoctorInClinicAppointment(props) {
     const { setSessions, clinicId, doctorId } = props;
     const [showSlot, setShowSlot] = useState([]);
-    console.log("==showSlot=>>>", showSlot)
     const [dayMonth, setDayMonth] = useState([]);
-    console.log("==dayMonth=>>>", dayMonth)
     const [error, setError] = useState([]);
     const [session, setSession] = useState([])
-    console.log("==session=>>>", session)
     const [date, setDate] = useState([])
     const [selectedDate, setSelectedDate] = useState([])
-    console.log("==selectedDate=>>>", selectedDate)
     const handleChange = (item) => {
         const session = setSessions.filter((slotsData) => {
             if ((item.day) === (slotsData.day)) {

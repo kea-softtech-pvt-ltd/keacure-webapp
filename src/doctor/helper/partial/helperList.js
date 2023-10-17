@@ -1,29 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
-import AuthApi from "../../../services/AuthApi";
 import { Button, Card, Modal } from 'react-bootstrap';
-//for table
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2)
-    },
-    table: {
-        minWidth: 650,
-    },
+import HelperApi from '../../../services/HelperApi';
 
-}));
 
 export default function HelperList(props) {
     const { doctorId } = props;
     const [helperList, setHelperList] = useState([]);
     const [showDelete, setShowDelete] = useState(false);
     const [details, setDetails] = useState([])
-    const { removeHelper, getHelper } = AuthApi();
+    const { removeHelper, getHelper } = HelperApi();
     // const { state } = useLocation()
     // const { doctorId } = state.data
 
@@ -35,22 +22,28 @@ export default function HelperList(props) {
         setShowDelete(true)
     }
     const handleDeleteClose = () => setShowDelete(false)
-    
+
     async function getHelperDetails() {
-        const result = await getHelper(doctorId);
-        const data = result.filter((helper) => {
-            if (helper.isDeleted === false) {
-                return helper
-            }
-        })
-        setHelperList(data)
+        getHelper(doctorId)
+            .then((result) => {
+                const data = result.filter((helper) => {
+                    if (helper.isDeleted === false) {
+                        return helper
+                    }
+                })
+                setHelperList(data)
+            })
+
     }
 
-    async function deleteHelper(details) {
+    function deleteHelper(details) {
         const id = details._id;
-        await removeHelper(id)
-        getHelperDetails()
-        handleDeleteClose()
+        removeHelper(id)
+            .then(() => {
+                getHelperDetails()
+                handleDeleteClose()
+            })
+
     }
 
     return (

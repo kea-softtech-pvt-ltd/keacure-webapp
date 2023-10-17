@@ -7,7 +7,7 @@ import { setDoctorId } from "../../../recoil/atom/setDoctorId";
 import AuthApi from "../../../services/AuthApi";
 
 function ShowLoginOtp(props) {
-    const { otp, _id, isLoggedIn } = props.loginData;
+    const { otp, _id, isSubscribed } = props.loginData;
     const getOTP = otp
     const [id, setId] = useRecoilState(setDoctorId)
     const { loginOtp } = AuthApi()
@@ -15,15 +15,15 @@ function ShowLoginOtp(props) {
     const [loginotp, setLoginOtp] = useState('');
     const [errormessage, setErrormessage] = useState(false);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit =  (e) => {
         e.preventDefault();
-        await loginOtp({ getOTP, _id }) //axios call
+         loginOtp({ getOTP, _id }) //axios call
             .then(response => {
                 setId(_id)
                 if (getOTP !== loginotp) {
                     setErrormessage("Please enter correct OTP");
                 } else {
-                    if (isLoggedIn === true) {
+                    if (isSubscribed === true) {
                         history.push(`/dashboard/${_id}`)
                     } else {
                         history.push(`/subscription/${_id}`);

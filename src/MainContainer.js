@@ -34,6 +34,8 @@ import Helper from "./doctor/helper/Helper";
 import EditHelper from './doctor/helper/EditHelper';
 import Patient from "./patient/patient";
 import { AppointmentBookingSection } from "./patient/appointmentBookingSection";
+import GetDependent from "./patient/getDependent";
+import Report from "./doctor/Dashboard-card/Report";
 function MainContainer() {
   return (
     <Switch>
@@ -85,9 +87,9 @@ function MainContainer() {
       <Route path="/editdoctorprofile/:doctorId">
         <EditDoctorProfile />
       </Route>
-      {/* <Route exact path="/patientlist/:doctorId">
+      <Route exact path="/patientlist/:doctorId">
         <PatientList />
-      </Route> */}
+      </Route>
       {/* <Route path="/patientlist">
             <OPD/>
           </Route> */}
@@ -151,8 +153,14 @@ function MainContainer() {
       <Route path="/patient/:doctorId">
         <Patient />
       </Route>
+      {/* <Route path="/getdependent/:patientId">
+        <GetDependent />
+      </Route> */}
       <Route path="/appointmentbookingsection/:patientId">
         <AppointmentBookingSection />
+      </Route>
+      <Route path="/report/:doctorId">
+        <Report/>
       </Route>
     </Switch>
   )

@@ -21,6 +21,7 @@ import { Wrapper } from '../../mainComponent/Wrapper';
 import UserLinks from '../Dashboard-card/partial/uselinks';
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
+import ReportApi from '../../services/ReportApi';
 
 function TabPanel(props) {
     const { children, value, index } = props;
@@ -51,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PatientMedicalReport() {
     const { reportId } = useParams();
-    const { getMedicineReport } = AuthApi()
+    const { getMedicineReport } = ReportApi()
     const classes = useStyles();
     const [doctorId, setDoctorId] = useState([]);
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
@@ -70,8 +71,8 @@ export default function PatientMedicalReport() {
     function changeTab(tabIndex) {
         setValue(tabIndex);
     }
-    const medicalReportData = async () => {
-        await getMedicineReport({ reportId })
+    const medicalReportData = () => {
+        getMedicineReport({ reportId })
             .then((res) => {
                 setDoctorId(res[0].doctorId)
             })

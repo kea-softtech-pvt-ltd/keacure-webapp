@@ -59,7 +59,7 @@ export default function EditDoctorProfile() {
                     helperId={helpersData._id}
                     accessModule={helpersData.access_module}
                 />
-                <div className="common_box">
+                <div className="whiteBox">
                     <MainTabs
                         value={tabValue}
                         onChange={handleChange}

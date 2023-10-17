@@ -9,6 +9,8 @@ import { MainInput } from "../../../../mainComponent/mainInput";
 import { PlacesAutocompleteInput } from "./placesAutocomplete";
 import { MainSelect } from "../../../../mainComponent/mainSelect";
 import AuthApi from "../../../../services/AuthApi";
+import ClinicApi from "../../../../services/ClinicApi";
+import EducationalApi from "../../../../services/EducationalApi";
 const AddClinic = (props) => {
     const { doctorId } = useParams();
     const [coilDoctorClinicData, setCoilDoctorClinicData] = useRecoilState(setDoctorClinic)
@@ -16,15 +18,18 @@ const AddClinic = (props) => {
     //for fetch specialization data
     const [drspecialization, setDrSpecialization] = useState([])
     const [clinicInfo, setClinicInfo] = useState([]);
-    const { insertClinicData, fetchDrSpecialization } = AuthApi()
+    const { fetchDrSpecialization } = EducationalApi()
+    const { insertClinicData } = ClinicApi()
     //for fetch specialization data
     useEffect(() => {
         fetchSpecializations()
     }, [])
 
-    const fetchSpecializations = async () => {
-        const result = await fetchDrSpecialization();
-        setDrSpecialization(result);
+    const fetchSpecializations = () => {
+        fetchDrSpecialization()
+            .then((result) => {
+                setDrSpecialization(result);
+            })
     }
 
     function handleChange(event) {
@@ -37,7 +42,7 @@ const AddClinic = (props) => {
         })
     }
 
-    async function sendClinicInfo(e) {
+     function sendClinicInfo(e) {
         e.preventDefault();
         const newClinicData = {
             doctorId: doctorId,
@@ -48,10 +53,10 @@ const AddClinic = (props) => {
             services: clinicInfo.services
         }
         // const res = await axios.post(`${API}/insertclinic`, newClinicData)
-        
-       await insertClinicData({newClinicData} )
-        .then((res) => {
-            setCoilDoctorClinicData(coilDoctorClinicData.concat(res.data))
+
+         insertClinicData({ newClinicData })
+            .then((res) => {
+                setCoilDoctorClinicData(coilDoctorClinicData.concat(res.data))
                 props.onSubmit()
             });
     }
@@ -60,7 +65,7 @@ const AddClinic = (props) => {
         setClinicInfo(prevInput => {
             return {
                 ...prevInput,
-                ['address'] : address
+                ['address']: address
             }
         })
     }

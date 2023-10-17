@@ -1310,6 +1310,26 @@ a.box_cat_home {
 .radius {
 	border-radius: 5px;
 }
+.box_general_4{
+	background-color: #fff;
+	padding: 30px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid #e1e8ed;
+}
+.buttonPatient {
+	width: 200px;
+	align-items: center;
+	
+}
+.Form-data {
+	width:85%;
+}
+.patientFetch {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 #reccomended,
 #staff {
 	margin-top: 40px;
@@ -3284,8 +3304,10 @@ a.btn_2 .full-width {
 .patientDataStyle {
 	text-align: left;
 	padding-top: 15px;
-	margin-left: 40px;
-	margin-bottom: 40px;
+	font-size: medium;
+}
+.patientDetails {
+	height: 100%;
 }
 @media (max-width: 991px) {
 	#secondary_nav ul li:last-child {
@@ -3400,6 +3422,7 @@ input[type="radio"]:checked + label {
 	background: #3f4079;
 	color: hsla(215, 0%, 100%, 1);
 }
+
 .fetchedudata {
 	text-align: left;
 	padding-bottom: 12px;
@@ -3895,7 +3918,15 @@ ul.treatments.checkout li strong {
 }
 .viewMreport {
 	padding: 10px;
-	margin-top: 20px;
+	/* margin-top: 20px; */
+}
+.whatsApp{
+	background: #0000;
+	margin: 12px;
+}
+.appLogo{
+	height: 50px;
+	width:140px;
 }
 .vitalSign {
 	display: flex;
@@ -4457,7 +4488,17 @@ input[type="file"]::-webkit-file-upload-button {
 	padding: 20px;
 }
 .whiteBox {
+	padding: 20px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	margin-bottom: 15px;
+	margin-top: 4px;
+	width: 1130px;
+	border: 1px solid #e1e8ed;
 	background-color: white;
+}
+.marginLeft {
+	margin-left: 20px;
 }
 .addiconbutton {
 	border: none;
@@ -4728,9 +4769,14 @@ a.box_feat_about h3 {
 	/* margin: 2px 4px; */
 }
 .form-textarea {
-	height: 120px;
+	height: 115px;
 	margin-top: 10px;
 	width: 350px;
+}
+.clinicHistory {
+	color: #000;
+	font-size: large;
+	margin-top: 10px;
 }
 .medicine-checkbox {
 	font-size: 100px;
@@ -4834,13 +4880,14 @@ textarea.form-control {
 .dashboard {
 	/* margin: 20px; */
 	border-bottom: 1px solid #e1e8ed;
+	padding: 15px 15px;
 }
 .doctorProfile {
 	height: 75%;
 	width: 75%;
 }
-.dashSpace {
-	line-height: 65px;
+.dashspace {
+	width: 100%;
 }
 .wrapperCss {
 	width: 100%;
@@ -4856,8 +4903,8 @@ textarea.form-control {
 	border: 1px solid #e1e8ed;
 }
 .MuiAccordionDetails-root reset-style {
-    display: flex;
-    padding: 8px 16px 16px;
+	display: flex;
+	padding: 8px 16px 16px;
 }
 .white-box {
 	background-color: white;

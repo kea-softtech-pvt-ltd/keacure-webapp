@@ -1,15 +1,13 @@
 import React from 'react';
-import { API } from "../../../../config";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from 'axios';
 import { useRecoilState } from "recoil";
 import { setDoctorEducation } from "../../../../recoil/atom/setDoctorEducation";
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
 import { MainInput } from '../../../../mainComponent/mainInput';
 import { MainSelect } from '../../../../mainComponent/mainSelect';
-import AuthApi from '../../../../services/AuthApi';
+import EducationalApi from '../../../../services/EducationalApi';
 function AddDoctorEducation(props) {
     const { doctorId } = useParams();
     const [updateEduData, setUpdateEduData] = useState([])
@@ -18,7 +16,7 @@ function AddDoctorEducation(props) {
     const [drspecialization, setDrSpecialization] = useState([])
     // for fetch degrees
     const [drdegrees, setDrdegrees] = useState([])
-    const { fetchDrSpecialization, fetchDrDegree } = AuthApi();
+    const { AddEducation, fetchDrSpecialization, fetchDrDegree } = EducationalApi()
     useEffect(() => {
         fetchSpecializations()
         fetchDegrees()
@@ -29,15 +27,15 @@ function AddDoctorEducation(props) {
         register("document", { required: true });
     }, [])
 
-    const fetchSpecializations = async () => {
-        await fetchDrSpecialization()
+    const fetchSpecializations = () => {
+        fetchDrSpecialization()
             .then((res) => {
                 setDrSpecialization(res);
             })
     }
 
-    const fetchDegrees = async () => {
-        await fetchDrDegree()
+    const fetchDegrees = () => {
+        fetchDrDegree()
             .then((res) => {
                 setDrdegrees(res);
             })
@@ -53,18 +51,18 @@ function AddDoctorEducation(props) {
         x++;
     }
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
-    const onSubmit = async (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
         const bodyData = {
-            doctorId:doctorId,
+            doctorId: doctorId,
             degree: updateEduData.degree,
             collage: updateEduData.collage,
             comYear: updateEduData.comYear,
             specialization: updateEduData.specialization,
             // document:document
         }
-        await axios.post(`${API}/education`, bodyData)
-        .then(res => {
+        AddEducation(bodyData)
+            .then(res => {
                 setCoilDoctorEducationData(coilDoctorEducationData.concat(res.data))
                 props.recordAdded();
             });
@@ -87,9 +85,9 @@ function AddDoctorEducation(props) {
         // <form onSubmit={handleSubmit(onSubmit)} className="my-4" encType='multipart/form-data'>
         <>
             <div className="row">
-                <div className="col-md-6 my-2">
-                <div className=" text-left">
-                    <label><b>Doctor Degree</b></label>
+                <div className="col-md-6">
+                    <div className=" text-left">
+                        <label><b>Doctor Degree</b></label>
                     </div>
                     <MainSelect
                         name="degree"
@@ -102,7 +100,7 @@ function AddDoctorEducation(props) {
                     </MainSelect>
                     {errors.degree && <span className="validation">Please Select your degree</span>}
                     <div className=" text-left">
-                    <label><b>Doctor Collage/University</b></label>
+                        <label><b>Doctor Collage/University</b></label>
                     </div>
                     <MainInput
                         type="text"
@@ -111,8 +109,26 @@ function AddDoctorEducation(props) {
                         placeholder="Doctor Collage/University">
                         {errors.collage && <span className="validation">Please enter your collage</span>}
                     </MainInput>
+
+                </div>
+
+                <div className="col-md-6 ">
                     <div className=" text-left">
-                    <label><b>Complition Year</b></label>
+                        <label><b>Specialization</b></label>
+                    </div>
+                    <MainSelect
+                        name="specialization"
+                        className="form-control"
+                        value={updateEduData.specialization}
+                        onChange={handleInputChange}>
+                        <option>Select specialization</option>
+                        {drspecialization.map((spe, index) => (
+                            <option className="form-control" key={index}>{spe.specialization}</option>
+                        ))}
+                    </MainSelect>
+                    {errors.specialization && <span className="validation">Please select your specialization</span>}
+                    <div className=" text-left">
+                        <label><b>Complition Year</b></label>
                     </div>
                     <MainSelect
                         name="comYear"
@@ -124,25 +140,8 @@ function AddDoctorEducation(props) {
                         ))}
                     </MainSelect>
                     {errors.comYear && <span className="validation">Please select your complition Year</span>}
-                </div>
-
-                <div className="col-md-6 my-2">
-                <div className=" text-left">
-                    <label><b>Specialization</b></label>
-                    </div>
-                    <MainSelect
-                        name="specialization"
-                        className="form-control"
-                        value={updateEduData.specialization}
-                        onChange={handleInputChange}>
-                        <option>Select specialization</option>
-                        {drspecialization.map((spe, index) => (
-                            <option key={index}>{spe.specialization}</option>
-                        ))}
-                    </MainSelect>
-                    {errors.specialization && <span className="validation">Please select your specialization</span>}
-                    <div className=" text-left">
-                    <label><b>Qualification Document Photo</b></label>
+                    {/* <div className=" text-left">
+                        <label><b>Qualification Document Photo</b></label>
                     </div>
                     <MainInput
                         type="file"
@@ -151,7 +150,7 @@ function AddDoctorEducation(props) {
                         placeholder="Document"
                         multiple={true}>
                         {errors.document && <span className="validation">Please upload your document</span>}
-                    </MainInput>
+                    </MainInput> */}
                 </div>
             </div>
             <div className="text-center add_top_30">

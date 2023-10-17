@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import AuthApi from '../../../services/AuthApi';
+import ReportApi from '../../../services/ReportApi';
 
 export default function GetLabPrescription(props) {
     const { reportId } = props;
-    const { getLabTestPrescriptionData } = AuthApi();
+    const { getLabTestPrescriptionData } = ReportApi();
     const [getLabData, setGetLabData] = useState([]);
     useEffect(() => {
         getLabPrescriptionData()
     }, [getLabData])
 
-    const getLabPrescriptionData = async () => {
-        const result = await getLabTestPrescriptionData({ reportId })
-        setGetLabData(result)
+    const getLabPrescriptionData = () => {
+        getLabTestPrescriptionData({ reportId })
+            .then((result) => {
+                setGetLabData(result)
+            })
     }
     return (
         <>
             {
                 getLabData.length > 0 ?
-                    <div className='whiteBox viewMreport' align='left'>
+                    <div className=' viewMreport' align='left'>
                         <h6> <b>List of Test</b></h6>
                         {getLabData && getLabData.map((item, i) => {
                             return (

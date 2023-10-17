@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { MainInput } from '../../../mainComponent/mainInput';
 import { MainButtonInput } from '../../../mainComponent/mainButtonInput';
-import AuthApi from '../../../services/AuthApi';
 import { useHistory } from 'react-router-dom';
+import HelperApi from '../../../services/HelperApi';
 export default function AddHelper(props) {
-    const { getAccessModule, createHelper } = AuthApi();
+    const { getAccessModule, createHelper } = HelperApi();
     const [accessModule, setAccessModule] = useState([]);
     const [selectedModule, setSelectedModule] = useState([]);
     const [checked, setChecked] = useState([]);
@@ -21,8 +21,8 @@ export default function AddHelper(props) {
         getAccess();
     }, [])
 
-    const getAccess = async () => {
-        await getAccessModule()
+    const getAccess =  () => {
+         getAccessModule()
             .then((res) => {
                 setAccessModule(res)
             })
@@ -48,7 +48,7 @@ export default function AddHelper(props) {
         }
         setSelectedModule(module)
     }
-    const saveData = async (e) => {
+    const saveData =  (e) => {
         const bodyData = {
             "doctorId": props.doctorId,
             "username": loginData.username,
@@ -58,10 +58,10 @@ export default function AddHelper(props) {
             "access_module": selectedModule,
         }
 
-        await createHelper(bodyData)
-            .then((res) => {
+         createHelper(bodyData)
+            .then(() => {
+                history.push(`/dashboard/${props.doctorId}`)
             })
-        history.push(`/dashboard/${props.doctorId}`)
     }
     return (
         <div className='whiteBox'>

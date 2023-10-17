@@ -1,28 +1,31 @@
 import React, { useState } from 'react'
 import AuthApi from '../../../services/AuthApi';
+import ReportApi from '../../../services/ReportApi';
 // import { CKEditor } from 'ckeditor4-react'
 export default function Investigation(props) {
 
     const [investigation_note, setInvestigation_note] = useState("")
     const { onChange, reportId } = props;
-    const { insertInvestigationNote } = AuthApi();
+    const { insertInvestigationNote } = ReportApi();
 
     const handleChange = (event) => {
         // const { name, value } = event.target;
         setInvestigation_note(event.target.value);
     }
-    const addNode = async () => {
+    const addNode = () => {
         const bodyData = {
             "investigation_note": investigation_note,
         }
-        await insertInvestigationNote({ reportId }, bodyData)
-        onChange()
+        insertInvestigationNote({ reportId }, bodyData)
+            .then(()=>{
+                onChange()
+            })
     }
 
     return (
         <div >
             <div className=" container mx-3" >
-                <span  className='left mb-2'>Doctor Investigation Note</span>
+                <span className='left mb-2'>Doctor Investigation Note</span>
                 <textarea
                     type="text"
                     value={investigation_note}

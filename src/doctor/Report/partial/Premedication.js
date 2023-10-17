@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import AuthApi from "../../../services/AuthApi";
+import ReportApi from "../../../services/ReportApi";
 export default function Premedication(props) {
-    const { insertPremedicationNote } = AuthApi();
+    const { insertPremedicationNote } = ReportApi();
     const [premedication_note, setPremedication_note] = useState('')
     const { onChange, reportId } = props;
     const handleChange = (event) => {
         setPremedication_note(event.target.value);
     }
 
-    const addNode = async () => {
+    const addNode = () => {
         const bodyData = {
             "premedication_note": premedication_note,
         }
-        await insertPremedicationNote({ reportId }, bodyData)
-        onChange()
+        insertPremedicationNote({ reportId }, bodyData)
+            .then(() => {
+                onChange()
+            })
     }
     return (
         <>

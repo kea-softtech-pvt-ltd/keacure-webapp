@@ -4,24 +4,27 @@ import { useParams } from 'react-router-dom';
 import GetMedicinePriscription from './partial/GetMedicinePrescription';
 import GetLabPrescription from './partial/getLabPrescription';
 import GetSymptomsData from './partial/GetSymptomsData';
+import PatientApi from '../../services/PatientApi';
+import ReportApi from '../../services/ReportApi';
 
 export default function ViewMedicalReport() {
     const { reportId } = useParams();
-    const { getMedicineReport, patientDetailsData } = AuthApi();
+    const { getMedicineReport } = ReportApi();
+    const { patientDetailsData } = PatientApi()
     const [viewData, setViewData] = useState([]);
     const [patientDetails, setPatientDetails] = useState([]);
 
     useEffect(() => {
         getMedicineReportData()
 
-    },[])
+    }, [])
 
-    const getMedicineReportData = async () => {
-        await getMedicineReport({ reportId })
-            .then(async (res) => {
+    const getMedicineReportData = () => {
+        getMedicineReport({ reportId })
+            .then((res) => {
                 setViewData(res[0])
                 const patientId = res[0].patientId
-                await patientDetailsData({ patientId })
+                patientDetailsData({ patientId })
                     .then((response) => {
                         setPatientDetails(response[0])
                     })

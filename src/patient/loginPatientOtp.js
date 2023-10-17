@@ -10,7 +10,6 @@ import axios from "axios";
 function LoginPatientOtp(props) {
     const history = useHistory()
     const { patientId, loginData } = props;
-    console.log("loginData",loginData)
     const [patientData, setPatientData] = useRecoilState(setNewPatientId);
     const [loginotp, setLoginOtp] = useState('');
     const getOTP= loginData.otp
