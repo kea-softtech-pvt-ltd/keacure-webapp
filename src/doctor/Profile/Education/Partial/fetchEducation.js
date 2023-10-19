@@ -2,16 +2,13 @@ import React from 'react';
 import { EditEducation } from "./EditEducation";
 import { Link } from "react-router-dom";
 import { Modal } from "react-bootstrap";
-import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { FetchImages } from "./fetchImages";
 import { useRecoilState } from "recoil";
 import { setDoctorEducation } from "../../../../recoil/atom/setDoctorEducation";
-import AuthApi from '../../../../services/AuthApi';
 import EducationalApi from '../../../../services/EducationalApi';
 
-function FetchEducation() {
-    const { doctorId } = useParams();
+function FetchEducation(props) {
+    const { doctorId } = props;
     const [eduData, setEduData] = useRecoilState(setDoctorEducation);
     const [activeModal, setActiveModal] = useState();
     const { fetchAllEducations, deleteEducationData } = EducationalApi();
@@ -21,7 +18,9 @@ function FetchEducation() {
     const handleShow = (e, index) => {
         setActiveModal(index)
     };
-
+    // let data = [1, 2, 3, 4, 5]
+    // data.splice(2, 1, "three")
+    // console.log("===>>>data", data)
     const EditData = () => {
         handleClose(true);
     };
@@ -34,14 +33,13 @@ function FetchEducation() {
         fetchAllEducations({ doctorId })
             .then((res) => {
                 setEduData(res.data);
+
             })
     }
     const deleteEducation = (education) => {
         const id = education._id
         deleteEducationData(id)
-            .then(() => {
-                getAllEducations()
-            })
+        getAllEducations()
     }
 
     return (
@@ -76,18 +74,21 @@ function FetchEducation() {
                                                 <b>Doctor Collage/University</b>
                                                 <div>{education.collage}</div>
                                             </div>
-                                            <div className="fetchedudata">
-                                                <span className="icon-icon">
-                                                    <i className="icon_calendar" title="calendar"></i>
-                                                </span>
-                                                <b>Complition Year</b>
-                                                <div>{education.comYear}</div>
-                                            </div>
+
                                         </div>
                                         <div className="col-md-6">
                                             <div className="fetchedudata">
-                                                <div className='marginLeft'> <label><b>Specialization</b></label></div>
-                                                <div className='marginLeft'>{education.specialization}</div>
+                                                <div > <label><b>Specialization</b></label></div>
+                                                <div >{education.specialization}</div>
+                                            </div>
+                                            <div className="fetchedudata">
+                                                <div>
+                                                    <span className="icon-icon">
+                                                        <i className="icon_calendar" title="calendar"></i>
+                                                    </span>
+                                                    <b>Complition Year</b>
+                                                </div>
+                                                <div>{education.comYear}</div>
                                             </div>
                                             {/* <FetchImages imageData={education.document} /> */}
                                         </div>

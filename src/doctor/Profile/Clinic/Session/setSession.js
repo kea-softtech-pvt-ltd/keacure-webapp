@@ -22,12 +22,11 @@ function SetSession(props) {
     const [updateTime, setUpdateTime] = useState(false);
     const [fetchTime, setfetchTime] = useRecoilState(SetDoctorSessionTiming);
     const [fetchUpdateTime, setfetchUpdateTime] = useRecoilState(updateSession);
-    const [updateItem, setUpdateItem] = useState();
+    const [updateItem, setUpdateItem] = useState([]);
     const [deleteItem, setDeleteItem] = useState([]);
     const [Item, setItem] = useState([]);
     const [showDelete, setShowDelete] = useState(false);
-
-    const { allSessions, deleteSlot } = SessionApi()
+    const { allSessions, deleteSlot, getUpdatedSessionSlotData } = SessionApi()
     const dayList = {
         "sun": "Sunday",
         "mon": "Monday",
@@ -88,8 +87,8 @@ function SetSession(props) {
                 setfetchTime(byDay)
                 setfetchUpdateTime(byDay)
             });
-    }
 
+    }
 
 
     const deleteSlotData = (Item) => {

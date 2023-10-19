@@ -133,7 +133,7 @@ function AddDoctorProfessionalExperience(props) {
                                 name="description"
                                 value={experienceData.description}
                                 onChange={handleInputChange}
-                                className="form-textarea p-2 "
+                                className="textarea-ex form-control p-2 "
                                 placeholder="description"
                             />
                         </div>

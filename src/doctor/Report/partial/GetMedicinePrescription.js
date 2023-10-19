@@ -7,6 +7,7 @@ import {
     TableRow,
     TableCell,
     TableBody,
+    Paper,
 } from '@material-ui/core';
 import ReportApi from '../../../services/ReportApi';
 
@@ -19,7 +20,7 @@ const GetMedicinePriscription = (props) => {
         getMedicineData()
     }, [showMedicineData])
 
-     function getMedicineData() {
+    function getMedicineData() {
         getMedicinePrescriptionData(reportId)
             .then((result) => {
                 setShowMedicineData(result);
@@ -31,8 +32,8 @@ const GetMedicinePriscription = (props) => {
         <>
             {showMedicineData.length > 0 ?
                 <>
-                    <label><h6><b className='mx-2' >Medicine</b></h6></label>
-                    <div className='whiteBox viewMreport'>
+                    {/* <label><h6><b className='mx-2' >Medicine</b></h6></label> */}
+                    <div className='whiteBox'>
                         <TableContainer>
                             <Table>
                                 <TableHead>

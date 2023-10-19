@@ -2,9 +2,9 @@ import axios from "axios";
 import { API } from "../config";
 
 export default function EducationalApi() {
-    const AddEducation = (bodyData) => {
+    const AddEducation = async (bodyData) => {
         try {
-            const result = axios.post(`${API}/education`, bodyData)
+            const result = await axios.post(`${API}/education`, bodyData)
             return result.data
         }
         catch (err) {

@@ -14,10 +14,10 @@ import uuid from "uuid";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 function DoctorPersonalInformation(props) {
-    //const { data } = props
-    const { doctorId } = useParams();
+    const { data, doctorId } = props
+    // const { doctorId } = useParams();
     const [updateData, setUpdateData] = useState([]);
-    const { addDoctorInformation, submitDoctorInformation } = AuthApi();
+    const { addDoctorInformation } = AuthApi();
     function handleChangeAddress(address) {
         setUpdateData(prevInput => {
             return {
@@ -33,50 +33,51 @@ function DoctorPersonalInformation(props) {
         const { name, value } = event.target;
         setUpdateData({ ...updateData, [name]: value });
     };
+    
     useEffect(() => {
         addDoctorInformation({ doctorId })
             .then(jsonRes => {
                 setUpdateData(jsonRes)
             });
     }, [])
- 
-    async function uploadImageAsync(uri) {
-        const blob = await new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            xhr.onload = function () {
-                resolve(xhr.response);
-            };
-            xhr.onerror = function (e) {
-                console.log(e);
-                reject(new TypeError("Network request failed"));
-            };
-            xhr.responseType = "blob";
-            xhr.open("GET", uri, true);
-            xhr.send(null);
-        });
 
-        const fileRef = ref(getStorage(), uuid.v4());
+    // async function uploadImageAsync(uri) {
+    //     const blob = await new Promise((resolve, reject) => {
+    //         const xhr = new XMLHttpRequest();
+    //         xhr.onload = function () {
+    //             resolve(xhr.response);
+    //         };
+    //         xhr.onerror = function (e) {
+    //             console.log(e);
+    //             reject(new TypeError("Network request failed"));
+    //         };
+    //         xhr.responseType = "blob";
+    //         xhr.open("GET", uri, true);
+    //         xhr.send(null);
+    //     });
 
-        const result = await uploadBytes(fileRef, blob);
+    //     const fileRef = ref(getStorage(), uuid.v4());
 
-        // blob.close();
-        return await getDownloadURL(fileRef);
-    }
+    //     const result = await uploadBytes(fileRef, blob);
+
+    //     // blob.close();
+    //     return await getDownloadURL(fileRef);
+    // }
 
     const { formState: { errors } } = useForm();
-    const onSubmit = async (e) => {
-       const resultUrl = await uploadImageAsync(updateData.photo)
+    const onSubmit = async () => {
+        // const resultUrl = await uploadImageAsync(updateData.photo)
+          
+                const bodyData = {
+                    // photo: resultUrl,
+                    name: updateData.name,
+                    gender: updateData.gender,
+                    personalEmail: updateData.personalEmail,
+                    address: updateData.address,
+                }
 
-        const bodyData = {
-           photo: resultUrl,
-            name: updateData.name,
-            gender: updateData.gender,
-            personalEmail: updateData.personalEmail,
-            address: updateData.address,
-        }
-
-        const result=await axios.post(`${API}/insertPersonalInfo/${doctorId}`, bodyData)
-        console.log('=====result', result)
+                const result = await axios.post(`${API}/insertPersonalInfo/${doctorId}`, bodyData)
+                console.log('=====result', result)
     }
 
     return (
@@ -109,7 +110,7 @@ function DoctorPersonalInformation(props) {
                                     accept=".png, .jpg, .jpeg"
                                     onChange={(e) => {
                                         console.log(e)
-                                        setUpdateData({...updateData, ['photo']: URL.createObjectURL(e.target.files[0])})
+                                        setUpdateData({ ...updateData, ['photo']: URL.createObjectURL(e.target.files[0]) })
                                     }}
                                     name="photo">
                                 </MainInput>
@@ -176,7 +177,7 @@ function DoctorPersonalInformation(props) {
                 <MainButtonInput onClick={onSubmit}> Save</MainButtonInput>
             </div>
             <div className="text-right add_top_30">
-                <MainButtonInput onClick={props.data}>Next</MainButtonInput>
+                <MainButtonInput onClick={data}>Next</MainButtonInput>
             </div>
             {/* </form> */}
         </>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import DateFnsUtils from '@date-io/date-fns';
 import TextField from "@material-ui/core/TextField";
 import { useState } from "react";
@@ -18,14 +18,23 @@ function SetUpdateTime(props) {
     const [error, setError] = useState("");
     const [updateSessionTime, setUpdateSessionTime] = useRecoilState(updateSession)
     const [selectedSlots, setSelectedSlots] = useState([])
-    const [sessionTime, setSessionTime] = useState(update[0])
+    const [sessionTime, setSessionTime] = useState([])
     const [showSelectedSlots, setShowSelectedSlots] = useState([])
-    const { updateSessionData } = SessionApi()
+    const { updateSessionData, getUpdatedSessionSlotData } = SessionApi()
     const handleInputChange = event => {
         const { name, value } = event.target;
         setSessionTime({ ...sessionTime, [name]: value });
     };
+    useEffect(() => {
+        UpdatedData()
+    }, [])
 
+    const UpdatedData = () => {
+        getUpdatedSessionSlotData(_id)
+            .then((res) => {
+                setSessionTime(res[0])
+            })
+    }
     const handleChange = (event) => {
         let temp = []
         temp = showSelectedSlots
@@ -79,7 +88,7 @@ function SetUpdateTime(props) {
         setSelectedSlots(allTimes)
     }
 
-     function handleTimeClick(e) {
+    function handleTimeClick(e) {
         e.preventDefault();
         const setTimeData = {
             clinicId: clinicId,
@@ -95,15 +104,15 @@ function SetUpdateTime(props) {
         if (sessionTime.fromTime < sessionTime.toTime) {
             updateSessionData(_id, setTimeData)
                 .then((response) => {
+                    console.log("===>>>", response)
                     let setTime = {}
-                    setTime[day] = [response.data]
+                    setTime[day] = [response]
                     setUpdateSessionTime({ ...updateSessionTime, ...setTime })
                     props.onSubmit();
                 });
         } else {
             setError("please enter valid time")
         }
-
     }
 
     return (

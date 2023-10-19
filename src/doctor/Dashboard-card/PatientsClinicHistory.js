@@ -43,8 +43,8 @@ export default function PatientsClinicHistory() {
                     if (patientData.status === "Completed") {
                         return result;
                     }
-                    setPatientHistoryData(data)
                 })
+                setPatientHistoryData(data)
             })
     }
 

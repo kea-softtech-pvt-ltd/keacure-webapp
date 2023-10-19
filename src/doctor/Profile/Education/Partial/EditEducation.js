@@ -124,16 +124,7 @@ function EditEducation(props) {
                         placeholder="Doctor Collage/University">
                     </MainInput>
 
-                    <label><b>Complition Year</b></label>
-                    <MainSelect
-                        value={updateEducation.comYear}
-                        name="comYear"
-                        onChange={handleInputChange}>
-                        <option value="" >Select Year</option>
-                        {options.map((option, index) => (
-                            <option key={index}>{option}</option>
-                        ))}
-                    </MainSelect>
+
                 </div>
 
                 <div className="col-md-6">
@@ -147,7 +138,17 @@ function EditEducation(props) {
                             <option key={index}>{special.specialization}</option>
                         ))}
                     </MainSelect>
-                    <label><b>Qualification document Photo</b></label>
+                    <label><b>Complition Year</b></label>
+                    <MainSelect
+                        value={updateEducation.comYear}
+                        name="comYear"
+                        onChange={handleInputChange}>
+                        <option value="" >Select Year</option>
+                        {options.map((option, index) => (
+                            <option key={index}>{option}</option>
+                        ))}
+                    </MainSelect>
+                    {/* <label><b>Qualification document Photo</b></label>
                     <MainInput
                         type="file"
                         name="document"
@@ -179,7 +180,7 @@ function EditEducation(props) {
                                 )
                             })}
                         </div>
-                    </MainInput>
+                    </MainInput> */}
                 </div>
             </div>
 

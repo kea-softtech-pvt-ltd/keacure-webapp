@@ -50,7 +50,7 @@ export default function ViewMedicalReport() {
                         <b>Patient Information</b>
                     </h6>
                     <div className="whiteBox" >
-                        <div className="row mx-4 viewMreport">
+                        <div className="row viewMreport">
                             <div className="col-md-6 " align='left'>
                                 <div><b className='viewMreport fontSize'>{patientDetails.name}</b></div>
                                 <div><b className='viewMreport'>Email :</b>{patientDetails.email}</div>
@@ -123,7 +123,7 @@ export default function ViewMedicalReport() {
                         </div>
                     </div>
 
-                    <div>
+                    <div className='pr-2'>
                         <GetMedicinePriscription reportId={reportId} />
                     </div>
 

@@ -9,9 +9,11 @@ import { MainInput } from '../../../../mainComponent/mainInput';
 import { MainSelect } from '../../../../mainComponent/mainSelect';
 import EducationalApi from '../../../../services/EducationalApi';
 function AddDoctorEducation(props) {
-    const { doctorId } = useParams();
+    const { doctorId } = props;
     const [updateEduData, setUpdateEduData] = useState([])
+    console.log("===>>>", updateEduData)
     const [coilDoctorEducationData, setCoilDoctorEducationData] = useRecoilState(setDoctorEducation)
+    console.log("coilDoctorEducationData---", coilDoctorEducationData)
     //for fetch specialization data
     const [drspecialization, setDrSpecialization] = useState([])
     // for fetch degrees
@@ -62,24 +64,25 @@ function AddDoctorEducation(props) {
             // document:document
         }
         AddEducation(bodyData)
-            .then(res => {
-                setCoilDoctorEducationData(coilDoctorEducationData.concat(res.data))
+            .then((res) => {
+                console.log("====bodyData>>>", res)
+                setCoilDoctorEducationData(coilDoctorEducationData.concat(res))
                 props.recordAdded();
             });
     }
 
     //for all input onchange method
-    const handleInputChange = event => {
+    const handleInputChange = (event) => {
         const { name, value } = event.target;
         setUpdateEduData({ ...updateEduData, [name]: value });
         setValue(name, value)
     };
 
     //for document onChange methods
-    const onFileChange = (e) => {
-        setUpdateEduData({ ...updateEduData, document: e.target.files })
-        setValue("document", e.target.files)
-    }
+    // const onFileChange = (e) => {
+    //     setUpdateEduData({ ...updateEduData, document: e.target.files })
+    //     setValue("document", e.target.files)
+    // }
 
     return (
         // <form onSubmit={handleSubmit(onSubmit)} className="my-4" encType='multipart/form-data'>

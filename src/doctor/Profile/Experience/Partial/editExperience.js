@@ -43,7 +43,7 @@ function EditExperience(props) {
 
     function UpdateData(e) {
         e.preventDefault();
-        e.target.reset()
+        // e.target.reset()
         const updateExperienceData = {
             doctorId: updateExperience.doctorId,
             clinicName: updateExperience.clinicName,
@@ -60,7 +60,7 @@ function EditExperience(props) {
                 .then((res) => {
                     const editExperience = coilExperienceData.map(function (e, index) {
                         if (ExId === e._id) {
-                            return res.data
+                            return res
                         } else {
                             return e
                         }
@@ -71,7 +71,6 @@ function EditExperience(props) {
                 })
         }
         // setUpdateExperience({})
-
     }
 
     function manipulateExperience(data) {
@@ -95,53 +94,54 @@ function EditExperience(props) {
     }
 
     return (
-        <form onSubmit={UpdateData} id={"updateData"}>
-            <div className="row">
-                <div className="col-md-6 ">
-                    <i className="icon-calendar:before" title="Edit profile"></i>
+        <>
+         {/* <form onSubmit={UpdateData} id={"updateData"}> */}
+                <div className="row">
+                    <div className="col-md-6 ">
+                        <i className="icon-calendar:before" title="Edit profile"></i>
 
-                    <MainMuiPickers
-                        name="startYear"
-                        value={startYear}
-                        onChange={handleStartYearChange}>Start Year
-                    </MainMuiPickers>
-                </div>
-                <div className="col-md-6 ">
-
-                    <MainMuiPickers
-                        name="startYear"
-                        value={endYear}
-                        onChange={handleEndYearChange}>End Year
-                    </MainMuiPickers>
-                </div>
-                <div className="col-md-12 ">
-                    <label><b>Clinic/Hospital Name</b></label>
-                    <MainInput
-                        type="text"
-                        name="clinicName"
-                        value={updateExperience.clinicName}
-                        onChange={handleInputChange}
-                        placeholder="clinic name">
-                    </MainInput>
-                </div>
-                <div className="col-lg-12">
-                    <div className="textarea">
-                        <label><b>Description</b></label>
-                        <textarea
+                        <MainMuiPickers
+                            name="startYear"
+                            value={startYear}
+                            onChange={handleStartYearChange}>Start Year
+                        </MainMuiPickers>
+                    </div>
+                    <div className="col-md-6 ">
+                        <MainMuiPickers
+                            name="startYear"
+                            value={endYear}
+                            onChange={handleEndYearChange}>End Year
+                        </MainMuiPickers>
+                    </div>
+                    <div className="col-md-12 ">
+                        <label><b>Clinic/Hospital Name</b></label>
+                        <MainInput
                             type="text"
-                            name="description"
-                            value={updateExperience.description}
+                            name="clinicName"
+                            value={updateExperience.clinicName}
                             onChange={handleInputChange}
-                            className="form-control"
-                            placeholder="description"
-                        />
+                            placeholder="clinic name">
+                        </MainInput>
+                    </div>
+                    <div className="col-lg-12">
+                        <div className="textarea">
+                            <label><b>Description</b></label>
+                            <textarea
+                                type="text"
+                                name="description"
+                                value={updateExperience.description}
+                                onChange={handleInputChange}
+                                className="form-control textarea-ex"
+                                placeholder="description"
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="text-center add_top_30">
-                <MainButtonInput>Save</MainButtonInput>
-            </div>
-        </form>
+                <div className="text-center add_top_30">
+                    <MainButtonInput onClick={UpdateData}>Save</MainButtonInput>
+                </div>
+         {/* </form> */}
+        </>
     )
 }
 export { EditExperience }
