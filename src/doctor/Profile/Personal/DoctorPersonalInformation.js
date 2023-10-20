@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { API } from "../../../config";
-import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import React from 'react';
 import axios from 'axios';
@@ -15,7 +14,6 @@ import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 function DoctorPersonalInformation(props) {
     const { data, doctorId } = props
-    // const { doctorId } = useParams();
     const [updateData, setUpdateData] = useState([]);
     const { addDoctorInformation } = AuthApi();
     function handleChangeAddress(address) {
@@ -33,7 +31,7 @@ function DoctorPersonalInformation(props) {
         const { name, value } = event.target;
         setUpdateData({ ...updateData, [name]: value });
     };
-    
+
     useEffect(() => {
         addDoctorInformation({ doctorId })
             .then(jsonRes => {
@@ -67,22 +65,19 @@ function DoctorPersonalInformation(props) {
     const { formState: { errors } } = useForm();
     const onSubmit = async () => {
         // const resultUrl = await uploadImageAsync(updateData.photo)
-          
-                const bodyData = {
-                    // photo: resultUrl,
-                    name: updateData.name,
-                    gender: updateData.gender,
-                    personalEmail: updateData.personalEmail,
-                    address: updateData.address,
-                }
 
-                const result = await axios.post(`${API}/insertPersonalInfo/${doctorId}`, bodyData)
-                console.log('=====result', result)
+        const bodyData = {
+            // photo: resultUrl,
+            name: updateData.name,
+            gender: updateData.gender,
+            personalEmail: updateData.personalEmail,
+            address: updateData.address,
+        }
+        const result = await axios.post(`${API}/insertPersonalInfo/${doctorId}`, bodyData)
     }
 
     return (
         <>
-            {/* <form onSubmit={handleSubmit(onSubmit)} encType='multipart/form-data'> */}
             <div className="row">
                 <div className="col-md-6 ">
                     <div className="">
@@ -123,7 +118,6 @@ function DoctorPersonalInformation(props) {
                         </div>
                     </div>
                     <div className="">
-                        {/* <div className="form-group"> */}
                         <div className="col-6">
                             <MainRadioGroup
                                 name="gender"
@@ -136,7 +130,6 @@ function DoctorPersonalInformation(props) {
                                 label2="other">
                             </MainRadioGroup>
                             {errors.gender && <span className="validation">Please Select your gender</span>}
-                            {/* </div> */}
                         </div>
                     </div>
                 </div>
@@ -179,7 +172,6 @@ function DoctorPersonalInformation(props) {
             <div className="text-right add_top_30">
                 <MainButtonInput onClick={data}>Next</MainButtonInput>
             </div>
-            {/* </form> */}
         </>
     )
 }

@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { API } from "../../../../config";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { setDoctorClinic } from "../../../../recoil/atom/setDoctorClinic";
 import { useRecoilState } from "recoil";
@@ -8,7 +6,6 @@ import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
 import { MainInput } from "../../../../mainComponent/mainInput";
 import { PlacesAutocompleteInput } from "./placesAutocomplete";
 import { MainSelect } from "../../../../mainComponent/mainSelect";
-import AuthApi from "../../../../services/AuthApi";
 import ClinicApi from "../../../../services/ClinicApi";
 import EducationalApi from "../../../../services/EducationalApi";
 const AddClinic = (props) => {

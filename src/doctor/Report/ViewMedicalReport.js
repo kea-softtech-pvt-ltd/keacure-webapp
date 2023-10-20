@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import AuthApi from '../../services/AuthApi';
 import { useParams } from 'react-router-dom';
 import GetMedicinePriscription from './partial/GetMedicinePrescription';
 import GetLabPrescription from './partial/getLabPrescription';

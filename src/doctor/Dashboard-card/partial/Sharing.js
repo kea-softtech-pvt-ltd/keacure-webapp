@@ -5,7 +5,6 @@ import AppointmentsApi from '../../../services/AppointmentsApi';
 export default function Sharing(props) {
     const { downloadPrescription } = AppointmentsApi()
     const { reportId } = props
-    console.log("reportId", reportId)
     const [shareUrl, setShareUrl] = useState([])
     useEffect(() => {
         SharePdf()

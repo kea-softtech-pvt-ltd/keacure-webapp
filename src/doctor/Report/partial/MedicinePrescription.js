@@ -10,7 +10,6 @@ import Paper from '@material-ui/core/Paper';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import AuthApi from '../../../services/AuthApi';
 import GetMedicinePriscription from './GetMedicinePrescription';
 import ReportApi from '../../../services/ReportApi';
 export default function MedicinePrescription(props) {

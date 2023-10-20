@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import AuthApi from "../../../services/AuthApi";
 import PatientProfile from "../../../img/profile.png"
 import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import PatientApi from "../../../services/PatientApi";

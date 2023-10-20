@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from "react-router-dom";
 import moment from 'moment';
-import AuthApi from "../../services/AuthApi";
 import { MainNav } from '../../mainComponent/mainNav';
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";

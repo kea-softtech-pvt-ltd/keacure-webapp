@@ -11,15 +11,17 @@ import { MainInput, MainInputBox } from '../../../../mainComponent/mainInput';
 import { MainSelect } from '../../../../mainComponent/mainSelect';
 import moment from 'moment';
 import SessionApi from '../../../../services/SessionApi';
+
 function SetUpdateTime(props) {
-    // const { doctorId, clinicId, ItemId } = useParams();
-    const { update } = props;
     const { doctorId, clinicId, _id, day } = props.update[0];
     const [error, setError] = useState("");
     const [updateSessionTime, setUpdateSessionTime] = useRecoilState(updateSession)
+    const [fromTime, setFromTime] = useState();
+    console.log("fromTime-------", fromTime)
+    const [toTime, setToTime] = useState();
+    console.log("toTime-------", toTime)
     const [selectedSlots, setSelectedSlots] = useState([])
     const [sessionTime, setSessionTime] = useState([])
-    const [showSelectedSlots, setShowSelectedSlots] = useState([])
     const { updateSessionData, getUpdatedSessionSlotData } = SessionApi()
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -33,70 +35,56 @@ function SetUpdateTime(props) {
         getUpdatedSessionSlotData(_id)
             .then((res) => {
                 setSessionTime(res[0])
+                setFromTime(res[0].fromTime)
+                setToTime(res[0].toTime)
+                setSelectedSlots(res[0].showSelectedSlots)
+                setSelectedSlots(checkTimeSlot(res[0].fromTime, res[0].toTime, res[0].timeSlot))
             })
     }
-    const handleChange = (event) => {
-        let temp = []
-        temp = showSelectedSlots
-        const { name, value } = event.target;
-        if (event.target.checked) {
-            temp.push({
-                time: value,
-                status: false
-            })
 
-        } else {
-            let time = temp.filter(function (item, index) {
-                return (item.time !== value)
-            })
-            temp = time
+    const checkTimeSlot = (fromTime, toTime, interval) => {
+        const startTime = moment(fromTime, "HH:mm");
+        const endTime = moment(toTime, "HH:mm")
+        const allTimes = [];
+        //Loop over the times - only pushes time with 20 or 30 minutes interval
+        while (startTime < endTime) {
+            allTimes.push({ time: startTime.format("HH:mm"), status: true }); //Push times
+            startTime.add(interval, 'minutes');//Add interval of selected minutes
         }
-        setShowSelectedSlots(temp)
+        return allTimes
     }
 
     const handleFromTimeSelection = (time) => {
-        setSessionTime(sessionTime => {
-            return {
-                ...sessionTime,
-                ['fromTime']: time
-            }
-        })
+        setFromTime(time);
+    }
+    const handleToTimeSelection = (time) => {
+        setToTime(time);
+        setSelectedSlots(checkTimeSlot(fromTime, moment(time).format('HH:mm'), sessionTime.timeSlot))
+
     }
 
-    const handleToTimeSelection = (time) => {
-        setSessionTime(sessionTime => {
-            return {
-                ...sessionTime,
-                ['toTime']: time
-            }
-        })
-
-        //for time slots
-        const interval = sessionTime.timeSlot;
-        const fromTime = sessionTime.fromTime;
-        const toTime = sessionTime.time;
-
-        const startTime = moment(fromTime, "HH:mm");
-        const endTime = moment(time, "HH:mm")
-
-        const allTimes = [];
-        //Loop over the times - only pushes time with 20 or 30 minutes interval
-        while (startTime < time) {
-            allTimes.push(startTime.format("HH:mm")); //Push times
-            startTime.add(interval, 'minutes');//Add interval of selected minutes
-        }
-        setSelectedSlots(allTimes)
+    const handleChange = (event, index) => {
+        const { name, value } = event.target;
+        setSessionTime({ ...sessionTime, [name]: value });
+        let newState = [...selectedSlots]
+        newState[index]["status"] = !selectedSlots[index]["status"]
+        setSelectedSlots(newState);
     }
 
     function handleTimeClick(e) {
         e.preventDefault();
+        const slots = selectedSlots.filter((res) => {
+            if (res.status == true) {
+                return selectedSlots
+            }
+        })
         const setTimeData = {
             clinicId: clinicId,
             doctorId: doctorId,
-            fromTime: moment(sessionTime.fromTime).format("HH:mm"),
-            toTime: moment(sessionTime.toTime).format("HH:mm"),
+            fromTime: moment(fromTime).format("HH:mm"),
+            toTime: moment(toTime).format("HH:mm"),
             timeSlot: sessionTime.timeSlot,
-            showSelectedSlots: showSelectedSlots,
+            showSelectedSlots: slots,
             Appointment: 'InClinicAppointment',
             fees: sessionTime.fees,
             day: day
@@ -104,7 +92,6 @@ function SetUpdateTime(props) {
         if (sessionTime.fromTime < sessionTime.toTime) {
             updateSessionData(_id, setTimeData)
                 .then((response) => {
-                    console.log("===>>>", response)
                     let setTime = {}
                     setTime[day] = [response]
                     setUpdateSessionTime({ ...updateSessionTime, ...setTime })
@@ -154,10 +141,10 @@ function SetUpdateTime(props) {
                                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                     <TimePicker
                                         renderInput={(props) => <TextField {...props} />}
-                                        value={sessionTime.fromTime}
+                                        value={fromTime}
                                         name="fromTime"
                                         ampm={false}
-                                        minutesStep={5}
+                                        //minutesStep={5}
                                         onChange={handleFromTimeSelection}
                                     />
                                 </MuiPickersUtilsProvider>
@@ -171,7 +158,7 @@ function SetUpdateTime(props) {
                             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                 <TimePicker
                                     renderInput={(props) => <TextField {...props} />}
-                                    value={sessionTime.toTime}
+                                    value={toTime}
                                     ampm={false}
                                     name="toTime"
                                     minutesStep={5}
@@ -189,9 +176,14 @@ function SetUpdateTime(props) {
                             <div key={index}>
                                 <MainInputBox
                                     type="checkbox"
-                                    onChange={handleChange}
-                                    value={item} name="selectedSlots">
-                                    <label className="btn_1">{item}</label>
+                                    onChange={(event) => handleChange(event, index)}
+                                    value={item}
+                                    name="selectedSlots"
+                                    checked={item.status ? true : false}
+                                >
+                                    <label className="btn_1">
+                                        {item.time}
+                                    </label>
                                 </MainInputBox>
                             </div>
                         ))}

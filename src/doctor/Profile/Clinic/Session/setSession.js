@@ -3,20 +3,15 @@ import { Link } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import { SetTiming } from "./setTiming";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { FaVideo, FaWalking, FaRupeeSign } from "react-icons/fa"
+import { FaWalking, FaRupeeSign } from "react-icons/fa"
 import { useRecoilState } from 'recoil';
 import { SetDoctorSessionTiming } from "../../../../recoil/atom/SetDoctorSessionTiming";
 import { updateSession } from '../../../../recoil/atom/setUpdateSession'
-// import ModalHeader from "react-bootstrap/esm/ModalHeader";
 import SetUpdateTime from "./setUpdateTime";
-import AuthApi from "../../../../services/AuthApi";
 import { Icon } from '@material-ui/core';
 import SessionApi from '../../../../services/SessionApi';
 function SetSession(props) {
-    const { doctorId } = useParams();
-    const { clinicId } = props;
-    // const [clinicIds] = useState(clinicId);
+    const {doctorId, clinicId } = props;
     const [dayName, setDayNames] = useState();
     const [showtime, setShowTime] = useState(false);
     const [updateTime, setUpdateTime] = useState(false);
@@ -26,7 +21,8 @@ function SetSession(props) {
     const [deleteItem, setDeleteItem] = useState([]);
     const [Item, setItem] = useState([]);
     const [showDelete, setShowDelete] = useState(false);
-    const { allSessions, deleteSlot, getUpdatedSessionSlotData } = SessionApi()
+    const { allSessions, deleteSlot} = SessionApi()
+
     const dayList = {
         "sun": "Sunday",
         "mon": "Monday",

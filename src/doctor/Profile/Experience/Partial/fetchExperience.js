@@ -6,8 +6,8 @@ import { Modal } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { setDoctorExperience } from "../../../../recoil/atom/setDoctorExperience";
 import { useRecoilState } from 'recoil';
-import AuthApi from '../../../../services/AuthApi';
 import ExperienceApi from '../../../../services/ExperienceApi';
+
 function FetchExperience() {
     const { doctorId } = useParams();
     const [fetchExperience, setFetchExperience] = useRecoilState(setDoctorExperience)

@@ -1,11 +1,9 @@
 import { Link } from "react-router-dom";
-import { API } from "../../../../config";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Experience from "../../Partial/totalExperience";
 import AuthApi from "../../../../services/AuthApi";
-function FetchDoctorPersonalDetails(props) {
 
+function FetchDoctorPersonalDetails(props) {
     const doctorId = props.doctorId;
     const [fetchPersonalData, setFetchPersonalData] = useState([]);
 

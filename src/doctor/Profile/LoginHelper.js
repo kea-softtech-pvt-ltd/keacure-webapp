@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { MainButtonInput } from "../../mainComponent/mainButtonInput";
 import { MainInput } from "../../mainComponent/mainInput";
-import AuthApi from "../../services/AuthApi";
 import { useHistory } from "react-router-dom";
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
 import HelperApi from "../../services/HelperApi";
+
 export default function LoginDoctor() {
     const { loginHelperData } = HelperApi()
     const [loginData, setLoginData] = useState({});

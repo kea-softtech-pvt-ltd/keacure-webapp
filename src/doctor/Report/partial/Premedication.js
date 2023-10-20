@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import AuthApi from "../../../services/AuthApi";
 import ReportApi from "../../../services/ReportApi";
+
 export default function Premedication(props) {
     const { insertPremedicationNote } = ReportApi();
     const [premedication_note, setPremedication_note] = useState('')

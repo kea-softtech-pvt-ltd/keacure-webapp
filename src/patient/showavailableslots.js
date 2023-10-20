@@ -12,7 +12,6 @@ const ShowInClinicAppointSlots = (props) => {
     const [bookingSlots, setBookingSlots] = useState([]);
     const [showDelete, setShowDelete] = useState(false);
     const [bookSlot, setbookSlot] = useState([]);
-    const [data, setData] = useState([])
     const { paymentInfo, getbookedSlots } = PatientApi();
 
     useEffect(() => {

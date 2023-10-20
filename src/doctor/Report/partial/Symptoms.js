@@ -29,10 +29,6 @@ export default function Symptoms(props) {
     const handleOtherChangeValue = (e) => {
         setOtherSymptoms(e.target.value)
     }
-    // const clearData = () => {
-    //     setOtherSymptoms('')
-    //     setSymptoms()
-    // }
 
     const addSymptoms = () => {
         const bodyData = {
@@ -53,23 +49,7 @@ export default function Symptoms(props) {
                 insertSymptom_masterTable(other)
 
             })
-
-        // const data = symptoms.filter((item)=>{
-        //     if(item.name !== other.symptoms){
-        //         return item
-        //     }
-        // })
-        // console.log("===data", data)
-        // symptoms.filter((item) => {
-        //     if (item.name !== otherSymptom) {
-        //         saveSymptoms.push(otherSymptom )
-        //     }
-        //     console.log("===>>", item.name)
-        // })
-        // onChange()
-        // clearData()
     }
-
 
     return (
         <div>

@@ -2,7 +2,6 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import AuthApi from '../../../services/AuthApi';
 import GetLabPrescription from './getLabPrescription';
 import ReportApi from '../../../services/ReportApi';
 

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import AuthApi from '../../../services/AuthApi';
 import {
     TableContainer,
     Table,

@@ -1,5 +1,4 @@
 import { AddClinic } from "./addclinic";
-import { API } from "../../../../config";
 import { SetSession } from "../Session/setSession";
 import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
 import { Link } from "react-router-dom";
@@ -9,7 +8,6 @@ import { Modal } from "react-bootstrap";
 import { setDoctorClinic } from "../../../../recoil/atom/setDoctorClinic";
 import { useRecoilState } from "recoil";
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
-import AuthApi from "../../../../services/AuthApi";
 import ClinicApi from "../../../../services/ClinicApi";
 function AddDoctorClinicInfo() {
     const { doctorId } = useParams();
@@ -82,7 +80,7 @@ function AddDoctorClinicInfo() {
                                         <Modal.Title>Set Session</Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
-                                        <SetSession clinicId={item._id} onSubmit={onSessionFormSubmit} />
+                                        <SetSession clinicId={item._id} doctorId={doctorId} onSubmit={onSessionFormSubmit} />
                                     </Modal.Body>
                                 </Modal>
                             </div>

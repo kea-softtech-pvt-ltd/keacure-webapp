@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import DatePicker from 'react-date-picker';
 import { useState } from 'react';
-import AuthApi from '../../../services/AuthApi';
-// import { useHistory } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import Payment from './Payment';
 import ReportApi from '../../../services/ReportApi';
+
 export default function NewFollowup(props) {
     //for datepicker
     const { insertNewFollowUpDate, getMedicineReport } = ReportApi()

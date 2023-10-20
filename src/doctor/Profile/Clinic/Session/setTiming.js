@@ -10,15 +10,13 @@ import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
 import { MainInput, MainInputBox } from '../../../../mainComponent/mainInput';
 import { MainSelect } from '../../../../mainComponent/mainSelect';
 import moment from 'moment';
-import AuthApi from "../../../../services/AuthApi";
-import SessionApi from '../../../../services/SessionApi';
+import SessionApi from "../../../../services/SessionApi";
 function SetTiming(props) {
     const { doctorId } = useParams();
     const { clinicId, day } = props;
     const [error, setError] = useState("");
     const [coilSessionTimining, setCoilSessionTimining] = useRecoilState(SetDoctorSessionTiming)
     const [selectedSlots, setSelectedSlots] = useState([])
-    const [showSelectedSlots, setShowSelectedSlots] = useState([])
     const { setSessionTimeData } = SessionApi()
     const [sessionTime, setSessionTime] = useState({
         clinicId: clinicId,
@@ -34,15 +32,6 @@ function SetTiming(props) {
         const { name, value } = event.target;
         setSessionTime({ ...sessionTime, [name]: value });
     };
-
-    const handleFromTimeSelection = (time) => {
-        setSessionTime(sessionTime => {
-            return {
-                ...sessionTime,
-                ['fromTime']: time
-            }
-        })
-    }
     const handleToTimeSelection = (time) => {
         setSessionTime(sessionTime => {
             return {
@@ -50,8 +39,6 @@ function SetTiming(props) {
                 ['toTime']: time
             }
         })
-
-        //for time slots
         const interval = sessionTime.timeSlot;
         const fromTime = sessionTime.fromTime;
         const startTime = moment(fromTime, "HH:mm");
@@ -63,43 +50,44 @@ function SetTiming(props) {
         }
         setSelectedSlots(allTimes)
     }
-    const handleChange = (event,index) => {
-        // event.preventDefault()
+
+    const handleChange = (event, index) => {
         const { name, value } = event.target;
-        setSelectedSlots( {...selectedSlots , name: [value]});
-        const slots = [...selectedSlots]
-        slots[index]["status"] = !selectedSlots[index]["status"]
-        //setChecked(data)
-        console.log("====data", slots)
-        //const { name, value } = event.target;
-        // if (event.target.checked) {
-        //     temp.push({
-        //         time: value,
-        //         status: 0
-        //     })
-        // } else {
-        //     let time = temp.filter(function (item, index) {
-        //         return (item.slotTime !== value)
-        //     })
-        //     temp = time
-        // }
-        // setShowSelectedSlots(temp)
+        setSessionTime({ ...sessionTime, [name]: value });
+        let newState = [...selectedSlots]
+        newState[index]["status"] = !selectedSlots[index]["status"]
+        setSelectedSlots(newState);
     }
-     function handleTimeClick(e) {
+
+    const handleFromTimeSelection = (time) => {
+        setSessionTime(sessionTime => {
+            return {
+                ...sessionTime,
+                ['fromTime']: time
+            }
+        })
+    }
+
+    async function handleTimeClick(e) {
         e.preventDefault();
+        const slots = selectedSlots.filter((res) => {
+            if (res.status == true) {
+                return selectedSlots
+            }
+        })
         const setTimeData = {
             clinicId: clinicId,
             doctorId: sessionTime.doctorId,
             fromTime: moment(sessionTime.fromTime).format("HH:mm"),
             toTime: moment(sessionTime.toTime).format("HH:mm"),
             timeSlot: sessionTime.timeSlot,
-            showSelectedSlots: showSelectedSlots,
-            Appointment: 'InClinicAppointment',
+            showSelectedSlots: slots,
+            Appointment: "InClinicAppointment",
             fees: sessionTime.fees,
-            day: sessionTime.day,
+            day: sessionTime.day
         }
         if (sessionTime.fromTime < sessionTime.toTime) {
-             setSessionTimeData(setTimeData)
+            await setSessionTimeData(setTimeData)
                 .then(res => {
                     let setTime = {}
                     setTime[sessionTime.day] = [res.data]
@@ -118,26 +106,15 @@ function SetTiming(props) {
                 <div className="row">
                     <div className="col-lg-6">
                         <label><b>Select Time Slot</b></label>
-                        <MainSelect
-                            name="timeSlot"
-                            defaultValue="20 min"
-                            onChange={handleInputChange}
-                            value={sessionTime.timeSlot}>
+                        <MainSelect name="timeSlot" defaultValue="20 min" onChange={handleInputChange} value={sessionTime.timeSlot} >
                             <option selected="selected" value={20}> 20 min</option>
-                            <option value={15}> 15 min</option>
                             <option value={30}> 30 min</option>
                         </MainSelect>
                     </div>
 
                     <div className="col-lg-6">
                         <label><b>Clinic Fees</b></label>
-                        <MainInput
-                            type="text"
-                            name="fees"
-                            onChange={handleInputChange}
-                            value={sessionTime.fees}
-                            placeholder="Enter fees">
-                        </MainInput>
+                        <MainInput type="text" name="fees" onChange={handleInputChange} value={sessionTime.fees} placeholder="Enter fees" ></MainInput>
                     </div>
                 </div>
 
@@ -184,11 +161,11 @@ function SetTiming(props) {
                             <div key={index}>
                                 <MainInputBox
                                     type="checkbox"
-                                    // onChange={() => handleChange(index, event)}
-                                    onChange={(e) => handleChange(e,index)}
+                                    onChange={(event) => handleChange(event, index)}
                                     value={item}
                                     name="selectedSlots"
-                                    checked={item.status ? true : false}>
+                                    checked={item.status ? true : false}
+                                >
                                     <label className="btn_1">
                                         {item.time}
                                     </label>
@@ -198,28 +175,7 @@ function SetTiming(props) {
                     </section>
                     : null}
 
-                {/* <div className="options">
-                    <div className="row"> */}
-                {/* <div className="col-lg-6">
-                            <MainInputBox type="radio" name="Appointment" value="VideoAppointment" onChange={handleInputChange} label="Video Appointment">
-                                <b>Video Appointment</b>
-                            </MainInputBox>
-                        </div> */}
-
-                {/* <div className="col-lg-6 p-2 ml-2">
-                            <MainInputBox
-                                type="radio"
-                                name="Appointment"
-                                value="InClinicAppointment"
-                                onChange={handleInputChange}
-                                label="In Clinic Appointment">
-                                <b className="p-2">In Clinic Appointment</b>
-                            </MainInputBox>
-                        </div> */}
-                {/* </div>
-                </div> */}
-
-                <div className="text-center p-2  add_top_30">
+                <div className="text-center  p-2 add_top_30">
                     <MainButtonInput>Set</MainButtonInput>
                 </div>
             </form>

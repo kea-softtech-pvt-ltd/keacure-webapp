@@ -15,7 +15,6 @@ import NewFollowup from './partial/NewFollowup';
 import Symptoms from './partial/Symptoms';
 import LabPrescription from './partial/LabPrescription';
 import { MainNav } from '../../mainComponent/mainNav';
-import AuthApi from '../../services/AuthApi';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import { Wrapper } from '../../mainComponent/Wrapper';
 import UserLinks from '../Dashboard-card/partial/uselinks';

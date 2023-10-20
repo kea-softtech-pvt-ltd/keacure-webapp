@@ -11,9 +11,7 @@ import EducationalApi from '../../../../services/EducationalApi';
 function AddDoctorEducation(props) {
     const { doctorId } = props;
     const [updateEduData, setUpdateEduData] = useState([])
-    console.log("===>>>", updateEduData)
     const [coilDoctorEducationData, setCoilDoctorEducationData] = useRecoilState(setDoctorEducation)
-    console.log("coilDoctorEducationData---", coilDoctorEducationData)
     //for fetch specialization data
     const [drspecialization, setDrSpecialization] = useState([])
     // for fetch degrees
@@ -65,7 +63,6 @@ function AddDoctorEducation(props) {
         }
         AddEducation(bodyData)
             .then((res) => {
-                console.log("====bodyData>>>", res)
                 setCoilDoctorEducationData(coilDoctorEducationData.concat(res))
                 props.recordAdded();
             });
@@ -85,7 +82,6 @@ function AddDoctorEducation(props) {
     // }
 
     return (
-        // <form onSubmit={handleSubmit(onSubmit)} className="my-4" encType='multipart/form-data'>
         <>
             <div className="row">
                 <div className="col-md-6">
@@ -159,7 +155,6 @@ function AddDoctorEducation(props) {
             <div className="text-center add_top_30">
                 <MainButtonInput onClick={onSubmit}>Save</MainButtonInput>
             </div>
-            {/* </form> */}
         </>
     )
 }

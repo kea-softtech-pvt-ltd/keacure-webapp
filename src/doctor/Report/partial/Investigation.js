@@ -1,15 +1,12 @@
 import React, { useState } from 'react'
-import AuthApi from '../../../services/AuthApi';
 import ReportApi from '../../../services/ReportApi';
-// import { CKEditor } from 'ckeditor4-react'
-export default function Investigation(props) {
 
+export default function Investigation(props) {
     const [investigation_note, setInvestigation_note] = useState("")
     const { onChange, reportId } = props;
     const { insertInvestigationNote } = ReportApi();
 
     const handleChange = (event) => {
-        // const { name, value } = event.target;
         setInvestigation_note(event.target.value);
     }
     const addNode = () => {

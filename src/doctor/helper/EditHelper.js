@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MainInput } from '../../mainComponent/mainInput';
 import { MainButtonInput } from '../../mainComponent/mainButtonInput';
-import AuthApi from '../../services/AuthApi';
 import { MainNav } from '../../mainComponent/mainNav';
 import { Link } from 'react-router-dom';
 import { useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min';

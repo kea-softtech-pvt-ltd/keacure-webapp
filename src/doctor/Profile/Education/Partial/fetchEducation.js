@@ -18,9 +18,6 @@ function FetchEducation(props) {
     const handleShow = (e, index) => {
         setActiveModal(index)
     };
-    // let data = [1, 2, 3, 4, 5]
-    // data.splice(2, 1, "three")
-    // console.log("===>>>data", data)
     const EditData = () => {
         handleClose(true);
     };

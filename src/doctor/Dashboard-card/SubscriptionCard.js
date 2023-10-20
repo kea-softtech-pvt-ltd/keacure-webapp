@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import AuthApi from "../../services/AuthApi";
 import { useParams } from "react-router-dom";
 import UserLinks from "./partial/uselinks";
 import { Wrapper } from "../../mainComponent/Wrapper";

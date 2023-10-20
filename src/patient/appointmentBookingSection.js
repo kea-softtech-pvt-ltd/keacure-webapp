@@ -50,10 +50,6 @@ function AppointmentBookingSection() {
                     accessModule={helpersData.access_module}
                 />
                 <div className="white-box booking">
-                    {/* <div className="form_title  "> */}
-                        {/* <h3 className="m-2"><FaClinicMedical /> Clinic List</h3> */}
-                    {/* </div> */}
-                    {/* <small><h5><FaClinicMedical /> Clinic List</h5></small> */}
                     <div>
                         {clinicData.map((clinicItem, id) => (            
                                 <MainAccordion key={id} icon={<FaClinicMedical />}   title={clinicItem.clinicName}>
@@ -71,7 +67,6 @@ function AppointmentBookingSection() {
 
                 </div>
             </div>
-            {/* <Link to={`/doctorbookingwithpatientlogin/${doctorId}`} className="btn_1 full-width">Book Appointment</Link> */}
         </Wrapper>
     )
 }

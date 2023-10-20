@@ -2,9 +2,6 @@ import axios from "axios";
 import { API } from "../config";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-//import { setDoctorBooking} from "../recoil/atom/setDoctorBooking";
-import { doctorBookingState } from "../recoil/selector/doctorBookingState"
-import { patientIdState } from "../recoil/selector/patientIdState"
 import { useRecoilState } from "recoil";
 import { setDoctorId } from "../recoil/atom/setDoctorId";
 

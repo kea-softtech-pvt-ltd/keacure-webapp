@@ -1,12 +1,11 @@
-import { API } from "../config";
 import React, { useState, useEffect } from "react";
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
 import Carousel from "react-bootstrap/Carousel";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ShowInClinicAppointSlots } from "./showavailableslots";
 
 function ShowDoctorInClinicAppointment(props) {
-    const { setSessions, clinicId, doctorId } = props;
+    const { setSessions } = props;
     const [showSlot, setShowSlot] = useState([]);
     const [dayMonth, setDayMonth] = useState([]);
     const [error, setError] = useState([]);

@@ -1,17 +1,15 @@
 import { TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete/Autocomplete';
-import React, { useEffect, useState } from 'react';
-import AuthApi from '../../../services/AuthApi';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import AppointmentsApi from '../../../services/AppointmentsApi';
+
 export default function Payment(props) {
-    const { reportId, appointmentId, fees, doctorId } = props;
+    const { reportId, appointmentId, fees } = props;
     const history = useHistory()
     const [saveMode, setSaveMode] = useState([]);
     const [patientFees, setPatientFees] = useState(fees);
-
     const [otherFees, setOtherFees] = useState();
-    const { } = AuthApi();
     const { UpdateStatusBookingdata, createPDF } = AppointmentsApi()
     const mode = [
         {
@@ -30,9 +28,7 @@ export default function Payment(props) {
             "name": "UPI"
         },
     ]
-    // useEffect(()=>{
-    //     totalFees()
-    // },[])
+
     const handleMode = (e, selectedMode) => {
         setSaveMode(selectedMode.name)
     }

@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import AuthApi from '../../../services/AuthApi';
 import ReportApi from '../../../services/ReportApi';
 export default function PatientPersonalInfo(props) {
     const { insertPatientVitalSignsData } = ReportApi()
