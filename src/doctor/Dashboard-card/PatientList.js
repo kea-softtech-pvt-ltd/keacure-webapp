@@ -2,7 +2,6 @@ import React from 'react';
 import { useEffect, useState } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import moment from 'moment';
-import AuthApi from "../../services/AuthApi";
 import { Button, Modal } from 'react-bootstrap';
 import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
 import { FaClinicMedical } from 'react-icons/fa';
@@ -174,33 +173,36 @@ export default function PatientList() {
 
                 })}
             </div>
-            <nav aria-label="" className="add_top_20">
-                <ul className="pagination pagination-sm">
-                    <li className="page-item">
-                        <Link className="page-link"
-                            to="#" onClick={prePage}>
-                            Previous
-                        </Link>
-                    </li>
-                    {
-                        number.map((n, i) => {
-                            return (
-                                <li className={`page-item ${activePageNo === n ? 'active' : ""}`} key={i}>
-                                    <Link className="page-link"
-                                        to="#" onClick={() => changeCPage(n)}>
-                                        {n}</Link>
-                                </li>
-                            )
-                        })
-                    }
-                    <li className="page-item">
-                        <Link className="page-link"
-                            to="#" onClick={nextPage}>
-                            Next
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
+            {records.length > 0 ?
+                <nav aria-label="" className="add_top_20">
+                    <ul className="pagination pagination-sm">
+                        <li className="page-item">
+                            <Link className="page-link"
+                                to="#" onClick={prePage}>
+                                Previous
+                            </Link>
+                        </li>
+                        {
+                            number.map((n, i) => {
+                                return (
+                                    <li className={`page-item ${activePageNo === n ? 'active' : ""}`} key={i}>
+                                        <Link className="page-link"
+                                            to="#" onClick={() => changeCPage(n)}>
+                                            {n}</Link>
+                                    </li>
+                                )
+                            })
+                        }
+                        <li className="page-item">
+                            <Link className="page-link"
+                                to="#" onClick={nextPage}>
+                                Next
+                            </Link>
+                        </li>
+                    </ul>
+                </nav>
+                : <div className="clinicHistory" ><b>Data is not Available</b></div>}
+
             <Modal show={showDelete} onHide={handleDeleteClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Are You Sure?</Modal.Title>
