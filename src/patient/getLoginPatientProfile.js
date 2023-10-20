@@ -9,6 +9,7 @@ import { MainNav } from "../mainComponent/mainNav";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { setDoctorId } from "../recoil/atom/setDoctorId";
 import GetDependent from "./getDependent";
+
 export default function GetLoginPatientProfile() {
     const [doctorId, setDoctorsId] = useRecoilState(setDoctorId);
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)

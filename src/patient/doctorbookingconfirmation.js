@@ -6,7 +6,6 @@ import { useRecoilState } from "recoil";
 import { setDoctorId } from "../recoil/atom/setDoctorId";
 
 function DoctorBookingConfirmation(props) {
-    const { time } = props;
     const { patientId } = props;
     const [doctorName, setDoctorName] = useState([]);
     const [doctorId, setDoctorsId] = useRecoilState(setDoctorId);
@@ -18,7 +17,6 @@ function DoctorBookingConfirmation(props) {
         const result = await axios.get(`${API}/doctor/${doctorId}`);
         setDoctorName(result.data[0]);
     }
-
 
     return (
         <aside className="col-xl-4" id="sidebar">
@@ -38,7 +36,6 @@ function DoctorBookingConfirmation(props) {
                             <li className="linkAlign">
                                 <b>Address : </b><strong className="float-center">{doctorName.address}</strong>
                             </li>
-                            {/* <li className="linkAlign"><b>Appointment Type : </b><strong className="float-right"></strong></li> */}
                         </ul>
                     </div>
                     {

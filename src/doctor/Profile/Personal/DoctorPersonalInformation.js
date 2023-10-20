@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
-import { API } from "../../../config";
 import { useForm } from "react-hook-form";
 import React from 'react';
-import axios from 'axios';
 import avatarImage from "../../../img/profile.png";
 import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
 import { MainInput } from '../../../mainComponent/mainInput';
@@ -14,8 +12,11 @@ import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 function DoctorPersonalInformation(props) {
     const { data, doctorId } = props
-    const [updateData, setUpdateData] = useState([]);
-    const { addDoctorInformation } = AuthApi();
+    const [ updateData, setUpdateData] = useState([]);
+    const { 
+        addDoctorInformation, 
+        submitDoctorInformation 
+    } = AuthApi();
     function handleChangeAddress(address) {
         setUpdateData(prevInput => {
             return {
@@ -24,7 +25,6 @@ function DoctorPersonalInformation(props) {
             }
         })
     }
-
 
     //for all input onchange method
     const handleInputChange = event => {
@@ -73,7 +73,10 @@ function DoctorPersonalInformation(props) {
             personalEmail: updateData.personalEmail,
             address: updateData.address,
         }
-        const result = await axios.post(`${API}/insertPersonalInfo/${doctorId}`, bodyData)
+        submitDoctorInformation({doctorId, bodyData})
+        .then(()=>{
+
+        })
     }
 
     return (

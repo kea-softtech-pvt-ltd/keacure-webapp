@@ -49,8 +49,6 @@ const AddClinic = (props) => {
             clinicNumber: clinicInfo.clinicNumber,
             services: clinicInfo.services
         }
-        // const res = await axios.post(`${API}/insertclinic`, newClinicData)
-
          insertClinicData({ newClinicData })
             .then((res) => {
                 setCoilDoctorClinicData(coilDoctorClinicData.concat(res.data))

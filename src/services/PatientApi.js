@@ -2,7 +2,24 @@ import axios from 'axios';
 import { API } from '../config';
 
 export default function PatientApi() {
-
+    const loginPatient = async ({ mobile }) => {
+        try {
+            const result = await axios.post(`${API}/patientLogin`, { mobile })
+            return result
+        }
+        catch (err) {
+            return err;
+        }
+    };
+    const patientLoginOtp = async ({ getOTP, _id }) => {
+        try {
+            const result = await axios.post(`${API}/patientLoginOtp`, { getOTP, _id })
+            return result
+        }
+        catch (err) {
+            return err;
+        }
+    };
     const fetchSessionSlotsData = async ({ doctorId, clinicId }) => {
         try {
             const result = await axios.get(`${API}/fetcSessionSlots/${doctorId}/${clinicId}`)
@@ -42,11 +59,24 @@ export default function PatientApi() {
         }
     }
 
+    const signup = async ({ patientId }, bodyData) => {
+        try {
+            const result = await axios.post(`${API}/insertPatientDetails/${patientId}`, bodyData)
+            console.log("===========result", result)
+            return result.data
+        }
+        catch (err) {
+            return err;
+        }
+    };
     return {
+        loginPatient,
+        patientLoginOtp,
         fetchSessionSlotsData,
         paymentInfo,
         getbookedSlots,
-        patientDetailsData
+        patientDetailsData,
+        signup
     }
 
 

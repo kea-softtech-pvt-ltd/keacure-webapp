@@ -3,15 +3,11 @@ import DoctorDetail from "./doctor/Dashboard-card/DoctorDetail";
 import LoginDoctor from "./doctor/Profile/LoginDoctor";
 import DoctorProfile from "./doctor/Profile/DoctorProfile";
 import EditDoctorProfile from "./doctor/Profile/EditDoctorProfile";
-import PatientList from "./doctor/Dashboard-card/PatientList";
 import Dashboard from './doctor/Dashboard-card/Dashboard';
-import PatientDashboard from "./patient/PatientDashboard";
 import PatientMedicalReport from "./doctor/Report/PatientMedicalReport";
 import MedicineHistory from "./patient/MedicineHistory";
-import PatientInfo from "./patient/PatientInfo";
 import PatientsPaymentHistory from "./patient/PatientsPaymentHistory";
 import PatientsClinicHistory from "./doctor/Dashboard-card/PatientsClinicHistory";
-import SearchLocationInput from "./common/demo";
 import CreatePatientProfile from "./patient/createPatientProfile";
 import GetLoginPatientProfile from "./patient/getLoginPatientProfile";
 import Calender from './doctor/Dashboard-card/Calender';
@@ -26,15 +22,11 @@ import Helper from "./doctor/helper/Helper";
 import EditHelper from './doctor/helper/EditHelper';
 import Patient from "./patient/patient";
 import { AppointmentBookingSection } from "./patient/appointmentBookingSection";
-import GetDependent from "./patient/getDependent";
 import Report from "./doctor/Dashboard-card/Report";
+
 function MainContainer() {
   return (
     <Switch>
-
-      <Route path="/demo">
-        <SearchLocationInput />
-      </Route>
       <Route path="/doctordetail/:doctorId">
         <DoctorDetail />
       </Route>
@@ -53,9 +45,6 @@ function MainContainer() {
       <Route path="/editdoctorprofile/:doctorId">
         <EditDoctorProfile />
       </Route>
-      <Route exact path="/patientlist/:doctorId">
-        <PatientList />
-      </Route>
       <Route path="/consultation/:reportId">
         <PatientMedicalReport />
       </Route>
@@ -68,14 +57,8 @@ function MainContainer() {
       <Route path="/subscription/:doctorId">
         <Subscription />
       </Route>
-      <Route path="/patientdashboard/:patientId">
-        <PatientDashboard />
-      </Route>
       <Route path="/medicinehistory">
         <MedicineHistory />
-      </Route>
-      <Route path="/patientinfo">
-        < PatientInfo />
       </Route>
       <Route path="/patientspaymenthistory/:doctorId">
         < PatientsPaymentHistory />

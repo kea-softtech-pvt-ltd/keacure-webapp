@@ -7,6 +7,7 @@ import { MainButtonInput } from "../mainComponent/mainButtonInput";
 import { setNewPatientId } from "../recoil/atom/setNewPatientId";
 import { useRecoilState } from "recoil";
 import axios from "axios";
+import PatientApi from "../services/PatientApi";
 
 function PatientLoginForm(props) {
     const { redirection } = props
@@ -15,34 +16,27 @@ function PatientLoginForm(props) {
     const [isError, setIsError] = useState(false);
     const [showOTP, setShowOTP] = useState(false)
     const [loginData, setLoginData] = useState([])
+    const { loginPatient } = PatientApi()
     const [patientData, setPatientData] = useRecoilState(setNewPatientId);
-    const history = useHistory()
 
-    const getOTPSection = async (e) => {
+    const getOTPSection = (e) => {
         e.preventDefault()
         if (mobile.length < 10) {
             setIsError('Please Enter valid mobile number.')
         }
         else {
-            try {
-                await axios.post(`${API}/patientLogin`, {
-                    mobile: mobile
+            loginPatient({ mobile: mobile })
+                .then(data => {
+                    setPatientId(data.data._id)
+                    setPatientData(data.data._id)
+                    alert(data.data.otp)
+                    let item = data.data
+                    setLoginData(item)
+                    setShowOTP(true)
+
                 })
-
-                    .then(data => {
-                        setPatientId(data.data._id)
-                        setPatientData(data.data._id)
-                        alert(data.data.otp)
-                        let item = data.data
-                        setLoginData(item)
-                        setShowOTP(true)
-
-                    })
-            }
-            catch (e) {
-            }
         }
-    };
+    }
 
     return (
         <div className="bg_color_2">
@@ -77,9 +71,9 @@ function PatientLoginForm(props) {
                                     : null}
                             </div>
                         </div>
-            </form>
+                    </form>
                 </div>
-        </div>
+            </div>
         </div >
     )
 }

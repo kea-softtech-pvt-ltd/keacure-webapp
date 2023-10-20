@@ -1,40 +1,28 @@
 import React from 'react';
-import { API } from "../../../../config";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from 'axios';
-import pdfImage from "../../../../img/pdfimg.png";
-import { Link } from '@material-ui/core';
 import { useRecoilState } from "recoil";
 import { setDoctorEducation } from "../../../../recoil/atom/setDoctorEducation";
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
 import { MainInput } from '../../../../mainComponent/mainInput';
 import { MainSelect } from '../../../../mainComponent/mainSelect';
 import EducationalApi from '../../../../services/EducationalApi';
+
 function EditEducation(props) {
-    const { doctorId } = useParams();
-    const { EduId } = props;
+    const { doctorId, EduId } = props;
     //for fetch specialization data
     const [drspecialization, setDrSpecialization] = useState([])
-    // for setdocument 
-    const [drDocument, setDrDocument] = useState([]);
     // for fetch degrees
     const [drdegrees, setDrdegrees] = useState([])
     //for update data using recoil
     const [eduData, setEduData] = useRecoilState(setDoctorEducation)
     //for update education data
     const [updateEducation, setUpdateEducation] = useState([])
-    const { fetchEditEducationData, fetchDrSpecialization, fetchDrDegree } = EducationalApi();
-    const removeImage = (EduId, index) => {
-        let tempEduImages = drDocument.filter((item, key) => {
-            return key !== index
-        })
-        setDrDocument(tempEduImages)
-        axios.post(`${API}/deleteDocument/${EduId}`, {
-            document: tempEduImages
-        })
-            .then(res => console.log(res.data));
-    }
+    const {
+        fetchEditEducationData,
+        fetchDrSpecialization,
+        fetchDrDegree,
+        updateEducationData
+    } = EducationalApi();
 
     useEffect(() => {
         fetchSpecializations();
@@ -60,9 +48,7 @@ function EditEducation(props) {
         fetchEditEducationData({ EduId })
             .then((result) => {
                 setUpdateEducation(result)
-                setDrDocument(props.imageData)
             })
-
     }
 
     //for Year dropdownlist
@@ -86,11 +72,11 @@ function EditEducation(props) {
         e.preventDefault();
         const formData = new FormData(document.querySelector("#EditData"));
         formData.append('doctorId', doctorId);
-        const res = await axios.post(`${API}/updateEducation/${EduId}`, formData)
+        updateEducationData({ EduId, formData })
             .then(res => {
                 const newEduData = eduData.map(function (d, index) {
                     if (EduId === d._id) {
-                        return res.data
+                        return res
                     } else {
                         return d
                     }
@@ -123,8 +109,6 @@ function EditEducation(props) {
                         onChange={handleInputChange}
                         placeholder="Doctor Collage/University">
                     </MainInput>
-
-
                 </div>
 
                 <div className="col-md-6">
@@ -148,39 +132,7 @@ function EditEducation(props) {
                             <option key={index}>{option}</option>
                         ))}
                     </MainSelect>
-                    {/* <label><b>Qualification document Photo</b></label>
-                    <MainInput
-                        type="file"
-                        name="document"
-                        accept="image/*"
-                        placeholder="document"
-                        multiple={true}>
-                        <div className="fetchedudata">
 
-                            {drDocument.map((eduImage, index) => {
-                                return (
-                                    <div key={index}>
-                                        {(/\.(gif|jpe?g|png)$/i).test(eduImage) ? (
-                                            <img
-                                                alt="education"
-                                                src={"/uploads/" + eduImage}
-                                                className="documentStyle"
-                                                accept="image/*"
-                                            />
-                                        ) : (
-                                            <img
-                                                alt="education"
-                                                src={pdfImage}
-                                                className="documentStyle"
-                                                accept="image/*"
-                                            />
-                                        )}
-                                        <Link to="#" onClick={() => removeImage(EduId, index)}>x</Link>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    </MainInput> */}
                 </div>
             </div>
 

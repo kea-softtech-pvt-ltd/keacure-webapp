@@ -9,8 +9,8 @@ import AppointmentsApi from '../../services/AppointmentsApi';
 import ReportApi from '../../services/ReportApi';
 
 
-export default function PatientList() {
-    const { doctorId } = useParams()
+export default function PatientList(props) {
+    const { doctorId } = props
     let history = useHistory();
     const [patientList, setPatientList] = useState([]);
     const [showDelete, setShowDelete] = useState(false);

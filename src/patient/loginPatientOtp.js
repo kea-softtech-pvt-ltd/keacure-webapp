@@ -1,11 +1,10 @@
-import { API } from "../config";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { MainButtonInput } from "../mainComponent/mainButtonInput";
 import { MainInput } from "../mainComponent/mainInput";
 import { setNewPatientId } from "../recoil/atom/setNewPatientId";
 import { useRecoilState } from "recoil";
-import axios from "axios";
+import PatientApi from "../services/PatientApi";
 
 function LoginPatientOtp(props) {
     const history = useHistory()
@@ -13,16 +12,14 @@ function LoginPatientOtp(props) {
     const [patientData, setPatientData] = useRecoilState(setNewPatientId);
     const [loginotp, setLoginOtp] = useState('');
     const getOTP= loginData.otp
+    const {patientLoginOtp} = PatientApi()
     const [errormessage, setErrormessage] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const loginOtp = loginotp
-
-        axios.post(`${API}/patientLoginOtp`, {
-            getOTP: loginOtp,
-            _id: patientId
-        })
+        const _id = patientId 
+        patientLoginOtp({getOTP, _id})
             .then((response) => {
                 setPatientData(patientId)
                 const isLoggedIn = loginData.isLoggedIn

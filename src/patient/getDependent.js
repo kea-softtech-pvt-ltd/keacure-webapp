@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom/cjs/react-router-dom.min'
-import { API } from '../config'
-import axios from 'axios'
+import PatientApi from '../services/PatientApi';
 export default function GetDependent() {
     const { patientId } = useParams();
-    const [fetchPatientData, setFetchPatientData] = useState([])
+    const [ fetchPatientData, setFetchPatientData] = useState([])
+    const { patientDetailsData} = PatientApi()
     useEffect(() => {
         getAllPatientData()
     }, [])
 
-    async function getAllPatientData() {
-        await axios.get(`${API}/patientById/${patientId}`)
-            .then(function (response) {
-                setFetchPatientData(response.data[0].dependent)
+    function getAllPatientData() {
+        patientDetailsData({ patientId })
+            .then( (response)=> {
+                console.log("=response====", response)
+                setFetchPatientData(response[0].dependent)
             })
     }
     return (

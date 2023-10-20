@@ -13,12 +13,10 @@ import AppointmentsApi from '../../services/AppointmentsApi';
 
 const { getStorage, ref, getDownloadURL } = require("firebase/storage");
 
-
 export default function PatientsClinicHistory() {
     const { doctorId } = useParams();
     const [patientHistoryData, setPatientHistoryData] = useState([])
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
-
     const { getPatientListDetails, downloadPrescription } = AppointmentsApi()
     //For Pagination
     const [activePageNo, setActivePageNo] = useState(1)
@@ -58,20 +56,6 @@ export default function PatientsClinicHistory() {
                 alink.click();
             })
     }
-    // const sharePdf = async (details) => {
-    //     const reportId = details.medicalReportId
-    //     const result = await downloadPrescription(reportId)
-    //     let alink = document.createElement('a');
-    //     alink.href = result;
-    //     alink.setAttribute("target", "_blank")
-    //     alink.download = 'Prescription.pdf';
-    //     alink.click();
-    //     setIsVisible(true)
-    // }
-
-    // const handleHide = () => {
-    //     setIsVisible(false)
-    // }
     //For Pagination
     function prePage() {
         if (activePageNo !== 1) {
@@ -84,12 +68,10 @@ export default function PatientsClinicHistory() {
     function nextPage() {
         if (activePageNo !== nPage) {
             setActivePageNo(activePageNo + 1)
-
         }
     }
     return (
         <Wrapper>
-
             <MainNav>
                 <ul className="clearfix">
                     <li>
@@ -144,17 +126,7 @@ export default function PatientsClinicHistory() {
                                                         <Button className="appColor helperBtn" > View</Button>
                                                     </Link>
                                                     <Button className="appColor helperBtn" onClick={() => downloadPdf(details)}> Download</Button>
-                                                    {/* <Button className="appColor helperBtn" onClick={sharePdf(details)}>
-                                                        <i className="pe-7s-share" style={{ fontSize: 20 }} />
-                                                    </Button> */}
-                                                    {/* {
-                                                        isVisible !== true ?
-                                                            <Button className="appColor helperBtn" onClick={() => sharePdf(details)}>
-                                                                <i className="pe-7s-share" style={{ fontSize: 20 }} />
-                                                            </Button>
-                                                            : */}
                                                     <Sharing reportId={details.medicalReportId} />
-                                                    {/* } */}
                                                 </div>
 
                                             </div>
@@ -191,14 +163,7 @@ export default function PatientsClinicHistory() {
                                                         <Button className="appColor helperBtn" > View</Button>
                                                     </Link>
                                                     <Button className="appColor helperBtn" onClick={() => downloadPdf(details)}> Download</Button>
-                                                    {/* {
-                                                        isVisible !== true ?
-                                                            <Button className="appColor helperBtn" onClick={() => sharePdf(details)}>
-                                                                <i className="pe-7s-share" style={{ fontSize: 20 }} />
-                                                            </Button>
-                                                            : */}
                                                     <Sharing reportId={details.medicalReportId} />
-                                                    {/* // } */}
                                                 </div>
                                             </div>
                                         </div>}

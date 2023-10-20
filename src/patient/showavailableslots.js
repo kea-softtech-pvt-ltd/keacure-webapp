@@ -1,5 +1,6 @@
 import { slots } from "../common/constant";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { FaRupeeSign } from "react-icons/fa";
 import { setNewPatientId } from "../recoil/atom/setNewPatientId";
 import { useRecoilState } from "recoil";
@@ -13,7 +14,7 @@ const ShowInClinicAppointSlots = (props) => {
     const [showDelete, setShowDelete] = useState(false);
     const [bookSlot, setbookSlot] = useState([]);
     const { paymentInfo, getbookedSlots } = PatientApi();
-
+    const history = useHistory()
     useEffect(() => {
         availableSlots()
     }, [])
@@ -46,9 +47,11 @@ const ShowInClinicAppointSlots = (props) => {
         }
         paymentInfo(transactionData)
             .then((res) => {
+                history.push(`/patient/${session.doctorId}`);
             })
         handleDeleteClose()
     }
+
     const availableSlots = () => {
         getbookedSlots(session.doctorId, session.clinicId)
             .then((result) => {
@@ -78,7 +81,6 @@ const ShowInClinicAppointSlots = (props) => {
                                             onClick={() => handleDeleteShow(item)}
                                             className="disabled-div"
                                             type="radio"
-                                            // aria-disabled="true"
                                             time={slots}>
                                             <label>{item.time}</label>
                                         </div>

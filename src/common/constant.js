@@ -5,7 +5,6 @@ const constants ={
     MEDICINELIST_DATA:"../data/medicinelist.json",
     MEDICINEWEIGHT_DATA:"../data/medicineWeight.json",
     SLOTOFDAYS_DATA:"../data/slotOfDays.json",
-    PATIENTINFO_DATA:"../data/patientInfo.json",
     PATIENTPAYMENT_DATA:"../data/patientpayment.json",
     SLIDER_DATA:"../data/silder.json",
     MEAL_DATA:"./data/Meal.json"

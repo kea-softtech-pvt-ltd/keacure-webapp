@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
-import { API } from "./config";
 import react, { useState ,useEffect } from "react";
 import Experience from "../doctor/Profile/Partial/totalExperience";
-import axios from "axios";
 import { DoctorDetailsProfessionalStatement} from "./doctorDetailsProfessionalStatement";
 import { DoctorDetailsEducationalStatement} from "./doctorDetailsEducationalStatement";
 
@@ -14,9 +12,9 @@ function GetDoctorDetails(props){
         getDoctorPersonalInfo();
     },[])
     
-    async function getDoctorPersonalInfo(){
-        const result = await axios.get(`${API}/doctor/${doctorId}`); 
-        setFetchProfileData(result.data[0]);   
+    function getDoctorPersonalInfo(){
+        getDrInfo({doctorId}); 
+        setFetchProfileData(result[0]);   
     } 
     
     return (

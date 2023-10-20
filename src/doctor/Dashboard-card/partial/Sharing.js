@@ -15,15 +15,13 @@ export default function Sharing(props) {
                 setShareUrl(result)
             })
     }
-//     const result = downloadPrescription(reportId)
-//    const shareUrl = result
 
     return (
         <div className='whatsApp'>
             <WhatsappShareButton
                 quote='Prescription'
                 url={shareUrl}>
-                <WhatsappIcon size={40} round={true} />
+                <WhatsappIcon size={30} round={true} />
             </WhatsappShareButton >
         </div>
     )

@@ -1,20 +1,19 @@
-import axios from "axios";
-import { API } from "../config";
 import { useEffect, useState } from "react";
-import avatarImage from "../img/profile.png";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import PatientApi from "../services/PatientApi";
 
 function FetchPatientInfo(props) {
     const { patientId } = props;
     const [fetchPatientData, setFetchPatientData] = useState([])
+    const {patientDetailsData} = PatientApi()
     useEffect(() => {
         getAllPatientData()
     }, [])
 
-    async function getAllPatientData() {
-        const result = await axios.get(`${API}/patientById/${patientId}`)
-            .then(function (response) {
-                setFetchPatientData(response.data[0])
+    function getAllPatientData() {
+        patientDetailsData({patientId})
+            .then( (response) =>{
+                setFetchPatientData(response[0])
             })
     }
 

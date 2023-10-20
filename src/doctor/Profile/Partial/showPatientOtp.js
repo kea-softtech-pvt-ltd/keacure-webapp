@@ -15,9 +15,9 @@ function ShowPatientOtp(props) {
     const [loginotp, setLoginOtp] = useState('');
     const [errormessage, setErrormessage] = useState(false);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        await loginOtp({ getOTP, _id }) //axios call
+        loginOtp({ getOTP, _id }) //axios call
             .then(response => {
                 setId(_id)
                 if (getOTP !== loginotp) {
@@ -25,9 +25,9 @@ function ShowPatientOtp(props) {
                 } else {
                     if (isLoggedIn === true) {
                         history.push(`/patientprofile/${_id}`)
-                     }else {
-                       history.push(`/appointment/${_id}`);
-                     }
+                    } else {
+                        history.push(`/appointment/${_id}`);
+                    }
                 }
             })
     }

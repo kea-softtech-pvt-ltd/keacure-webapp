@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { API } from "../../../../config";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { setDoctorOwnClinic } from "../../../../recoil/atom/setDoctorOwnClinic";
@@ -10,6 +8,7 @@ import { MainSelect } from "../../../../mainComponent/mainSelect";
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
 import ClinicApi from "../../../../services/ClinicApi";
 import EducationalApi from "../../../../services/EducationalApi";
+
 const AddOwnClinic = (onSubmit) => {
     const { doctorId } = useParams();
     const [coilDoctorOwnClinicInfo, setCoilDoctorOwnClinicInfo] = useRecoilState(setDoctorOwnClinic)
@@ -36,7 +35,6 @@ const AddOwnClinic = (onSubmit) => {
             clinicNumber: ownClinicInfo.clinicNumber,
             services: ownClinicInfo.services
         }
-        // const res = await axios.post(`${API}/insertownclinic` , newClinicData)
          insertOwnClinics(newClinicData)
             .then(res => {
                 setCoilDoctorOwnClinicInfo(coilDoctorOwnClinicInfo.concat(res.data))

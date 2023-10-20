@@ -6,6 +6,7 @@ import { MainButtonInput } from '../../../../mainComponent/mainButtonInput';
 import { MainInput } from '../../../../mainComponent/mainInput';
 import { MainMuiPickers } from '../../../../mainComponent/MainMuiPickers';
 import ExperienceApi from '../../../../services/ExperienceApi';
+
 function EditExperience(props) {
     const { ExId } = props;
     const [error, setError] = useState('')
@@ -43,7 +44,6 @@ function EditExperience(props) {
 
     function UpdateData(e) {
         e.preventDefault();
-        // e.target.reset()
         const updateExperienceData = {
             doctorId: updateExperience.doctorId,
             clinicName: updateExperience.clinicName,
@@ -55,7 +55,6 @@ function EditExperience(props) {
             setError("end year should be greater than start year")
         }
         else {
-            // const res = await axios.post(`${API}/updateExperience/${ExId}` , updateExperienceData)
             editExperienceData({ ExId }, updateExperienceData)
                 .then((res) => {
                     const editExperience = coilExperienceData.map(function (e, index) {
@@ -70,7 +69,6 @@ function EditExperience(props) {
                     props.onSubmit();
                 })
         }
-        // setUpdateExperience({})
     }
 
     function manipulateExperience(data) {

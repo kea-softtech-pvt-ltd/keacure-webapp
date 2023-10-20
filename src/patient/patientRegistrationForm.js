@@ -1,13 +1,13 @@
-import { API } from "../config";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { MainInput } from "../mainComponent/mainInput";
 import { MainButtonInput } from "../mainComponent/mainButtonInput";
+import PatientApi from "../services/PatientApi";
 
 function PatientRegistrationForm(props) {
     const { patientId, handalChange } = props;
     const [updatePatientData, setUpdatePatientData] = useState({})
+    const {patientDetailsData,signup} = PatientApi()
     //for all input onchange method
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -24,9 +24,9 @@ function PatientRegistrationForm(props) {
     }, [])
 
     async function getPatientDetails() {
-        const result = await axios.get(`${API}/patientById/${patientId}`)
+        patientDetailsData({patientId})
             .then(function (response) {
-                setUpdatePatientData(response.data[0])
+                setUpdatePatientData(response[0])
             })
     }
 
@@ -40,7 +40,7 @@ function PatientRegistrationForm(props) {
             age: updatePatientData.age,
             email: updatePatientData.email,
         }
-        axios.post(`${API}/insertPatientDetails/${patientId}`, newPatientData)
+        signup({patientId}, newPatientData)
             .then(function (response) {
                handalChange()
             })
@@ -48,9 +48,6 @@ function PatientRegistrationForm(props) {
 
     return (
         <>
-            {/* <div className="message">
-                <div>Exisitng Customer? <Link to={`/patientLoginForm/${patientId}`}>Click here to login</Link></div>
-            </div> */}
             <div className="underline">
                 <h3 className="mb-3">Patient Details</h3>
             </div>

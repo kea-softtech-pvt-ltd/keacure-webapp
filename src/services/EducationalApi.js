@@ -58,6 +58,16 @@ export default function EducationalApi() {
             return err
         }
     }
+
+    const updateEducationData = async ({EduId, formData}) => {
+        try {
+            const result = await axios.post(`${API}/updateEducation/${EduId}`, formData)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+    }
     return {
         AddEducation,
         fetchAllEducations,
@@ -65,5 +75,6 @@ export default function EducationalApi() {
         deleteEducationData,
         fetchDrSpecialization,
         fetchDrDegree,
+        updateEducationData
     }
 }

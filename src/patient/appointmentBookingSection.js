@@ -11,7 +11,6 @@ import { MainNav } from "../mainComponent/mainNav";
 import { setHelperData } from "../recoil/atom/setHelperData";
 import { Wrapper } from "../mainComponent/Wrapper";
 function AppointmentBookingSection() {
-    // const { clinicData, ownClinicData } = props;
     const [doctorId, setDoctorsId] = useRecoilState(setDoctorId)
     const [clinicData, setClinicData] = useState([])
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
@@ -22,8 +21,8 @@ function AppointmentBookingSection() {
         doctorData()
     }, [])
 
-     function doctorData() {
-         getDrInfo({ doctorId })
+    function doctorData() {
+        getDrInfo({ doctorId })
             .then((res) => {
                 setDoctorName(res[0])
                 setClinicData(res[0].clinicList)
@@ -51,20 +50,13 @@ function AppointmentBookingSection() {
                 />
                 <div className="white-box booking">
                     <div>
-                        {clinicData.map((clinicItem, id) => (            
-                                <MainAccordion key={id} icon={<FaClinicMedical />}   title={clinicItem.clinicName}>
-                                    <DoctorAppointmentType clinicData={clinicItem} />
-                                </MainAccordion>
-                          
-                        ))}
-
-                        {/* {ownClinicData.map((ownClinicItem, id) => (
-                            <MainAccordion key={id} title={ownClinicItem.clinicName}>
-                                <DoctorAppointmentType clinicData={ownClinicItem} />
+                        {clinicData.map((clinicItem, id) => (
+                            <MainAccordion key={id} icon={<FaClinicMedical />} title={clinicItem.clinicName}>
+                                <DoctorAppointmentType clinicData={clinicItem} />
                             </MainAccordion>
-                        ))} */}
-                    </div>
 
+                        ))}
+                    </div>
                 </div>
             </div>
         </Wrapper>

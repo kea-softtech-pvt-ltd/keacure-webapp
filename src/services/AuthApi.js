@@ -33,9 +33,9 @@ export default function AuthApi() {
         }
     }
 
-    const submitDoctorInformation = async ({ doctorId, formData }) => {
+    const submitDoctorInformation = async ({ doctorId, bodyData }) => {
         try {
-            const result = await axios.post(`${API}/insertPersonalInfo/${doctorId}`, { formData })
+            const result = await axios.post(`${API}/insertPersonalInfo/${doctorId}`,  bodyData )
             return result
         }
         catch (err) {
