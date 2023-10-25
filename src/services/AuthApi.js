@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { API } from '../config';
+import { useRecoilState } from 'recoil';
+import { setSubscription } from '../recoil/atom/setSubscription';
 
 export default function AuthApi() {
+    const [subscibed, setSubscribed] = useRecoilState(setSubscription)
     const login = async ({ mobile }) => {
         try {
             const result = await axios.post(`${API}/loginotp`, { mobile })
@@ -10,12 +13,12 @@ export default function AuthApi() {
         catch (err) {
             return err
         }
-
     };
 
     const loginOtp = async ({ getOTP, _id }) => {
         try {
             const result = await axios.post(`${API}/otp`, { getOTP, _id });
+            setSubscribed(result.data.isSubscribed)
             return result;
         }
         catch (err) {
@@ -24,34 +27,45 @@ export default function AuthApi() {
     };
 
     const addDoctorInformation = async ({ doctorId }) => {
-        try {
-            const result = await axios.get(`${API}/fetchData/${doctorId}`);
-            return result.data;
+        if (subscibed === true) {
+            try {
+                const result = await axios.get(`${API}/fetchData/${doctorId}`);
+                return result.data;
+            }
+            catch (err) {
+                return err
+            }
+        } else {
+            return null
         }
-        catch (err) {
-            return err
-        }
-    }
+    };
 
     const submitDoctorInformation = async ({ doctorId, bodyData }) => {
-        try {
-            const result = await axios.post(`${API}/insertPersonalInfo/${doctorId}`,  bodyData )
-            return result
-        }
-        catch (err) {
-            return err
+        if (subscibed === true) {
+            try {
+                const result = await axios.post(`${API}/insertPersonalInfo/${doctorId}`, bodyData)
+                return result
+            }
+            catch (err) {
+                return err
+            }
+        } else {
+            return null
         }
     }
 
     const getDrInfo = async ({ doctorId }) => {
-        try {
-            const result = await axios.get(`${API}/doctor/${doctorId}`);
-            return result.data;
+        if (subscibed === true) {
+            try {
+                const result = await axios.get(`${API}/doctor/${doctorId}`);
+                return result.data;
+            }
+            catch (err) {
+                return err
+            }
+        } else {
+            return null
         }
-        catch (err) {
-            return err
-        }
-
     }
 
     return {
@@ -59,7 +73,6 @@ export default function AuthApi() {
         loginOtp,
         addDoctorInformation,
         submitDoctorInformation,
-        getDrInfo,
-        // getPatientFees,
+        getDrInfo
     }
 }

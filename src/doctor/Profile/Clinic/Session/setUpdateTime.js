@@ -17,9 +17,7 @@ function SetUpdateTime(props) {
     const [error, setError] = useState("");
     const [updateSessionTime, setUpdateSessionTime] = useRecoilState(updateSession)
     const [fromTime, setFromTime] = useState();
-    console.log("fromTime-------", fromTime)
     const [toTime, setToTime] = useState();
-    console.log("toTime-------", toTime)
     const [selectedSlots, setSelectedSlots] = useState([])
     const [sessionTime, setSessionTime] = useState([])
     const { updateSessionData, getUpdatedSessionSlotData } = SessionApi()
@@ -38,7 +36,7 @@ function SetUpdateTime(props) {
                 setFromTime(res[0].fromTime)
                 setToTime(res[0].toTime)
                 setSelectedSlots(res[0].showSelectedSlots)
-                setSelectedSlots(checkTimeSlot(res[0].fromTime, res[0].toTime, res[0].timeSlot))
+                setSelectedSlots(checkTimeSlot(moment(res[0].fromTime).format("HH:mm"),moment(res[0].toTime).format("HH:mm"), res[0].timeSlot))
             })
     }
 
@@ -60,7 +58,6 @@ function SetUpdateTime(props) {
     const handleToTimeSelection = (time) => {
         setToTime(time);
         setSelectedSlots(checkTimeSlot(fromTime, moment(time).format('HH:mm'), sessionTime.timeSlot))
-
     }
 
     const handleChange = (event, index) => {
@@ -81,8 +78,8 @@ function SetUpdateTime(props) {
         const setTimeData = {
             clinicId: clinicId,
             doctorId: doctorId,
-            fromTime: moment(fromTime).format("HH:mm"),
-            toTime: moment(toTime).format("HH:mm"),
+            fromTime: fromTime,
+            toTime: toTime,
             timeSlot: sessionTime.timeSlot,
             showSelectedSlots: slots,
             Appointment: 'InClinicAppointment',

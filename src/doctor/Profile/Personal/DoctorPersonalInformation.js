@@ -85,7 +85,7 @@ function DoctorPersonalInformation(props) {
                 <div className="col-md-6 ">
                     <div className="">
                         <div className="col-4">
-                            <div className="doctorphoto">
+                            {/* <div className="doctorphoto">
                                 {updateData.photo ?
                                     <img
                                         src={updateData.photo}
@@ -98,7 +98,7 @@ function DoctorPersonalInformation(props) {
                                         className="doctorphotoStyle"
                                     />
                                 }
-                            </div>
+                            </div> */}
                         </div>
                         <div className="col-8">
                             <div className="text-left">

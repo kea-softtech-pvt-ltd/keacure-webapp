@@ -1,7 +1,11 @@
 import axios from 'axios';
 import { API } from '../config';
+import { useRecoilState } from 'recoil';
+import { setSubscription } from '../recoil/atom/setSubscription';
 
 export default function HelperApi() {
+    const [subscibed, setSubscribed] = useRecoilState(setSubscription)
+
     const createHelper = async (bodyData) => {
         try {
             const result = await axios.post(`${API}/addhelper`, bodyData)

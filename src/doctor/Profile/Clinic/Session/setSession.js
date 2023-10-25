@@ -7,21 +7,23 @@ import { FaWalking, FaRupeeSign } from "react-icons/fa"
 import { useRecoilState } from 'recoil';
 import { SetDoctorSessionTiming } from "../../../../recoil/atom/SetDoctorSessionTiming";
 import { updateSession } from '../../../../recoil/atom/setUpdateSession'
-import SetUpdateTime from "./setUpdateTime";
 import { Icon } from '@material-ui/core';
+import SetUpdateTime from "./setUpdateTime";
+import moment from 'moment';
 import SessionApi from '../../../../services/SessionApi';
+
 function SetSession(props) {
-    const {doctorId, clinicId } = props;
-    const [dayName, setDayNames] = useState();
-    const [showtime, setShowTime] = useState(false);
-    const [updateTime, setUpdateTime] = useState(false);
-    const [fetchTime, setfetchTime] = useRecoilState(SetDoctorSessionTiming);
-    const [fetchUpdateTime, setfetchUpdateTime] = useRecoilState(updateSession);
-    const [updateItem, setUpdateItem] = useState([]);
-    const [deleteItem, setDeleteItem] = useState([]);
-    const [Item, setItem] = useState([]);
-    const [showDelete, setShowDelete] = useState(false);
-    const { allSessions, deleteSlot} = SessionApi()
+    const { doctorId, clinicId } = props;
+    const [ dayName, setDayNames] = useState();
+    const [ showtime, setShowTime] = useState(false);
+    const [ updateTime, setUpdateTime] = useState(false);
+    const [ fetchTime, setfetchTime] = useRecoilState(SetDoctorSessionTiming);
+    const [ fetchUpdateTime, setfetchUpdateTime] = useRecoilState(updateSession);
+    const [ updateItem, setUpdateItem] = useState([]);
+    const [ deleteItem, setDeleteItem] = useState([]);
+    const [ Item, setItem] = useState([]);
+    const [ showDelete, setShowDelete] = useState(false);
+    const { allSessions, deleteSlot } = SessionApi()
 
     const dayList = {
         "sun": "Sunday",
@@ -86,7 +88,6 @@ function SetSession(props) {
 
     }
 
-
     const deleteSlotData = (Item) => {
         const deleteData = deleteItem.filter((i) => {
             if (i.day === Item) {
@@ -99,7 +100,6 @@ function SetSession(props) {
                 getAllSession()
                 handleDeleteClose()
             })
-
     }
     return (
         <div className="container">
@@ -117,15 +117,13 @@ function SetSession(props) {
                                         <div className="col-md-5" >
                                             <Link onClick={(e) => handleUpdate(e, fetchUpdateTime[item])} >
                                                 <span>
-                                                    {fetchUpdateTime[item][0].fromTime}
+                                                    {moment(new Date(fetchUpdateTime[item][0].fromTime)).format("HH:mm")}
                                                     -
-                                                    {fetchUpdateTime[item][0].toTime}
+                                                    {moment(new Date(fetchUpdateTime[item][0].toTime)).format("HH:mm")}
                                                     <span className='ml-3'>
                                                         <FaRupeeSign />
                                                     </span>
                                                     {fetchUpdateTime[item][0].fees}/-
-                                                    {/* {(fetchUpdateTime[item][0].Appointment === "VideoAppointment") */}
-                                                    {/* ? <FaVideo /> */}
                                                     <FaWalking />
                                                 </span>
                                             </Link>
@@ -144,14 +142,12 @@ function SetSession(props) {
                                                 <> <div className="col-md-6" >
                                                     <Link onClick={(e) => handleUpdate(e, fetchTime[item])} >
                                                         <span>
-                                                            {fetchTime[item][0].fromTime}
+                                                            {moment(new Date(fetchTime[item][0].fromTime)).format("HH:mm")}
                                                             -
-                                                            {fetchTime[item][0].toTime}
+                                                            {moment(new Date(fetchTime[item][0].toTime)).format("HH:mm")}
                                                             <FaRupeeSign />
                                                             {fetchTime[item][0].fees}/-
-                                                            {/* {(fetchTime[item][0].Appointment === "VideoAppointment") */}
-                                                            {/* ? <FaVideo /> */}
-                                                            {/* <FaWalking /> */}
+                                                            <FaWalking />
                                                         </span>
                                                     </Link>
 

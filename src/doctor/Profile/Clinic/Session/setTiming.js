@@ -11,18 +11,17 @@ import { MainInput, MainInputBox } from '../../../../mainComponent/mainInput';
 import { MainSelect } from '../../../../mainComponent/mainSelect';
 import moment from 'moment';
 import SessionApi from "../../../../services/SessionApi";
+
 function SetTiming(props) {
     const { doctorId } = useParams();
     const { clinicId, day } = props;
-    const [error, setError] = useState("");
-    const [coilSessionTimining, setCoilSessionTimining] = useRecoilState(SetDoctorSessionTiming)
-    const [selectedSlots, setSelectedSlots] = useState([])
+    const [ error, setError] = useState("");
+    const [ coilSessionTimining, setCoilSessionTimining] = useRecoilState(SetDoctorSessionTiming)
+    const [ selectedSlots, setSelectedSlots] = useState([])
     const { setSessionTimeData } = SessionApi()
-    const [sessionTime, setSessionTime] = useState({
+    const [ sessionTime, setSessionTime] = useState({
         clinicId: clinicId,
         doctorId: doctorId,
-        fromTime: (moment(new Date()).format('HH:mm')),
-        toTime: (moment(new Date()).format('HH:mm')),
         timeSlot: 20,
         fees: "",
         day: day,
@@ -32,6 +31,7 @@ function SetTiming(props) {
         const { name, value } = event.target;
         setSessionTime({ ...sessionTime, [name]: value });
     };
+    
     const handleToTimeSelection = (time) => {
         setSessionTime(sessionTime => {
             return {
@@ -68,26 +68,21 @@ function SetTiming(props) {
         })
     }
 
-    async function handleTimeClick(e) {
+    function handleTimeClick(e) {
         e.preventDefault();
-        const slots = selectedSlots.filter((res) => {
-            if (res.status == true) {
-                return selectedSlots
-            }
-        })
         const setTimeData = {
             clinicId: clinicId,
             doctorId: sessionTime.doctorId,
-            fromTime: moment(sessionTime.fromTime).format("HH:mm"),
-            toTime: moment(sessionTime.toTime).format("HH:mm"),
+            fromTime: sessionTime.fromTime,
+            toTime: sessionTime.toTime,
             timeSlot: sessionTime.timeSlot,
-            showSelectedSlots: slots,
+            showSelectedSlots: selectedSlots.filter((e) => e.status === true),
             Appointment: "InClinicAppointment",
             fees: sessionTime.fees,
             day: sessionTime.day
         }
         if (sessionTime.fromTime < sessionTime.toTime) {
-            await setSessionTimeData(setTimeData)
+            setSessionTimeData(setTimeData)
                 .then(res => {
                     let setTime = {}
                     setTime[sessionTime.day] = [res.data]
