@@ -1,39 +1,44 @@
 import React from 'react';
-import { useState ,useEffect} from "react";
+import { useState, useEffect } from "react";
 import Icon from '@material-ui/core/Icon';
-import { FetchExperience} from "./Partial/fetchExperience";
-import { AddDoctorProfessionalExperience} from "./Partial/addDoctorProfessionalExperience";
+import { FetchExperience } from "./Partial/fetchExperience";
+import { AddDoctorProfessionalExperience } from "./Partial/addDoctorProfessionalExperience";
 import { Link } from '@material-ui/core';
-import { MainButtonInput} from "../../../mainComponent/mainButtonInput";
+import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
 
-function DoctorProfessionalExperience(props){
+function DoctorProfessionalExperience(props) {
     //for add new fiels (experience)
     const [showExperience, setShowExperience] = useState(false);
     function handleAdd() {
         setShowExperience(!showExperience)
     }
 
-    function handleRecordAdded(){
+    function handleRecordAdded() {
         setShowExperience(true)
     }
 
-return(
-    <>
-        <FetchExperience/>           
-        <Link to="#" onClick={() => handleAdd()}>
-            <Icon className="addiconbutton mt-4" style={{ fontSize: 25 }}>add</Icon>
-        </Link>
-        
-        {showExperience === false ?(
-            <div>
-                <AddDoctorProfessionalExperience addRecords={handleRecordAdded}/>
+    return (
+        <>
+            <FetchExperience />
+            <div className="row float-right">
+                <div className="my-2 ">
+                    <Link onClick={() => handleAdd()}>
+                        <Icon className="addiconbutton">add</Icon>
+                    </Link>
+                </div>
+                <div className="m-2 ">
+                    <MainButtonInput onClick={props.data}>Next</MainButtonInput>
+                </div>
             </div>
-        ):null
-        }  
-        <div className="text-right add_top_30">
-            <MainButtonInput onClick={props.data}>Next</MainButtonInput>
-        </div>
-    </>
+            <div className="my-5">
+                {showExperience === false ? (
+                    <div>
+                        <AddDoctorProfessionalExperience addRecords={handleRecordAdded} />
+                    </div>
+                ) : null
+                }
+            </div>
+        </>
     )
 }
-export{DoctorProfessionalExperience}
+export { DoctorProfessionalExperience }

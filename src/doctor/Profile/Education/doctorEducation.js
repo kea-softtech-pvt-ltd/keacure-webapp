@@ -20,21 +20,27 @@ function DoctorEducation(props) {
 
     return (
         <>
-            <FetchEducation doctorId={doctorId}/>
+            <FetchEducation doctorId={doctorId} />
 
-            <Link onClick={() => handleAdd()}>
-                <Icon className="addiconbutton my-5 " style={{ fontSize: 50 }}>add</Icon>
-            </Link>
-
-            {showEducation === false ? (
-                <div>
-                    <AddDoctorEducation doctorId={doctorId} recordAdded={handleRecordAdded} />
+            <div className="row float-right">
+                <div className="my-2 ">
+                    <Link onClick={() => handleAdd()}>
+                        <Icon className="addiconbutton" style={{ fontSize: 150 }}>add</Icon>
+                    </Link>
                 </div>
-            ) : null}
-
-            <div className="text-right add_top_30">
-                <MainButtonInput onClick={props.data}>Next</MainButtonInput>
+                <div className="m-2 ">
+                    <MainButtonInput onClick={props.data}>Next</MainButtonInput>
+                </div>
             </div>
+            <div className="my-5">
+                {showEducation === false ? (
+                    <div>
+                        <AddDoctorEducation doctorId={doctorId} recordAdded={handleRecordAdded} />
+                    </div>
+                ) : null}
+            </div>
+
+
         </>
     )
 }
