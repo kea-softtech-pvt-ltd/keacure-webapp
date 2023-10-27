@@ -13,13 +13,12 @@ import moment from 'moment';
 import SessionApi from "../../../../services/SessionApi";
 
 function SetTiming(props) {
-    const { doctorId } = useParams();
-    const { clinicId, day } = props;
-    const [ error, setError] = useState("");
-    const [ coilSessionTimining, setCoilSessionTimining] = useRecoilState(SetDoctorSessionTiming)
-    const [ selectedSlots, setSelectedSlots] = useState([])
+    const { doctorId, clinicId, day } = props;
+    const [error, setError] = useState("");
+    const [coilSessionTimining, setCoilSessionTimining] = useRecoilState(SetDoctorSessionTiming)
+    const [selectedSlots, setSelectedSlots] = useState([])
     const { setSessionTimeData } = SessionApi()
-    const [ sessionTime, setSessionTime] = useState({
+    const [sessionTime, setSessionTime] = useState({
         clinicId: clinicId,
         doctorId: doctorId,
         timeSlot: 20,
@@ -31,7 +30,15 @@ function SetTiming(props) {
         const { name, value } = event.target;
         setSessionTime({ ...sessionTime, [name]: value });
     };
-    
+
+    const handleChange = (event, index) => {
+        const { name, value } = event.target;
+        setSessionTime({ ...sessionTime, [name]: value });
+        let newState = [...selectedSlots]
+        newState[index]["status"] = !selectedSlots[index]["status"]
+        setSelectedSlots(newState);
+    }
+
     const handleToTimeSelection = (time) => {
         setSessionTime(sessionTime => {
             return {
@@ -43,7 +50,6 @@ function SetTiming(props) {
         const fromTime = sessionTime.fromTime;
         const startTime = moment(fromTime, "HH:mm");
         const allTimes = [];
-        //Loop over the times - only pushes time with 20 or 30 minutes interval
         while (startTime < time) {
             allTimes.push({ time: startTime.format("HH:mm"), status: true }); //Push times
             startTime.add(interval, 'minutes');//Add interval of selected minutes
@@ -51,14 +57,7 @@ function SetTiming(props) {
         setSelectedSlots(allTimes)
     }
 
-    const handleChange = (event, index) => {
-        const { name, value } = event.target;
-        setSessionTime({ ...sessionTime, [name]: value });
-        let newState = [...selectedSlots]
-        newState[index]["status"] = !selectedSlots[index]["status"]
-        setSelectedSlots(newState);
-    }
-
+  
     const handleFromTimeSelection = (time) => {
         setSessionTime(sessionTime => {
             return {
@@ -104,6 +103,7 @@ function SetTiming(props) {
                         <MainSelect name="timeSlot" defaultValue="20 min" onChange={handleInputChange} value={sessionTime.timeSlot} >
                             <option selected="selected" value={20}> 20 min</option>
                             <option value={30}> 30 min</option>
+                            <option value={15}> 15 min</option>
                         </MainSelect>
                     </div>
 

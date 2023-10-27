@@ -175,7 +175,7 @@ function SetSession(props) {
                     <Modal.Title>Add Session</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <SetTiming clinicId={clinicId} day={dayName} onSubmit={handleTimeClick} />
+                    <SetTiming doctorId={doctorId} clinicId={clinicId} day={dayName} onSubmit={handleTimeClick} />
                 </Modal.Body>
             </Modal>
             <Modal show={updateTime} onHide={handleUpdateClose}>
@@ -183,7 +183,7 @@ function SetSession(props) {
                     <Modal.Title>Update Session</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <SetUpdateTime day={dayName} update={updateItem} onSubmit={handleUpdateTimeClick} />
+                    <SetUpdateTime doctorId={doctorId} day={dayName} update={updateItem} onSubmit={handleUpdateTimeClick} />
                 </Modal.Body>
             </Modal>
             <div>

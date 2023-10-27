@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import DateFnsUtils from '@date-io/date-fns';
 import TextField from "@material-ui/core/TextField";
 import { useState } from "react";
-// import { useParams }from "react-router-dom";
 import { TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { useRecoilState } from 'recoil';
 import { updateSession } from "../../../../recoil/atom/setUpdateSession";
@@ -21,6 +20,7 @@ function SetUpdateTime(props) {
     const [selectedSlots, setSelectedSlots] = useState([])
     const [sessionTime, setSessionTime] = useState([])
     const { updateSessionData, getUpdatedSessionSlotData } = SessionApi()
+
     const handleInputChange = event => {
         const { name, value } = event.target;
         setSessionTime({ ...sessionTime, [name]: value });
@@ -36,7 +36,12 @@ function SetUpdateTime(props) {
                 setFromTime(res[0].fromTime)
                 setToTime(res[0].toTime)
                 setSelectedSlots(res[0].showSelectedSlots)
-                setSelectedSlots(checkTimeSlot(moment(res[0].fromTime).format("HH:mm"),moment(res[0].toTime).format("HH:mm"), res[0].timeSlot))
+                setSelectedSlots
+                    (checkTimeSlot
+                        (moment(res[0].fromTime)
+                            .format("HH:mm"), moment(res[0].toTime)
+                                .format("HH:mm"), res[0].timeSlot)
+                    )
             })
     }
 
@@ -44,7 +49,6 @@ function SetUpdateTime(props) {
         const startTime = moment(fromTime, "HH:mm");
         const endTime = moment(toTime, "HH:mm")
         const allTimes = [];
-        //Loop over the times - only pushes time with 20 or 30 minutes interval
         while (startTime < endTime) {
             allTimes.push({ time: startTime.format("HH:mm"), status: true }); //Push times
             startTime.add(interval, 'minutes');//Add interval of selected minutes
@@ -71,7 +75,7 @@ function SetUpdateTime(props) {
     function handleTimeClick(e) {
         e.preventDefault();
         const slots = selectedSlots.filter((res) => {
-            if (res.status == true) {
+            if (res.status === true) {
                 return selectedSlots
             }
         })

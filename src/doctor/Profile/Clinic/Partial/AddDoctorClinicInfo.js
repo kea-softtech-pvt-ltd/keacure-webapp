@@ -9,20 +9,19 @@ import { setDoctorClinic } from "../../../../recoil/atom/setDoctorClinic";
 import { useRecoilState } from "recoil";
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
 import ClinicApi from "../../../../services/ClinicApi";
+import { setDoctorId } from "../../../../recoil/atom/setDoctorId";
 function AddDoctorClinicInfo() {
-    const { doctorId } = useParams();
-    //for open addclinic session modal form
     const [showSession, setShowSession] = useState(false);
     const [activeModal, setActiveModal] = useState()
-    //fetch clinic list
     const [clinicList, setClinicList] = useRecoilState(setDoctorClinic);
+    const [doctorId, setDoctorsId] = useRecoilState(setDoctorId)
     const { getAllClinicsData } = ClinicApi()
     useEffect(() => {
         getAllClinics();
     }, [])
 
     const getAllClinics = () => {
-         getAllClinicsData({ doctorId })
+        getAllClinicsData({ doctorId })
             .then(jsonRes => {
                 setClinicList(jsonRes)
             });
