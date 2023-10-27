@@ -48,12 +48,17 @@ function SetTiming(props) {
         })
         const interval = sessionTime.timeSlot;
         const fromTime = sessionTime.fromTime;
+        console.log("fromTime------", fromTime)
+
         const startTime = moment(fromTime, "HH:mm");
+        console.log("startTime------", startTime)
         const allTimes = [];
         while (startTime < time) {
             allTimes.push({ time: startTime.format("HH:mm"), status: true }); //Push times
             startTime.add(interval, 'minutes');//Add interval of selected minutes
         }
+        console.log("allTimes------", allTimes)
+
         setSelectedSlots(allTimes)
     }
 

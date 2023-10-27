@@ -3438,9 +3438,9 @@ input[type="radio"]:checked + label {
 	letter-spacing: 0.00938em;
 }
 .doctorphoto {
-	height: 130px;
-	width: 130px;
-	margin-bottom: 15px;
+	height: 150px;
+	width: 150px;
+	margin-bottom: 40px;
 }
 .doctorphotoStyle {
 	width: 100%;
@@ -4508,8 +4508,18 @@ input[type="file"]::-webkit-file-upload-button {
 	cursor: pointer;
 	float: right;
 	border-radius: 20%;
-	font-size: 20px !important;
-	margin-top: 5px;
+	font-size: 25px !important;
+	margin-top: 7px;
+}
+.bottomborder{
+	border-bottom-style: solid;
+	border-width: 1px;
+	border-color: #d7d4d4;
+}
+.rightborder{
+	border-right-style: solid;
+	border-width: 1px;
+	border-color: #d7d4d4;
 }
 .btn_1.medium,
 a.btn_1.medium {
@@ -4884,7 +4894,7 @@ textarea.form-control {
 	padding: 15px 15px;
 }
 .doctorProfile {
-	height: 75%;
+	height: 400px;
 	width: 75%;
 }
 .dashspace {

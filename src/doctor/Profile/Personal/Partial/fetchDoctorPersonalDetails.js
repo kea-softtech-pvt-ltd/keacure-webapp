@@ -6,7 +6,7 @@ import AuthApi from "../../../../services/AuthApi";
 function FetchDoctorPersonalDetails(props) {
     const doctorId = props.doctorId;
     const [fetchPersonalData, setFetchPersonalData] = useState([]);
-
+    console.log("=========",fetchPersonalData)
     const { getDrInfo } = AuthApi();
 
     useEffect(() => {

@@ -12,10 +12,10 @@ import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 function DoctorPersonalInformation(props) {
     const { data, doctorId } = props
-    const [ updateData, setUpdateData] = useState([]);
-    const { 
-        addDoctorInformation, 
-        submitDoctorInformation 
+    const [updateData, setUpdateData] = useState([]);
+    const {
+        addDoctorInformation,
+        submitDoctorInformation
     } = AuthApi();
     function handleChangeAddress(address) {
         setUpdateData(prevInput => {
@@ -39,53 +39,54 @@ function DoctorPersonalInformation(props) {
             });
     }, [])
 
-    // async function uploadImageAsync(uri) {
-    //     const blob = await new Promise((resolve, reject) => {
-    //         const xhr = new XMLHttpRequest();
-    //         xhr.onload = function () {
-    //             resolve(xhr.response);
-    //         };
-    //         xhr.onerror = function (e) {
-    //             console.log(e);
-    //             reject(new TypeError("Network request failed"));
-    //         };
-    //         xhr.responseType = "blob";
-    //         xhr.open("GET", uri, true);
-    //         xhr.send(null);
-    //     });
+    async function uploadImageAsync(uri) {
+        const blob = await new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                resolve(xhr.response);
+            };
+            xhr.onerror = function (e) {
+                console.log(e);
+                reject(new TypeError("Network request failed"));
+            };
+            xhr.responseType = "blob";
+            xhr.open("GET", uri, true);
+            xhr.send(null);
+        });
 
-    //     const fileRef = ref(getStorage(), uuid.v4());
+        const fileRef = ref(getStorage(), uuid.v4());
 
-    //     const result = await uploadBytes(fileRef, blob);
+        const result = await uploadBytes(fileRef, blob);
 
-    //     // blob.close();
-    //     return await getDownloadURL(fileRef);
-    // }
+        // blob.close();
+        return await getDownloadURL(fileRef);
+    }
 
     const { formState: { errors } } = useForm();
     const onSubmit = async () => {
-        // const resultUrl = await uploadImageAsync(updateData.photo)
+        const resultUrl = await uploadImageAsync(updateData.photo)
 
         const bodyData = {
-            // photo: resultUrl,
+            photo: resultUrl,
             name: updateData.name,
             gender: updateData.gender,
             personalEmail: updateData.personalEmail,
             address: updateData.address,
         }
-        submitDoctorInformation({doctorId, bodyData})
-        .then(()=>{
-
-        })
+        console.log("=====bodyData", bodyData)
+        submitDoctorInformation({ doctorId, bodyData })
+            .then(() => {
+                alert("added")
+            })
     }
 
     return (
         <>
             <div className="row">
                 <div className="col-md-6 ">
-                    <div className="">
-                        <div className="col-4">
-                            {/* <div className="doctorphoto">
+                    <div className="row mb-10">
+                        <div className="col-md-5">
+                            <div className="doctorphoto">
                                 {updateData.photo ?
                                     <img
                                         src={updateData.photo}
@@ -98,9 +99,9 @@ function DoctorPersonalInformation(props) {
                                         className="doctorphotoStyle"
                                     />
                                 }
-                            </div> */}
+                            </div>
                         </div>
-                        <div className="col-8">
+                        <div className="col-md-7">
                             <div className="text-left">
                                 <label><b>Doctor photo</b></label>
                                 <MainInput
@@ -115,25 +116,21 @@ function DoctorPersonalInformation(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="form-group ">
-                        <div className="text-left">
-                            <label><b>Gender</b></label>
-                        </div>
+                    <div className="text-left">
+                        <label><b>Gender</b></label>
                     </div>
-                    <div className="">
-                        <div className="col-6">
-                            <MainRadioGroup
-                                name="gender"
-                                value="female"
-                                value1="male"
-                                value2="other"
-                                onChange={handleInputChange}
-                                label="Female"
-                                label1="male"
-                                label2="other">
-                            </MainRadioGroup>
-                            {errors.gender && <span className="validation">Please Select your gender</span>}
-                        </div>
+                    <div className="col-6">
+                        <MainRadioGroup
+                            name="gender"
+                            value="female"
+                            value1="male"
+                            value2="other"
+                            onChange={handleInputChange}
+                            label="Female"
+                            label1="male"
+                            label2="other">
+                        </MainRadioGroup>
+                        {errors.gender && <span className="validation">Please Select your gender</span>}
                     </div>
                 </div>
                 <div className="col-md-5">
@@ -168,12 +165,13 @@ function DoctorPersonalInformation(props) {
                     {errors.address && <span className="validation">Please enter your location</span>}
                 </div>
             </div>
-
-            <div className="text-center add_top_30">
-                <MainButtonInput onClick={onSubmit}> Save</MainButtonInput>
-            </div>
-            <div className="text-right add_top_30">
-                <MainButtonInput onClick={data}>Next</MainButtonInput>
+            <div className="row float-right">
+                <div className="text-left m-2 add_top_30">
+                    <MainButtonInput onClick={onSubmit}> Save</MainButtonInput>
+                </div>
+                <div className="text-left m-2 add_top_30">
+                    <MainButtonInput onClick={data}>Next</MainButtonInput>
+                </div>
             </div>
         </>
     )

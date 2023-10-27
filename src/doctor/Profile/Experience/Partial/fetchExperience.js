@@ -75,7 +75,7 @@ function FetchExperience() {
                         <Link to="#" onClick={e => removeExperienceData(experience, e)} className="editbutton"><i className="icon-trash-2" title="Delete profile"></i></Link>
                         <Modal show={activeModal === index} onHide={handleClose} id={`experience-${experience._id}`} key={experience._id}>
                             <Modal.Header closeButton>
-                                <Modal.Title>Edit Experience Data</Modal.Title>
+                                <Modal.Title>Edit Experience</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 <EditExperience doctorId={doctorId} ExId={experience._id} onSubmit={EditData} />

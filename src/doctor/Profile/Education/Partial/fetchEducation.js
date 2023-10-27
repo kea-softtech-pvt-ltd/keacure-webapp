@@ -50,7 +50,7 @@ function FetchEducation(props) {
                                 <Link onClick={e => deleteEducation(education, e)} to="#" className="editbutton"><i className="icon-trash-2" title="delete profile"></i></Link>
                                 <Modal show={activeModal === index} onHide={handleClose} id={`education-${education._id}`} key={education._id}>
                                     <Modal.Header closeButton >
-                                        <Modal.Title>Edit Education Data</Modal.Title>
+                                        <Modal.Title>Edit Education</Modal.Title>
                                     </Modal.Header>
                                     <Modal.Body>
                                         <EditEducation imageData={education.document} doctorId={doctorId} EduId={education._id} onClick={handleClose} onSubmit={EditData} />
@@ -87,7 +87,6 @@ function FetchEducation(props) {
                                                 </div>
                                                 <div>{education.comYear}</div>
                                             </div>
-                                            {/* <FetchImages imageData={education.document} /> */}
                                         </div>
                                     </div>
                                 </div>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import { SetTiming } from "./setTiming";
 import { useState, useEffect } from "react";
-import { FaWalking, FaRupeeSign } from "react-icons/fa"
+import { FaRupeeSign } from "react-icons/fa"
 import { useRecoilState } from 'recoil';
 import { SetDoctorSessionTiming } from "../../../../recoil/atom/SetDoctorSessionTiming";
 import { updateSession } from '../../../../recoil/atom/setUpdateSession'
@@ -14,15 +14,15 @@ import SessionApi from '../../../../services/SessionApi';
 
 function SetSession(props) {
     const { doctorId, clinicId } = props;
-    const [ dayName, setDayNames] = useState();
-    const [ showtime, setShowTime] = useState(false);
-    const [ updateTime, setUpdateTime] = useState(false);
-    const [ fetchTime, setfetchTime] = useRecoilState(SetDoctorSessionTiming);
-    const [ fetchUpdateTime, setfetchUpdateTime] = useRecoilState(updateSession);
-    const [ updateItem, setUpdateItem] = useState([]);
-    const [ deleteItem, setDeleteItem] = useState([]);
-    const [ Item, setItem] = useState([]);
-    const [ showDelete, setShowDelete] = useState(false);
+    const [dayName, setDayNames] = useState();
+    const [showtime, setShowTime] = useState(false);
+    const [updateTime, setUpdateTime] = useState(false);
+    const [fetchTime, setfetchTime] = useRecoilState(SetDoctorSessionTiming);
+    const [fetchUpdateTime, setfetchUpdateTime] = useRecoilState(updateSession);
+    const [updateItem, setUpdateItem] = useState([]);
+    const [deleteItem, setDeleteItem] = useState([]);
+    const [Item, setItem] = useState([]);
+    const [showDelete, setShowDelete] = useState(false);
     const { allSessions, deleteSlot } = SessionApi()
 
     const dayList = {
@@ -61,6 +61,7 @@ function SetSession(props) {
         setUpdateTime(true);
         setUpdateItem(item)
     }
+
     const handleUpdateTimeClick = () => {
         handleUpdateClose();
     }
@@ -106,15 +107,18 @@ function SetSession(props) {
             <ul>
                 {daysKeys.map((item, index) =>
                     <li key={index}>
-                        <div className="my-2">
+                        <div className="bottomborder">
                             <div className="row">
-                                <div className="col-md-5">
-                                    {dayList[item]}
+                                <div className="col-md-3 rightborder">
+                                    <div className=" p-2 ">
+                                        {dayList[item]}
+                                    </div>
                                 </div>
+
                                 {fetchUpdateTime[item]
                                     ?
                                     <>
-                                        <div className="col-md-5" >
+                                        <div className="col-md-7 p-2" >
                                             <Link onClick={(e) => handleUpdate(e, fetchUpdateTime[item])} >
                                                 <span>
                                                     {moment(new Date(fetchUpdateTime[item][0].fromTime)).format("HH:mm")}
@@ -124,22 +128,20 @@ function SetSession(props) {
                                                         <FaRupeeSign />
                                                     </span>
                                                     {fetchUpdateTime[item][0].fees}/-
-                                                    <FaWalking />
                                                 </span>
                                             </Link>
                                         </div>
-                                        <span className="col-md-2 ">
+                                        <span className="col-md-2">
                                             <Link to="#" onClick={() => handleDeleteShow(item)}>
                                                 <Icon className="icon-trash-2" style={{ fontSize: 17 }} ></Icon>
                                             </Link>
                                         </span>
-                                    </>
-
+                                        </>
                                     : (
                                         <>
                                             {fetchTime[item]
                                                 ?
-                                                <> <div className="col-md-6" >
+                                                <> <div className="col-md-7 p-2" >
                                                     <Link onClick={(e) => handleUpdate(e, fetchTime[item])} >
                                                         <span>
                                                             {moment(new Date(fetchTime[item][0].fromTime)).format("HH:mm")}
@@ -147,14 +149,13 @@ function SetSession(props) {
                                                             {moment(new Date(fetchTime[item][0].toTime)).format("HH:mm")}
                                                             <FaRupeeSign />
                                                             {fetchTime[item][0].fees}/-
-                                                            <FaWalking />
                                                         </span>
                                                     </Link>
 
                                                 </div>
                                                 </>
                                                 :
-                                                <div className="col-md-6">
+                                                <div className="col-md-7 p-2">
                                                     <Link to="#" onClick={(e) => handleShow(e, item)} className="">
                                                         Set Session Timing
                                                     </Link>
@@ -163,7 +164,6 @@ function SetSession(props) {
                                         </>
                                     )
                                 }
-
                             </div>
                         </div>
                     </li>
