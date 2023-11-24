@@ -45,7 +45,7 @@ export default function Patient() {
                     </li>
                     <li className='float-none' style={{ fontSize: 'inherit' }} >Appoinment</li>
                     <li>
-                        <Link onClick={() => setActive(true)} >
+                        <Link onClick={() => setActive(!active)} >
                             <Icon className="addiconbutton " style={{ fontSize: 50 }}>add</Icon>
                         </Link>
                     </li>
@@ -59,7 +59,7 @@ export default function Patient() {
                 />
                 <div className="common_box">
                     <>
-                        {!active && patientList.length > 0 ?
+                        {!active && patientList?
                             <PatientList doctorId={doctorId} />
                             :
                             <PatientLoginForm doctorId={doctorId} />

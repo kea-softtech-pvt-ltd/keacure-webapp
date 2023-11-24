@@ -52,6 +52,7 @@
     "react-scripts": "4.0.3",
     "react-share": "^4.4.1",
     "react-time-picker": "^4.3.0",
+    "react-toastify": "^9.0.0",
     "recoil": "^0.4.1",
     "recoil-persist": "^5.1.0",
     "redux": "^4.1.0",
@@ -60,8 +61,8 @@
     "uuid": "^3.4.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "react-scripts --openssl-legacy-provider start",
+    "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

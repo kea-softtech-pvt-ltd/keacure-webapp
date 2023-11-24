@@ -12,6 +12,10 @@ import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import GetMedicinePriscription from './GetMedicinePrescription';
 import ReportApi from '../../../services/ReportApi';
+import "react-toastify/dist/ReactToastify.css";
+import Toaster from '../../Toaster';
+import { toast } from 'react-toastify';
+
 export default function MedicinePrescription(props) {
     //for add new fiels (priscription)
     const { onChange, reportId, appointmentId } = props;
@@ -110,6 +114,7 @@ export default function MedicinePrescription(props) {
         insertMedicinePrescriptionData(bodyData)
             .then((res) => {
             })
+            toast.success("Saved Successfully!")
     }
 
     return (
@@ -198,6 +203,9 @@ export default function MedicinePrescription(props) {
             <div className="text-right add_top_30 medicinebtn">
                 <input type="submit" onClick={saveData} className="btn_1 medicinebtn" value="Save" />
                 <input type="submit" onClick={onChange} className="btn_1 medicinebtn" value="Next" />
+            </div>
+            <div className="row float-right">
+                <Toaster />
             </div>
         </div>
 

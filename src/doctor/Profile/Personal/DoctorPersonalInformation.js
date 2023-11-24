@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import React from 'react';
-import avatarImage from "../../../img/profile.png";
+import avatarImage from '../../../img/profile.png'
 import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
 import { MainInput } from '../../../mainComponent/mainInput';
 import { PlacesAutocompleteInput } from "../Clinic/Partial/placesAutocomplete"
@@ -9,9 +9,11 @@ import { MainRadioGroup } from "../../../mainComponent/mainRadioGroup";
 import AuthApi from "../../../services/AuthApi";
 import uuid from "uuid";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
-
+import Toaster from "../../Toaster";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 function DoctorPersonalInformation(props) {
-    const { data, doctorId } = props
+    const { data, doctorId } = props;
     const [updateData, setUpdateData] = useState([]);
     const {
         addDoctorInformation,
@@ -65,19 +67,19 @@ function DoctorPersonalInformation(props) {
     const { formState: { errors } } = useForm();
     const onSubmit = async () => {
         const resultUrl = await uploadImageAsync(updateData.photo)
-
         const bodyData = {
             photo: resultUrl,
             name: updateData.name,
             gender: updateData.gender,
             personalEmail: updateData.personalEmail,
             address: updateData.address,
+            isSubscribed: true
         }
-        console.log("=====bodyData", bodyData)
         submitDoctorInformation({ doctorId, bodyData })
             .then(() => {
-                alert("added")
             })
+        toast.success("Saved Successfully!")
+
     }
 
     return (
@@ -172,6 +174,7 @@ function DoctorPersonalInformation(props) {
                 <div className="text-left m-2 add_top_30">
                     <MainButtonInput onClick={data}>Next</MainButtonInput>
                 </div>
+                <Toaster />
             </div>
         </>
     )

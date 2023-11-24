@@ -33,7 +33,7 @@ export default function PatientsClinicHistory() {
         getPatientHistory();
     }, [])
 
-    async function getPatientHistory() {
+     function getPatientHistory() {
         getPatientListDetails({ doctorId })
             .then((result) => {
                 const data = result.filter((patientData) => {

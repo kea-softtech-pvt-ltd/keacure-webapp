@@ -26,13 +26,13 @@ function SetSession(props) {
     const { allSessions, deleteSlot } = SessionApi()
 
     const dayList = {
-        "sun": "Sunday",
-        "mon": "Monday",
-        "tue": "Tuesday",
-        "wed": "Wednesday",
-        "thu": "Thursday",
-        "fri": "Friday",
-        "sat": "Saturday",
+        "mon": "Mon",
+        "tue": "Tue",
+        "wed": "Wed",
+        "thu": "Thu",
+        "fri": "Fri",
+        "sat": "Sat",
+        "sun": "Sun"
     }
     const daysKeys = Object.keys(dayList)
 
@@ -124,10 +124,9 @@ function SetSession(props) {
                                                     {moment(new Date(fetchUpdateTime[item][0].fromTime)).format("HH:mm")}
                                                     -
                                                     {moment(new Date(fetchUpdateTime[item][0].toTime)).format("HH:mm")}
-                                                    <span className='ml-3'>
-                                                        <FaRupeeSign />
+                                                    <span className='ml-5'>
+                                                        {fetchUpdateTime[item][0].fees}/-
                                                     </span>
-                                                    {fetchUpdateTime[item][0].fees}/-
                                                 </span>
                                             </Link>
                                         </div>
@@ -136,7 +135,7 @@ function SetSession(props) {
                                                 <Icon className="icon-trash-2" style={{ fontSize: 17 }} ></Icon>
                                             </Link>
                                         </span>
-                                        </>
+                                    </>
                                     : (
                                         <>
                                             {fetchTime[item]
@@ -147,12 +146,18 @@ function SetSession(props) {
                                                             {moment(new Date(fetchTime[item][0].fromTime)).format("HH:mm")}
                                                             -
                                                             {moment(new Date(fetchTime[item][0].toTime)).format("HH:mm")}
-                                                            <FaRupeeSign />
-                                                            {fetchTime[item][0].fees}/-
+                                                            <span className='ml-5'>
+                                                                {fetchTime[item][0].fees}/-
+                                                            </span>
                                                         </span>
                                                     </Link>
 
                                                 </div>
+                                                    <span className="col-md-2">
+                                                        <Link to="#" onClick={() => handleDeleteShow(item)}>
+                                                            <Icon className="icon-trash-2" style={{ fontSize: 17 }} ></Icon>
+                                                        </Link>
+                                                    </span>
                                                 </>
                                                 :
                                                 <div className="col-md-7 p-2">

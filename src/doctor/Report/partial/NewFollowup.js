@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import Payment from './Payment';
 import ReportApi from '../../../services/ReportApi';
+import "react-toastify/dist/ReactToastify.css";
+import Toaster from '../../Toaster';
+import { toast } from 'react-toastify';
 
 export default function NewFollowup(props) {
     //for datepicker
@@ -22,18 +25,19 @@ export default function NewFollowup(props) {
     const addDatePicker = (date) => {
         setDate(date)
     }
-    const addNode =  () => {
+    const addNode = () => {
         const bodyData = {
             "new_follow_up": date,
         }
-         insertNewFollowUpDate({ reportId }, bodyData)
+        insertNewFollowUpDate({ reportId }, bodyData)
+        toast.success("Saved Successfully!")
     }
     useEffect(() => {
         medicalReportData()
     }, [])
 
-    const medicalReportData =  () => {
-         getMedicineReport({ reportId })
+    const medicalReportData = () => {
+        getMedicineReport({ reportId })
             .then((res) => {
                 setDoctorId(res[0].doctorId)
                 setAppointmentId(res[0].patientAppointmentId)
@@ -77,27 +81,27 @@ export default function NewFollowup(props) {
                     className="btn_1 medicinebtn"
                     value="Add"
                 />
-                    {/* <div className="text-right  float-right"> */}
-                        <input
-                            type="submit"
-                            // onClick={getPrescriptionData}
-                            className="btn_1 medicinebtn"
-                            value="Make Payment"
-                            onClick={handleShow}
+                <input
+                    type="submit"
+                    className="btn_1 medicinebtn"
+                    value="Make Payment"
+                    onClick={handleShow}
 
-                        />
-                    {/* </div> */}
-                    <Modal show={show} onHide={handleClose}>
-                        <Modal.Header closeButton>
-                            <Modal.Title>Payment</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <Payment fees={fees} doctorId={doctorId} appointmentId={appointmentId} reportId={reportId} onSubmit={onSubmit} />
-                        </Modal.Body>
-                    </Modal>
-                </div>
+                />
 
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Payment</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Payment fees={fees} doctorId={doctorId} appointmentId={appointmentId} reportId={reportId} onSubmit={onSubmit} />
+                    </Modal.Body>
+                </Modal>
             </div>
-        
+            <div className="row float-right">
+                <Toaster />
+            </div>
+        </div>
+
     )
 }

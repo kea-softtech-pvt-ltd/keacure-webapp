@@ -7,7 +7,6 @@ import { setDoctorExperience } from '../../../../recoil/atom/setDoctorExperience
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
 import { MainInput } from '../../../../mainComponent/mainInput';
 import { MainMuiPickers } from '../../../../mainComponent/MainMuiPickers';
-import AuthApi from '../../../../services/AuthApi';
 import ExperienceApi from '../../../../services/ExperienceApi';
 function AddDoctorProfessionalExperience(props) {
     const { doctorId } = useParams();

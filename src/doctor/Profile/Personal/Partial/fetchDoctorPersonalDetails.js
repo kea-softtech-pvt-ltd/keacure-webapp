@@ -4,14 +4,13 @@ import Experience from "../../Partial/totalExperience";
 import AuthApi from "../../../../services/AuthApi";
 
 function FetchDoctorPersonalDetails(props) {
-    const doctorId = props.doctorId;
+    const {doctorId} = props
     const [fetchPersonalData, setFetchPersonalData] = useState([]);
-    console.log("=========",fetchPersonalData)
     const { getDrInfo } = AuthApi();
 
     useEffect(() => {
         getDoctorPersonalDetails();
-    }, [props]);
+    }, []);
 
     const getDoctorPersonalDetails = () => {
         getDrInfo({ doctorId })
@@ -44,7 +43,6 @@ function FetchDoctorPersonalDetails(props) {
                                     <Experience experienceData={fetchPersonalData.experienceList}></Experience>
                                 ) : null
                             }
-                            <p><Link to="#"> <b>View on map</b></Link></p>
 
                         </address>
                     </div>

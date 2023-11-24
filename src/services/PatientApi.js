@@ -1,10 +1,7 @@
 import axios from 'axios';
 import { API } from '../config';
-import { useRecoilState } from 'recoil';
-import { setSubscription } from '../recoil/atom/setSubscription';
 
 export default function PatientApi() {
-    const [subscibed, setSubscribed] = useRecoilState(setSubscription)
 
     const loginPatient = async ({ mobile }) => {
         try {
@@ -44,21 +41,21 @@ export default function PatientApi() {
         }
     };
     const getbookedSlots = async (doctorId, clinicId) => {
-        try{
+        try {
             const result = await axios.get(`${API}/getBookingData/${doctorId}/${clinicId}`)
             return result.data
         }
-        catch(err){
+        catch (err) {
             return err
         }
     };
 
     const patientDetailsData = async ({ patientId }) => {
-        try{
+        try {
             const result = await axios.get(`${API}/patientById/${patientId}`)
             return result.data
         }
-        catch(err){
+        catch (err) {
             return err
         }
     }
@@ -66,13 +63,30 @@ export default function PatientApi() {
     const signup = async ({ patientId }, bodyData) => {
         try {
             const result = await axios.post(`${API}/insertPatientDetails/${patientId}`, bodyData)
-            console.log("===========result", result)
             return result.data
         }
         catch (err) {
             return err;
         }
     };
+    const getPatientLifestyle = async (patientId) => {
+        try {
+            const result = await axios.get(`${API}/fetchPatientLifestyleInfo/${patientId}`);
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+    }
+    const getPatientMedical = async (patientId) => {
+        try {
+            const result = await axios.get(`${API}/fetchPatientMedicalInfo/${patientId}`);
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+    }
     return {
         loginPatient,
         patientLoginOtp,
@@ -80,7 +94,9 @@ export default function PatientApi() {
         paymentInfo,
         getbookedSlots,
         patientDetailsData,
-        signup
+        signup,
+        getPatientLifestyle,
+        getPatientMedical
     }
 
 

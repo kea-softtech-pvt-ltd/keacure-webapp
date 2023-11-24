@@ -5,6 +5,7 @@ import UserLinks from "../Dashboard-card/partial/uselinks";
 import { Wrapper } from "../../mainComponent/Wrapper";
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
+import Report from "../Dashboard-card/Report";
 
 export default function DoctorProfile() {
     const { doctorId } = useParams();
@@ -39,9 +40,14 @@ export default function DoctorProfile() {
                     doctorId={doctorId}
                     helperId={helpersData._id}
                     accessModule={helpersData.access_module} />
-                <div id="section_1" className="col-lg-10">
-                    <div className="white-box">
+                <div className="white-box">
+                    <div id="section_1" className="col-lg-10">
                         <FetchDoctorPersonalDetails doctorId={doctorId} />
+                    </div>
+                    <div id="section_1" className="col-lg-12">
+                        <div>
+                            <Report doctorId={doctorId} />
+                        </div>
                     </div>
                 </div>
             </div>

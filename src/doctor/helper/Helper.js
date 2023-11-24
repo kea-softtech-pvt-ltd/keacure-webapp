@@ -10,7 +10,7 @@ import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
 import HelperApi from '../../services/HelperApi';
 export default function Helper() {
-    const [helperList, setHelperList] = useState([]);
+    const [helperList, setHelperList] = useState(null);
     const [active, setActive] = useState(false)
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
 
@@ -47,7 +47,7 @@ export default function Helper() {
                     </li>
                     <li className='float-none' style={{ fontSize: 'inherit' }} >Assistant</li>
                     <li>
-                        <Link onClick={() => setActive(true)} >
+                        <Link onClick={() => setActive(!active)} >
                             <Icon className="addiconbutton " style={{ fontSize: 50 }}>add</Icon>
                         </Link>
                     </li>
@@ -61,11 +61,17 @@ export default function Helper() {
                 />
                 <div className="common_box">
                     <>
-                        {!active && helperList.length > 0 ?
-                            <HelperList doctorId={doctorId} />
-                            :
-                            <AddHelper doctorId={doctorId} />
-                        }
+                    {helperList?(
+                        <>
+
+                            {!active && helperList.length > 0 ?
+                                <HelperList doctorId={doctorId} />
+                                :
+                                <AddHelper doctorId={doctorId} />
+                            }
+                        </>
+                     ): null} 
+                        
                     </>
                 </div>
 

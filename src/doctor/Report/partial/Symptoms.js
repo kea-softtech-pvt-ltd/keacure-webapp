@@ -4,6 +4,9 @@ import TextField from '@material-ui/core/TextField';
 import { useState, useEffect } from 'react';
 import GetSymptomsData from './GetSymptomsData'
 import ReportApi from '../../../services/ReportApi';
+import Toaster from '../../Toaster';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 export default function Symptoms(props) {
     const { onChange, reportId } = props
     const [symptoms, setSymptoms] = useState([])
@@ -47,8 +50,8 @@ export default function Symptoms(props) {
                     "symptoms": otherSymptom,
                 }
                 insertSymptom_masterTable(other)
-
             })
+        toast.success("Saved Successfully!")
     }
 
     return (
@@ -102,7 +105,9 @@ export default function Symptoms(props) {
                     className="btn_1 medicinebtn"
                     value="Next"
                 />
-
+            </div>
+            <div className="row float-right">
+                <Toaster />
             </div>
         </div>
     )

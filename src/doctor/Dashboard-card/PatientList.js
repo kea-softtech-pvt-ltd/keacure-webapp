@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import moment from 'moment';
 import { Button, Modal } from 'react-bootstrap';
 import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
@@ -88,6 +88,9 @@ export default function PatientList(props) {
 
         }
     }
+    const handleShowProfile = (patientId) => {
+        history.push(`/patientdata/${patientId}`)
+    }
     return (
         <>
 
@@ -98,9 +101,13 @@ export default function PatientList(props) {
                             {!details.dependentId ?
                                 <div className="col-md-4 ">
                                     <div className="cardDiv">
-                                        <span className='cardSpan '>
+                                        <span className='cardSpan'>
                                             <i className='icon-user color patientListIcon' />
-                                            <span className='patientName'>{details['patientDetails'][0].name}</span>
+                                            <span className='patientName '>
+                                                <Link to="#" className='underLine' onClick={() => handleShowProfile(details.patientId)}>
+                                                    {details['patientDetails'][0].name}
+                                                </Link>
+                                            </span>
                                         </span>
                                         <span className='cardSpan'>
                                             <i className='icon-mobile-1 color patientListIcon' />
@@ -112,7 +119,9 @@ export default function PatientList(props) {
                                         </span>
                                         <span className='cardSpan time'>
                                             <i className='pe-7s-date m-1 color patientListIcon' />
-                                            <span className='slotTime'>{moment(details.selectedDate).format('YYYY-MM-DD').toString()},{details.slotTime}
+                                            <span className='slotTime'>
+                                                {moment(details.selectedDate).format('YYYY-MM-DD').toString()},
+                                                {details.slotTime}
                                                 <span className='timeSlot'>
                                                     <AccessTimeRoundedIcon style={{ fontSize: 20, color: '#1a3c8b' }} />
                                                     {details.timeSlot} Min.
@@ -121,22 +130,25 @@ export default function PatientList(props) {
                                         </span>
 
                                         <div className='cardSpan appointmentBtn'>
-                                            <Link to="#" onClick={() => saveData(details)}>
-                                                <button className="btn appColor helperBtn ">Start Consultation</button>
-                                            </Link>
+                                            {moment(details.selectedDate).format("YYYY-MM-DD") < moment(new Date()).format("YYYY-MM-DD ") ?
+                                                <button className="btn-disabled btn helperBtn" style={{ cursor: 'not-allowed' }}>Incomplete</button>
+                                                : <Link to="#" onClick={() => saveData(details)}>
+                                                    <button className="btn appColor helperBtn ">Start Consultation</button>
+                                                </Link>}
                                             <Link onClick={() => handleDeleteShow(details)} >
-                                                <button className='btn btn-default helperBtn ' >Cancel</button>
+                                                <button className='btn btn-default helperBtn'>Cancel</button>
                                             </Link>
 
                                         </div>
                                     </div>
                                 </div>
-
                                 : <div className="col-md-4 ">
                                     <div className="cardDiv">
                                         <span className='cardSpan '>
                                             <i className='icon-user color patientListIcon' />
-                                            <span className='patientName'>{details['dependentDetails'][0].name}</span>
+                                            <Link to="#" className='underLine' onClick={() => handleShowProfile(details.dependentId)}>
+                                                <span className='patientName'>{details['dependentDetails'][0].name}</span>
+                                            </Link>
                                         </span>
                                         <span className='cardSpan'>
                                             <i className='icon-mobile-1 color patientListIcon' />
@@ -157,9 +169,12 @@ export default function PatientList(props) {
                                         </span>
 
                                         <div className='cardSpan appointmentBtn'>
-                                            <Link to="#" onClick={() => saveData(details)}>
-                                                <button className="btn appColor helperBtn ">Start Consultation</button>
-                                            </Link>
+                                            {moment(details.selectedDate).format("YYYY-MM-DD") < moment(new Date()).format("YYYY-MM-DD ") ?
+                                                <button className="btn-disabled btn helperBtn"
+                                                    style={{ cursor: 'not-allowed' }}>Incomplete</button>
+                                                : <Link to="#" onClick={() => saveData(details)}>
+                                                    <button className="btn appColor helperBtn">Start Consultation</button>
+                                                </Link>}
                                             <Link onClick={() => handleDeleteShow(details)} >
                                                 <button className='btn btn-default helperBtn ' >Cancel</button>
                                             </Link>
@@ -172,38 +187,41 @@ export default function PatientList(props) {
                     )
 
                 })}
-            </div>
-            {records.length > 0 ?
-                <nav aria-label="" className="add_top_20">
-                    <ul className="pagination pagination-sm">
-                        <li className="page-item">
-                            <Link className="page-link"
-                                to="#" onClick={prePage}>
-                                Previous
-                            </Link>
-                        </li>
-                        {
-                            number.map((n, i) => {
-                                return (
-                                    <li className={`page-item ${activePageNo === n ? 'active' : ""}`} key={i}>
-                                        <Link className="page-link"
-                                            to="#" onClick={() => changeCPage(n)}>
-                                            {n}</Link>
-                                    </li>
-                                )
-                            })
-                        }
-                        <li className="page-item">
-                            <Link className="page-link"
-                                to="#" onClick={nextPage}>
-                                Next
-                            </Link>
-                        </li>
-                    </ul>
-                </nav>
-                : <div className="clinicHistory" ><b>Data is not Available</b></div>}
+            </div >
 
-            <Modal show={showDelete} onHide={handleDeleteClose}>
+            {
+                records ?
+                    <nav aria-label="" className="add_top_20">
+                        <ul className="pagination pagination-sm">
+                            <li className="page-item">
+                                <Link className="page-link"
+                                    to="#" onClick={prePage}>
+                                    Previous
+                                </Link>
+                            </li>
+                            {
+                                number.map((n, i) => {
+                                    return (
+                                        <li className={`page-item ${activePageNo === n ? 'active' : ""}`} key={i}>
+                                            <Link className="page-link"
+                                                to="#" onClick={() => changeCPage(n)}>
+                                                {n}</Link>
+                                        </li>
+                                    )
+                                })
+                            }
+                            <li className="page-item">
+                                <Link className="page-link"
+                                    to="#" onClick={nextPage}>
+                                    Next
+                                </Link>
+                            </li>
+                        </ul>
+                    </nav>
+                    : <div className="clinicHistory" ><b>Data is not Available</b></div>
+            }
+
+            <Modal show={showDelete} onHide={handleDeleteClose} >
                 <Modal.Header closeButton>
                     <Modal.Title>Are You Sure?</Modal.Title>
                 </Modal.Header>
@@ -217,9 +235,8 @@ export default function PatientList(props) {
                     <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleDeleteClose}>
                         No
                     </Button>
-
                 </Modal.Footer>
-            </Modal>
+            </Modal >
 
         </>
     )

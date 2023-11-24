@@ -4,14 +4,14 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import GetLabPrescription from './getLabPrescription';
 import ReportApi from '../../../services/ReportApi';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import Toaster from '../../Toaster';
 
 export default function LabPrescription(props) {
-    //for add new files (priscription)
     const { onChange, reportId, appointmentId } = props
     const { getLabData, insertLabPrescriptionData } = ReportApi()
-    //for whole data
     const [labTestData, setLabTestData] = useState([]);
-    //for Selected data
     const [saveLabData, setSaveLabData] = useState('')
     useEffect(() => {
         getLabTestData();
@@ -35,6 +35,7 @@ export default function LabPrescription(props) {
         }
         insertLabPrescriptionData(bodyData)
         // onChange()
+        toast.success("Saved Successfully!")
     }
 
     return (
@@ -81,6 +82,9 @@ export default function LabPrescription(props) {
                         value="Next"
                     />
                 </div>
+            </div>
+            <div className="row float-right">
+                <Toaster />
             </div>
         </>
     )

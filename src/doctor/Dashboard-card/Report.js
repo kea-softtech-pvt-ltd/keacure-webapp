@@ -47,54 +47,35 @@ export default function Report() {
     }
 
     return (
-        <Wrapper>
-            <>
-                <MainNav>
-                    <ul className="clearfix">
-                        <li>
-                            <Link to={`/dashboard/${doctorId}`}>
-                                <i className="arrow_back backArrow" title="back button"></i>
-                            </Link>
-                        </li>
-                        <li className='float-none' style={{ fontSize: 'inherit' }}>Report</li>
-                    </ul>
-                </MainNav>
-                <div className='row'>
-                    <UserLinks
-                        doctorId={doctorId}
-                        helperId={helpersData._id}
-                        accessModule={helpersData.access_module}
-                    />
-                    <div className="common_box">
-                        <div className='row'>
-                            <div className="col-md-4 ">
-                                <div className="cardDiv">
-                                    <span className='cardSpan '>
-                                        <span className='patientName m-3'>Total Appoinment</span>
-                                        <span className='patientName m-3'>{patientList.length}</span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="col-md-4 ">
-                                <div className="cardDiv">
-                                    <span className='cardSpan '>
-                                        <span className='patientName m-3'>Total Patients</span>
-                                        <span className='patientName m-3'>{patientData.length}</span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="col-md-4 ">
-                                <div className="cardDiv">
-                                    <span className='cardSpan '>
-                                        <span className='patientName m-3'>Total Amount</span>
-                                        <span className='patientName m-3'>{total}</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div >
+
+        <div className="">
+            <div className='row'>
+                <div className="col-md-4 ">
+                    <div className="cardDiv">
+                        <span className='cardSpan '>
+                            <span className='patientName m-3'>Total Appoinment</span>
+                            <span className='patientName m-3'>{patientList.length}</span>
+                        </span>
+                    </div>
                 </div>
-            </>
-        </Wrapper>
+                <div className="col-md-4 ">
+                    <div className="cardDiv">
+                        <span className='cardSpan '>
+                            <span className='patientName m-3'>Total Patients</span>
+                            <span className='patientName m-3'>{patientData.length}</span>
+                        </span>
+                    </div>
+                </div>
+                <div className="col-md-4 ">
+                    <div className="cardDiv">
+                        <span className='cardSpan '>
+                            <span className='patientName m-3'>Total Amount (INR)</span>
+                            <span className='patientName m-3'>{total}</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div >
+
     )
 }

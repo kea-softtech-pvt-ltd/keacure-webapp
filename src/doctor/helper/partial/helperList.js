@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { Link } from "react-router-dom";
-import { Button, Card, Modal } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import HelperApi from '../../../services/HelperApi';
 
 
@@ -17,13 +16,14 @@ export default function HelperList(props) {
     useEffect(() => {
         getHelperDetails();
     }, [])
+
     const handleDeleteShow = (details) => {
         setDetails(details)
         setShowDelete(true)
     }
     const handleDeleteClose = () => setShowDelete(false)
 
-    async function getHelperDetails() {
+     function getHelperDetails() {
         getHelper(doctorId)
             .then((result) => {
                 const data = result.filter((helper) => {

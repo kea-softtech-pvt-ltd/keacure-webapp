@@ -1,11 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReportApi from '../../../services/ReportApi';
-
+import Toaster from '../../Toaster';
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from 'react-toastify';
 export default function Investigation(props) {
     const [investigation_note, setInvestigation_note] = useState("")
+    const [investigation, setInvestigation] = useState('')
     const { onChange, reportId } = props;
-    const { insertInvestigationNote } = ReportApi();
+    const { insertInvestigationNote, getMedicineReport } = ReportApi();
 
+    useEffect(() => {
+        investigationData()
+    }, [])
     const handleChange = (event) => {
         setInvestigation_note(event.target.value);
     }
@@ -14,8 +20,15 @@ export default function Investigation(props) {
             "investigation_note": investigation_note,
         }
         insertInvestigationNote({ reportId }, bodyData)
-            .then(()=>{
-                onChange()
+            .then(() => {
+
+            })
+        toast.success("Saved Successfully!")
+    }
+    const investigationData = () => {
+        getMedicineReport({ reportId })
+            .then((res) => {
+                setInvestigation(res[0].investigation_note)
             })
     }
 
@@ -25,7 +38,7 @@ export default function Investigation(props) {
                 <span className='left mb-2'>Doctor Investigation Note</span>
                 <textarea
                     type="text"
-                    value={investigation_note}
+                    value={investigation}
                     onChange={handleChange}
                     style={{ width: 950 }}
                     className="form-control"
@@ -41,6 +54,16 @@ export default function Investigation(props) {
                     className="btn_1"
                     value="Add Note"
                 />
+                <input
+                    type="submit"
+                    onClick={onChange}
+                    className="btn_1 medicinebtn"
+                    value="Next"
+                />
+
+            </div>
+            <div className="row float-right">
+                <Toaster />
             </div>
         </div>
     )

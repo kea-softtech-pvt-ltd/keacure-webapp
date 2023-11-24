@@ -7,7 +7,7 @@ export default function Header() {
     const doctorId = useRecoilValue(doctorIdState)
 
     return (
-        <header className="header_sticky">
+        <header style={{ zIndex: '-1' }} className="header_sticky">
             <Link to="#menu" className="btn_mobile">
                 <div className="hamburger hamburger--spin" id="hamburger">
                     <div className="hamburger-box">
@@ -18,9 +18,11 @@ export default function Header() {
             <div className="container">
                 <div className="row">
                     <div className="col-lg-3 col-6">
+                        <Link to={`/dashboard/${doctorId}`}>
                         <div id="logo_home" align='left'>
                             <img className='appLogo' src={appLogo} alt="Something Went Wrong" />
                         </div>
+                        </Link>
                     </div>
                     <div className="col-lg-9 col-6">
                         <nav id="menu" className="main-menu">

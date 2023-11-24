@@ -1,10 +1,7 @@
 import axios from 'axios';
 import { API } from '../config';
-import { useRecoilState } from 'recoil';
-import { setSubscription } from '../recoil/atom/setSubscription';
 
 export default function SubscriptionApi() {
-    const [subscibed, setSubscribed] = useRecoilState(setSubscription)
 
     const subscription = async (bodyData) => {
         try {
@@ -33,10 +30,21 @@ export default function SubscriptionApi() {
             return err
         }
     }
+    const getSubscriptionPlan = async () => {
+        try{
+            const result = await axios.get(`${API}/getsubscriptionplans`)
+            return result.data
+        }
+        catch(err){
+            return err
+        }
+    }
 
     return {
         subscription,
         getSubscriptionData,
         updateSubscriptionData,
+        getSubscriptionPlan
     }
+
 }

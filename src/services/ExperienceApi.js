@@ -1,11 +1,7 @@
 import axios from 'axios';
 import { API } from '../config';
-import { useRecoilState } from 'recoil';
-import { setSubscription } from '../recoil/atom/setSubscription';
 
 export default function ExperienceApi() {
-    const [subscibed, setSubscribed] = useRecoilState(setSubscription)
-
     const insertDrExperience = async (newDoctorData) => {
         try {
             const result = await axios.post(`${API}/insertExperience`, newDoctorData)

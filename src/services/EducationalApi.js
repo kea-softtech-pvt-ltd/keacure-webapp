@@ -1,10 +1,7 @@
 import axios from "axios";
 import { API } from "../config";
-import { useRecoilState } from 'recoil';
-import { setSubscription } from '../recoil/atom/setSubscription';
 
 export default function EducationalApi() {
-    const [subscibed, setSubscribed] = useRecoilState(setSubscription)
 
     const AddEducation = async (bodyData) => {
         try {

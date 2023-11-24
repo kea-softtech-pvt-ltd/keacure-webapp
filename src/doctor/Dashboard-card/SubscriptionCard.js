@@ -8,19 +8,24 @@ import { useRecoilState } from "recoil";
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { Button, Modal } from "react-bootstrap";
 import SubscriptionApi from "../../services/SubscriptionApi";
+import { FaRupeeSign } from "react-icons/fa";
 export default function SubscriptionCard() {
-    const { updateSubscriptionData, getSubscriptionData } = SubscriptionApi();
-    const [getSubData, setGetSubData] = useState(null);
+    const { updateSubscriptionData, getSubscriptionData, getSubscriptionPlan } = SubscriptionApi();
+    const [getSubData, setGetSubData] = useState([]);
     const [getPlan, setGetPlan] = useState(null);
     const [subscriptionId, setSubscriptionId] = useState([]);
     const { doctorId } = useParams();
     const [helpersData, setHelpersData] = useRecoilState(setHelperData);
+    const [getSubscription, setGetSubscription] = useState([])
+
     const [show, setShow] = useState(false);
 
     const history = useHistory();
 
     useEffect(() => {
         fetchSubscription()
+        getSubscriptionPlans()
+
     }, []);
 
     const fetchSubscription = () => {
@@ -35,6 +40,7 @@ export default function SubscriptionCard() {
         setGetPlan(item)
         setShow(true)
     }
+
     const handleClose = () => {
         setShow(false)
     }
@@ -44,7 +50,9 @@ export default function SubscriptionCard() {
         const bodyData = {
             "doctorId": doctorId,
             "date": new Date(),
-            "plan": plan,
+            "expiryDate": new Date(),
+            "plan": plan.name,
+            "duration": plan.frequency
         }
         updateSubscriptionData({ _id }, bodyData)
             .then(() => {
@@ -53,6 +61,20 @@ export default function SubscriptionCard() {
             })
         handleClose()
 
+    }
+    const getSubscriptionPlans = () => {
+        getSubscriptionPlan()
+            .then((res) => {
+                subscriptionPlan(res)
+            })
+    }
+    const subscriptionPlan = (res) => {
+        const data = res.filter((sub) => {
+            if (sub.status === true) {
+                return (sub)
+            }
+        })
+        setGetSubscription(data)
     }
 
     return (
@@ -75,7 +97,49 @@ export default function SubscriptionCard() {
                         helperId={helpersData._id}
                         accessModule={helpersData.access_module}
                     />
-                    <div className="col-md-10">
+                    <div className="row">
+                        {getSubscription.map((item, i) => {
+                            return (
+                                <div className="" >
+                                    <div className="card " key={i}>
+                                        <span>
+                                            <h4 className="">{item.name}</h4>
+                                        </span>
+                                        <h5> <FaRupeeSign />-{item.amount}</h5>
+                                        <ul className="  card-text" >
+                                            {item.features.map((data, i) => {
+                                                return (
+                                                    <li key={i} className="card-list">
+                                                        <i className="icon-right-circled" title="right-tick"></i>
+                                                        {data}
+                                                    </li>
+                                                )
+                                            })}
+
+                                        </ul>
+                                        {getSubData === item.name ?
+                                            <button
+                                                onClick={handleClose}
+                                                className="btn disabled-card shadow-none disabled"
+                                            >Subscribed
+                                            </button>
+                                            : <button
+                                                onClick={() => handleShow(item)}
+                                                className="sub-card-btn shadow-none btn btn-primary">
+                                                Get Started
+                                            </button>
+                                        }
+                                        {/* <button
+                                                onClick={() => handleShow(item)}
+                                                className="sub-card-btn shadow-none btn btn-primary">
+                                                Get Started
+                                            </button> */}
+                                    </div>
+                                </div>
+                            )
+                        })}
+                    </div>
+                    {/* <div className="col-md-10">
                         <div className="container ">
                             <div className="row">
                                 <div className="card">
@@ -184,7 +248,7 @@ export default function SubscriptionCard() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
                             <Modal.Title>Are You Sure?</Modal.Title>

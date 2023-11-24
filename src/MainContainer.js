@@ -23,6 +23,7 @@ import EditHelper from './doctor/helper/EditHelper';
 import Patient from "./patient/patient";
 import { AppointmentBookingSection } from "./patient/appointmentBookingSection";
 import Report from "./doctor/Dashboard-card/Report";
+import PatientData from "./doctor/Dashboard-card/partial/patientData";
 
 function MainContainer() {
   return (
@@ -79,10 +80,10 @@ function MainContainer() {
         < Logout />
       </Route>
       <Route path="/helper/:doctorId">
-        <Helper/>
+        <Helper />
       </Route>
       <Route path="/edithelper/:helperId">
-        <EditHelper/>
+        <EditHelper />
       </Route>
       <Route path="/loginhelper">
         <LoginHelper />
@@ -93,11 +94,14 @@ function MainContainer() {
       <Route path="/patient/:doctorId">
         <Patient />
       </Route>
+      <Route path="/patientdata/:patientId">
+        <PatientData />
+      </Route>
       <Route path="/appointmentbookingsection/:patientId">
         <AppointmentBookingSection />
       </Route>
       <Route path="/report/:doctorId">
-        <Report/>
+        <Report />
       </Route>
     </Switch>
   )
