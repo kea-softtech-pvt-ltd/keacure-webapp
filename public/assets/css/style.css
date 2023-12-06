@@ -445,7 +445,7 @@ a.btn_1 {
 }
 .labData {
 	position: relative;
-	left: 200px;
+	left: 50px;
 }
 .medicinebtn {
 	margin: 10px;
@@ -456,7 +456,7 @@ a.btn_1 {
 
 .helperDiv {
 	position: relative;
-	left: 215px;
+	left: 125px;
 }
 .helperCheckbox {
 	accent-color: #1a3c8b;
@@ -469,10 +469,10 @@ a.btn_1 {
 	border-bottom: 1px solid rgb(233, 231, 231);
 	margin: 5px;
 }
-/* .symptomsBtn{
+.addSymptomBtn{
 	position: relative;
-    right: 150px;
-} */
+    right: 43px;
+}
 .modalbtn {
 	margin-top: 10px;
 	font-size: 13px;
@@ -490,9 +490,8 @@ a.btn_1 {
 	/* margin-left: -15px; */
 }
 .getSymptoms {
-	margin-left: 80px;
 	position: relative;
-	left: 200px;
+	left: 50px;
 	/* bottom: 150px; */
 	/* float: right; */
 }
@@ -4838,8 +4837,17 @@ a.box_feat_about h3 {
 .clinicLogo {
 	height: 60px;
 	width: 60px;
+}
+.adminClinic {
+	margin-left: 15px;
+}
+.borderRadius{
 	border-radius: 5px;
 }
+/* .headingStyle{
+font-size:inherit ;
+font: 500;
+} */
 .medicine-checkbox {
 	font-size: 100px;
 	height: 25%;

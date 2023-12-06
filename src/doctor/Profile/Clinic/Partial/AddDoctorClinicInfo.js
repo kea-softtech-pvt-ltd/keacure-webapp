@@ -3,7 +3,6 @@ import { SetSession } from "../Session/setSession";
 import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { Modal } from "react-bootstrap";
 import { setDoctorClinic } from "../../../../recoil/atom/setDoctorClinic";
 import { useRecoilState } from "recoil";
@@ -62,16 +61,16 @@ function AddDoctorClinicInfo() {
             <>
                 {clinicList.map((item, index) => (
                     <div className="" key={item._id}>
-                        <div className='adminClinic row'>
+                        <div className='row'>
                             <figure className="col-md-1">
                                 <img
-                                    className='clinicLogo'
+                                    className='clinicLogo borderRadius'
                                     src={item.clinicLogo}
                                     alt="Clinic Logo"
                                 />
                             </figure>
-                            <div className="col-md-3">
-                                <div className='fontS'><b>{item.clinicName}</b></div>
+                            <div className="col-md-3 adminClinic" align='left'>
+                                <div className='fontS' ><b>{item.clinicName}</b></div>
                                 <div className="icon-location fontSize color">
                                     {item.address}
                                 </div>

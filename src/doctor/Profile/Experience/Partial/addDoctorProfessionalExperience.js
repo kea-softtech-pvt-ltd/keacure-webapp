@@ -9,7 +9,7 @@ import { MainInput } from '../../../../mainComponent/mainInput';
 import { MainMuiPickers } from '../../../../mainComponent/MainMuiPickers';
 import ExperienceApi from '../../../../services/ExperienceApi';
 function AddDoctorProfessionalExperience(props) {
-    const { doctorId } = useParams();
+    const { doctorId, addRecords } = props;
     const [coilDoctorExperience, setCoilDoctorExperience] = useRecoilState(setDoctorExperience)
     const [error, setError] = useState('')
     const [startYear, setStartYear] = useState(new Date())
@@ -60,6 +60,7 @@ function AddDoctorProfessionalExperience(props) {
                     props.addRecords()
                 })
         }
+        addRecords();
     }
 
     function manipulateExperience(data) {

@@ -31,7 +31,6 @@ export default function EditDoctorProfile() {
         setTabValue(3)
     }
 
-
     return (
         <Wrapper>
             <MainNav>
@@ -42,9 +41,9 @@ export default function EditDoctorProfile() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="#section_1" className="active">
+                        <span to="#section_1" className="active ">
                             Doctor Information
-                        </Link>
+                        </span>
                     </li>
                     <li>
                         <Link to={`/dashboard/${doctorId}`}>

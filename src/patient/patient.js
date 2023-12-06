@@ -10,7 +10,7 @@ import PatientList from '../doctor/Dashboard-card/PatientList';
 import { PatientLoginForm } from './patientLoginForm';
 import AppointmentsApi from '../services/AppointmentsApi';
 export default function Patient() {
-    const [patientList, setPatientList] = useState([]);
+    const [patientList, setPatientList] = useState(null);
     const [active, setActive] = useState(false)
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const { getPatientListDetails } = AppointmentsApi()
@@ -59,11 +59,15 @@ export default function Patient() {
                 />
                 <div className="common_box">
                     <>
-                        {!active && patientList?
-                            <PatientList doctorId={doctorId} />
-                            :
-                            <PatientLoginForm doctorId={doctorId} />
-                        }
+                        {patientList ?
+                            <>
+                                {!active && patientList ?
+                                    <PatientList doctorId={doctorId} />
+                                    :
+                                    <PatientLoginForm doctorId={doctorId} />
+                                }
+                            </>
+                            : null}
                     </>
                 </div>
 

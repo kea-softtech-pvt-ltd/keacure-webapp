@@ -41,6 +41,11 @@ export default function UserLinks(props) {
         e.preventDefault()
         history.push(`/report/${doctorId}`)
     }
+    function handleMedicineList(e) {
+        e.preventDefault()
+        history.push(`/medicinelist/${doctorId}`)
+    }
+    
     return (
 
         <div className="col-sm-2 dashSpace" align='left'>
@@ -198,7 +203,32 @@ export default function UserLinks(props) {
                     }
                 </>
             }
-
+            {!helperId ?
+                <div className="dashboard">
+                    <Link
+                        onClick={handleMedicineList}>
+                        <i className="icon-medkit" style={{ fontSize: 20 }} />
+                        <b className="fontSize">  Medicine-List</b>
+                    </Link>
+                </div> :
+                <>
+                    {
+                        accessModule.map((item) => {
+                            return (
+                                (item.moduleName === "Report") === true ?
+                                    <div className="dashboard">
+                                        <Link
+                                            onClick={handleMedicineList}>
+                                            <i className="icon-medkit" style={{ fontSize: 20 }} />
+                                            <b className="fontSize">  Medicine-List</b>
+                                        </Link>
+                                    </div>
+                                    : null
+                            )
+                        })
+                    }
+                </>
+            }
         </div>
 
     )

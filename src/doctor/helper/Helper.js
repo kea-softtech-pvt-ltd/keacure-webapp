@@ -20,10 +20,6 @@ export default function Helper() {
         getHelperDetails();
     }, [])
 
-    // async function getHelperDetails() {
-    //     const result = await getHelper(doctorId);
-    //     setHelperList(result)
-    // }
     async function getHelperDetails() {
         getHelper(doctorId)
             .then((result) => {

@@ -7,7 +7,7 @@ export default function Header() {
     const doctorId = useRecoilValue(doctorIdState)
 
     return (
-        <header style={{ zIndex: '-1' }} className="header_sticky">
+        <header  className="header_sticky">
             <Link to="#menu" className="btn_mobile">
                 <div className="hamburger hamburger--spin" id="hamburger">
                     <div className="hamburger-box">

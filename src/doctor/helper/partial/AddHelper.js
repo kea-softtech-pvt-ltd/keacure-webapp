@@ -98,9 +98,9 @@ export default function AddHelper(props) {
                         onChange={handleChange}
                         placeholder="Email">
                     </MainInput>
-                    <div>
+                    {/* <div> */}
                         <label className='helperLabel float-left'><b>Mobile Number</b></label>
-                    </div>
+                    {/* </div> */}
                     <MainInput
                         type="mobile"
                         name="mobile"
@@ -111,8 +111,8 @@ export default function AddHelper(props) {
                         placeholder="Phone Number (+XX)">
                     </MainInput>
                 </div>
-                <div className="col-lg-5">
-                    <span><b>Select Access</b></span>
+                <div className="col-lg-4">
+                <label className='helperLabel' ><b>Select Access</b></label>
                     <div className='helperDiv'>
                         {accessModule.map((item, index) => {
                             return (
@@ -121,7 +121,6 @@ export default function AddHelper(props) {
                                         type="checkbox"
                                         onChange={() => changeSelectedModule(index)}
                                         className="mx-3 helperCheckbox"
-                                    // value={item.module_name}
                                     />
                                     <label className='helperspan '>{item.module_name}</label>
                                 </div>

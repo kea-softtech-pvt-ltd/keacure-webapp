@@ -13,7 +13,7 @@ export default function Symptoms(props) {
     const [saveSymptoms, setSaveSymptoms] = useState([])
     const [otherSymptom, setOtherSymptoms] = useState('')
     const { symptomsData, insertSymptoms, insertSymptom_masterTable } = ReportApi();
-
+    const [inputSymptom, setInputSymptoms] = useState([])
     useEffect(() => {
         getSymptomsData();
     }, [])
@@ -29,35 +29,40 @@ export default function Symptoms(props) {
         setSaveSymptoms(selectedValue)
     }
 
-    const handleOtherChangeValue = (e) => {
-        setOtherSymptoms(e.target.value)
+    const addInputBox = () => {
+        const value = [...inputSymptom,[]]
+        setInputSymptoms(value)
     }
-
+    const handleInputChange = (onChangeValue, i) => {
+        const inputData = [...inputSymptom]
+        inputData[i] = onChangeValue.target.value;
+        setInputSymptoms(inputData)
+    }
+    const handleDelete = (i) => {
+        const deleteVal = [...inputSymptom]
+        deleteVal.splice(i)
+        setInputSymptoms(deleteVal)
+    }
     const addSymptoms = () => {
+        const symptom = saveSymptoms.push(...inputSymptom)
         const bodyData = {
             "symptoms": saveSymptoms,
         }
-
-        if (otherSymptom) {
-            saveSymptoms.push(otherSymptom)
-        } else {
-            setOtherSymptoms(null)
-        }
-
         insertSymptoms({ reportId }, bodyData)
             .then(() => {
                 const other = {
-                    "symptoms": otherSymptom,
+                    "symptoms": symptom,
                 }
                 insertSymptom_masterTable(other)
             })
         toast.success("Saved Successfully!")
+
     }
 
     return (
         <div>
-            <div className='symptomsData w-100'>
-                <div className='w-40'>
+             <div className='symptomsData row'>
+                <div className='col-md-3'>
                     <label className='left'>Choose Symptoms</label>
                     <Autocomplete
                         style={{ width: 250 }}
@@ -76,19 +81,40 @@ export default function Symptoms(props) {
                             />}
                     />
                 </div>
-                <div className="symptomsInput w-30">
+                <div className="symptomsInput col-sm-4">
                     <span className="vital-signInput ">
-                        <label className='left' >Other</label>
-                        <input
-                            type="text"
-                            className="form-control "
-                            onChange={handleOtherChangeValue}
-                            placeholder="Enter your symptoms"
-                        />
+
+                        {
+                            inputSymptom.map((data, i) => {
+                                return (
+                                    <div className=' d-flex'>
+                                        <input
+                                            type="text"
+                                            className="form-control mb-2"
+                                            onChange={(e) => handleInputChange(e, i)}
+                                            placeholder="Enter your symptoms"
+                                        />
+                                        <input
+                                            type="submit"
+                                            onClick={() => handleDelete(i)}
+                                            className="btn_1 patientinfo ml-2"
+                                            value="Delete"
+                                        />
+                                    </div>
+                                )
+                            })
+                        }
+                        <div>
+                            <input
+                                type="submit"
+                                onClick={() => addInputBox()}
+                                className="btn_1 addSymptomBtn "
+                                value="Add Symptoms"
+                            />
+                        </div>
                     </span>
                 </div>
-
-                <div className='getSymptoms w-30'  >
+                <div className='getSymptoms col-md-3'>
                     <GetSymptomsData reportId={reportId} />
                 </div>
             </div>

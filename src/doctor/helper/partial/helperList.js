@@ -65,7 +65,7 @@ export default function HelperList(props) {
                                     <i className='icon-mobile-1 color' />
                                     {details.mobile}
                                 </span>
-                                <span className='cardSpan'>
+                                <span className='cardSpan appointmentBtn'>
                                     <Link to={`/edithelper/${details._id}`} >
                                         <Button className='appColor helperBtn' >Edit</Button>
                                     </Link>

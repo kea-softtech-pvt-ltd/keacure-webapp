@@ -115,14 +115,8 @@ export default function Payment(props) {
             <div className=' border-payment' />
             <div className='paymentInput'>
                 <label className='totalFees'><b>Total</b></label>
-                <span className=" totalInput dashboard">{patientFees}</span>
-                {/* <input
-                        type="text"
-                        value={patientFees}
-                        // onChange={handleDurationValue}
-                        className="payment totalInput"
-                        name="total"
-                    /> */}
+                <span className=" totalInput ">{patientFees}</span>
+              
             </div>
             <div className="text-center">
                 <input

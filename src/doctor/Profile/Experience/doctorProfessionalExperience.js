@@ -1,11 +1,12 @@
 import React from 'react';
-import { useState} from "react";
+import { useState } from "react";
 import { FetchExperience } from "./Partial/fetchExperience";
 import { AddDoctorProfessionalExperience } from "./Partial/addDoctorProfessionalExperience";
 import { Link } from '@material-ui/core';
 import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
 
 function DoctorProfessionalExperience(props) {
+    const { doctorId } = props;
     //for add new fiels (experience)
     const [showExperience, setShowExperience] = useState(true);
     function handleAdd() {
@@ -32,7 +33,7 @@ function DoctorProfessionalExperience(props) {
             <div className="my-5">
                 {showExperience === false ? (
                     <div>
-                        <AddDoctorProfessionalExperience addRecords={handleRecordAdded} />
+                        <AddDoctorProfessionalExperience doctorId={doctorId} addRecords={handleRecordAdded} />
                     </div>
                 ) : null
                 }

@@ -40,9 +40,8 @@ export default function LabPrescription(props) {
 
     return (
         <>
-            <div className='d-flex' >
-                <div >
-                    <div className='align-left w-50'>
+            <div className='row' >
+                    <div className='col-md-4'>
                         <label className='left'>Test Name</label>
                         <Autocomplete
                             style={{ width: 200 }}
@@ -60,9 +59,7 @@ export default function LabPrescription(props) {
                         />
                     </div>
 
-                </div>
-
-                <div className='align-right w-50 labData'>
+                <div className='col-md-4 labData'>
                     <GetLabPrescription reportId={reportId} />
                 </div>
 

@@ -15,10 +15,12 @@ import { toast } from "react-toastify";
 function DoctorPersonalInformation(props) {
     const { data, doctorId } = props;
     const [updateData, setUpdateData] = useState([]);
+
     const {
         addDoctorInformation,
         submitDoctorInformation
     } = AuthApi();
+
     function handleChangeAddress(address) {
         setUpdateData(prevInput => {
             return {
@@ -55,15 +57,10 @@ function DoctorPersonalInformation(props) {
             xhr.open("GET", uri, true);
             xhr.send(null);
         });
-
         const fileRef = ref(getStorage(), uuid.v4());
-
         const result = await uploadBytes(fileRef, blob);
-
-        // blob.close();
         return await getDownloadURL(fileRef);
     }
-
     const { formState: { errors } } = useForm();
     const onSubmit = async () => {
         const resultUrl = await uploadImageAsync(updateData.photo)

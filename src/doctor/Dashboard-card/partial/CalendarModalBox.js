@@ -6,6 +6,7 @@ import ReportApi from "../../../services/ReportApi";
 function CalendarModalBox(props) {
     const { patientId, doctorId, patientList } = props;
     const [patientDetails, setPatientDetails] = useState([]);
+
     const { MedicineReportData } = ReportApi()
     const { patientDetailsData } = PatientApi()
     const history = useHistory()
@@ -63,10 +64,10 @@ function CalendarModalBox(props) {
                         <b className="patientModal">Age :    </b>
                         {patientDetails.age}
                     </div>
-                    <div>
+                    {/* <div>
                         <b className="patientModal">Time :    </b>
                         {patientDetails.slotTime}
-                    </div>
+                    </div> */}
 
                     <span className='' align='left'>
                         {patientList.status === "Ongoing" ?

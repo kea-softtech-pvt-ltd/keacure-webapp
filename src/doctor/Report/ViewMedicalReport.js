@@ -5,6 +5,13 @@ import GetLabPrescription from './partial/getLabPrescription';
 import GetSymptomsData from './partial/GetSymptomsData';
 import PatientApi from '../../services/PatientApi';
 import ReportApi from '../../services/ReportApi';
+import { Wrapper } from '../../mainComponent/Wrapper';
+import UserLinks from '../Dashboard-card/partial/uselinks';
+import { MainNav } from '../../mainComponent/mainNav';
+import { useRecoilState } from 'recoil';
+import { setHelperData } from '../../recoil/atom/setHelperData';
+import { setDoctorId } from '../../recoil/atom/setDoctorId';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 export default function ViewMedicalReport() {
     const { reportId } = useParams();
@@ -12,10 +19,11 @@ export default function ViewMedicalReport() {
     const { patientDetailsData } = PatientApi()
     const [viewData, setViewData] = useState([]);
     const [patientDetails, setPatientDetails] = useState([]);
+    const [helpersData, setHelpersData] = useRecoilState(setHelperData)
+    const [doctorId, setDoctorsId] = useRecoilState(setDoctorId)
 
     useEffect(() => {
         getMedicineReportData()
-
     }, [])
 
     const getMedicineReportData = () => {
@@ -32,24 +40,30 @@ export default function ViewMedicalReport() {
     }
 
     return (
-        <main>
-            <div className="container margin_120_95">
-                <div className="row">
-                    <div className="col-lg-12 ">
-                        <nav id="secondary_nav">
-                            {/* <Link to={`/Patientsclinichistory/${doctorId}`}>
-                                <i className="arrow_back backArrow m-3" title="back button"></i>
-                            </Link> */}
-                            <span><b>Prescription</b></span>
-                        </nav>
-                    </div>
-                </div>
-                <div className="box_form ">
+        <Wrapper>
+            <MainNav>
+               
+                <ul className="clearfix">
+                <li>
+                    <Link to={`/Patientsclinichistory/${doctorId}`}>
+                        <i className="arrow_back backArrow" title="back button"></i>
+                    </Link>
+                </li>
+                    <li className='float-none' style={{ fontSize: 'inherit' }}>Prescription</li>
+                </ul>
+            </MainNav>
+            <div className="row">
+                <UserLinks
+                    doctorId={doctorId}
+                    helperId={helpersData._id}
+                    accessModule={helpersData.access_module}
+                />
+                <div className="common_box ">
                     <h6 align="left">
                         <b>Patient Information</b>
                     </h6>
                     <div className="whiteBox" >
-                        <div className="row viewMreport">
+                        <div className="row mx-4 viewMreport">
                             <div className="col-md-6 " align='left'>
                                 <div><b className='viewMreport fontSize'>{patientDetails.name}</b></div>
                                 <div><b className='viewMreport'>Email :</b>{patientDetails.email}</div>
@@ -122,15 +136,15 @@ export default function ViewMedicalReport() {
                         </div>
                     </div>
 
-                    <div className='pr-2'>
+                    <div className="whiteBox viewMreport">
                         <GetMedicinePriscription reportId={reportId} />
                     </div>
 
-                    <div>
+                    <div className="whiteBox viewMreport">
                         <GetLabPrescription reportId={reportId} />
                     </div>
 
-                    <div>
+                    <div className="whiteBox viewMreport">
                         <GetSymptomsData reportId={reportId} />
                     </div>
 
@@ -158,6 +172,6 @@ export default function ViewMedicalReport() {
                 </div>
 
             </div>
-        </main >
+        </Wrapper >
     )
 }
