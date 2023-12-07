@@ -10,6 +10,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 import { makeStyles } from '@material-ui/core/styles';
 import uuid from "uuid";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import ReportApi from '../../services/ReportApi';
 
 //for table
 const useStyles = makeStyles((theme) => ({
@@ -28,12 +29,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PatientsClinicHistory() {
     const { doctorId } = useParams();
+    const { saveMedicineList } = ReportApi()
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
-    const [data, setData] = useState([])
+    const [data, setData] = useState()
+    console.log("====result", data)
     const [columnArray, setColumnArray] = useState([])
     const [saveMedicine, setSaveMedicine] = useState([])
-    console.log("====result", saveMedicine)
-
     const [values, setValues] = useState([])
     const classes = useStyles();
     const handleFile = (event) => {
@@ -53,12 +54,10 @@ export default function PatientsClinicHistory() {
                 setValues(valuesArray)
             }
         })
+        saveData()
     }
-    useEffect(() => {
-        uploadImageAsync()
-    }, [])
+
     async function uploadImageAsync(uri) {
-        console.log("====>>", uri)
         const blob = await new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
             xhr.onload = function () {
@@ -76,22 +75,15 @@ export default function PatientsClinicHistory() {
         const result = await uploadBytes(fileRef, blob);
         return await getDownloadURL(fileRef);
     }
-    // const onSubmit = async () => {
-    //     const resultUrl = await uploadImageAsync(updateData.photo)
-    //     const bodyData = {
-    //         photo: resultUrl,
-    //         name: updateData.name,
-    //         gender: updateData.gender,
-    //         personalEmail: updateData.personalEmail,
-    //         address: updateData.address,
-    //         isSubscribed: true
-    //     }
-    //     submitDoctorInformation({ doctorId, bodyData })
-    //         .then(() => {
-    //         })
-    //     toast.success("Saved Successfully!")
+    const saveData = async () => {
+        const data = await uploadImageAsync(saveMedicine)
+        const bodyData = {
+            'medicineList': data,
+        }
+        saveMedicineList(bodyData)
+    }
+   
 
-    // }
     return (
         <Wrapper>
             <MainNav>

@@ -146,7 +146,26 @@ export default function ReportApi() {
             return err
         }
     }
-
+    const saveMedicineList = async (bodyData) => {
+        try {
+            const result = await axios.post(`${API}/add_mymedicines_list`,bodyData)
+            console.log("==post=", result)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+    }
+    const getMedicineList = async () => {
+        try {
+            const result = await axios.get(`${API}/get_mymedicines_list`)
+            console.log("=get==", result)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+    }
     return {
         MedicineReportData,
         insertPatientVitalSignsData,
@@ -162,6 +181,8 @@ export default function ReportApi() {
         getMedicinePrescriptionData,
         getLabTestPrescriptionData,
         getMedicineReport,
-        getLabData
+        getLabData,
+        saveMedicineList,
+        getMedicineList
     }
 }
