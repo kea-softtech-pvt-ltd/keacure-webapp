@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import uuid from "uuid";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import ReportApi from '../../services/ReportApi';
+import AuthApi from '../../services/AuthApi';
 
 //for table
 const useStyles = makeStyles((theme) => ({
@@ -27,21 +28,28 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function PatientsClinicHistory() {
+export default function MedicineList() {
     const { doctorId } = useParams();
+    const { getDrInfo } = AuthApi()
     const { saveMedicineList } = ReportApi()
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
-    const [data, setData] = useState()
-    console.log("====result", data)
+    const [data, setData] = useState([])
     const [columnArray, setColumnArray] = useState([])
     const [saveMedicine, setSaveMedicine] = useState([])
+    const [medicineId, setMedicineId] = useState([])
     const [values, setValues] = useState([])
     const classes = useStyles();
+
+    useEffect(() => {
+        idData()
+        saveData()
+    }, [])
     const handleFile = (event) => {
         Papa.parse(event.target.files[0], {
             header: true,
             skipEmptyLines: true,
             complete: function (result) {
+                console.log('===result', result.data)
                 setSaveMedicine(result.data)
                 const columnArray = [];
                 const valuesArray = [];
@@ -57,32 +65,42 @@ export default function PatientsClinicHistory() {
         saveData()
     }
 
-    async function uploadImageAsync(uri) {
-        const blob = await new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
-            xhr.onload = function () {
-                resolve(xhr.response);
-            };
-            xhr.onerror = function (e) {
-                console.log(e);
-                reject(new TypeError("Network request failed"));
-            };
-            xhr.responseType = "blob";
-            xhr.open("GET", uri, true);
-            xhr.send(null);
-        });
-        const fileRef = ref(getStorage(), uuid.v4());
-        const result = await uploadBytes(fileRef, blob);
-        return await getDownloadURL(fileRef);
+    // async function uploadImageAsync(uri) {
+    //     const blob = await new Promise((resolve, reject) => {
+    //         const xhr = new XMLHttpRequest();
+    //         xhr.onload = function () {
+    //             resolve(xhr.response);
+    //         };
+    //         xhr.onerror = function (e) {
+    //             console.log(e);
+    //             reject(new TypeError("Network request failed"));
+    //         };
+    //         xhr.responseType = "blob";
+    //         xhr.open("GET", uri, true);
+    //         xhr.send(null);
+    //     });
+    //     const fileRef = ref(getStorage(), uuid.v4());
+    //     const result = await uploadBytes(fileRef, blob);
+    //     return await getDownloadURL(fileRef);
+    // }
+    const idData = () => {
+        getDrInfo({ doctorId })
+            .then((res) => {
+                setMedicineId(res[0].medicines_ID)
+                console.log('=========',res[0].medicines_ID)
+            })
     }
-    const saveData = async () => {
-        const data = await uploadImageAsync(saveMedicine)
+    const saveData = () => {
+
+        // const data = await uploadImageAsync(saveMedicine)
         const bodyData = {
-            'medicineList': data,
+            'medicinesList': saveMedicine,
+            'medicines_code':medicineId
         }
+        console.log('------',bodyData)
         saveMedicineList(bodyData)
     }
-   
+
 
     return (
         <Wrapper>
