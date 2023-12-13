@@ -1,7 +1,6 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { useRecoilState } from 'recoil';
 import { setDoctorExperience } from '../../../../recoil/atom/setDoctorExperience';
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";

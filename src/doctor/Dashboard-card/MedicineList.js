@@ -33,16 +33,16 @@ export default function MedicineList() {
     const { getDrInfo } = AuthApi()
     const { saveMedicineList } = ReportApi()
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
-    const [data, setData] = useState([])
+    // const [data, setData] = useState([])
     const [columnArray, setColumnArray] = useState([])
     const [saveMedicine, setSaveMedicine] = useState([])
-    const [medicineId, setMedicineId] = useState([])
+    const [medicineId, setMedicineId] = useState('')
     const [values, setValues] = useState([])
     const classes = useStyles();
 
     useEffect(() => {
         idData()
-        saveData()
+        
     }, [])
     const handleFile = (event) => {
         Papa.parse(event.target.files[0], {
@@ -57,7 +57,7 @@ export default function MedicineList() {
                     columnArray.push(Object.keys(d))
                     valuesArray.push(Object.values(d))
                 })
-                setData(result.data)
+                // setData(result.data)
                 setColumnArray(columnArray[0])
                 setValues(valuesArray)
             }
@@ -83,7 +83,7 @@ export default function MedicineList() {
     //     const result = await uploadBytes(fileRef, blob);
     //     return await getDownloadURL(fileRef);
     // }
-    const idData = () => {
+    const idData= () => {
         getDrInfo({ doctorId })
             .then((res) => {
                 setMedicineId(res[0].medicines_ID)
@@ -91,12 +91,11 @@ export default function MedicineList() {
             })
     }
     const saveData = () => {
-
         // const data = await uploadImageAsync(saveMedicine)
         const bodyData = {
-            'medicinesList': saveMedicine,
+            'medicineslist': saveMedicine,
             'medicines_code':medicineId
-        }
+        }                   
         console.log('------',bodyData)
         saveMedicineList(bodyData)
     }

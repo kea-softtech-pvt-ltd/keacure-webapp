@@ -4528,7 +4528,7 @@ input[type="file"]::-webkit-file-upload-button {
 	border-width: 1px;
 	border-color: #d7d4d4;
 }
-.eduCard {
+.grayBox {
 	width: 100%;
 	background-color: #f7f8fa;
 	border-radius: 5px;
@@ -4955,6 +4955,9 @@ textarea.form-control {
 .doctorProfile {
 	height: 300px;
 	width: 250px;
+}
+.doctorPic{
+	height: 200px;
 }
 .dashspace {
 	width: 100%;

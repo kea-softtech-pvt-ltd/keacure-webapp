@@ -1,5 +1,4 @@
 import React from 'react';
-import { API } from "../../../../config";
 import { EditExperience } from "./editExperience";
 import { Link, useParams } from "react-router-dom";
 import { Modal } from "react-bootstrap";
@@ -82,7 +81,7 @@ function FetchExperience() {
                                     </Modal.Body>
                                 </Modal>
                                 <div className="row">
-                                    <div className="eduCard">
+                                    <div className="grayBox">
                                         <div className="row">
                                             <div className='col-md-9'>
                                                 <div className="" align='left'>

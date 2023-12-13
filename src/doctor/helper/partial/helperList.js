@@ -23,7 +23,7 @@ export default function HelperList(props) {
     }
     const handleDeleteClose = () => setShowDelete(false)
 
-     function getHelperDetails() {
+    function getHelperDetails() {
         getHelper(doctorId)
             .then((result) => {
                 const data = result.filter((helper) => {
@@ -49,34 +49,40 @@ export default function HelperList(props) {
     return (
         <div>
             <div className='row'>
-                {helperList.map((details, i) => {
-                    return (
-                        <div className="col-md-3">
-                            <div className="mainCards">
-                                <span className='cardSpan'>
-                                    <i className='icon-user color' />
-                                    <b className=' fontSize'>{details.username}</b>
-                                </span>
-                                <span className='cardSpan'>
-                                    <i className='icon-email color' />
-                                    {details.email}
-                                </span>
-                                <span className='cardSpan'>
-                                    <i className='icon-mobile-1 color' />
-                                    {details.mobile}
-                                </span>
-                                <span className='cardSpan appointmentBtn'>
-                                    <Link to={`/edithelper/${details._id}`} >
-                                        <Button className='appColor helperBtn' >Edit</Button>
-                                    </Link>
-                                    <Link to="#" onClick={() => handleDeleteShow(details)}>
-                                        <Button className="appColor helperBtn" >Delete</Button>
-                                    </Link>
-                                </span>
-                            </div>
-                        </div>
-                    )
-                })}
+                {
+                    helperList ?
+                        <>
+                            {helperList.map((details, i) => {
+                                return (
+                                    <div className="col-md-3">
+                                        <div className="mainCards">
+                                            <span className='cardSpan'>
+                                                <i className='icon-user color' />
+                                                <b className=' fontSize'>{details.username}</b>
+                                            </span>
+                                            <span className='cardSpan'>
+                                                <i className='icon-email color' />
+                                                {details.email}
+                                            </span>
+                                            <span className='cardSpan'>
+                                                <i className='icon-mobile-1 color' />
+                                                {details.mobile}
+                                            </span>
+                                            <span className='cardSpan appointmentBtn'>
+                                                <Link to={`/edithelper/${details._id}`} >
+                                                    <Button className='appColor helperBtn' >Edit</Button>
+                                                </Link>
+                                                <Link to="#" onClick={() => handleDeleteShow(details)}>
+                                                    <Button className="appColor helperBtn" >Delete</Button>
+                                                </Link>
+                                            </span>
+                                        </div>
+                                    </div>
+                                )
+                            })}
+                        </>
+                        : <div className="clinicHistory" ><b>Loading...</b></div>
+                }
             </div>
 
             <Modal show={showDelete} onHide={handleDeleteClose}>

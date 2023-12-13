@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Experience from "../../Partial/totalExperience";
 import AuthApi from "../../../../services/AuthApi";
@@ -23,13 +22,11 @@ function FetchDoctorPersonalDetails(props) {
         <div className="profile" >
             <div className="row" key={fetchPersonalData.id}>
                 <div className="col-lg-5 col-md-4">
-                    <figure>
                         <img
                             src={fetchPersonalData.photo}
                             alt="doctorProfile"
-                            className='doctorProfile'
+                            className='doctorPic borderRadius'
                         />
-                    </figure>
                 </div>
                 <div className="col-lg-7 col-md-8" align="left">
                     <h1>Dr. {fetchPersonalData.name}</h1>

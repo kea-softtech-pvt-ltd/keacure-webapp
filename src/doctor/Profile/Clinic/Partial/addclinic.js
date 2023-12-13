@@ -97,16 +97,7 @@ const AddClinic = (props) => {
                 props.onSubmit()
             });
     }
-    //google map
-    function handleChangeAddress(address) {
-        setClinicInfo(prevInput => {
-            return {
-                ...prevInput,
-                ['address']: address
-            }
-        })
-    }
-
+   
     return (
         <div className="col-lg-12">
             <form onSubmit={sendClinicInfo}>

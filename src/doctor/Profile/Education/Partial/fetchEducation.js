@@ -67,7 +67,7 @@ function FetchEducation(props) {
                                         </Modal.Body>
                                     </Modal>
                                     <div className='row'>
-                                        <div className='eduCard'>
+                                        <div className='grayBox'>
                                             <div className='row'>
                                                 <div className='col-md-9'>
                                                     <div className="" align='left'>

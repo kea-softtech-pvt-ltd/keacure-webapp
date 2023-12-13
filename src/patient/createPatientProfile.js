@@ -1,6 +1,4 @@
-import { useEffect } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { DoctorBookingConfirmation } from "../patient/doctorbookingconfirmation";
 import { PatientRegistrationForm } from "../patient/patientRegistrationForm";
 import { Wrapper } from "../mainComponent/Wrapper";
 import { MainNav } from "../mainComponent/mainNav";

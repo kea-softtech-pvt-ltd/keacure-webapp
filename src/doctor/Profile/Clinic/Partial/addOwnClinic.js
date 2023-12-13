@@ -25,6 +25,7 @@ const AddOwnClinic = (onSubmit) => {
             }
         })
     }
+    
      function sendownClinicInfo(e) {
         e.preventDefault();
         const newClinicData = {

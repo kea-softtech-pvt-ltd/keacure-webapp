@@ -12,7 +12,6 @@ export default function GetDependent() {
     function getAllPatientData() {
         patientDetailsData({ patientId })
             .then( (response)=> {
-                console.log("=response====", response)
                 setFetchPatientData(response[0].dependent)
             })
     }

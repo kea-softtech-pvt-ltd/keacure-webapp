@@ -12,6 +12,7 @@ import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import Toaster from "../../Toaster";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+
 function DoctorPersonalInformation(props) {
     const { data, doctorId } = props;
     const [updateData, setUpdateData] = useState([]);
@@ -28,21 +29,31 @@ function DoctorPersonalInformation(props) {
                 ['address']: address
             }
         })
+        setValue("address", address)
     }
 
     //for all input onchange method
     const handleInputChange = event => {
         const { name, value } = event.target;
         setUpdateData({ ...updateData, [name]: value });
+        setValue(name, value)
     };
 
     useEffect(() => {
+        register("name", { required: true });
+        register("gender", { required: true });
+        register("personalEmail", { required: true });
+        register("address", { required: true });
+        addDrInfo()
+    }, [])
+
+    const addDrInfo = () => {
         addDoctorInformation({ doctorId })
             .then(jsonRes => {
                 setUpdateData(jsonRes)
             });
-    }, [])
 
+    }
     async function uploadImageAsync(uri) {
         const blob = await new Promise((resolve, reject) => {
             const xhr = new XMLHttpRequest();
@@ -61,8 +72,8 @@ function DoctorPersonalInformation(props) {
         const result = await uploadBytes(fileRef, blob);
         return await getDownloadURL(fileRef);
     }
-    const { formState: { errors } } = useForm();
-    const onSubmit = async () => {
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+    const onSubmit = async (data) => {
         const resultUrl = await uploadImageAsync(updateData.photo)
         const bodyData = {
             photo: resultUrl,
@@ -72,6 +83,7 @@ function DoctorPersonalInformation(props) {
             address: updateData.address,
             isSubscribed: true
         }
+        console.log("==bd", bodyData)
         submitDoctorInformation({ doctorId, bodyData })
             .then(() => {
             })
@@ -80,7 +92,7 @@ function DoctorPersonalInformation(props) {
     }
 
     return (
-        <>
+        <form encType='multipart/form-data' onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
                 <div className="col-md-6 ">
                     <div className="row mb-10">
@@ -116,7 +128,7 @@ function DoctorPersonalInformation(props) {
                         </div>
                     </div>
                     <div className="text-left">
-                        <label><b>Gender</b></label>
+                        <label><b>Gender *</b></label>
                     </div>
                     <div className="col-6">
                         <MainRadioGroup
@@ -129,22 +141,22 @@ function DoctorPersonalInformation(props) {
                             label1="male"
                             label2="other">
                         </MainRadioGroup>
-                        {errors.gender && <span className="validation">Please Select your gender</span>}
+                        {errors.gender !== "" ? errors.gender && <span className="validation">Please Select your gender</span> : null}
                     </div>
                 </div>
                 <div className="col-md-5">
                     <div className="text-left">
-                        <label><b>Full Name</b></label>
+                        <label><b>Full Name *</b></label>
                     </div>
                     <MainInput
                         name="name"
                         value={updateData.name}
                         onChange={handleInputChange}
                         placeholder="Name">
-                        {errors.name && <span className="validation">Please enter your first name</span>}
+                        {errors.name !== "" ? errors.name && <span className="validation">User Name is Required</span> : null}
                     </MainInput>
                     <div className="text-left">
-                        <label><b>Personal EmailId</b></label>
+                        <label><b>Personal EmailId *</b></label>
                     </div>
                     <MainInput
                         type="email"
@@ -152,16 +164,17 @@ function DoctorPersonalInformation(props) {
                         name="personalEmail"
                         onChange={handleInputChange}
                         placeholder="Personal EmailId">
-                        {errors.personalEmail && <span className="validation">Please enter your personal Email</span>}
+                        {errors.personalEmail !== "" ? errors.personalEmail && <span className="validation"> Email is Required</span> : null}
                     </MainInput>
                     <div align='left'>
                         <PlacesAutocompleteInput
+                            name='address'
                             value={updateData.address}
                             onChange={handleChangeAddress}>
-                            <label ><b>City & Area</b></label>
+                            <label ><b>City & Area *</b></label>
                         </PlacesAutocompleteInput>
                     </div>
-                    {errors.address && <span className="validation">Please enter your location</span>}
+                    {errors.address === "" ? errors.address && <span className="validation">Location is Required</span>:null}
                 </div>
             </div>
             <div className="row float-right">
@@ -173,7 +186,7 @@ function DoctorPersonalInformation(props) {
                 </div>
                 <Toaster />
             </div>
-        </>
+        </form>
     )
 }
 export { DoctorPersonalInformation }

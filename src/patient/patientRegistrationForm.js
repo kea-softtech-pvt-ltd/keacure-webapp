@@ -7,7 +7,7 @@ import PatientApi from "../services/PatientApi";
 function PatientRegistrationForm(props) {
     const { patientId, handalChange } = props;
     const [updatePatientData, setUpdatePatientData] = useState({})
-    const {patientDetailsData,signup} = PatientApi()
+    const { patientDetailsData, signup } = PatientApi()
     //for all input onchange method
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -24,13 +24,14 @@ function PatientRegistrationForm(props) {
     }, [])
 
     async function getPatientDetails() {
-        patientDetailsData({patientId})
+        patientDetailsData({ patientId })
             .then(function (response) {
                 setUpdatePatientData(response[0])
             })
     }
 
     const { register, setValue, formState: { errors } } = useForm();
+    console.log("===errors", errors)
     const onSubmit = (e) => {
         e.preventDefault();
         const newPatientData = {
@@ -40,9 +41,9 @@ function PatientRegistrationForm(props) {
             age: updatePatientData.age,
             email: updatePatientData.email,
         }
-        signup({patientId}, newPatientData)
+        signup({ patientId }, newPatientData)
             .then(function (response) {
-               handalChange()
+                handalChange()
             })
     }
 
@@ -51,7 +52,7 @@ function PatientRegistrationForm(props) {
             <div className="underline">
                 <h3 className="mb-3">Patient Details</h3>
             </div>
-            <form onSubmit={(e)=>onSubmit(e)}>
+            <form onSubmit={onSubmit}>
                 <div className="row mt-3">
                     <div className="col-sm-6">
                         <div align='left'><label>Full name</label></div>
@@ -62,7 +63,7 @@ function PatientRegistrationForm(props) {
                             onChange={handleInputChange}
                             placeholder="Jhon">
                         </MainInput>
-                        {errors.name && <span className="validation">Please enter your full name</span>}
+                        {errors.name && <span className="validation">User Name is Required</span>}
                     </div>
                     <div className="col-md-4 col-sm-4">
                         <div align='left'> <label>Mobile</label></div>

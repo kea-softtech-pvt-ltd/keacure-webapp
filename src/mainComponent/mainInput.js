@@ -13,7 +13,6 @@ const MainInput =(props)=>{
                 accept={props.accept}
                 required={props.required}
                 multiple={props.multiple}
-                
             />
             {props.children}
         </div>    

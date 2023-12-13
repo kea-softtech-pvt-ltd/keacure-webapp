@@ -33,7 +33,7 @@ export default function PatientsClinicHistory() {
         getPatientHistory();
     }, [])
 
-     function getPatientHistory() {
+    function getPatientHistory() {
         getPatientListDetails({ doctorId })
             .then((result) => {
                 const data = result.filter((patientData) => {
@@ -172,35 +172,41 @@ export default function PatientsClinicHistory() {
 
                         })}
                     </div>
-                    {records.length > 0 ?
-                        <nav aria-label="" className="add_top_20">
-                            <ul className="pagination pagination-sm">
-                                <li className="page-item">
-                                    <Link className="page-link"
-                                        to="#" onClick={prePage}>
-                                        Previous
-                                    </Link>
-                                </li>
-                                {
-                                    number.map((n, i) => {
-                                        return (
-                                            <li className={`page-item ${activePageNo === n ? 'active' : ""}`} key={i}>
-                                                <Link className="page-link"
-                                                    to="#" onClick={() => changeCPage(n)}>
-                                                    {n}</Link>
-                                            </li>
-                                        )
-                                    })
-                                }
-                                <li className="page-item">
-                                    <Link className="page-link"
-                                        to="#" onClick={nextPage}>
-                                        Next
-                                    </Link>
-                                </li>
-                            </ul>
-                        </nav>
-                        : <div className="clinicHistory" ><b>Data is not Available</b></div>}
+                    {records ?
+                        <>
+
+                            {records.length > 0 ?
+                                <nav aria-label="" className="add_top_20">
+                                    <ul className="pagination pagination-sm">
+                                        <li className="page-item">
+                                            <Link className="page-link"
+                                                to="#" onClick={prePage}>
+                                                Previous
+                                            </Link>
+                                        </li>
+                                        {
+                                            number.map((n, i) => {
+                                                return (
+                                                    <li className={`page-item ${activePageNo === n ? 'active' : ""}`} key={i}>
+                                                        <Link className="page-link"
+                                                            to="#" onClick={() => changeCPage(n)}>
+                                                            {n}</Link>
+                                                    </li>
+                                                )
+                                            })
+                                        }
+                                        <li className="page-item">
+                                            <Link className="page-link"
+                                                to="#" onClick={nextPage}>
+                                                Next
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                : <div className="clinicHistory" ><b>Loading...</b></div>}
+                        </>
+                        : <div className="clinicHistory" ><b>Data is not Available</b></div>
+                    }
                 </div>
             </div>
         </Wrapper>
