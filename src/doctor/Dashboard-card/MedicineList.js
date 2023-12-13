@@ -6,101 +6,62 @@ import { useRecoilState } from "recoil";
 import { Wrapper } from '../../mainComponent/Wrapper';
 import UserLinks from './partial/uselinks';
 import Papa from 'papaparse'
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import uuid from "uuid";
-import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL, uploadBytes } from "firebase/storage";
 import ReportApi from '../../services/ReportApi';
 import AuthApi from '../../services/AuthApi';
-
-//for table
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2)
-    },
-    table: {
-        minWidth: 650,
-    },
-
-}));
+import { MainButtonInput } from '../../mainComponent/mainButtonInput';
+import { toast } from "react-toastify";
 
 export default function MedicineList() {
     const { doctorId } = useParams();
     const { getDrInfo } = AuthApi()
     const { saveMedicineList } = ReportApi()
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
-    const [data, setData] = useState([])
-    const [columnArray, setColumnArray] = useState([])
     const [saveMedicine, setSaveMedicine] = useState([])
-    const [medicineId, setMedicineId] = useState([])
-    const [values, setValues] = useState([])
-    const classes = useStyles();
+    const [medicineId, setMedicineId] = useState('')
+    const [getCSV, setCSV] = useState('')
+    const fbStorage = getStorage()
+
 
     useEffect(() => {
-        idData()
-        saveData()
+        DrInfo()
     }, [])
+
     const handleFile = (event) => {
+        setCSV(event.target.files[0].name)
         Papa.parse(event.target.files[0], {
             header: true,
             skipEmptyLines: true,
             complete: function (result) {
-                console.log('===result', result.data)
                 setSaveMedicine(result.data)
-                const columnArray = [];
-                const valuesArray = [];
-                result.data.map((d) => {
-                    columnArray.push(Object.keys(d))
-                    valuesArray.push(Object.values(d))
-                })
-                setData(result.data)
-                setColumnArray(columnArray[0])
-                setValues(valuesArray)
             }
         })
-        saveData()
     }
 
-    // async function uploadImageAsync(uri) {
-    //     const blob = await new Promise((resolve, reject) => {
-    //         const xhr = new XMLHttpRequest();
-    //         xhr.onload = function () {
-    //             resolve(xhr.response);
-    //         };
-    //         xhr.onerror = function (e) {
-    //             console.log(e);
-    //             reject(new TypeError("Network request failed"));
-    //         };
-    //         xhr.responseType = "blob";
-    //         xhr.open("GET", uri, true);
-    //         xhr.send(null);
-    //     });
-    //     const fileRef = ref(getStorage(), uuid.v4());
-    //     const result = await uploadBytes(fileRef, blob);
-    //     return await getDownloadURL(fileRef);
-    // }
-    const idData = () => {
+    const DrInfo = () => {
         getDrInfo({ doctorId })
             .then((res) => {
                 setMedicineId(res[0].medicines_ID)
-                console.log('=========',res[0].medicines_ID)
             })
     }
-    const saveData = () => {
 
-        // const data = await uploadImageAsync(saveMedicine)
+    const saveData = async () => {
+        const storageRef = ref(fbStorage, `csvFiles/${medicineId}-${getCSV}`);
+        const metadata = {
+            contentType: "application/csv",
+        };
+        const snapshot = await uploadBytesResumable(storageRef, metadata);
+        const downloadURL = await getDownloadURL(snapshot.ref);
         const bodyData = {
-            'medicinesList': saveMedicine,
-            'medicines_code':medicineId
+            'medicineslist': saveMedicine,
+            'medicines_code': medicineId
         }
-        console.log('------',bodyData)
         saveMedicineList(bodyData)
+        
+        toast.success("Saved Successfully!")
     }
-
 
     return (
         <Wrapper>
@@ -128,40 +89,7 @@ export default function MedicineList() {
                         onChange={handleFile}
                         style={{ display: 'block', margin: "10px auto" }}
                     />
-                    <div>
-                        <TableContainer component={Paper}>
-                            <Table className={classes.table} size="medium" aria-label="a dense table">
-                                {/* <TableHead>
-                                    {saveMedicine.map((col, i) => (
-                                        <>
-                                            {console.log("=====col", col.ID)}
-                                            <TableRow align="center" key={i}>
-                                                <b key={i}>{col.ID}</b>
-                                            </TableRow>
-                                            <TableCell align="center" key={i}>
-                                                <b key={i}>{col.MedicineName}</b>
-                                            </TableCell>
-                                        </>
-                                    ))}
-
-                                </TableHead> */}
-                                <TableRow>
-                                    <TableBody>
-                                        {values.map((data, i) => (
-                                            <>
-                                                <TableRow >
-                                                    {/* <TableCell align="center" key={i}>{data.ID}</TableCell> */}
-                                                    <TableCell align="center" key={i}>{data}</TableCell>
-                                                </TableRow>
-                                            </>
-                                        ))}
-                                    </TableBody>
-                                </TableRow>
-
-                            </Table>
-                        </TableContainer>
-                    </div>
-
+                    <MainButtonInput onClick={saveData}> Save</MainButtonInput>
                 </div>
             </div>
         </Wrapper>
