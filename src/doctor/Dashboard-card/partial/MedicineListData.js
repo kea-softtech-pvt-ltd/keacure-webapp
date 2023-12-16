@@ -14,48 +14,36 @@ export default function MedicineListData(props) {
     const { saveMedicineList, getMedicineList } = ReportApi()
     const [saveMedicine, setSaveMedicine] = useState([])
     const [medicineList, setMedicineList] = useState()
-    const [getCSV, setCSV] = useState()
-    const fbStorage = getStorage()
+    const [getCSV, setCSV] = useState("")
+    console.log("getCSV-----------", getCSV)
+    const saveData = async(e) => {
+        e.preventDefault();
+        const data = new FormData();
+        data.append("file", getCSV);
+        data.append('medicines_code', medicineId);
+        console.log("data-----------", data)
 
-
-    // const fetchMedicineList = () => {
-    //     const medicine_Id = `medicines_${doctorId}`
-    //     console.log('=medicineId==', medicine_Id)
-    //     getMedicineList(medicine_Id)
-    //         .then((res) => {
-    //             if (res) {
-    //                 console.log('=res==', res[0].medicineList)
-    //                 setMedicineList(res[0].medicineList
-    //                     )
-    //             }
-    //         })
-    // }
-    const saveData = () => {
-        const formData = new FormData()
-        formData.append('file', getCSV)
-        // formData.append('medicines_code', medicineId)
-        var options = { content: formData };
-        console.log('---options', options)
-
-        // axios.post(`${API}/add_mymedicines_list`, formData)
-        // saveMedicineList(formData)
-        toast.success("Saved Successfully!")
-
-    }
+        await axios({
+            method: "POST",
+            url: `${API}/add_mymedicines_list`,
+            data: data,
+        }).then((res) => {
+            console.log("res-----------", res)
+        });
+    };
 
     return (
-
-        <div className="common_box ">
+        <form onSubmit={saveData} className="common_box ">
             <input
                 type='file'
                 name='file'
                 accept='.csv'
                 onChange={(event) => setCSV(event.target.files[0])}
                 className='add_bottom_15'
-            // style={{ display: 'block', margin: "10px auto" }}
+                required
             />
 
-            <MainButtonInput onClick={saveData}> Save</MainButtonInput>
-        </div>
+            <MainButtonInput> Save</MainButtonInput>
+        </form>
     )
 }
