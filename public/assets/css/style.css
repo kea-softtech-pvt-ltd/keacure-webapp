@@ -3330,6 +3330,29 @@ a.btn_2 .full-width {
 .card-list i {
 	color: #1a3c8b;
 }
+.whiteCard{
+	background-color: white;
+	margin: 20px;
+    margin-right: 25px;
+    margin-left: 55px;
+	border-radius: 5px;
+}
+.cardListScroll{
+	height: 200px;
+	overflow: auto;
+}
+.Nav-active{
+	background-color:#e1e9fa;
+	color:white;
+    position: relative;
+    top: 4px;
+    left: 7px;
+    border-radius: 5px;
+}
+/* .cardHeight{
+	height: 300px;
+} */
+
 .sub-card-btn {
 	cursor: pointer;
 	border-radius: 10px;
@@ -3342,13 +3365,11 @@ a.btn_2 .full-width {
 .radio-input {
 	accent-color: #1a3c8b;
 }
-.card {
-	/* height: 325px; */
-	/* width: 100%; */
+/* .card {
 	border-radius: 10px;
 	padding: 22px;
 	margin: 15px;
-}
+} */
 
 .helperLabel {
 	font-size: 15px;
@@ -4942,19 +4963,19 @@ textarea.form-control {
 	padding-bottom: 15px;
 }
 .calendar {
-	/* height:200px;
-	width: 1110px; */
 	position: relative;
 	bottom: 68px;
 }
 .dashboard {
-	/* margin: 20px; */
 	border-bottom: 1px solid #e1e8ed;
-	padding: 15px 15px;
+	padding: 25px 10px;
 }
 .doctorProfile {
 	height: 300px;
 	width: 250px;
+}
+.margin_top_30 {
+	margin-top: 30px;
 }
 .doctorPic{
 	height: 200px;
@@ -4986,7 +5007,7 @@ textarea.form-control {
 	border-radius: 5px;
 	margin-bottom: 15px;
 	margin-top: 4px;
-	width: 1130px;
+	width: 83%;
 	border: 1px solid #e1e8ed;
 }
 .containar-nav {

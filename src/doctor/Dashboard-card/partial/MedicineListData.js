@@ -1,20 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import Papa from 'papaparse'
-import { makeStyles } from '@material-ui/core/styles';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL, uploadBytes } from "firebase/storage";
+import React, { useState } from 'react';
 import ReportApi from '../../../services/ReportApi';
 import { MainButtonInput } from '../../../mainComponent/mainButtonInput';
-import { toast } from "react-toastify";
 import axios from 'axios';
 import { API } from '../../../config';
 
 export default function MedicineListData(props) {
     const { medicineId, doctorId } = props
-
-    const { saveMedicineList, getMedicineList } = ReportApi()
-    const [saveMedicine, setSaveMedicine] = useState([])
-    const [medicineList, setMedicineList] = useState()
     const [getCSV, setCSV] = useState("")
+    
     console.log("getCSV-----------", getCSV)
     const saveData = async(e) => {
         e.preventDefault();

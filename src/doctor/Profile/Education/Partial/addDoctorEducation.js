@@ -12,11 +12,10 @@ function AddDoctorEducation(props) {
     const { doctorId } = props;
     const [updateEduData, setUpdateEduData] = useState([])
     const [coilDoctorEducationData, setCoilDoctorEducationData] = useRecoilState(setDoctorEducation)
-    //for fetch specialization data
     const [drspecialization, setDrSpecialization] = useState([])
-    // for fetch degrees
     const [drdegrees, setDrdegrees] = useState([])
     const { AddEducation, fetchDrSpecialization, fetchDrDegree } = EducationalApi()
+
     useEffect(() => {
         fetchSpecializations()
         fetchDegrees()
@@ -24,7 +23,6 @@ function AddDoctorEducation(props) {
         register("collage", { required: true });
         register("comYear", { required: true });
         register("specialization", { required: true });
-        register("document", { required: true });
     }, [])
 
     const fetchSpecializations = () => {
@@ -51,8 +49,7 @@ function AddDoctorEducation(props) {
         x++;
     }
     const { register, handleSubmit, setValue, formState: { errors } } = useForm();
-    const onSubmit = (e) => {
-        e.preventDefault();
+    const onSubmit = () => {
         const bodyData = {
             doctorId: doctorId,
             degree: updateEduData.degree,
@@ -61,6 +58,7 @@ function AddDoctorEducation(props) {
             specialization: updateEduData.specialization,
             // document:document
         }
+        console.log("====", bodyData)
         AddEducation(bodyData)
             .then((res) => {
                 setCoilDoctorEducationData(coilDoctorEducationData.concat(res))
@@ -75,14 +73,8 @@ function AddDoctorEducation(props) {
         setValue(name, value)
     };
 
-    //for document onChange methods
-    // const onFileChange = (e) => {
-    //     setUpdateEduData({ ...updateEduData, document: e.target.files })
-    //     setValue("document", e.target.files)
-    // }
-
     return (
-        <>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
                 <div className="col-md-6">
                     <div className=" text-left">
@@ -98,17 +90,18 @@ function AddDoctorEducation(props) {
                         ))}
                     </MainSelect>
                     {errors.degree && <span className="validation">Please Select your degree</span>}
-                    <div className=" text-left">
-                        <label><b>Doctor Collage/University</b></label>
+                    <div className='margin_top_30'>
+                        <div className=" text-left">
+                            <label><b>Doctor Collage/University</b></label>
+                        </div>
+                        <MainInput
+                            type="text"
+                            value={updateEduData.collage}
+                            name="collage" onChange={handleInputChange}
+                            placeholder="Doctor Collage/University">
+                        </MainInput>
+                            {errors.collage && <span className="validation">Please enter your collage</span>}
                     </div>
-                    <MainInput
-                        type="text"
-                        value={updateEduData.collage}
-                        name="collage" onChange={handleInputChange}
-                        placeholder="Doctor Collage/University">
-                        {errors.collage && <span className="validation">Please enter your collage</span>}
-                    </MainInput>
-
                 </div>
 
                 <div className="col-md-6 ">
@@ -126,6 +119,7 @@ function AddDoctorEducation(props) {
                         ))}
                     </MainSelect>
                     {errors.specialization && <span className="validation">Please select your specialization</span>}
+                    <div className='margin_top_30'>
                     <div className=" text-left">
                         <label><b>Complition Year</b></label>
                     </div>
@@ -139,6 +133,7 @@ function AddDoctorEducation(props) {
                         ))}
                     </MainSelect>
                     {errors.comYear && <span className="validation">Please select your complition Year</span>}
+                    </div>
                     {/* <div className=" text-left">
                         <label><b>Qualification Document Photo</b></label>
                     </div>
@@ -153,9 +148,9 @@ function AddDoctorEducation(props) {
                 </div>
             </div>
             <div className="text-center add_top_30">
-                <MainButtonInput onClick={onSubmit}>Save</MainButtonInput>
+                <MainButtonInput >Save</MainButtonInput>
             </div>
-        </>
+        </form>
     )
 }
 export { AddDoctorEducation }

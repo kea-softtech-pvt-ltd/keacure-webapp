@@ -1,17 +1,12 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { MainNav } from '../../mainComponent/mainNav';
-import UserLinks from './partial/uselinks';
-import { Wrapper } from '../../mainComponent/Wrapper';
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
 import AppointmentsApi from '../../services/AppointmentsApi';
 
-export default function Report() {
-    const { doctorId } = useParams()
+export default function Report(props) {
+    const { doctorId } = props
     const [patientList, setPatientList] = useState([]);
-    const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const { getPatientListDetails } = AppointmentsApi();
     const [patientData, setPatientData] = useState([]);
     const [total, setTotal] = useState([]);

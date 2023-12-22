@@ -6,10 +6,12 @@ import { Wrapper } from "../../mainComponent/Wrapper";
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
 import Report from "../Dashboard-card/Report";
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function DoctorProfile() {
     const { doctorId } = useParams();
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
+    let location = useLocation()
     return (
 
         <Wrapper>
@@ -23,10 +25,10 @@ export default function DoctorProfile() {
                     </li>
                     <li className='float-none' style={{ fontSize: 'inherit' }}>General info</li>
                     <li>
-                        <Link
-                            to={`/editdoctorprofile/${doctorId}`}>
-                            <i className="icon_pencil-edit" title="Edit profile"></i>
-                        </Link>
+                            <Link
+                                to={`/editdoctorprofile/${doctorId}`}>
+                                <i className="icon_pencil-edit" title="Edit profile"></i>
+                            </Link>
                     </li>
                 </ul>
             </MainNav>

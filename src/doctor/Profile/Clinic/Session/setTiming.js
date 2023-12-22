@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import DateFnsUtils from '@date-io/date-fns';
 import TextField from "@material-ui/core/TextField";
 import { useState } from "react";
@@ -11,6 +11,7 @@ import { MainInput, MainInputBox } from '../../../../mainComponent/mainInput';
 import { MainSelect } from '../../../../mainComponent/mainSelect';
 import moment from 'moment';
 import SessionApi from "../../../../services/SessionApi";
+import { useForm } from 'react-hook-form';
 
 function SetTiming(props) {
     const { doctorId, clinicId, day } = props;
@@ -26,9 +27,13 @@ function SetTiming(props) {
         day: day,
         Appointment: " "
     })
+    useEffect(() => {
+        register("degree", { required: true });
+    }, [])
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setSessionTime({ ...sessionTime, [name]: value });
+        setValue(name, value)
     };
 
     const handleChange = (event, index) => {
@@ -38,7 +43,7 @@ function SetTiming(props) {
         newState[index]["status"] = !selectedSlots[index]["status"]
         setSelectedSlots(newState);
     }
-
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const handleToTimeSelection = (time) => {
         setSessionTime(sessionTime => {
             return {
@@ -48,16 +53,13 @@ function SetTiming(props) {
         })
         const interval = sessionTime.timeSlot;
         const fromTime = sessionTime.fromTime;
-        console.log("fromTime------", fromTime)
 
         const startTime = moment(fromTime, "HH:mm");
-        console.log("startTime------", startTime)
         const allTimes = [];
         while (startTime < time) {
             allTimes.push({ time: startTime.format("HH:mm"), status: true }); //Push times
             startTime.add(interval, 'minutes');//Add interval of selected minutes
         }
-        console.log("allTimes------", allTimes)
 
         setSelectedSlots(allTimes)
     }
@@ -100,7 +102,7 @@ function SetTiming(props) {
 
     return (
         <div className="col-lg-12">
-            <form onSubmit={handleTimeClick}>
+            <form onSubmit={handleSubmit(handleTimeClick)}>
                 <h5>{day}</h5>
                 <div className="row">
                     <div className="col-lg-6">

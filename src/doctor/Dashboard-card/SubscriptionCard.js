@@ -97,16 +97,16 @@ export default function SubscriptionCard() {
                         helperId={helpersData._id}
                         accessModule={helpersData.access_module}
                     />
-                    <div className="row">
-                        {getSubscription.map((item, i) => {
-                            return (
-                                <div className="" >
-                                    <div className="card " key={i}>
+                    <div className="col-sm-10">
+                        <div className='row'>
+                            {getSubscription.map((item, i) => {
+                                return (
+                                    <div className="whiteCard  col-3" key={i}>
                                         <span>
-                                            <h4 className="">{item.name}</h4>
+                                            <h4 className="add_top_20 ">{item.name}</h4>
                                         </span>
                                         <h5> <FaRupeeSign />-{item.amount}</h5>
-                                        <ul className="  card-text" >
+                                        <ul className="card-text cardListScroll underline" >
                                             {item.features.map((data, i) => {
                                                 return (
                                                     <li key={i} className="card-list">
@@ -120,135 +120,22 @@ export default function SubscriptionCard() {
                                         {getSubData === item.name ?
                                             <button
                                                 onClick={handleClose}
-                                                className="btn disabled-card shadow-none disabled"
+                                                className="btn disabled-card add_bottom_15 shadow-none disabled"
                                             >Subscribed
                                             </button>
                                             : <button
                                                 onClick={() => handleShow(item)}
-                                                className="sub-card-btn shadow-none btn btn-primary">
+                                                className="sub-card-btn add_bottom_15 shadow-none btn btn-primary">
                                                 Get Started
                                             </button>
                                         }
-                                        {/* <button
-                                                onClick={() => handleShow(item)}
-                                                className="sub-card-btn shadow-none btn btn-primary">
-                                                Get Started
-                                            </button> */}
+
                                     </div>
-                                </div>
-                            )
-                        })}
-                    </div>
-                    {/* <div className="col-md-10">
-                        <div className="container ">
-                            <div className="row">
-                                <div className="card">
-                                    <span>
-                                        <h4 className=" card-title float-left">Free-Trial</h4>
-                                    </span>
-                                    <ul className="card-text" >
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Access All patients for FREE!
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Create Profile
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Add Multiple Clinic for FREE!
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Try Many Features for FREE!
-                                        </li>
-                                    </ul>
-                                    {getSubData === 'free-trial' ?
-                                        <button
-                                            onClick={handleClose}
-                                            className="btn disabled-card shadow-none disabled"
-                                        >Subscribed
-                                        </button>
-                                        : <button
-                                            onClick={() => handleShow('free-trial')}
-                                            className="sub-card-btn shadow-none btn btn-primary">
-                                            Get Started
-                                        </button>
-                                    }
-                                </div>
-                                <div className="card">
-                                    <span>
-                                        <h4 className=" card-title float-left">6-Month</h4>
-                                    </span>
-                                    <ul className="card-text" >
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Access All patients for FREE!
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Create Profile
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Add Multiple Clinic for FREE!
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Try Many Features for FREE!
-                                        </li>
-                                    </ul>
-                                    {getSubData === '6-month' ?
-                                        <button
-                                            onClick={handleClose}
-                                            className="btn disabled-card shadow-none disabled"
-                                        >Subscribed
-                                        </button>
-                                        : <button
-                                            onClick={() => handleShow('6-month')} className="sub-card-btn shadow-none btn btn-primary">
-                                            Get Started
-                                        </button>
-                                    }
-                                </div>
-                                <div className="card">
-                                    <span>
-                                        <h4 className=" card-title float-left">Yearly</h4>
-                                    </span>
-                                    <ul className="card-text" >
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Access All patients for FREE!
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Create Profile
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Add Multiple Clinic for FREE!
-                                        </li>
-                                        <li className="card-list">
-                                            <i className="icon-right-circled" title="right-tick"></i>
-                                            Try Many Features for FREE!
-                                        </li>
-                                    </ul>
-                                    {getSubData === "yearly" ?
-                                        <button
-                                            onClick={handleClose}
-                                            className="btn disabled-card shadow-none disabled"
-                                        >Subscribed
-                                        </button>
-                                        : <button
-                                            onClick={() => handleShow('yearly')}
-                                            className=" sub-card-btn shadow-none btn btn-primary">
-                                            Get Started
-                                        </button>
-                                    }
-                                </div>
-                            </div>
+                                )
+                            })}
                         </div>
-                    </div> */}
+                    </div>
+
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
                             <Modal.Title>Are You Sure?</Modal.Title>

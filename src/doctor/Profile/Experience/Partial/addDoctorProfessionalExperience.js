@@ -16,6 +16,7 @@ function AddDoctorProfessionalExperience(props) {
     const [experienceData, setExperienceData] = useState([]);
     const { insertDrExperience } = ExperienceApi();
     const handleStartYearChange = (date) => {
+        console.log('===',date)
         // const splitDate = date.split("")
         // const year = splitDate[0]
         // const month = splitDate[1]
@@ -29,6 +30,8 @@ function AddDoctorProfessionalExperience(props) {
     useEffect(() => {
         register("clinicName", { required: true });
         register("description", { required: true });
+        // register("endYear", { required: true });
+        // register("startYear", { required: true });
     }, [])
 
     //for all input onchange method
@@ -48,6 +51,7 @@ function AddDoctorProfessionalExperience(props) {
             startYear: startYear,
             description: data.description
         }
+        console.log('=newDoctorData=',newDoctorData)
         if (endYear < startYear) {
             setError("end year should be greater than start year")
         }
@@ -107,6 +111,7 @@ function AddDoctorProfessionalExperience(props) {
                                     onChange={handleEndYearChange}>End Year
                                 </MainMuiPickers>
                             </div>
+                            {error && <span className="validation">select valid year</span>}
                         </div>
                     </div>
                     <div className="">
