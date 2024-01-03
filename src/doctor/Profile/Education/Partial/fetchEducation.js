@@ -1,7 +1,7 @@
 import React from 'react';
 import { EditEducation } from "./EditEducation";
 import { Link } from "react-router-dom";
-import { Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { setDoctorEducation } from "../../../../recoil/atom/setDoctorEducation";
@@ -11,7 +11,16 @@ function FetchEducation(props) {
     const { doctorId } = props
     const [eduData, setEduData] = useRecoilState(setDoctorEducation);
     const [activeModal, setActiveModal] = useState();
+    const [Item, setItem] = useState([]);
+    const [showDelete, setShowDelete] = useState(false);
     const { fetchAllEducations, deleteEducationData } = EducationalApi();
+
+    const handleDeleteShow = (item) => {
+        setItem(item)
+        setShowDelete(true)
+    }
+    const handleDeleteClose = () => setShowDelete(false)
+
     const handleClose = () => {
         setActiveModal(null)
     }
@@ -39,6 +48,7 @@ function FetchEducation(props) {
             .then(() => {
                 getAllEducations()
             })
+        handleDeleteClose()
     }
 
     return (
@@ -107,7 +117,7 @@ function FetchEducation(props) {
                                                         </i>
                                                     </Link>
                                                     <Link
-                                                        onClick={e => deleteEducation(education, e)}
+                                                        onClick={() => handleDeleteShow(education)}
                                                         to="#"
                                                         align='right'
                                                         className="editbutton">
@@ -128,6 +138,25 @@ function FetchEducation(props) {
                     }
                 </div>
                 : null}
+            <div>
+                <Modal show={showDelete} onHide={handleDeleteClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Are You Sure?</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div className="alert alert-danger">You Want To Delete This Session</div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="default" className='appColor' onClick={() => deleteEducation(Item)}>
+                            Yes
+                        </Button>
+                        <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleDeleteClose}>
+                            No
+                        </Button>
+
+                    </Modal.Footer>
+                </Modal>
+            </div>
         </>
     )
 }

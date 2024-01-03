@@ -6,13 +6,13 @@ import { TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { useRecoilState } from 'recoil';
 import { updateSession } from "../../../../recoil/atom/setUpdateSession";
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
-import { MainInput, MainInputBox } from '../../../../mainComponent/mainInput';
+import { MainInput } from '../../../../mainComponent/mainInput';
 import { MainSelect } from '../../../../mainComponent/mainSelect';
 import moment from 'moment';
 import SessionApi from '../../../../services/SessionApi';
 
 function SetUpdateTime(props) {
-    const { doctorId, clinicId, _id, day } = props.update[0];
+    const { doctorId, clinicId, _id, day, onSubmit } = props.update[0];
     const [error, setError] = useState("");
     const [updateSessionTime, setUpdateSessionTime] = useRecoilState(updateSession)
     const [fromTime, setFromTime] = useState();
@@ -101,6 +101,7 @@ function SetUpdateTime(props) {
         } else {
             setError("please enter valid time")
         }
+
     }
 
     return (

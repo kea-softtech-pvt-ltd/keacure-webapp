@@ -22,7 +22,7 @@ export default function Patient() {
     function getPatientDetails() {
         getPatientListDetails({ doctorId })
             .then((result) => {
-                patientData(result)
+                patientData(result.test)
             })
     }
     const patientData = (list, e) => {

@@ -13,7 +13,7 @@ import moment from 'moment';
 import SessionApi from '../../../../services/SessionApi';
 
 function SetSession(props) {
-    const { doctorId, clinicId } = props;
+    const { doctorId, clinicId, onSubmit } = props;
     const [dayName, setDayNames] = useState();
     const [showtime, setShowTime] = useState(false);
     const [updateTime, setUpdateTime] = useState(false);

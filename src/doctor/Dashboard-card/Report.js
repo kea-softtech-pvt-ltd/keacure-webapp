@@ -17,14 +17,14 @@ export default function Report(props) {
     function getPatientDetails() {
         getPatientListDetails({ doctorId })
             .then((result) => {
-                const data = result.filter((patient) => {
+                const data = result.test.filter((patient) => {
                     if (patient.status === "Completed") {
                         return patient;
                     }
                 })
                 setPatientList(data)
-                const res = result.filter(function (item, index) {
-                    return index === result.findIndex((obj) => {
+                const res = result.test.filter(function (item, index) {
+                    return index === result.test.findIndex((obj) => {
                         if (item.patientId === obj.patientId)
                             return item
                     })

@@ -4529,6 +4529,10 @@ input[type="file"]::-webkit-file-upload-button {
 .marginLeft {
 	margin-left: 20px;
 }
+.margin_left_15{
+	margin-left: 15px;
+    margin-top: 5px;
+}
 .addiconbutton {
 	border: none;
 	background-color: #1a3c8b;
@@ -4772,7 +4776,8 @@ a.box_feat_about h3 {
 	font-size: 20px;
 }
 .timeSlot {
-	margin-left: 115px;
+	position: relative;
+	left:90px
 }
 .time {
 	font-weight: 600;
@@ -5204,6 +5209,7 @@ ul.bullets li:before {
 .add_bottom_45 {
 	margin-bottom: 45px;
 }
+
 @media (max-width: 767px) {
 	.add_bottom_45 {
 		margin-bottom: 30px;

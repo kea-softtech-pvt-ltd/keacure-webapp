@@ -1,7 +1,7 @@
 import React from 'react';
 import { EditExperience } from "./editExperience";
 import { Link, useParams } from "react-router-dom";
-import { Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import { setDoctorExperience } from "../../../../recoil/atom/setDoctorExperience";
 import { useRecoilState } from 'recoil';
@@ -12,6 +12,15 @@ function FetchExperience() {
     const [fetchExperience, setFetchExperience] = useRecoilState(setDoctorExperience)
     const [activeModal, setActiveModal] = useState()
     const { fetchExperienceData, removeExperience } = ExperienceApi();
+    const [Item, setItem] = useState([]);
+    const [showDelete, setShowDelete] = useState(false);
+
+    const handleDeleteShow = (item) => {
+        setItem(item)
+        setShowDelete(true)
+    }
+    const handleDeleteClose = () => setShowDelete(false)
+
     const handleClose = () => {
         setActiveModal(null)
     }
@@ -39,7 +48,7 @@ function FetchExperience() {
     function manipulateExperience(data) {
         return data.map(function (item, index) {
             const experiences = monthDiff(new Date(item.startYear), new Date(item.endYear))
-            const month = experiences % 12
+            const month = experiences % 12;
             let year = 0
             if (experiences > 11) {
                 const exYear = experiences / 12
@@ -61,8 +70,9 @@ function FetchExperience() {
         const id = experience._id
         removeExperience(id)
             .then(() => {
-                getAllExperience()
+                getAllExperience();
             })
+            handleDeleteClose();
     }
 
     return (
@@ -123,7 +133,6 @@ function FetchExperience() {
                                                     <b>Doctor Experience  - </b>
                                                     <span>{experience.totalExperience} years</span>
                                                 </div>
-
                                                 <div className="" align='left'>
                                                     <b>Description  - </b>
                                                     <span>{experience.description}</span>
@@ -140,7 +149,7 @@ function FetchExperience() {
                                                 </Link>
                                                 <Link
                                                     to="#"
-                                                    onClick={e => removeExperienceData(experience, e)}
+                                                    onClick={() => handleDeleteShow(experience)}
                                                     className="editbutton">
                                                     <i className="icon-trash-2"
                                                         title="Delete profile">
@@ -156,6 +165,25 @@ function FetchExperience() {
                         </div>
                     )
                 })}
+                <div>
+                    <Modal show={showDelete} onHide={handleDeleteClose}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Are You Sure?</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <div className="alert alert-danger">You Want To Delete This Session</div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="default" className='appColor' onClick={() => removeExperienceData(Item)}>
+                                Yes
+                            </Button>
+                            <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleDeleteClose}>
+                                No
+                            </Button>
+
+                        </Modal.Footer>
+                    </Modal>
+                </div>
             </div>
         </>
     )

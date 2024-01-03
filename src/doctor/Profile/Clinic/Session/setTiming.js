@@ -14,7 +14,7 @@ import SessionApi from "../../../../services/SessionApi";
 import { useForm } from 'react-hook-form';
 
 function SetTiming(props) {
-    const { doctorId, clinicId, day } = props;
+    const { doctorId, clinicId, day, onSubmit } = props;
     const [error, setError] = useState("");
     const [coilSessionTimining, setCoilSessionTimining] = useRecoilState(SetDoctorSessionTiming)
     const [selectedSlots, setSelectedSlots] = useState([])
@@ -98,6 +98,7 @@ function SetTiming(props) {
         } else {
             setError("Please enter valid time");
         }
+        props.onSubmit()
     }
 
     return (

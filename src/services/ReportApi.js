@@ -149,17 +149,15 @@ export default function ReportApi() {
     const saveMedicineList = async (formData) => {
         try {
             const result = await axios.post(`${API}/add_mymedicines_list`, formData)
-            console.log("==post=", result)
             return result.data
         }
         catch (err) {
             return err
         }
     }
-    const getMedicineList = async (medicalId) => {
+    const getMedicineList = async (medicalId, currentPage, pageSize) => {
         try {
-            const result = await axios.get(`${API}/get_mymedicines_list/${medicalId}`)
-            console.log("=get==", result)
+            const result = await axios.get(`${API}/get_mymedicines_list/${medicalId}?page=${currentPage}&pageSize=${pageSize}`)
             return result.data
         }
         catch (err) {

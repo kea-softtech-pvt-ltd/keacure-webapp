@@ -3,55 +3,65 @@ import { API } from "../config";
 
 export default function AppointmentsApi() {
 
-    const getPatientListDetails = async ({ doctorId }) => {
-            try {
-                const result = await axios.get(`${API}/getBookingData/${doctorId}`);
-                return result.data;
-            }
-            catch (err) {
-                return err
-            }
-       
+    const getPatientListDetails = async ({ doctorId }, currentPage, pageSize) => {
+        try {
+            const result = await axios.get(`${API}/getBookingData/${doctorId}?page=${currentPage}&pageSize=${pageSize}`);
+            return result.data;
+        }
+        catch (err) {
+            return err
+        }
+
+    }
+    const updateIncompleteStatus = async (patientAppointmentId, bodyData) => {
+        try {
+            const result = await axios.post(`${API}/updateIncompleteStatus/${patientAppointmentId}`, bodyData)
+            console.log('result', result)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
     }
     const UpdateStatusBookingdata = async ({ appointmentId }, bodyData) => {
-            try {
-                const result = await axios.post(`${API}/updateStatus/${appointmentId}`, bodyData)
-                return result.data
-            }
-            catch (err) {
-                return err
-            }
-        
+        try {
+            const result = await axios.post(`${API}/updateStatus/${appointmentId}`, bodyData)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+
     }
     const createPDF = async ({ reportId }) => {
-            try {
-                const result = await axios.post(`${API}/createprescriptionpdf/${reportId}`)
-                return result.data
-            }
-            catch (err) {
-                return err
-            }
-       
+        try {
+            const result = await axios.post(`${API}/createprescriptionpdf/${reportId}`)
+            return result.data
+        }
+        catch (err) {
+            return err
+        }
+
     };
     const downloadPrescription = async (reportId) => {
-            try {
-                const result = await axios.get(`${API}/download-prescription/${reportId}`);
-                return result.data;
-            }
-            catch (err) {
-                return err
-            }
-      
+        try {
+            const result = await axios.get(`${API}/download-prescription/${reportId}`);
+            return result.data;
+        }
+        catch (err) {
+            return err
+        }
+
     }
     const cancelPatientAppointment = async (id) => {
-            try {
-                const result = await axios.delete(`${API}/cancelappointment/${id}`)
-                return result
-            }
-            catch (err) {
-                return err
-            }
-        
+        try {
+            const result = await axios.delete(`${API}/cancelappointment/${id}`)
+            return result
+        }
+        catch (err) {
+            return err
+        }
+
     }
 
     return {
@@ -59,7 +69,8 @@ export default function AppointmentsApi() {
         UpdateStatusBookingdata,
         createPDF,
         downloadPrescription,
-        cancelPatientAppointment
+        cancelPatientAppointment,
+        updateIncompleteStatus
     }
 }
 
