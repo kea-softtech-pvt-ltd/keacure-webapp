@@ -5,7 +5,6 @@ import avatarImage from '../../../img/profile.png'
 import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
 import { MainInput } from '../../../mainComponent/mainInput';
 import { PlacesAutocompleteInput } from "../Clinic/Partial/placesAutocomplete"
-import { MainRadioGroup } from "../../../mainComponent/mainRadioGroup";
 import AuthApi from "../../../services/AuthApi";
 import uuid from "uuid";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
@@ -16,6 +15,7 @@ import { toast } from "react-toastify";
 function DoctorPersonalInformation(props) {
     const { data, doctorId } = props;
     const [updateData, setUpdateData] = useState([]);
+    const [radioData, setRadioData] = useState('female');
 
     const {
         addDoctorInformation,
@@ -36,9 +36,10 @@ function DoctorPersonalInformation(props) {
     const handleInputChange = event => {
         const { name, value } = event.target;
         setUpdateData({ ...updateData, [name]: value });
-        setValue(name, value)
     };
-
+    const handleInputRadio = (e) => {
+        setRadioData(e.target.value)
+    }
     useEffect(() => {
         register("name", { required: true });
         register("gender", { required: true });
@@ -61,7 +62,6 @@ function DoctorPersonalInformation(props) {
                 resolve(xhr.response);
             };
             xhr.onerror = function (e) {
-                console.log(e);
                 reject(new TypeError("Network request failed"));
             };
             xhr.responseType = "blob";
@@ -81,9 +81,8 @@ function DoctorPersonalInformation(props) {
             gender: updateData.gender,
             personalEmail: updateData.personalEmail,
             address: updateData.address,
-            isSubscribed: true
+
         }
-        console.log("==bd", bodyData)
         submitDoctorInformation({ doctorId, bodyData })
             .then(() => {
             })
@@ -119,7 +118,6 @@ function DoctorPersonalInformation(props) {
                                     type="file"
                                     accept=".png, .jpg, .jpeg"
                                     onChange={(e) => {
-                                        console.log(e)
                                         setUpdateData({ ...updateData, ['photo']: URL.createObjectURL(e.target.files[0]) })
                                     }}
                                     name="photo">
@@ -130,18 +128,37 @@ function DoctorPersonalInformation(props) {
                     <div className="text-left">
                         <label><b>Gender *</b></label>
                     </div>
-                    <div className="col-6">
-                        <MainRadioGroup
+                    <div className="col-6 radioButton">
+                        <input
+                            className="radio_button"
+                            type="radio"
+                            value='female'
                             name="gender"
-                            value="female"
-                            value1="male"
-                            value2="other"
                             onChange={handleInputChange}
-                            label="Female"
-                            label1="male"
-                            label2="other">
-                        </MainRadioGroup>
-                        {errors.gender !== "" ? errors.gender && <span className="validation">Please Select your gender</span> : null}
+                            checked={updateData.gender === 'female' ? true : false}
+                        />
+                        <span>Female</span>
+                        <input
+                            className="radio_button"
+                            type="radio"
+                            value='male'
+                            name="gender"
+                            checked={updateData.gender === 'male' ? true : false}
+                            onChange={handleInputChange}
+
+                        />
+                        <span>Male</span>
+                        <input
+                            className="radio_button"
+                            type="radio"
+                            value='other'
+                            name="gender"
+                            checked={updateData.gender === 'other' ? true : false}
+                            onChange={handleInputChange}
+
+                        />
+                        <span>Other</span>
+                        {/* {errors.gender !== "" ? errors.gender && <span className="validation">Please Select your gender</span> : null} */}
                     </div>
                 </div>
                 <div className="col-md-5">
@@ -153,7 +170,7 @@ function DoctorPersonalInformation(props) {
                         value={updateData.name}
                         onChange={handleInputChange}
                         placeholder="Name">
-                        {errors.name !== "" ? errors.name && <span className="validation">User Name is Required</span> : null}
+                        {/* {errors.name !== "" ? errors.name && <span className="validation">User Name is Required</span> : null} */}
                     </MainInput>
                     <div className="text-left">
                         <label><b>Personal EmailId *</b></label>
@@ -164,17 +181,28 @@ function DoctorPersonalInformation(props) {
                         name="personalEmail"
                         onChange={handleInputChange}
                         placeholder="Personal EmailId">
-                        {errors.personalEmail !== "" ? errors.personalEmail && <span className="validation"> Email is Required</span> : null}
+                        {/* {errors.personalEmail !== "" ? errors.personalEmail && <span className="validation"> Email is Required</span> : null} */}
                     </MainInput>
-                    <div align='left'>
+                    {/* <div align='left'>
                         <PlacesAutocompleteInput
                             name='address'
                             value={updateData.address}
                             onChange={handleChangeAddress}>
                             <label ><b>City & Area *</b></label>
                         </PlacesAutocompleteInput>
+                    </div> */}
+                    <div className="text-left">
+                        <label ><b>City & Area *</b></label>
                     </div>
-                    {errors.address === "" ? errors.address && <span className="validation">Location is Required</span>:null}
+                    <div align='left'>
+                        <MainInput
+                            name='address'
+                            value={updateData.address}
+                            placeholder="Address"
+                            onChange={handleInputChange}>
+                        </MainInput>
+                    </div>
+                    {/* {errors.address === "" ? errors.address && <span className="validation">Location is Required</span> : null} */}
                 </div>
             </div>
             <div className="row float-right">

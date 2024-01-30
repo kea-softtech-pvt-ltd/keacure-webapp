@@ -8,6 +8,7 @@ export default function Toaster() {
             position="top-center"
             autoClose={2000}
             hideProgressBar={false}
+            style={{top:'80px'}}
             // newestOnTop={false}
             closeOnClick
             rtl={false}

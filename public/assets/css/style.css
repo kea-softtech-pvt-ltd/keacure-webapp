@@ -1112,6 +1112,7 @@ ul#additional_links li:after {
 .textarea {
 	margin-bottom: 20px;
 	margin-top: 20px;
+	width: 100%;
 }
 .animation Step {
 	position: absolute;
@@ -4840,12 +4841,22 @@ a.box_feat_about h3 {
 	background-color: #1a3c8b;
 	color: white;
 }
+.radioButton{
+	font-size: 0.875rem;
+    min-height: 40px;
+}
+.radio_button{
+	accent-color: #1a3c8b;
+	color: white;
+	margin: 10px;
+}
 .appColor:hover {
 	background-color: rgb(24, 31, 68);
 }
 .color {
 	color: #1a3c8b;
 }
+
 .underline {
 	border-bottom: 1px solid #e1e8ed;
 	/* margin: 2px 4px; */
@@ -4939,7 +4950,7 @@ font: 500;
 textarea.form-control {
 	height: 120px;
 	margin-top: 13px;
-	width: 350px;
+	width: 100%;
 }
 .vital-signInput-txt {
 	height: 125px;

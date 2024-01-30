@@ -11,12 +11,13 @@ export default function Symptoms(props) {
     const { onChange, reportId } = props
     const [symptoms, setSymptoms] = useState([])
     const [saveSymptoms, setSaveSymptoms] = useState([])
-    const [otherSymptom, setOtherSymptoms] = useState('')
     const { symptomsData, insertSymptoms, insertSymptom_masterTable } = ReportApi();
     const [inputSymptom, setInputSymptoms] = useState([])
+
     useEffect(() => {
         getSymptomsData();
-    }, [])
+    }, [symptoms])
+    
     const getSymptomsData = () => {
         symptomsData()
             .then((result) => {
@@ -30,7 +31,7 @@ export default function Symptoms(props) {
     }
 
     const addInputBox = () => {
-        const value = [...inputSymptom,[]]
+        const value = [...inputSymptom, []]
         setInputSymptoms(value)
     }
     const handleInputChange = (onChangeValue, i) => {
@@ -44,16 +45,19 @@ export default function Symptoms(props) {
         setInputSymptoms(deleteVal)
     }
     const addSymptoms = () => {
-        const symptom = saveSymptoms.push(...inputSymptom)
+        saveSymptoms.push(...inputSymptom)
         const bodyData = {
             "symptoms": saveSymptoms,
         }
         insertSymptoms({ reportId }, bodyData)
             .then(() => {
-                const other = {
-                    "symptoms": symptom,
-                }
-                insertSymptom_masterTable(other)
+                inputSymptom.map((item, i) => {
+                    const other = {
+                        "symptoms": item,
+                    }
+                    insertSymptom_masterTable(other)
+                })
+
             })
         toast.success("Saved Successfully!")
 
@@ -61,7 +65,7 @@ export default function Symptoms(props) {
 
     return (
         <div>
-             <div className='symptomsData row'>
+            <div className='symptomsData row'>
                 <div className='col-md-3'>
                     <label className='left'>Choose Symptoms</label>
                     <Autocomplete

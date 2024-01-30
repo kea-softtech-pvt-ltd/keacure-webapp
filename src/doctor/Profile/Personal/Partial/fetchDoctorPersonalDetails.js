@@ -14,7 +14,7 @@ function FetchDoctorPersonalDetails(props) {
     const getDoctorPersonalDetails = () => {
         getDrInfo({ doctorId })
             .then((result) => {
-                setFetchPersonalData(result[0]);
+                setFetchPersonalData(result.result[0]);
             })
     }
 

@@ -22,17 +22,15 @@ export default function Patient() {
     function getPatientDetails() {
         getPatientListDetails({ doctorId })
             .then((result) => {
-                patientData(result.test)
+                const data = result.test.filter((patient) => {
+                    if (patient.status === "Ongoing") {
+                        return patient;
+                    }
+                })
+                setPatientList(data)
             })
     }
-    const patientData = (list, e) => {
-        const data = list.filter((patient) => {
-            if (patient.status === "Ongoing") {
-                return patient;
-            }
-        })
-        setPatientList(data)
-    }
+
 
     return (
         <Wrapper>
@@ -58,17 +56,15 @@ export default function Patient() {
                     accessModule={helpersData.access_module}
                 />
                 <div className="common_box">
+                    {patientList? (
                     <>
-                        {patientList ?
-                            <>
-                                {!active && patientList ?
-                                    <PatientList doctorId={doctorId} />
-                                    :
-                                    <PatientLoginForm doctorId={doctorId} />
-                                }
-                            </>
-                            : null}
+                        {!active && patientList ?
+                            <PatientList doctorId={doctorId} />
+                            :
+                            <PatientLoginForm doctorId={doctorId} />
+                        }
                     </>
+                    ):null}
                 </div>
 
             </div>

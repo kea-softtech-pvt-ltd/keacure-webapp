@@ -6,10 +6,12 @@ import { useRecoilState } from "recoil";
 import { Wrapper } from '../../mainComponent/Wrapper';
 import UserLinks from './partial/uselinks';
 import AuthApi from '../../services/AuthApi';
-import MedicineListData from './partial/MedicineListData';
 import ReportApi from '../../services/ReportApi';
 import axios from 'axios';
 import { API } from '../../config';
+import Toaster from '../Toaster';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Paper,
@@ -21,6 +23,7 @@ import {
     TableRow
 } from '@material-ui/core';
 import { MainButtonInput } from '../../mainComponent/mainButtonInput';
+
 
 export default function MedicineList() {
     const { doctorId } = useParams();
@@ -48,9 +51,12 @@ export default function MedicineList() {
     }));
     const classes = useStyles();
 
-
+    useEffect(() => {
+        DrInfo(currentPage);
+    }, [currentPage]);
 
     const saveData = async (e) => {
+        toast.success("Saved Successfully!")
         e.preventDefault();
         const data = new FormData();
         data.append("file", getCSV);
@@ -60,40 +66,44 @@ export default function MedicineList() {
             url: `${API}/add_mymedicines_list`,
             data: data,
         }).then((res) => {
-        });
-    };
-    useEffect(() => {
-        DrInfo(currentPage);
-    }, [currentPage]);
+        })
 
-    const handlePrevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
-    function changeCPage() {
-        setCurrentPage(currentPage * 15)
-    }
-    const handleNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
     };
 
+
+
+
+    const pageSize = 10;
     const DrInfo = (currentPage) => {
         getDrInfo({ doctorId })
             .then((res) => {
-                const pageSize = 10;
-                setMedicineId(res[0].medicines_ID)
-                getMedicineList(res[0].medicines_ID, currentPage, pageSize)
+                getMedicineList(res.result[0].medicines_ID, currentPage, pageSize)
                     .then((res, i) => {
                         const { totalPages } = res;
-                        console.log('==', res)
                         setMedicineData(res.filteredData)
                         setTotalPages(totalPages);
                     })
             })
     }
+    const handlePrevPage = () => {
+        if (currentPage !== 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+    const totalPagesCalculator = () => {
+        const pages = [];
+        for (let x = 1; x <= totalPages; x++) {
+            pages.push(x)
+        }
+
+        return pages
+    }
+    const handleNextPage = () => {
+        if (currentPage !== totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
 
     return (
         <Wrapper>
@@ -115,24 +125,32 @@ export default function MedicineList() {
                 />
 
                 <form onSubmit={saveData} className="common_box align-center">
-                    <div className='row'>
+                    <div className='row vitalSign' >
                         <input
+                            align='center'
                             type='file'
                             name='file'
                             accept='.csv'
                             onChange={(event) => setCSV(event.target.files[0])}
-                            className='add_bottom_15'
+                            className='add_bottom_15 '
                             required
                         />
                         <div className='margin_left_15'>
                             <MainButtonInput > Save</MainButtonInput>
                         </div>
+
+                    </div>
+                    <div className="clinicHistory" >
+                        (Make Sure Your File  Format Will be '_id and medicineName')
+                    </div>
+                    <div className="row float-right ">
+                        <Toaster />
                     </div>
                     <TableContainer component={Paper} className=''>
                         <Table className={classes.table} size="large" aria-label="a dense table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align="center"><b>Sr No.</b></TableCell>
+                                    {/* <TableCell align="center"><b>Sr No.</b></TableCell> */}
                                     <TableCell align="center"><b>Medicine Name</b></TableCell>
                                 </TableRow>
                             </TableHead>
@@ -140,9 +158,9 @@ export default function MedicineList() {
                                 {medicineData.map((data, i) => {
                                     return (
                                         <TableRow>
-                                            <TableCell align="center">
+                                            {/* <TableCell align="center">
                                                 {i}
-                                            </TableCell>
+                                            </TableCell> */}
                                             <TableCell align="center">
                                                 {data.medicineName}
                                             </TableCell>
@@ -152,33 +170,40 @@ export default function MedicineList() {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <ul className="pagination pagination-sm">
-                        <li className="page-item">
-                            <Link className="page-link"
-                                to="#" onClick={handlePrevPage}
-                                disabled={currentPage === 1}
-                            >
-                                Previous
-                            </Link>
-                        </li>
+                    {medicineData ?
+                        < ul className="pagination pagination-sm">
+                            <li className="page-item">
+                                <Link className="page-link"
+                                    to="#" onClick={handlePrevPage}
+                                    disabled={currentPage === 1}
+                                >
+                                    Previous
+                                </Link>
+                            </li>
 
-                        <li className='page-item '>
-                            <Link className="page-link"
-                                to="#" onClick={() => changeCPage()}>
-                                {currentPage}
-                            </Link>
-                        </li>
+                            {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
+                                <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
+                                    <Link className="page-link"
+                                        key={pageNo}
+                                        to="#"
+                                        onClick={() => setCurrentPage(pageNo)}>
+                                        {pageNo}
+                                    </Link>
+                                </li>
+                            )}
 
-                        <li className="page-item">
-                            <Link className="page-link"
-                                to="#" onClick={handleNextPage}
-                                disabled={currentPage === totalPages}>
-                                Next
-                            </Link>
-                        </li>
-
-                    </ul>
+                            <li className="page-item">
+                                <Link className="page-link"
+                                    to="#" onClick={handleNextPage}
+                                    disabled={currentPage === totalPages}>
+                                    Next
+                                </Link>
+                            </li>
+                        </ul>
+                        : <div className="clinicHistory" ><b>Data is not Available</b></div>
+                    }
                 </form>
+
             </div>
         </Wrapper >
     )

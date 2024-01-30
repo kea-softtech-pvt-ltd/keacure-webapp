@@ -60,9 +60,9 @@ export default function EducationalApi() {
         }
     }
 
-    const updateEducationData = async ({EduId, formData}) => {
+    const updateEducationData = async ({EduId, bodyData}) => {
         try {
-            const result = await axios.post(`${API}/updateEducation/${EduId}`, formData)
+            const result = await axios.post(`${API}/updateEducation/${EduId}`, bodyData)
             return result.data
         }
         catch (err) {

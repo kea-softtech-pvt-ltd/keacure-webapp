@@ -21,9 +21,9 @@ export default function SubscriptionApi() {
             return err
         }
     }
-    const updateSubscriptionData = async ({ _id }, bodyData) => {
+    const updateSubscriptionData = async ({subscriptionId}, bodyData) => {
         try{
-            const result = await axios.post(`${API}/updatesubscriptiondata/${_id}`, bodyData)
+            const result = await axios.post(`${API}/updatesubscriptiondata/${subscriptionId}`, bodyData)
             return result.data
         }
         catch(err){

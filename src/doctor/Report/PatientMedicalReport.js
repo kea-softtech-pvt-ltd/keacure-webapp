@@ -4,7 +4,6 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
-import { makeStyles } from '@material-ui/core/styles';
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import PatientPersonalInfo from './partial/PatientPersonalInfo';
@@ -21,6 +20,7 @@ import UserLinks from '../Dashboard-card/partial/uselinks';
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
 import ReportApi from '../../services/ReportApi';
+import { setDoctorId } from '../../recoil/atom/setDoctorId';
 
 function TabPanel(props) {
     const { children, value, index } = props;
@@ -35,31 +35,13 @@ function TabPanel(props) {
     );
 }
 
-//for table
-const useStyles = makeStyles((theme) => ({
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120
-    },
-    selectEmpty: {
-        marginTop: theme.spacing(2)
-    },
-    table: {
-        minWidth: 650,
-    },
-}));
-
 export default function PatientMedicalReport() {
     const { reportId } = useParams();
-    const { getMedicineReport } = ReportApi()
-    const classes = useStyles();
-    const [doctorId, setDoctorId] = useState([]);
+    const [doctorId, setDoctorsId]=useRecoilState(setDoctorId)
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const { state } = useLocation()
     const { fees } = state.data
-    useEffect(() => {
-        medicalReportData()
-    }, [])
+    
     //for tab
     const [value, setValue] = useState(0);
     const handleChange = (e, newValue) => {
@@ -69,12 +51,6 @@ export default function PatientMedicalReport() {
 
     function changeTab(tabIndex) {
         setValue(tabIndex);
-    }
-    const medicalReportData = () => {
-        getMedicineReport({ reportId })
-            .then((res) => {
-                setDoctorId(res[0].doctorId)
-            })
     }
 
     return (
@@ -145,6 +121,7 @@ export default function PatientMedicalReport() {
                             <TabPanel value={value} index={4}>
                                 <MedicinePrescription
                                     reportId={reportId}
+                                    doctorId={doctorId}
                                     onChange={() => changeTab(5)}
                                 />
                             </TabPanel>

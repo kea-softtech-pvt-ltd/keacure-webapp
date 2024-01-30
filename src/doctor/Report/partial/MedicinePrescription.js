@@ -15,17 +15,24 @@ import ReportApi from '../../../services/ReportApi';
 import "react-toastify/dist/ReactToastify.css";
 import Toaster from '../../Toaster';
 import { toast } from 'react-toastify';
+import AuthApi from '../../../services/AuthApi';
 
 export default function MedicinePrescription(props) {
     //for add new fiels (priscription)
-    const { onChange, reportId, appointmentId } = props;
+    const { onChange, reportId, appointmentId, doctorId } = props;
     const [tabletName, setTabletName] = useState([]);
     const [medicineSave, setMedicineSave] = useState();
     const [duration, setDuration] = useState('');
     const [selectedSchedule, setSelectedSchedule] = useState([]);
     const [checked, setChecked] = useState([]);
     const [saveMealData, setSaveMealData] = useState([]);
-    const { getMedicine, insertMedicinePrescriptionData } = ReportApi();
+    const [medicineData, setMedicineData] = useState([])
+    const [meargeData, setMeargeData] = useState([])
+    const [totalPages, setTotalPages] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const { getMedicine, getMedicineList, insertMedicinePrescriptionData } = ReportApi();
+    const { getDrInfo } = AuthApi();
+
     const useStyles = makeStyles((theme) => ({
         formControl: {
             margin: theme.spacing(1),
@@ -56,15 +63,28 @@ export default function MedicinePrescription(props) {
     ]
 
     useEffect(() => {
-        getMedicineData()
-    }, []);
+        getMedicineData(currentPage)
+    }, [currentPage]);
+
 
     const getMedicineData = () => {
         getMedicine()
-            .then((res) => {
-                setTabletName(res)
+            .then((response) => {
+                setTabletName(response)
+                getDrInfo({ doctorId })
+                    .then((res) => {
+                        const pageSize = 10;
+                        getMedicineList(res[0].medicines_ID, currentPage, pageSize)
+                            .then((res) => {
+                                const totalPages = res.totalPages;
+                                setMeargeData(res.reducedData)
+                                setMedicineData(res.filteredData)
+                                setTotalPages(totalPages);
+                            })
+                    })
             })
     };
+    const data = [...tabletName, ...meargeData]
     const classes = useStyles();
 
     const handleMealData = ((e, selectedValue) => {
@@ -114,7 +134,7 @@ export default function MedicinePrescription(props) {
         insertMedicinePrescriptionData(bodyData)
             .then((res) => {
             })
-            toast.success("Saved Successfully!")
+        toast.success("Saved Successfully!")
     }
 
     return (
@@ -138,14 +158,14 @@ export default function MedicinePrescription(props) {
                                 <TableCell align="right">
                                     <Autocomplete
                                         style={{ width: 250 }}
-                                        id={tabletName._id}
+                                        id={data._id}
                                         disablePortal={true}
                                         disableClearable
                                         disableCloseOnSelect
                                         value={medicineSave}
                                         onChange={handleChange}
-                                        getOptionLabel={(tabletName) => `${tabletName.medicineName}`}
-                                        options={tabletName}
+                                        getOptionLabel={(data) => `${data.medicineName}`}
+                                        options={data}
                                         noOptionsText={"Medicine not available"}
                                         renderInput={(params) =>
                                             <TextField {...params}

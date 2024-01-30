@@ -26,7 +26,6 @@ function ShowDoctorInClinicAppointment(props) {
             const fullDate = moment(item.fullDate).format("YYYY-MM-DD")
             const time = moment(session[0].toTime).format("HH:MM")
             const slotTime = fullDate.concat(' ', time)
-            console.log("====", slotTime)
             if (slotTime < currentTime) {
                 setShowSlot('')
             }

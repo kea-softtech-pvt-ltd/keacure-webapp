@@ -46,16 +46,14 @@ export default function AuthApi() {
         
     }
 
-    const getDrInfo = async ({ doctorId }) => {
-         
-            try {
-                const result = await axios.get(`${API}/doctor/${doctorId}`);
-                return result.data;
-            }
-            catch (err) {
-                return err
-            }
-       
+    const getDrInfo = async ({ doctorId },currentPage, pageSize) => {
+        try {
+            const result = await axios.get(`${API}/doctor/${doctorId}?page=${currentPage}&pageSize=${pageSize}`);
+            return result.data;
+        }
+        catch (err) {
+            return err
+        }
     }
 
     return {

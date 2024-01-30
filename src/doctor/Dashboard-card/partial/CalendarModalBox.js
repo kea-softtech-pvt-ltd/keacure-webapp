@@ -70,11 +70,9 @@ function CalendarModalBox(props) {
                     </div> */}
 
                     <span className='' align='left'>
-                        {patientList.status === "Ongoing" ?
-                            <Link to="#" onClick={() => saveData()}>
-                                <button className="btn appColor modalbtn ">Start Consultation</button>
-                            </Link>
-                            : null}
+                        <Link to="#" onClick={() => saveData()}>
+                            <button className="btn appColor modalbtn ">Start Consultation</button>
+                        </Link>
                     </span>
                 </div>
             </div>

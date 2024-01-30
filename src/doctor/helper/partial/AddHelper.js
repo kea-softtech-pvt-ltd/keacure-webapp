@@ -3,12 +3,16 @@ import { MainInput } from '../../../mainComponent/mainInput';
 import { MainButtonInput } from '../../../mainComponent/mainButtonInput';
 import { useHistory } from 'react-router-dom';
 import HelperApi from '../../../services/HelperApi';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import Toaster from '../../Toaster';
 export default function AddHelper(props) {
     const { getAccessModule, createHelper } = HelperApi();
     const [accessModule, setAccessModule] = useState([]);
     const [selectedModule, setSelectedModule] = useState([]);
     const [checked, setChecked] = useState([]);
     const [loginData, setLoginData] = useState([]);
+
 
     const history = useHistory()
     const handleChange = (e) => {
@@ -21,8 +25,8 @@ export default function AddHelper(props) {
         getAccess();
     }, [])
 
-    const getAccess =  () => {
-         getAccessModule()
+    const getAccess = () => {
+        getAccessModule()
             .then((res) => {
                 setAccessModule(res)
             })
@@ -48,7 +52,7 @@ export default function AddHelper(props) {
         }
         setSelectedModule(module)
     }
-    const saveData =  (e) => {
+    const saveData = (e) => {
         const bodyData = {
             "doctorId": props.doctorId,
             "username": loginData.username,
@@ -58,10 +62,11 @@ export default function AddHelper(props) {
             "access_module": selectedModule,
         }
 
-         createHelper(bodyData)
+        createHelper(bodyData)
             .then(() => {
                 history.push(`/dashboard/${props.doctorId}`)
             })
+        toast.success("Saved Successfully!")
     }
     return (
         <div className='whiteBox'>
@@ -99,7 +104,7 @@ export default function AddHelper(props) {
                         placeholder="Email">
                     </MainInput>
                     {/* <div> */}
-                        <label className='helperLabel float-left'><b>Mobile Number</b></label>
+                    <label className='helperLabel float-left'><b>Mobile Number</b></label>
                     {/* </div> */}
                     <MainInput
                         type="mobile"
@@ -112,7 +117,7 @@ export default function AddHelper(props) {
                     </MainInput>
                 </div>
                 <div className="col-lg-4">
-                <label className='helperLabel' ><b>Select Access</b></label>
+                    <label className='helperLabel' ><b>Select Access</b></label>
                     <div className='helperDiv'>
                         {accessModule.map((item, index) => {
                             return (
@@ -133,6 +138,9 @@ export default function AddHelper(props) {
             </div>
             <div className="text-center add_top_30 pb-2">
                 <MainButtonInput onClick={saveData}>Save</MainButtonInput>
+            </div>
+            <div className="row float-right toaster">
+                <Toaster />
             </div>
         </div>
 

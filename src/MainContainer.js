@@ -25,6 +25,7 @@ import { AppointmentBookingSection } from "./patient/appointmentBookingSection";
 import Report from "./doctor/Dashboard-card/Report";
 import PatientData from "./doctor/Dashboard-card/partial/patientData";
 import MedicineList from "./doctor/Dashboard-card/MedicineList";
+import SubscriptionConfirmation from "./doctor/Dashboard-card/subscriptionConfirmation";
 
 function MainContainer() {
   return (
@@ -98,7 +99,7 @@ function MainContainer() {
       <Route path="/patientdata/:patientId">
         <PatientData />
       </Route>
-      <Route path="/appointmentbookingsection/:patientId">
+      <Route path="/appointmentbookingsection/:doctorId">
         <AppointmentBookingSection />
       </Route>
       <Route path="/report/:doctorId">
@@ -106,6 +107,9 @@ function MainContainer() {
       </Route>
       <Route path="/medicinelist/:doctorId">
        <MedicineList/>
+      </Route>
+      <Route path="/subscriptionconfirmation/:doctorId">
+       <SubscriptionConfirmation/>
       </Route>
     </Switch>
   )

@@ -66,8 +66,8 @@ function EditExperience(props) {
                     })
                     const editAllExperienceData = manipulateExperience(editExperience[0]);
                     setCoilExperienceData(editAllExperienceData);
-                    props.onSubmit();
                 })
+                props.onSubmit();
         }
     }
 
@@ -120,20 +120,20 @@ function EditExperience(props) {
                     </MainInput>
                 </div>
                 <div className="col-lg-12">
-                    <div className="textarea">
+                    <div className="">
                         <label><b>Description</b></label>
                         <textarea
                             type="text"
                             name="description"
                             value={updateExperience.description}
                             onChange={handleInputChange}
-                            className="form-control textarea-ex"
+                            className="form-control"
                             placeholder="description"
                         />
                     </div>
                 </div>
             </div>
-            <div className="text-center add_top_30">
+            <div className="text-center add_top_20">
                 <MainButtonInput onClick={UpdateData}>Save</MainButtonInput>
             </div>
         </>

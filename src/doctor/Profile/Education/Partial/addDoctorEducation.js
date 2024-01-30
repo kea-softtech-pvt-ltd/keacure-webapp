@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { setDoctorEducation } from "../../../../recoil/atom/setDoctorEducation";
@@ -8,8 +7,12 @@ import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
 import { MainInput } from '../../../../mainComponent/mainInput';
 import { MainSelect } from '../../../../mainComponent/mainSelect';
 import EducationalApi from '../../../../services/EducationalApi';
+import Toaster from '../../../Toaster';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 function AddDoctorEducation(props) {
-    const { doctorId } = props;
+    const { doctorId, recordAdded } = props;
     const [updateEduData, setUpdateEduData] = useState([])
     const [coilDoctorEducationData, setCoilDoctorEducationData] = useRecoilState(setDoctorEducation)
     const [drspecialization, setDrSpecialization] = useState([])
@@ -58,12 +61,12 @@ function AddDoctorEducation(props) {
             specialization: updateEduData.specialization,
             // document:document
         }
-        console.log("====", bodyData)
         AddEducation(bodyData)
             .then((res) => {
                 setCoilDoctorEducationData(coilDoctorEducationData.concat(res))
-                props.recordAdded();
             });
+        toast.success("Saved Successfully!")
+        props.recordAdded()
     }
 
     //for all input onchange method
@@ -100,7 +103,7 @@ function AddDoctorEducation(props) {
                             name="collage" onChange={handleInputChange}
                             placeholder="Doctor Collage/University">
                         </MainInput>
-                            {errors.collage && <span className="validation">Please enter your collage</span>}
+                        {errors.collage && <span className="validation">Please enter your collage</span>}
                     </div>
                 </div>
 
@@ -120,19 +123,19 @@ function AddDoctorEducation(props) {
                     </MainSelect>
                     {errors.specialization && <span className="validation">Please select your specialization</span>}
                     <div className='margin_top_30'>
-                    <div className=" text-left">
-                        <label><b>Complition Year</b></label>
-                    </div>
-                    <MainSelect
-                        name="comYear"
-                        value={updateEduData.comYear}
-                        onChange={handleInputChange}>
-                        <option >Select Year</option>
-                        {options.map((option, index) => (
-                            <option key={index}>{option}</option>
-                        ))}
-                    </MainSelect>
-                    {errors.comYear && <span className="validation">Please select your complition Year</span>}
+                        <div className=" text-left">
+                            <label><b>Complition Year</b></label>
+                        </div>
+                        <MainSelect
+                            name="comYear"
+                            value={updateEduData.comYear}
+                            onChange={handleInputChange}>
+                            <option >Select Year</option>
+                            {options.map((option, index) => (
+                                <option key={index}>{option}</option>
+                            ))}
+                        </MainSelect>
+                        {errors.comYear && <span className="validation">Please select your complition Year</span>}
                     </div>
                     {/* <div className=" text-left">
                         <label><b>Qualification Document Photo</b></label>
@@ -149,6 +152,9 @@ function AddDoctorEducation(props) {
             </div>
             <div className="text-center add_top_30">
                 <MainButtonInput >Save</MainButtonInput>
+            </div>
+            <div className="row float-right toaster">
+                <Toaster />
             </div>
         </form>
     )

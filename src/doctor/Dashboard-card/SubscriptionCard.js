@@ -9,6 +9,7 @@ import { setHelperData } from "../../recoil/atom/setHelperData";
 import { Button, Modal } from "react-bootstrap";
 import SubscriptionApi from "../../services/SubscriptionApi";
 import { FaRupeeSign } from "react-icons/fa";
+
 export default function SubscriptionCard() {
     const { updateSubscriptionData, getSubscriptionData, getSubscriptionPlan } = SubscriptionApi();
     const [getSubData, setGetSubData] = useState([]);
@@ -25,14 +26,19 @@ export default function SubscriptionCard() {
     useEffect(() => {
         fetchSubscription()
         getSubscriptionPlans()
-
     }, []);
 
     const fetchSubscription = () => {
         getSubscriptionData({ doctorId })
             .then((res) => {
-                setGetSubData(res[0].selected_plan)
-                setSubscriptionId(res[0]._id)
+                const data = res.filter((item) => {
+                    if (item.Status === "Running") {
+                        return item
+                    }
+                })
+                console.log('--res--', data)
+                setGetSubData(data[0].selected_plan)
+                setSubscriptionId(data[0]._id)
             })
 
     }
@@ -46,19 +52,21 @@ export default function SubscriptionCard() {
     }
 
     const confirmInputHandler = (plan) => {
-        const _id = subscriptionId;
         const bodyData = {
             "doctorId": doctorId,
             "date": new Date(),
             "expiryDate": new Date(),
             "plan": plan.name,
-            "duration": plan.frequency
+            "duration": plan.frequency,
+            "status": "Running"
         }
-        updateSubscriptionData({ _id }, bodyData)
-            .then(() => {
-                history.push(`/doctorprofile/${doctorId}`)
+        updateSubscriptionData({ subscriptionId }, bodyData)
+            .then((res) => {
+                console.log('======resssssssssss', res)
+                // history.push(`/doctorprofile/${doctorId}`)
                 setGetSubData(plan)
             })
+        history.push(`/subscriptionconfirmation/${doctorId}`)
         handleClose()
 
     }
@@ -106,7 +114,7 @@ export default function SubscriptionCard() {
                                             <h4 className="add_top_20 ">{item.name}</h4>
                                         </span>
                                         <h5> <FaRupeeSign />-{item.amount}</h5>
-                                        <ul className="card-text cardListScroll underline" >
+                                        <ul className=" cardListScroll underline" >
                                             {item.features.map((data, i) => {
                                                 return (
                                                     <li key={i} className="card-list">

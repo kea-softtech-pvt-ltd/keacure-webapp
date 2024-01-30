@@ -9,13 +9,9 @@ import EducationalApi from '../../../../services/EducationalApi';
 
 function EditEducation(props) {
     const { doctorId, EduId } = props;
-    //for fetch specialization data
     const [drspecialization, setDrSpecialization] = useState([])
-    // for fetch degrees
     const [drdegrees, setDrdegrees] = useState([])
-    //for update data using recoil
     const [eduData, setEduData] = useRecoilState(setDoctorEducation)
-    //for update education data
     const [updateEducation, setUpdateEducation] = useState([])
     const {
         fetchEditEducationData,
@@ -70,9 +66,15 @@ function EditEducation(props) {
     //for document onChange methods
     async function EditData(e) {
         e.preventDefault();
-        const formData = new FormData(document.querySelector("#EditData"));
-        formData.append('doctorId', doctorId);
-        updateEducationData({ EduId, formData })
+        const bodyData = {
+            doctorId: doctorId,
+            degree: updateEducation.degree,
+            collage: updateEducation.collage,
+            comYear: updateEducation.comYear,
+            specialization: updateEducation.specialization,
+            // document:document
+        }
+        updateEducationData({ EduId, bodyData })
             .then(res => {
                 const newEduData = eduData.map(function (d, index) {
                     if (EduId === d._id) {

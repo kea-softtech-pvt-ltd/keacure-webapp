@@ -31,7 +31,6 @@ function PatientRegistrationForm(props) {
     }
 
     const { register, setValue, formState: { errors } } = useForm();
-    console.log("===errors", errors)
     const onSubmit = (e) => {
         e.preventDefault();
         const newPatientData = {

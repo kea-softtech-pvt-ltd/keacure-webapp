@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { setDoctorClinic } from "../../../../recoil/atom/setDoctorClinic";
 import { useRecoilState } from "recoil";
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
@@ -10,15 +9,17 @@ import { Autocomplete, TextField } from "@mui/material";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
 import uuid from "uuid";
 const AddClinic = (props) => {
-    const { doctorId } = useParams();
+    const { doctorId } = props;
     const [coilDoctorClinicData, setCoilDoctorClinicData] = useRecoilState(setDoctorClinic)
+    console.log('=======', coilDoctorClinicData)
     const [selectedService, setSelectedService] = useState([]);
-    const [selectedSpecialization, setSelectedSpecialization] = useState([]);
+    // const [selectedSpecialization, setSelectedSpecialization] = useState([]);
     const [drspecialization, setDrSpecialization] = useState([])
     const [clinicInfo, setClinicInfo] = useState([]);
     const { fetchDrSpecialization } = EducationalApi()
     const [servicess, setServicess] = useState([])
-    const { insertClinicData, getServicess } = ClinicApi()
+    const { getServicess, addAnotherClinic } = ClinicApi()
+
     useEffect(() => {
         fetchSpecializations()
         fetchServicess()
@@ -51,10 +52,10 @@ const AddClinic = (props) => {
         setSelectedService(selectedValue)
     }
 
-    const handleSpecialization = (e, selectedValue) => {
-        e.preventDefault()
-        setSelectedSpecialization(selectedValue)
-    }
+    // const handleSpecialization = (e, selectedValue) => {
+    //     e.preventDefault()
+    //     setSelectedSpecialization(selectedValue)
+    // }
 
     async function uploadImageAsync(uri) {
         const blob = await new Promise((resolve, reject) => {
@@ -63,7 +64,6 @@ const AddClinic = (props) => {
                 resolve(xhr.response);
             };
             xhr.onerror = function (e) {
-                console.log(e);
                 reject(new TypeError("Network request failed"));
             };
             xhr.responseType = "blob";
@@ -83,21 +83,19 @@ const AddClinic = (props) => {
         e.preventDefault();
         const resultUrl = await uploadImageAsync(clinicInfo.clinicLogo)
         const newClinicData = {
-            doctorId: doctorId,
             clinicLogo: resultUrl,
-            specialization: selectedSpecialization,
             clinicName: clinicInfo.clinicName,
             address: clinicInfo.address,
             clinicNumber: clinicInfo.clinicNumber,
             services: selectedService
         }
-        insertClinicData({ newClinicData })
+        addAnotherClinic(newClinicData, doctorId)
             .then((res) => {
-                setCoilDoctorClinicData(coilDoctorClinicData.concat(res.data))
-                props.onSubmit()
+                setCoilDoctorClinicData(coilDoctorClinicData.concat(res))
             });
+        props.onSubmit()
     }
-   
+
     return (
         <div className="col-lg-12">
             <form onSubmit={sendClinicInfo}>
@@ -107,7 +105,6 @@ const AddClinic = (props) => {
                         type="file"
                         accept=".png, .jpg, .jpeg"
                         onChange={(e) => {
-                            console.log(e)
                             setClinicInfo({ ...clinicInfo, ['clinicLogo']: URL.createObjectURL(e.target.files[0]) })
                         }}
                         name="clinicLogo">
@@ -124,7 +121,6 @@ const AddClinic = (props) => {
                     </MainInput>
                 </div>
 
-
                 <label><b>Location</b></label>
                 <MainInput
                     type="text"
@@ -133,7 +129,6 @@ const AddClinic = (props) => {
                     onChange={handleChange}
                     placeholder="Enter clinic address">
                 </MainInput>
-
 
                 <label><b>Clinic Number</b></label>
                 <MainInput
@@ -144,7 +139,7 @@ const AddClinic = (props) => {
                     placeholder="Enter clinic number">
                 </MainInput>
 
-                <div className='align-left '>
+                {/* <div className='align-left '>
                     <div align='left' className="patientData mb-2">
                         <b>Clinic Specialization</b>
                     </div>
@@ -163,7 +158,7 @@ const AddClinic = (props) => {
                             <TextField {...params}
                                 label="Specializaation" />}
                     />
-                </div>
+                </div> */}
                 <div className='align-left '>
                     <div align='left' className="patientData mt-2 mb-2">
                         <b>Clinic Services</b>

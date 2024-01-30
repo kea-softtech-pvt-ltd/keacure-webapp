@@ -6,7 +6,7 @@ export default function GetSymptomsData(props) {
     const [symptomDataInfo, setSymptomDataInfo] = useState([])
     useEffect(() => {
         symptomsData()
-    }, [symptomDataInfo])
+    }, [])
 
     const symptomsData =  () => {
          getMedicineReport({ reportId })

@@ -31,14 +31,19 @@ export default function Calender() {
 
   const handleModalButtonClick = (item) => {
     const patientId = item.patientId
-    setShow(true)
+    if (item.status === "Ongoing") {
+      setShow(true)
+    }else{
+      setShow(false)
+    }
     setPatientIdDetails(patientId)
   }
   const handleOnSelectSlot = () => {
     getPatientListDetails({ doctorId })
       .then((result) => {
+        const data = result.test;
         const calendarData = []
-        result.map((item) => {
+        data.map((item) => {
           setPatientList(item)
           if (item.dependentId) {
             calendarData.push({
@@ -66,8 +71,8 @@ export default function Calender() {
       })
   }
   const eventPropGetter = (event) => {
-    const backgroundColor = event.status === "Completed" ? '#c0d2fc' : '#1a3c8b';
-    const color = event.status === "Completed" ? '#333' : '#fff';
+    const backgroundColor = event.status === "Ongoing" ? '#c0d2fc' : '#1a3c8b';
+    const color = event.status === "Ongoing" ? '#333' : '#fff';
     return { style: { backgroundColor, color } }
   }
 

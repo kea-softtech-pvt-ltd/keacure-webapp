@@ -7,6 +7,10 @@ import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
 import { MainInput } from '../../../../mainComponent/mainInput';
 import { MainMuiPickers } from '../../../../mainComponent/MainMuiPickers';
 import ExperienceApi from '../../../../services/ExperienceApi';
+import Toaster from '../../../Toaster';
+import { toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 function AddDoctorProfessionalExperience(props) {
     const { doctorId, addRecords } = props;
     const [coilDoctorExperience, setCoilDoctorExperience] = useRecoilState(setDoctorExperience)
@@ -16,7 +20,6 @@ function AddDoctorProfessionalExperience(props) {
     const [experienceData, setExperienceData] = useState([]);
     const { insertDrExperience } = ExperienceApi();
     const handleStartYearChange = (date) => {
-        console.log('===',date)
         // const splitDate = date.split("")
         // const year = splitDate[0]
         // const month = splitDate[1]
@@ -51,19 +54,18 @@ function AddDoctorProfessionalExperience(props) {
             startYear: startYear,
             description: data.description
         }
-        console.log('=newDoctorData=',newDoctorData)
         if (endYear < startYear) {
             setError("end year should be greater than start year")
         }
         else {
             insertDrExperience(newDoctorData)
                 .then((res) => {
-                    const reArrangedData = manipulateExperience(res.data)
+                    const reArrangedData = manipulateExperience(res)
                     setCoilDoctorExperience(coilDoctorExperience.concat(reArrangedData))
-                    props.addRecords()
                 })
+                toast.success("Saved Successfully!")
+                props.addRecords()
         }
-        addRecords();
     }
 
     function manipulateExperience(data) {
@@ -149,6 +151,9 @@ function AddDoctorProfessionalExperience(props) {
 
             <div className="text-center my-2">
                 <MainButtonInput>Save</MainButtonInput>
+            </div>
+            <div className="row float-right toaster">
+                <Toaster />
             </div>
         </form>
     )

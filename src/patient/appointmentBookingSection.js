@@ -10,9 +10,12 @@ import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
 import { MainNav } from "../mainComponent/mainNav";
 import { setHelperData } from "../recoil/atom/setHelperData";
 import { Wrapper } from "../mainComponent/Wrapper";
+// import { useParams } from "react-router-dom/cjs/react-router-dom";
 function AppointmentBookingSection() {
+    // const { doctorId } = useParams()
     const [doctorId, setDoctorsId] = useRecoilState(setDoctorId)
     const [clinicData, setClinicData] = useState([])
+    console.log('===clinicData=====', clinicData)
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const [doctorName, setDoctorName] = useState([])
     const { getDrInfo } = AuthApi()
@@ -52,7 +55,7 @@ function AppointmentBookingSection() {
                     <div>
                         {clinicData.map((clinicItem, id) => (
                             <MainAccordion key={id} icon={<FaClinicMedical />} title={clinicItem.clinicName}>
-                                <DoctorAppointmentType clinicData={clinicItem} />
+                                <DoctorAppointmentType clinicData={clinicItem} doctorId={doctorId} />
                             </MainAccordion>
 
                         ))}

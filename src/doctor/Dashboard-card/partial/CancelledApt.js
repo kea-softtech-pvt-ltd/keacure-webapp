@@ -16,24 +16,28 @@ export default function CancelledAppointment(props) {
     }, [currentPage]);
 
     const handlePrevPage = () => {
-        if (currentPage > 1) {
+        if (currentPage !== 1) {
             setCurrentPage(currentPage - 1);
         }
     };
-    // function changeCPage() {
-    //     setCurrentPage(currentPage * 15)
-    // }
+    const totalPagesCalculator = () => {
+        const pages = [];
+        for (let x = 1; x <= totalPages; x++) {
+            pages.push(x)
+        }
+
+        return pages
+    }
     const handleNextPage = () => {
-        if (currentPage < totalPages) {
+        if (currentPage !== totalPages) {
             setCurrentPage(currentPage + 1);
         }
     };
 
+    const pageSize = 6;
     function getPatientHistory() {
-        const pageSize = 6;
         getPatientListDetails({ doctorId }, currentPage, pageSize)
             .then((result) => {
-                console.log('==---==', result)
                 const totalPages = result.totalCancelledPages;
                 setTotalPages(totalPages)
                 setPatientHistoryData(result.cancelled)
@@ -56,10 +60,10 @@ export default function CancelledAppointment(props) {
                                         <i className='icon-mobile-1 color patientListIcon' />
                                         <span className='patinetInfo'>{details['patientDetails'][0].mobile}</span>
                                     </span>
-                                    <span className='cardSpan '>
+                                    {/* <span className='cardSpan '>
                                         <i className='icon-hospital-1 color patientListIcon' />
                                         <span className='patinetInfo'>{details['clinicList'][0].clinicName}</span>
-                                    </span>
+                                    </span> */}
                                     <span className='cardSpan time'>
                                         <i className='pe-7s-date m-1 color patientListIcon' />
                                         <span className='slotTime'>{moment(details.selectedDate).format('YYYY-MM-DD').toString()},
@@ -82,31 +86,37 @@ export default function CancelledAppointment(props) {
                 })}
 
             </div>
-            <ul className="pagination pagination-sm">
-                <li className="page-item">
-                    <Link className="page-link"
-                        to="#" onClick={handlePrevPage}
-                        disabled={currentPage === 1}
-                    >
-                        Previous
-                    </Link>
-                </li>
+            {patientHistoryData ?
+                < ul className="pagination pagination-sm">
+                    <li className="page-item">
+                        <Link className="page-link"
+                            to="#" onClick={handlePrevPage}
+                            disabled={currentPage === 1}
+                        >
+                            Previous
+                        </Link>
+                    </li>
 
-                {/* <li className='page-item '>
-                    <Link className="page-link"
-                        to="#" onClick={() => changeCPage()}>
-                        {currentPage}
-                    </Link>
-                </li> */}
+                    {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
+                        <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
+                            <Link className="page-link"
+                                key={pageNo}
+                                to="#"
+                                onClick={() => setCurrentPage(pageNo)}>
+                                {pageNo}
+                            </Link>
+                        </li>
+                    )}
 
-                <li className="page-item">
-                    <Link className="page-link"
-                        to="#" onClick={handleNextPage}
-                        disabled={currentPage === totalPages}>
-                        Next
-                    </Link>
-                </li>
-            </ul>
+                    <li className="page-item">
+                        <Link className="page-link"
+                            to="#" onClick={handleNextPage}
+                            disabled={currentPage === totalPages}>
+                            Next
+                        </Link>
+                    </li>
+                </ul>
+                : <div className="clinicHistory" ><b>Data is not Available</b></div>}
         </>
     )
 }

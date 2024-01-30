@@ -14,7 +14,7 @@ export default function UserLinks(props) {
     let location = useLocation();
 
     useEffect(() => {
-        // console.log('====', location.pathname)
+        
     }, [location])
     function handleClick(e) {
         e.preventDefault()
