@@ -50,7 +50,6 @@ const ShowInClinicAppointSlots = (props) => {
             "status": "Ongoing",
             "payment": "hold"
         }
-        console.log('======transactionData',transactionData)
         paymentInfo(transactionData)
             .then((res) => {
                 history.push(`/patient/${session.doctorId}`);

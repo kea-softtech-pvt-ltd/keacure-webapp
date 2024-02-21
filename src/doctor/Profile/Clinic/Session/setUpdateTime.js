@@ -81,7 +81,6 @@ function SetUpdateTime(props) {
                 return selectedSlots
             }
         })
-        console.log('======slotes', slots)
         const setTimeData = {
             clinicId: clinicId,
             doctorId: doctorId,
