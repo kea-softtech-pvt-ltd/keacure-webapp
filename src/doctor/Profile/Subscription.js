@@ -39,6 +39,7 @@ export default function Subscription() {
     const getSubscriptionPlans = () => {
         getSubscriptionPlan()
             .then((res) => {
+                console.log('=======',res)
                 subscriptionPlan(res)
             })
     }

@@ -74,7 +74,7 @@ export default function MedicinePrescription(props) {
                 getDrInfo({ doctorId })
                     .then((res) => {
                         const pageSize = 10;
-                        getMedicineList(res[0].medicines_ID, currentPage, pageSize)
+                        getMedicineList(res.result[0].medicines_ID, currentPage, pageSize)
                             .then((res) => {
                                 const totalPages = res.totalPages;
                                 setMeargeData(res.reducedData)

@@ -6,7 +6,7 @@ export default function SubscriptionApi() {
     const subscription = async (bodyData) => {
         try {
             const result = await axios.post(`${API}/subscription`, bodyData)
-            return result.data
+            return result.data.data
         }
         catch (err) {
             return err
@@ -24,7 +24,7 @@ export default function SubscriptionApi() {
     const updateSubscriptionData = async ({subscriptionId}, bodyData) => {
         try{
             const result = await axios.post(`${API}/updatesubscriptiondata/${subscriptionId}`, bodyData)
-            return result.data
+            return result.data.data
         }
         catch(err){
             return err

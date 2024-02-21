@@ -3,15 +3,12 @@ import { Link } from "react-router-dom";
 import { Button, Modal } from 'react-bootstrap';
 import HelperApi from '../../../services/HelperApi';
 
-
 export default function HelperList(props) {
     const { doctorId } = props;
     const [helperList, setHelperList] = useState([]);
     const [showDelete, setShowDelete] = useState(false);
     const [details, setDetails] = useState([])
     const { removeHelper, getHelper } = HelperApi();
-    // const { state } = useLocation()
-    // const { doctorId } = state.data
 
     useEffect(() => {
         getHelperDetails();
@@ -33,7 +30,6 @@ export default function HelperList(props) {
                 })
                 setHelperList(data)
             })
-
     }
 
     function deleteHelper(details) {
@@ -43,7 +39,6 @@ export default function HelperList(props) {
                 getHelperDetails()
                 handleDeleteClose()
             })
-
     }
 
     return (
@@ -54,7 +49,7 @@ export default function HelperList(props) {
                         <>
                             {helperList.map((details, i) => {
                                 return (
-                                    <div className="col-md-3">
+                                    <div className="col-md-3" key={i}>
                                         <div className="mainCards">
                                             <span className='cardSpan'>
                                                 <i className='icon-user color' />

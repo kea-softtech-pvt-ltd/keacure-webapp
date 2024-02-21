@@ -91,7 +91,8 @@ export default function EditDoctorProfile() {
                     </TabPanel>
 
                     <TabPanel value={tabValue} index={3}>
-                        <DoctorClinic />
+                        <DoctorClinic 
+                         doctorId={doctorId}/>
                     </TabPanel>
                 </div>
             </div>

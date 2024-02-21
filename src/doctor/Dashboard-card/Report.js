@@ -30,9 +30,10 @@ export default function Report(props) {
                     })
                     setPatientData(res)
                     const item = result.test.filter((res) => {
-                        if (res.payment === "done")
-                            return res
-                    })
+                        if (res.payment === "Done")
+                        return res
+                })
+
                     const total = item.reduce((initialValue, curValue) => {
                         return initialValue + parseInt(curValue.total)
                     }, 0)
@@ -48,7 +49,7 @@ export default function Report(props) {
                     <div className="col-md-4 ">
                         <div className="cardDiv">
                             <span className='cardSpan '>
-                                <span className='patientName m-3'>Total Appoinment</span>
+                                <span className='patientName m-3'>Completed Appoinment</span>
                                 <span className='patientName m-3'>{patientList.length}</span>
                             </span>
                         </div>

@@ -7,22 +7,26 @@ import { useRecoilState } from "recoil";
 import PatientApi from "../services/PatientApi";
 import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
+import { setDependentId } from "../recoil/atom/setDependentId";
 const ShowInClinicAppointSlots = (props) => {
     const { sessionSlot, selectedDate, session, slotDate } = props;
     const [patientId, setPatientsId] = useRecoilState(setNewPatientId)
+    const [ dependentId, setDependentsId] = useRecoilState(setDependentId)
     const [bookingSlots, setBookingSlots] = useState([]);
-    const [showDelete, setShowDelete] = useState(false);
+    const [show, setShow] = useState(false);
     const [bookSlot, setbookSlot] = useState([]);
     const { paymentInfo, getbookedSlots } = PatientApi();
     const history = useHistory()
+
     useEffect(() => {
         availableSlots()
     }, [])
-    const handleDeleteShow = (item) => {
-        setShowDelete(true)
+
+    const handleShow = (item) => {
+        setShow(true)
         setbookSlot(item)
     }
-    const handleDeleteClose = () => setShowDelete(false)
+    const handleClose = () => setShow(false)
 
     const handleSelectedSlot = (item) => {
         const startDate = (selectedDate + " " + item.time)
@@ -31,6 +35,7 @@ const ShowInClinicAppointSlots = (props) => {
             "ClinicId": session.clinicId,
             "slotId": item._id,
             "patientId": patientId,
+            "dependentId":dependentId !== " " ? dependentId : null,
             // "order_id": payCheck.orderId,
             "transactionId": '123',
             "currency": 'INR',
@@ -45,11 +50,13 @@ const ShowInClinicAppointSlots = (props) => {
             "status": "Ongoing",
             "payment": "hold"
         }
+        console.log('======transactionData',transactionData)
         paymentInfo(transactionData)
             .then((res) => {
                 history.push(`/patient/${session.doctorId}`);
+                setDependentsId(' ')
             })
-        handleDeleteClose()
+        handleClose()
     }
 
     const availableSlots = () => {
@@ -78,7 +85,6 @@ const ShowInClinicAppointSlots = (props) => {
                                     ?
                                     <div>
                                         <div
-                                            onClick={() => handleDeleteShow(item)}
                                             className="disabled-div"
                                             type="radio"
                                             time={slots}>
@@ -89,7 +95,7 @@ const ShowInClinicAppointSlots = (props) => {
                                     <div>
                                         <Link
                                             to='#'
-                                            onClick={() => handleDeleteShow(item)}
+                                            onClick={() => handleShow(item)}
                                             className="btn_1"
                                             type="radio"
                                             time={slots}>
@@ -102,7 +108,7 @@ const ShowInClinicAppointSlots = (props) => {
                         </>
                     ))}
                 </section>
-                <Modal show={showDelete} onHide={handleDeleteClose}>
+                <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>Are You Sure?</Modal.Title>
                     </Modal.Header>
@@ -113,7 +119,7 @@ const ShowInClinicAppointSlots = (props) => {
                         <Button variant="default" className='appColor' onClick={() => handleSelectedSlot(bookSlot)}>
                             Yes
                         </Button>
-                        <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleDeleteClose}>
+                        <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleClose}>
                             No
                         </Button>
 

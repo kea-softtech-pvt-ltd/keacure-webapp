@@ -33,8 +33,6 @@ export default function EditHelper() {
                 setGetHelperData(res[0])
                 setSelectedModule(res[0].access_module)
             })
-
-
     }
     const getAccess = () => {
         getAccessModule()
@@ -96,7 +94,7 @@ export default function EditHelper() {
                 </ul>
             </MainNav>
             <div className="row ">
-                <UserLinks doctorId={doctorId} />
+                <UserLinks doctorId={doctorId} helperId={helperId} accessModule={accessModule} />
                 <div className="common_box">
                     <div className='whiteBox'>
                         <div className="row p-4">

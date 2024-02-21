@@ -21,9 +21,10 @@ export default function Calender() {
   const [patientIdDetails, setPatientIdDetails] = useState([])
   const [helpersData, setHelpersData] = useRecoilState(setHelperData)
   const [patientList, setPatientList] = useState([])
+  
   useEffect(() => {
     handleOnSelectSlot();
-  }, [])
+  }, [getData])
 
   const handleClose = () => {
     setShow(false)
@@ -41,7 +42,7 @@ export default function Calender() {
   const handleOnSelectSlot = () => {
     getPatientListDetails({ doctorId })
       .then((result) => {
-        const data = result.test;
+        const data = result['test'];
         const calendarData = []
         data.map((item) => {
           setPatientList(item)
@@ -57,8 +58,8 @@ export default function Calender() {
             })
           } else {
             calendarData.push({
-              title: item.patientDetails[0].name,
-              patientId: item.patientDetails[0]._id,
+              title: item['patientDetails'][0].name,
+              patientId: item['patientDetails'][0]._id,
               id: item._id,
               start: new Date(item.startDate),
               end: new Date(moment(item.startDate).add({ hours: 0, minutes: item.timeSlot }).toString()),

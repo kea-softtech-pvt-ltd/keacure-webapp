@@ -13,7 +13,6 @@ export default function Helper() {
     const [helperList, setHelperList] = useState(null);
     const [active, setActive] = useState(false)
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
-
     const { doctorId } = useParams()
     let { getHelper } = HelperApi()
     useEffect(() => {
@@ -57,17 +56,17 @@ export default function Helper() {
                 />
                 <div className="common_box">
                     <>
-                    {helperList?(
-                        <>
+                        {helperList ? (
+                            <>
 
-                            {!active && helperList.length > 0 ?
-                                <HelperList doctorId={doctorId} />
-                                :
-                                <AddHelper doctorId={doctorId} />
-                            }
-                        </>
-                     ): null} 
-                        
+                                {!active && helperList.length > 0 ?
+                                    <HelperList doctorId={doctorId} />
+                                    :
+                                    <AddHelper doctorId={doctorId} />
+                                }
+                            </>
+                        ) : null}
+
                     </>
                 </div>
 

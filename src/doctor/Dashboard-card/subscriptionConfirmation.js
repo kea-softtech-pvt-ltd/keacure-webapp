@@ -20,12 +20,12 @@ export default function SubscriptionConfirmation() {
     useEffect(() => {
         doctorInfo()
         fetchSubscription()
-    }, []);
+    }, [getSubData]);
 
     const doctorInfo = () => {
         getDrInfo({ doctorId })
             .then((res) => {
-                setDoctorData(res[0])
+                setDoctorData(res.result[0])
             })
     }
 
@@ -37,9 +37,7 @@ export default function SubscriptionConfirmation() {
                         return item
                     }
                 })
-                console.log('--res--', data)
                 setGetSubData(data[0].selected_plan)
-               
             })
 
     }

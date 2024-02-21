@@ -57,8 +57,8 @@ function FetchEducation(props) {
                 <div className='row'>
                     {eduData.map((education, index) => {
                         return (
-                            <div className='col-md-5 mx-3'>
-                                <div key={index}>
+                            <div className='col-md-5 mx-3' key={index}>
+                                <div>
                                     <Modal show={activeModal === index}
                                         onHide={handleClose}
                                         id={`education-${education._id}`}
@@ -153,7 +153,6 @@ function FetchEducation(props) {
                         <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleDeleteClose}>
                             No
                         </Button>
-
                     </Modal.Footer>
                 </Modal>
             </div>

@@ -1,5 +1,4 @@
 import { AddOwnClinic } from "./addOwnClinic";
-import { API } from "../../../../config";
 import { SetSession } from "../Session/setSession";
 import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
 import { Link } from "react-router-dom";
@@ -9,11 +8,10 @@ import { Modal } from "react-bootstrap";
 import { useRecoilState } from "recoil";
 import { setDoctorOwnClinic } from "../../../../recoil/atom/setDoctorOwnClinic";
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
-import AuthApi from "../../../../services/AuthApi";
 import ClinicApi from "../../../../services/ClinicApi";
+
 function AddDoctorOwnClinicInfo() {
     const { doctorId } = useParams();
-
     //for open add ownclinic session modal form
     const [showOwnSession, setShowOwnSession] = useState(false);
     const [activeModal1, setActiveModal1] = useState();
@@ -38,8 +36,6 @@ function AddDoctorOwnClinicInfo() {
     const ownClinicFormSubmit = (e) => {
         ownClinicClose();
     };
-
-    //fetch ownclinic list
     const [ownclinicList, setOwnClinicList] = useRecoilState(setDoctorOwnClinic)
 
     useEffect(() => {

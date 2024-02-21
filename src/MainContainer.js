@@ -26,91 +26,123 @@ import Report from "./doctor/Dashboard-card/Report";
 import PatientData from "./doctor/Dashboard-card/partial/patientData";
 import MedicineList from "./doctor/Dashboard-card/MedicineList";
 import SubscriptionConfirmation from "./doctor/Dashboard-card/subscriptionConfirmation";
+import { setDoctorId } from "./recoil/atom/setDoctorId";
+import { useRecoilState } from "recoil";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 function MainContainer() {
+  const [doctorId, sestDoctorId] = useRecoilState(setDoctorId);
+  
   return (
     <Switch>
       <Route path="/doctordetail/:doctorId">
         <DoctorDetail />
       </Route>
+
       <Route path="/updatesessiontime/:doctorId/:clinicId/:ItemId">
-        <SetUpdateTime />
+        {doctorId ? <SetUpdateTime /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/doctorprofile/:doctorId">
-        <DoctorProfile />
+        {doctorId ? <DoctorProfile /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/calender/:doctorId">
-        < Calender />
+        {doctorId ? < Calender /> : <Redirect to="/" />}
       </Route>
+
       <Route exact path="/">
         <LoginDoctor />
       </Route>
+
       <Route path="/editdoctorprofile/:doctorId">
-        <EditDoctorProfile />
+        {doctorId ? <EditDoctorProfile /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/consultation/:reportId">
-        <PatientMedicalReport />
+        {doctorId ? <PatientMedicalReport /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/patient-history/:reportId">
-        <ViewMedicalReport />
+        {doctorId ? <ViewMedicalReport /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/dashboard/:doctorId">
-        <Dashboard />
+        {doctorId ? <Dashboard /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/subscription/:doctorId">
-        <Subscription />
+        {doctorId ? <Subscription /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/medicinehistory">
-        <MedicineHistory />
+        {doctorId ? <MedicineHistory /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/patientspaymenthistory/:doctorId">
-        < PatientsPaymentHistory />
+        {doctorId ? < PatientsPaymentHistory /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/Patientsclinichistory/:doctorId">
-        < PatientsClinicHistory />
+        {doctorId ? < PatientsClinicHistory /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/createpatientprofile/:patientId">
-        < CreatePatientProfile />
+        {doctorId ? < CreatePatientProfile /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/getloginpatientprofile/:patientId">
-        < GetLoginPatientProfile />
+        {doctorId ? < GetLoginPatientProfile /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/user">
-        < User />
+        {doctorId ? < User /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/logout">
         < Logout />
       </Route>
+
       <Route path="/helper/:doctorId">
-        <Helper />
+        {doctorId ? <Helper /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/edithelper/:helperId">
-        <EditHelper />
+        {doctorId ? <EditHelper /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/loginhelper">
-        <LoginHelper />
+        {doctorId ? <LoginHelper /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/subscriptioncard/:doctorId">
-        <SubscriptionCard />
+        {doctorId ? <SubscriptionCard /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/patient/:doctorId">
-        <Patient />
+        {doctorId ? <Patient /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/patientdata/:patientId">
-        <PatientData />
+        {doctorId ? <PatientData /> : <Redirect to="/" />}
       </Route>
-      <Route path="/appointmentbookingsection/:doctorId">
-        <AppointmentBookingSection />
+
+      <Route path="/appointmentbookingsection/:patientId">
+        {doctorId ? <AppointmentBookingSection /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/report/:doctorId">
-        <Report />
+        {doctorId ? <Report /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/medicinelist/:doctorId">
-       <MedicineList/>
+        {doctorId ? <MedicineList /> : <Redirect to="/" />}
       </Route>
+
       <Route path="/subscriptionconfirmation/:doctorId">
-       <SubscriptionConfirmation/>
+        {doctorId ? <SubscriptionConfirmation /> : <Redirect to="/" />}
       </Route>
+
     </Switch>
   )
 }

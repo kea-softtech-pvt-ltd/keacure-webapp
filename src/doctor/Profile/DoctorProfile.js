@@ -6,12 +6,10 @@ import { Wrapper } from "../../mainComponent/Wrapper";
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
 import Report from "../Dashboard-card/Report";
-import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function DoctorProfile() {
     const { doctorId } = useParams();
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
-    let location = useLocation()
     return (
 
         <Wrapper>

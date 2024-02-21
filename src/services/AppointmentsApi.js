@@ -6,7 +6,6 @@ export default function AppointmentsApi() {
     const getPatientListDetails = async ({ doctorId }, currentPage, pageSize) => {
         try {
             const result = await axios.get(`${API}/getBookingData/${doctorId}?page=${currentPage}&pageSize=${pageSize}`);
-            console.log('--------------resultapi',result)
             return result.data;
         }
         catch (err) {

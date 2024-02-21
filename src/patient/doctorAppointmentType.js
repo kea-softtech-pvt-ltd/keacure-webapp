@@ -14,7 +14,6 @@ const DoctorAppointmentType = (props) => {
     async function fetchSessionSlots() {
         fetchSessionSlotsData({ doctorId, clinicId })
             .then((result) => {
-    console.log('=result', result)
                 setClinicSession(result)
             })
     }
@@ -22,8 +21,12 @@ const DoctorAppointmentType = (props) => {
     return (
         <div>
             {clinicSession.length > 0 ? (
-                <ShowDoctorInClinicAppointment doctorId={doctorId} clinicId={clinicId} setSessions={clinicSession} />
-            ) : <div style={{ color: "black", marginTop: '10px'}}><b>Slots Not Available</b></div>}
+                <ShowDoctorInClinicAppointment
+                    doctorId={doctorId}
+                    clinicId={clinicId}
+                    setSessions={clinicSession}
+                />
+            ) : <div style={{ color: "black", marginTop: '10px' }}><b>Slots Not Available</b></div>}
         </div>
     )
 }

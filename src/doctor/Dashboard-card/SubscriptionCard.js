@@ -36,7 +36,6 @@ export default function SubscriptionCard() {
                         return item
                     }
                 })
-                console.log('--res--', data)
                 setGetSubData(data[0].selected_plan)
                 setSubscriptionId(data[0]._id)
             })
@@ -62,7 +61,6 @@ export default function SubscriptionCard() {
         }
         updateSubscriptionData({ subscriptionId }, bodyData)
             .then((res) => {
-                console.log('======resssssssssss', res)
                 // history.push(`/doctorprofile/${doctorId}`)
                 setGetSubData(plan)
             })

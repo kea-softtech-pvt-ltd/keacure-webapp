@@ -13,6 +13,7 @@ import Toaster from '../Toaster';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { makeStyles } from '@material-ui/core/styles';
+import ReactPaginate from 'react-paginate';
 import {
     Paper,
     Table,
@@ -24,7 +25,6 @@ import {
 } from '@material-ui/core';
 import { MainButtonInput } from '../../mainComponent/mainButtonInput';
 
-
 export default function MedicineList() {
     const { doctorId } = useParams();
     const { getDrInfo } = AuthApi()
@@ -33,10 +33,9 @@ export default function MedicineList() {
     const [medicineData, setMedicineData] = useState([])
     const [totalPages, setTotalPages] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
+
     const { getMedicineList } = ReportApi()
     const [getCSV, setCSV] = useState("")
-
-
     const useStyles = makeStyles((theme) => ({
         formControl: {
             margin: theme.spacing(1),
@@ -67,16 +66,13 @@ export default function MedicineList() {
             data: data,
         }).then((res) => {
         })
-
     };
-
-
-
 
     const pageSize = 10;
     const DrInfo = (currentPage) => {
         getDrInfo({ doctorId })
             .then((res) => {
+                setMedicineId(res.result[0].medicines_ID)
                 getMedicineList(res.result[0].medicines_ID, currentPage, pageSize)
                     .then((res, i) => {
                         const { totalPages } = res;
@@ -85,25 +81,9 @@ export default function MedicineList() {
                     })
             })
     }
-    const handlePrevPage = () => {
-        if (currentPage !== 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
-    const totalPagesCalculator = () => {
-        const pages = [];
-        for (let x = 1; x <= totalPages; x++) {
-            pages.push(x)
-        }
-
-        return pages
+    const handlePageClick = (data) => {
+        setCurrentPage(data.selected + 1)
     }
-    const handleNextPage = () => {
-        if (currentPage !== totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
-    };
-
 
     return (
         <Wrapper>
@@ -123,7 +103,6 @@ export default function MedicineList() {
                     helperId={helpersData._id}
                     accessModule={helpersData.access_module}
                 />
-
                 <form onSubmit={saveData} className="common_box align-center">
                     <div className='row vitalSign' >
                         <input
@@ -138,7 +117,6 @@ export default function MedicineList() {
                         <div className='margin_left_15'>
                             <MainButtonInput > Save</MainButtonInput>
                         </div>
-
                     </div>
                     <div className="clinicHistory" >
                         (Make Sure Your File  Format Will be '_id and medicineName')
@@ -157,10 +135,7 @@ export default function MedicineList() {
                             <TableBody>
                                 {medicineData.map((data, i) => {
                                     return (
-                                        <TableRow>
-                                            {/* <TableCell align="center">
-                                                {i}
-                                            </TableCell> */}
+                                        <TableRow key={i}>
                                             <TableCell align="center">
                                                 {data.medicineName}
                                             </TableCell>
@@ -170,40 +145,30 @@ export default function MedicineList() {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    {medicineData ?
-                        < ul className="pagination pagination-sm">
-                            <li className="page-item">
-                                <Link className="page-link"
-                                    to="#" onClick={handlePrevPage}
-                                    disabled={currentPage === 1}
-                                >
-                                    Previous
-                                </Link>
-                            </li>
 
-                            {totalPagesCalculator(totalPages, pageSize).map(pageNo =>
-                                <li className={`page-item${pageNo === currentPage ? 'active' : ''}`} >
-                                    <Link className="page-link"
-                                        key={pageNo}
-                                        to="#"
-                                        onClick={() => setCurrentPage(pageNo)}>
-                                        {pageNo}
-                                    </Link>
-                                </li>
-                            )}
-
-                            <li className="page-item">
-                                <Link className="page-link"
-                                    to="#" onClick={handleNextPage}
-                                    disabled={currentPage === totalPages}>
-                                    Next
-                                </Link>
-                            </li>
-                        </ul>
-                        : <div className="clinicHistory" ><b>Data is not Available</b></div>
-                    }
+                    <div>
+                        <ReactPaginate
+                            breakLabel="..."
+                            nextLabel="Next >"
+                            onPageChange={handlePageClick}
+                            pageRangeDisplayed={5}
+                            pageCount={totalPages}
+                            previousLabel="< Previous"
+                            renderOnZeroPageCount={null}
+                            marginPagesDisplayed={2}
+                            containerClassName="pagination justify-content-center"
+                            pageClassName="page-item"
+                            pageLinkClassName="page-link"
+                            previousClassName="page-item"
+                            previousLinkClassName="page-link"
+                            nextClassName="page-item"
+                            nextLinkClassName="page-link"
+                            activeClassName="active"
+                            breakClassName="page-item"
+                            breakLinkClassName="page-link"
+                        />
+                    </div>
                 </form>
-
             </div>
         </Wrapper >
     )

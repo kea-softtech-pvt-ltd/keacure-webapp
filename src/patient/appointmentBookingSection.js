@@ -10,12 +10,11 @@ import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
 import { MainNav } from "../mainComponent/mainNav";
 import { setHelperData } from "../recoil/atom/setHelperData";
 import { Wrapper } from "../mainComponent/Wrapper";
-// import { useParams } from "react-router-dom/cjs/react-router-dom";
+import { useParams } from "react-router-dom/cjs/react-router-dom";
 function AppointmentBookingSection() {
-    // const { doctorId } = useParams()
+    const { patientId } = useParams()
     const [doctorId, setDoctorsId] = useRecoilState(setDoctorId)
     const [clinicData, setClinicData] = useState([])
-    console.log('===clinicData=====', clinicData)
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const [doctorName, setDoctorName] = useState([])
     const { getDrInfo } = AuthApi()
@@ -27,8 +26,8 @@ function AppointmentBookingSection() {
     function doctorData() {
         getDrInfo({ doctorId })
             .then((res) => {
-                setDoctorName(res[0])
-                setClinicData(res[0].clinicList)
+                setDoctorName(res.result[0])
+                setClinicData(res.result[0].clinicList)
             })
     }
     return (
@@ -36,11 +35,11 @@ function AppointmentBookingSection() {
             <MainNav>
                 <ul className="clearfix">
                     <li>
-                        <Link to={`/dashboard/${doctorId}`}>
+                        <Link to={`/getLoginPatientProfile/${patientId}`}>
                             <i className="arrow_back backArrow" title="back button"></i>
                         </Link>
                     </li>
-                    <li className='float-none' style={{ fontSize: 'inherit' }}>Clinic List <FaClinicMedical /> </li>
+                    <li className='float-none' style={{ fontSize: 'inherit' }}>Clinic List  </li>
                     <li style={{ fontSize: 'inherit' }} className="appColor" align='right'>Dr. {doctorName.name}</li>
 
                 </ul>

@@ -46,18 +46,20 @@ const SearchClinic = (props) => {
         setClinicSave(selectedValue)
     }
 
-   
+
 
     async function sendClinicInfo(e) {
         e.preventDefault();
         const newClinicData = {
             clinicId: clinicSave._id
         }
-        addClinic( newClinicData , doctorId)
+        addClinic(newClinicData, doctorId)
             .then((res) => {
                 setCoilDoctorClinicData(coilDoctorClinicData.concat(res))
             });
-            props.onSubmit()
+        props.onSubmit()
+        setShow(false)
+
     }
 
 

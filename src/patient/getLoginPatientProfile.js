@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import { DoctorBookingConfirmation } from "./doctorbookingconfirmation";
 import { FetchPatientInfo } from "./fetchPatientInfo";
 import { Wrapper } from "../mainComponent/Wrapper";
 import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
@@ -11,9 +10,9 @@ import { setDoctorId } from "../recoil/atom/setDoctorId";
 import GetDependent from "./getDependent";
 
 export default function GetLoginPatientProfile() {
+    const { patientId } = useParams()
     const [doctorId, setDoctorsId] = useRecoilState(setDoctorId);
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
-    const { patientId } = useParams()
     return (
         <>
             <Wrapper>
@@ -37,7 +36,7 @@ export default function GetLoginPatientProfile() {
                         <div className="row">
                             <div className="col-sm-6">
                                 <div className="box_general_4 cart patientDetails">
-                                    <FetchPatientInfo patientId={patientId} />
+                                    <FetchPatientInfo doctorId={doctorId}  patientId={patientId} />
                                 </div>
                             </div>
                             <GetDependent doctorId={doctorId} patientId={patientId} />

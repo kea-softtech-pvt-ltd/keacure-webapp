@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import DateFnsUtils from '@date-io/date-fns';
 import TextField from "@material-ui/core/TextField";
 import { useState } from "react";
-import { TimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { TimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useRecoilState } from 'recoil';
 import { updateSession } from "../../../../recoil/atom/setUpdateSession";
 import { MainButtonInput } from "../../../../mainComponent/mainButtonInput";
@@ -12,7 +12,7 @@ import moment from 'moment';
 import SessionApi from '../../../../services/SessionApi';
 
 function SetUpdateTime(props) {
-    const { doctorId, clinicId, _id, day, onSubmit } = props.update[0];
+    const { doctorId, clinicId, _id, day } = props.update[0];
     const [error, setError] = useState("");
     const [updateSessionTime, setUpdateSessionTime] = useRecoilState(updateSession)
     const [fromTime, setFromTime] = useState();
@@ -21,13 +21,15 @@ function SetUpdateTime(props) {
     const [sessionTime, setSessionTime] = useState([])
     const { updateSessionData, getUpdatedSessionSlotData } = SessionApi()
 
+    useEffect(() => {
+        UpdatedData()
+    }, [])
+
     const handleInputChange = event => {
         const { name, value } = event.target;
         setSessionTime({ ...sessionTime, [name]: value });
     };
-    useEffect(() => {
-        UpdatedData()
-    }, [])
+
 
     const UpdatedData = () => {
         getUpdatedSessionSlotData(_id)
@@ -55,13 +57,13 @@ function SetUpdateTime(props) {
         }
         return allTimes
     }
+    const handleToTimeSelection = (time) => {
+        setToTime(time);
+        setSelectedSlots(checkTimeSlot(moment(fromTime).format('HH:mm'), moment(time).format('HH:mm'), sessionTime.timeSlot))
+    }
 
     const handleFromTimeSelection = (time) => {
         setFromTime(time);
-    }
-    const handleToTimeSelection = (time) => {
-        setToTime(time);
-        setSelectedSlots(checkTimeSlot(fromTime, moment(time).format('HH:mm'), sessionTime.timeSlot))
     }
 
     const handleChange = (event, index) => {
@@ -79,6 +81,7 @@ function SetUpdateTime(props) {
                 return selectedSlots
             }
         })
+        console.log('======slotes', slots)
         const setTimeData = {
             clinicId: clinicId,
             doctorId: doctorId,
@@ -105,7 +108,6 @@ function SetUpdateTime(props) {
     }
 
     return (
-
         <div className="col-lg-12" >
             <form onSubmit={handleTimeClick}>
                 <h5>{day}</h5>
@@ -140,16 +142,16 @@ function SetUpdateTime(props) {
                         <div className="form-group">
                             <div className="k-widget k-timepicker">
                                 <label><b>From Time</b></label>
-                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                <LocalizationProvider dateAdapter={AdapterDateFns}>
                                     <TimePicker
                                         renderInput={(props) => <TextField {...props} />}
-                                        value={fromTime}
+                                        value={moment(sessionTime.fromTime).format("HH:mm")}
                                         name="fromTime"
                                         ampm={false}
                                         //minutesStep={5}
                                         onChange={handleFromTimeSelection}
                                     />
-                                </MuiPickersUtilsProvider>
+                                </LocalizationProvider>
                             </div>
                         </div>
                     </div>
@@ -157,16 +159,16 @@ function SetUpdateTime(props) {
                     <div className="col-lg-6">
                         <div className="form-group">
                             <label><b>To Time</b></label>
-                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <LocalizationProvider dateAdapter={AdapterDateFns}>
                                 <TimePicker
                                     renderInput={(props) => <TextField {...props} />}
-                                    value={toTime}
+                                    value={moment(sessionTime.toTime).format("HH:mm")}
                                     ampm={false}
                                     name="toTime"
                                     minutesStep={5}
                                     onChange={handleToTimeSelection}
                                 />
-                            </MuiPickersUtilsProvider>
+                            </LocalizationProvider>
                             {error && (<span className="validation"> {error} </span>)}
                         </div>
                     </div>

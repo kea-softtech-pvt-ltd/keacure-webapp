@@ -4,7 +4,6 @@ import React from 'react';
 import avatarImage from '../../../img/profile.png'
 import { MainButtonInput } from "../../../mainComponent/mainButtonInput";
 import { MainInput } from '../../../mainComponent/mainInput';
-import { PlacesAutocompleteInput } from "../Clinic/Partial/placesAutocomplete"
 import AuthApi from "../../../services/AuthApi";
 import uuid from "uuid";
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage";
@@ -15,31 +14,18 @@ import { toast } from "react-toastify";
 function DoctorPersonalInformation(props) {
     const { data, doctorId } = props;
     const [updateData, setUpdateData] = useState([]);
-    const [radioData, setRadioData] = useState('female');
 
     const {
         addDoctorInformation,
         submitDoctorInformation
     } = AuthApi();
-
-    function handleChangeAddress(address) {
-        setUpdateData(prevInput => {
-            return {
-                ...prevInput,
-                ['address']: address
-            }
-        })
-        setValue("address", address)
-    }
-
+   
     //for all input onchange method
     const handleInputChange = event => {
         const { name, value } = event.target;
         setUpdateData({ ...updateData, [name]: value });
     };
-    const handleInputRadio = (e) => {
-        setRadioData(e.target.value)
-    }
+  
     useEffect(() => {
         register("name", { required: true });
         register("gender", { required: true });

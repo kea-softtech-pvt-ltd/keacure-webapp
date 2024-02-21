@@ -155,9 +155,9 @@ export default function ReportApi() {
             return err
         }
     }
-    const getMedicineList = async (medicalId, currentPage, pageSize) => {
+    const getMedicineList = async (medicalId, page, pageSize) => {
         try {
-            const result = await axios.get(`${API}/get_mymedicines_list/${medicalId}?page=${currentPage}&pageSize=${pageSize}`)
+            const result = await axios.get(`${API}/get_mymedicines_list/${medicalId}?page=${page}&pageSize=${pageSize}`)
             return result.data
         }
         catch (err) {

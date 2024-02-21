@@ -17,13 +17,11 @@ function LoginPatientOtp(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const loginOtp = loginotp
-        const _id = patientId 
-        patientLoginOtp({getOTP, _id})
+        patientLoginOtp({otp:loginotp, _id:patientId})
             .then((response) => {
                 setPatientData(patientId)
                 const isLoggedIn = loginData.isLoggedIn
-                if (getOTP !== loginOtp) {
+                if (getOTP !== loginotp) {
                     setErrormessage("Please Enter Valid OTP");
                 } else {
                     if (isLoggedIn === true) {

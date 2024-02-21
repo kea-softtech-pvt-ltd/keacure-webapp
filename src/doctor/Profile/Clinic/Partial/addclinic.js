@@ -11,9 +11,7 @@ import uuid from "uuid";
 const AddClinic = (props) => {
     const { doctorId } = props;
     const [coilDoctorClinicData, setCoilDoctorClinicData] = useRecoilState(setDoctorClinic)
-    console.log('=======', coilDoctorClinicData)
     const [selectedService, setSelectedService] = useState([]);
-    // const [selectedSpecialization, setSelectedSpecialization] = useState([]);
     const [drspecialization, setDrSpecialization] = useState([])
     const [clinicInfo, setClinicInfo] = useState([]);
     const { fetchDrSpecialization } = EducationalApi()
@@ -135,8 +133,10 @@ const AddClinic = (props) => {
                     type="text"
                     name="clinicNumber"
                     onChange={handleChange}
+                    pattern="[+-]?\d+(?:[.,]\d+)?"
+                    maxLength={10}
                     value={clinicInfo.clinicnumber}
-                    placeholder="Enter clinic number">
+                    placeholder="Clinic Number (+XX)">
                 </MainInput>
 
                 {/* <div className='align-left '>

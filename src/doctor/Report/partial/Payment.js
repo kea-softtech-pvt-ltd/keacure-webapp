@@ -3,6 +3,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete/Autocomplete';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import AppointmentsApi from '../../../services/AppointmentsApi';
+import { Button, Modal } from 'react-bootstrap';
 
 export default function Payment(props) {
     const { reportId, appointmentId, fees } = props;
@@ -10,6 +11,7 @@ export default function Payment(props) {
     const [saveMode, setSaveMode] = useState([]);
     const [patientFees, setPatientFees] = useState(fees);
     const [otherFees, setOtherFees] = useState();
+    const [show, setShow] = useState(false);
     const { UpdateStatusBookingdata, createPDF } = AppointmentsApi()
     const mode = [
         {
@@ -28,6 +30,11 @@ export default function Payment(props) {
             "name": "UPI"
         },
     ]
+    const handleShow = () => {
+        setShow(true)
+    }
+
+    const handleClose = () => setShow(false)
 
     const handleMode = (e, selectedMode) => {
         setSaveMode(selectedMode.name)
@@ -49,7 +56,7 @@ export default function Payment(props) {
     const getPrescriptionData = () => {
         const bodyData = {
             "status": "Completed",
-            "payment": "done",
+            "payment": "Done",
             "medicalReportId": reportId,
             "paymentMethod": mode,
             "total": patientFees
@@ -120,12 +127,28 @@ export default function Payment(props) {
             </div>
             <div className="text-center">
                 <input
-                    onClick={getPrescriptionData}
+                    onClick={handleShow}
                     type="submit"
                     className="btn_1 paymentbtn "
                     value="Pay"
                 />
             </div>
+            <Modal show={show} onHide={handleClose} >
+                <Modal.Header closeButton>
+                    <Modal.Title>Are You Sure?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="alert alert-danger">You Want To Pay This Amount.? </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="default" className='appColor' onClick={() => getPrescriptionData()}>
+                        Yes
+                    </Button>
+                    <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleClose}>
+                        No
+                    </Button>
+                </Modal.Footer>
+            </Modal >
         </>
     )
 }

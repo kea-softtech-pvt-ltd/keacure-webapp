@@ -11,13 +11,10 @@ import CompletedAppointment from './partial/CompletedApt';
 import CancelledAppointment from './partial/CancelledApt';
 import IncompleteAppointment from './partial/IncompleteApt';
 
-
-
 export default function PatientsClinicHistory() {
     const { doctorId } = useParams();
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const [value, setValue] = useState(0);
-
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -42,7 +39,7 @@ export default function PatientsClinicHistory() {
                         helperId={helpersData._id}
                         accessModule={helpersData.access_module}
                     />
-                    <div className="common_box">
+                    <div className="common_box ">
                         <MainTabs
                             value={value}
                             onChange={handleChange}
@@ -63,10 +60,8 @@ export default function PatientsClinicHistory() {
                         <TabPanel value={value} index={2}>
                             <IncompleteAppointment doctorId={doctorId} />
                         </TabPanel>
-
                     </div>
                 </div>
-
             </>
         </Wrapper>
     )

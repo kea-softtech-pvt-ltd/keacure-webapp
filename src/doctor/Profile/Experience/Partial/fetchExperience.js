@@ -72,7 +72,7 @@ function FetchExperience() {
             .then(() => {
                 getAllExperience();
             })
-            handleDeleteClose();
+        handleDeleteClose();
     }
 
     return (
@@ -80,8 +80,8 @@ function FetchExperience() {
             <div className='row'>
                 {fetchExperience.map((experience, index) => {
                     return (
-                        <div className='col-sm-5 mx-3'>
-                            <div className="" key={index}>
+                        <div className='col-sm-5 mx-3' key={index}>
+                            <div className="" >
                                 <Modal show={activeModal === index} onHide={handleClose} id={`experience-${experience._id}`} key={experience._id}>
                                     <Modal.Header closeButton>
                                         <Modal.Title>Edit Experience Data</Modal.Title>

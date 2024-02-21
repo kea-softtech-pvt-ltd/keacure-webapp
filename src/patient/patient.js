@@ -10,7 +10,7 @@ import PatientList from '../doctor/Dashboard-card/PatientList';
 import { PatientLoginForm } from './patientLoginForm';
 import AppointmentsApi from '../services/AppointmentsApi';
 export default function Patient() {
-    const [patientList, setPatientList] = useState(null);
+    const [patientList, setPatientList] = useState([]);
     const [active, setActive] = useState(false)
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const { getPatientListDetails } = AppointmentsApi()
@@ -19,15 +19,11 @@ export default function Patient() {
     useEffect(() => {
         getPatientDetails()
     }, [])
+
     function getPatientDetails() {
         getPatientListDetails({ doctorId })
             .then((result) => {
-                const data = result.test.filter((patient) => {
-                    if (patient.status === "Ongoing") {
-                        return patient;
-                    }
-                })
-                setPatientList(data)
+                setPatientList(result.ongoing)
             })
     }
 
@@ -56,15 +52,15 @@ export default function Patient() {
                     accessModule={helpersData.access_module}
                 />
                 <div className="common_box">
-                    {patientList? (
-                    <>
-                        {!active && patientList ?
-                            <PatientList doctorId={doctorId} />
-                            :
-                            <PatientLoginForm doctorId={doctorId} />
-                        }
-                    </>
-                    ):null}
+                    {patientList ? (
+                        <>
+                            {!active && patientList ?
+                                <PatientList doctorId={doctorId} />
+                                :
+                                <PatientLoginForm doctorId={doctorId} />
+                            }
+                        </>
+                    ) : null}
                 </div>
 
             </div>

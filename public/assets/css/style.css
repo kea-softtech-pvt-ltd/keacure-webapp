@@ -4773,6 +4773,14 @@ a.box_feat_about h3 {
 .fontSize {
 	font-size: 15px;
 }
+.dependent {
+    background-color: #1a3c8b;
+    color: white;
+    font-size: 12px;
+    padding: 3px;
+    border-radius: 4px;
+    font-weight: 700;
+}
 .fontS {
 	font-size: 20px;
 }
@@ -4840,6 +4848,9 @@ a.box_feat_about h3 {
 .appColor {
 	background-color: #1a3c8b;
 	color: white;
+}
+.backgraoundColor{
+ color:#1a3c8b;
 }
 .radioButton{
 	font-size: 0.875rem;
@@ -5432,8 +5443,8 @@ ul.bullets li:before {
 	margin-left: 10px;
 }
 .page-item.active .page-link {
-	background-color: #3f4079;
-	border-color: #3f4079;
+	background-color: #1a3c8b;
+	border-color: #1a3c8b;
 }
 .page-item.disabled .page-link {
 	color: #999;
@@ -5559,7 +5570,7 @@ div.datedropper.primary .pick li span,
 div.datedropper.primary .pick-btn,
 div.datedropper.primary .pick-lg-b .pick-wke,
 div.datedropper.primary .pick-y.pick-jump {
-	color: #fd4741;
+	color: #1a3c8b;
 }
 .box_style_cat {
 	background: #fff;
