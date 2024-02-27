@@ -4,6 +4,7 @@ import Carousel from "react-bootstrap/Carousel";
 import { Link } from "react-router-dom";
 import { ShowInClinicAppointSlots } from "./showavailableslots";
 import moment from "moment";
+import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
 function ShowDoctorInClinicAppointment(props) {
     const { setSessions, clinicId, doctorId } = props;

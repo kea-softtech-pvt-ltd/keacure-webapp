@@ -16,6 +16,10 @@ function EditExperience(props) {
     const [coilExperienceData, setCoilExperienceData] = useRecoilState(setDoctorExperience)
     const [updateExperience, setUpdateExperience] = useState({});
     const { editExperienceData, getAllExperienceData } = ExperienceApi()
+    // const start = moment(startYear).toLocaleString('Asia/Kolkata') + " " + "(India Standard Time)"
+    const start = moment(new Date(startYear)).format('MM/YYYY')
+    const end = moment(new Date(endYear)).format('MM/YYYY')
+
     //for all input onchange method
     const handleInputChange = event => {
         const { name, value } = event.target;
@@ -68,7 +72,7 @@ function EditExperience(props) {
                     const editAllExperienceData = manipulateExperience(editExperience[0]);
                     setCoilExperienceData(editAllExperienceData);
                 })
-                props.onSubmit();
+            props.onSubmit();
         }
     }
 
@@ -99,14 +103,14 @@ function EditExperience(props) {
                     <i className="icon-calendar:before" title="Edit profile"></i>
                     <MainMuiPickers
                         name="startYear"
-                        value={moment(new Date(startYear)).format('MM-YYYY')}
+                        value={ moment(new Date(startYear)).format('MM/YYYY')}
                         onChange={handleStartYearChange}>Start Year
                     </MainMuiPickers>
                 </div>
                 <div className="col-md-6 ">
                     <MainMuiPickers
                         name="endYear"
-                        value={moment(new Date(endYear)).format('MM-YYYY')}
+                        value={ moment(new Date(endYear)).format('MM/YYYY')}
                         onChange={handleEndYearChange}>End Year
                     </MainMuiPickers>
                 </div>

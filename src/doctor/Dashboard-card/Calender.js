@@ -21,7 +21,7 @@ export default function Calender() {
   const [patientIdDetails, setPatientIdDetails] = useState([])
   const [helpersData, setHelpersData] = useRecoilState(setHelperData)
   const [patientList, setPatientList] = useState([])
-  
+
   useEffect(() => {
     handleOnSelectSlot();
   }, [getData])
@@ -34,7 +34,7 @@ export default function Calender() {
     const patientId = item.patientId
     if (item.status === "Ongoing") {
       setShow(true)
-    }else{
+    } else {
       setShow(false)
     }
     setPatientIdDetails(patientId)
@@ -45,7 +45,6 @@ export default function Calender() {
         const data = result['test'];
         const calendarData = []
         data.map((item) => {
-          setPatientList(item)
           if (item.dependentId) {
             calendarData.push({
               title: item['dependentDetails'][0].name,
@@ -67,8 +66,9 @@ export default function Calender() {
               status: item.status,
             })
           }
+          setPatientList(item)
+          setGetData(calendarData);
         })
-        setGetData(calendarData);
       })
   }
   const eventPropGetter = (event) => {
@@ -110,7 +110,6 @@ export default function Calender() {
               showMultiDayTimes={true}
               selectable={true}
               onSelectEvent={handleModalButtonClick}
-              // style={{width:1000, height:500}}
               style={{ height: 'calc(80vh - 80px)', width: '100%', cursor: 'pointer' }}
             />
           </div>

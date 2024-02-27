@@ -30,6 +30,7 @@ function AppointmentBookingSection() {
                 setClinicData(res.result[0].clinicList)
             })
     }
+    
     return (
         <Wrapper>
             <MainNav>

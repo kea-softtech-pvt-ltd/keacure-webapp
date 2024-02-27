@@ -28,11 +28,11 @@ import MedicineList from "./doctor/Dashboard-card/MedicineList";
 import SubscriptionConfirmation from "./doctor/Dashboard-card/subscriptionConfirmation";
 import { setDoctorId } from "./recoil/atom/setDoctorId";
 import { useRecoilState } from "recoil";
-import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import { Redirect, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
 function MainContainer() {
   const [doctorId, sestDoctorId] = useRecoilState(setDoctorId);
-  
+  const location = useLocation()
   return (
     <Switch>
       <Route path="/doctordetail/:doctorId">
@@ -56,7 +56,9 @@ function MainContainer() {
       </Route>
 
       <Route path="/editdoctorprofile/:doctorId">
-        {doctorId ? <EditDoctorProfile /> : <Redirect to="/" />}
+        <div >
+          {doctorId ? <EditDoctorProfile /> : <Redirect to="/" />}
+        </div>
       </Route>
 
       <Route path="/consultation/:reportId">
@@ -132,7 +134,9 @@ function MainContainer() {
       </Route>
 
       <Route path="/report/:doctorId">
-        {doctorId ? <Report /> : <Redirect to="/" />}
+        <div>
+          {doctorId ? <Report /> : <Redirect to="/" />}
+        </div>
       </Route>
 
       <Route path="/medicinelist/:doctorId">

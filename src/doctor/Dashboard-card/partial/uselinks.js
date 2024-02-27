@@ -14,7 +14,7 @@ export default function UserLinks(props) {
     let location = useLocation();
 
     useEffect(() => {
-        
+
     }, [location])
     function handleClick(e) {
         e.preventDefault()
@@ -51,12 +51,11 @@ export default function UserLinks(props) {
         e.preventDefault()
         history.push(`/medicinelist/${doctorId}`)
     }
-
-
+    const { pathname } = window.location;
     return (
         <div className="col-sm-2 dashSpace" align='left'>
             {!helperId ?
-                <div className={location.pathname === `/doctorProfile/${doctorId}`  ? "Nav-active" : null}>
+                <div className={pathname === `/doctorProfile/${doctorId}` || pathname === `/editDoctorProfile/${doctorId}` ? "Nav-active" : null}>
                     < div className="dashboard">
                         <Link
                             onClick={handleOnProfileClick}>
@@ -66,13 +65,12 @@ export default function UserLinks(props) {
                     </div>
                 </div>
                 :
-
                 <>
                     {
                         accessModule.map((item) => {
                             return (
                                 (item.moduleName === "Profile") === true ?
-                                    <div className={location.pathname === `/doctorProfile/${doctorId}`  ? "Nav-active" : null}>
+                                    <div className={location.pathname === `/doctorProfile/${doctorId}` ? "Nav-active" : null}>
                                         <div className="dashboard">
                                             <Link
                                                 onClick={handleOnProfileClick}
@@ -128,7 +126,6 @@ export default function UserLinks(props) {
             {
                 !helperId ?
                     <div className={location.pathname === `/PatientsClinicHistory/${doctorId}` ? "Nav-active" : null}>
-
                         <div className="dashboard">
                             <Link
                                 onClick={handleClinicClick}>

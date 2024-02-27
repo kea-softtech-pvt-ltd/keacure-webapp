@@ -16,7 +16,9 @@ function AddDoctorProfessionalExperience(props) {
     const [coilDoctorExperience, setCoilDoctorExperience] = useRecoilState(setDoctorExperience)
     const [error, setError] = useState('')
     const [startYear, setStartYear] = useState(new Date())
+    console.log('==startYear==',startYear)
     const [endYear, setEndYear] = useState(new Date())
+    console.log('==endYear==',endYear)
     const [experienceData, setExperienceData] = useState([]);
     const { insertDrExperience } = ExperienceApi();
     const handleStartYearChange = (date) => {
