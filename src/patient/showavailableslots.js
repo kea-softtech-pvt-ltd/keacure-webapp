@@ -8,10 +8,12 @@ import PatientApi from "../services/PatientApi";
 import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { setDependentId } from "../recoil/atom/setDependentId";
+import moment from "moment";
+
 const ShowInClinicAppointSlots = (props) => {
     const { sessionSlot, selectedDate, session, slotDate } = props;
     const [patientId, setPatientsId] = useRecoilState(setNewPatientId)
-    const [ dependentId, setDependentsId] = useRecoilState(setDependentId)
+    const [dependentId, setDependentsId] = useRecoilState(setDependentId)
     const [bookingSlots, setBookingSlots] = useState([]);
     const [show, setShow] = useState(false);
     const [bookSlot, setbookSlot] = useState([]);
@@ -20,7 +22,7 @@ const ShowInClinicAppointSlots = (props) => {
 
     useEffect(() => {
         availableSlots()
-    }, [])
+    }, [props])
 
     const handleShow = (item) => {
         setShow(true)
@@ -35,7 +37,7 @@ const ShowInClinicAppointSlots = (props) => {
             "ClinicId": session.clinicId,
             "slotId": item._id,
             "patientId": patientId,
-            "dependentId":dependentId !== " " ? dependentId : null,
+            "dependentId": dependentId !== " " ? dependentId : null,
             // "order_id": payCheck.orderId,
             "transactionId": '123',
             "currency": 'INR',
@@ -58,6 +60,13 @@ const ShowInClinicAppointSlots = (props) => {
         handleClose()
     }
 
+    const checkSlotAvailability = (slot) => {
+        const currentDate = moment(new Date()).format("YYYY-MM-DD HH:mm")
+        const slotDateTime = moment(new Date(selectedDate)).format("YYYY-MM-DD") + " " + slot.time
+        const returnData = currentDate > slotDateTime || bookingSlots.some(func => (func.slotId === slot._id && func.status !== "Cancelled")  )
+        return returnData
+    }
+
     const availableSlots = () => {
         getbookedSlots(session.doctorId, session.clinicId)
             .then((result) => {
@@ -77,34 +86,30 @@ const ShowInClinicAppointSlots = (props) => {
                     <b>  Fees - <FaRupeeSign /> {session.fees} /-</b></span>
                 <section className=" radiobutton">
                     {sessionSlot.map((item, index) => (
-                        <>
-                            <div key={index}>
-                                {bookingSlots.some(func =>
-                                    func.slotId === item._id && func.status !== "Cancelled")
-                                    ?
-                                    <div>
-                                        <div
-                                            className="disabled-div"
-                                            type="radio"
-                                            time={slots}>
-                                            <label>{item.time}</label>
-                                        </div>
+                        <div key={index}>
+                            {(checkSlotAvailability(item))
+                                ?
+                                <div>
+                                    <div
+                                        className="disabled-div"
+                                        type="radio"
+                                        time={slots}>
+                                        <label>{item.time}</label>
                                     </div>
-                                    :
-                                    <div>
-                                        <Link
-                                            to='#'
-                                            onClick={() => handleShow(item)}
-                                            className="btn_1"
-                                            type="radio"
-                                            time={slots}>
-                                            <label>{item.time}</label>
-                                        </Link>
-                                    </div>
-                                }
-                            </div>
-
-                        </>
+                                </div>
+                                :
+                                <div>
+                                    <Link
+                                        to='#'
+                                        onClick={() => handleShow(item)}
+                                        className="btn_1"
+                                        type="radio"
+                                        time={slots}>
+                                        <label>{item.time}</label>
+                                    </Link>
+                                </div>
+                            }
+                        </div>
                     ))}
                 </section>
                 <Modal show={show} onHide={handleClose}>

@@ -76,18 +76,13 @@ function SetUpdateTime(props) {
 
     function handleTimeClick(e) {
         e.preventDefault();
-        const slots = selectedSlots.filter((res) => {
-            if (res.status === true) {
-                return selectedSlots
-            }
-        })
         const setTimeData = {
             clinicId: clinicId,
             doctorId: doctorId,
             fromTime: fromTime,
             toTime: toTime,
             timeSlot: sessionTime.timeSlot,
-            showSelectedSlots: slots,
+            showSelectedSlots: selectedSlots.filter((e) => e.status === true),
             Appointment: 'InClinicAppointment',
             fees: sessionTime.fees,
             day: day
