@@ -49,7 +49,6 @@ export default function CompletedAppointment(props) {
 
     return (
         <>
-
             {
                 patientHistoryData ?
                     <div className='row'>
@@ -85,7 +84,7 @@ export default function CompletedAppointment(props) {
                                                 </span>
 
                                                 <div className='cardSpan appointmentBtn historyBtn'>
-                                                    <Link to={`/patient-history/${details.medicalReportId}`}>
+                                                    <Link to={`/history/medicalreport/${details.medicalReportId}`}>
                                                         <Button className="appColor helperBtn" > View</Button>
                                                     </Link>
                                                     <Button className="appColor helperBtn" onClick={() => downloadPdf(details)}> Download</Button>
@@ -125,7 +124,7 @@ export default function CompletedAppointment(props) {
                                                 </span>
 
                                                 <div className='cardSpan appointmentBtn historyBtn'>
-                                                    <Link to={`/patient-history/${details.medicalReportId}`}>
+                                                    <Link to={`/history/medicalreport/${details.medicalReportId}`}>
                                                         <Button className="appColor helperBtn" > View</Button>
                                                     </Link>
                                                     <Button className="appColor helperBtn" onClick={() => downloadPdf(details)}> Download</Button>

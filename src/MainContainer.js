@@ -35,7 +35,7 @@ function MainContainer() {
   const location = useLocation()
   return (
     <Switch>
-      <Route path="/doctordetail/:doctorId">
+      <Route path="doctor/doctordetail/:doctorId">
         <DoctorDetail />
       </Route>
 
@@ -61,11 +61,11 @@ function MainContainer() {
         </div>
       </Route>
 
-      <Route path="/consultation/:reportId">
+      <Route path="/appointments/consultation/:reportId">
         {doctorId ? <PatientMedicalReport /> : <Redirect to="/" />}
       </Route>
 
-      <Route path="/patient-history/:reportId">
+      <Route path="/history/medicalreport/:reportId">
         {doctorId ? <ViewMedicalReport /> : <Redirect to="/" />}
       </Route>
 
@@ -85,7 +85,7 @@ function MainContainer() {
         {doctorId ? < PatientsPaymentHistory /> : <Redirect to="/" />}
       </Route>
 
-      <Route path="/Patientsclinichistory/:doctorId">
+      <Route path="/history/:doctorId">
         {doctorId ? < PatientsClinicHistory /> : <Redirect to="/" />}
       </Route>
 
@@ -117,11 +117,11 @@ function MainContainer() {
         {doctorId ? <LoginHelper /> : <Redirect to="/" />}
       </Route>
 
-      <Route path="/subscriptioncard/:doctorId">
+      <Route path="/subscriptions/update/:doctorId">
         {doctorId ? <SubscriptionCard /> : <Redirect to="/" />}
       </Route>
 
-      <Route path="/patient/:doctorId">
+      <Route path="/appointments/:doctorId">
         {doctorId ? <Patient /> : <Redirect to="/" />}
       </Route>
 

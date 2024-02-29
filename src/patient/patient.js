@@ -37,7 +37,7 @@ export default function Patient() {
                             <i className="arrow_back backArrow" title="back button"></i>
                         </Link>
                     </li>
-                    <li className='float-none' style={{ fontSize: 'inherit' }} >Appoinment</li>
+                    <li className='float-none' style={{ fontSize: 'inherit' }} >Appointment</li>
                     <li>
                         <Link onClick={() => setActive(!active)} >
                             <Icon className="addiconbutton " style={{ fontSize: 50 }}>add</Icon>

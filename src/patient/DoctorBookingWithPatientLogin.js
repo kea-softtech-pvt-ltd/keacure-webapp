@@ -1,7 +1,7 @@
 import { Link ,useParams} from "react-router-dom";
 import React from "react";
 import { DoctorBookingConfirmation} from "../patient/doctorbookingconfirmation";
-import { PatientLoginForm } from "../patient/patientLoginForm";
+import { PatientLoginForm } from "./patientLoginForm";
 import { patientIdState }from "../recoil/selector/patientIdState"
 import { useRecoilValue } from "recoil";
 import { FetchPatientInfo } from "../patient/fetchPatientInfo";

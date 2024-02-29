@@ -19,7 +19,6 @@ import { Wrapper } from '../../mainComponent/Wrapper';
 import UserLinks from '../Dashboard-card/partial/uselinks';
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
-import ReportApi from '../../services/ReportApi';
 import { setDoctorId } from '../../recoil/atom/setDoctorId';
 
 function TabPanel(props) {

@@ -8,16 +8,18 @@ import { FaClinicMedical } from 'react-icons/fa';
 import AppointmentsApi from '../../services/AppointmentsApi';
 import ReportApi from '../../services/ReportApi';
 import ReactPaginate from 'react-paginate';
-
+import { useRecoilState } from 'recoil';
+import { setReportsId } from '../../recoil/atom/setReportId';
 
 export default function PatientList(props) {
-    const { doctorId } = props
+    const { doctorId } = props;
     let history = useHistory();
     const [patientList, setPatientList] = useState(null);
     const [show, setShow] = useState(false);
     const [id, setId] = useState()
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0);
+    const [reportId, setReportId] = useRecoilState(setReportsId)
     const { MedicineReportData, } = ReportApi()
     const { getPatientListDetails, cancelPatientAppointment, updateIncompleteStatus } = AppointmentsApi()
 
@@ -43,7 +45,8 @@ export default function PatientList(props) {
         }
         MedicineReportData(bodyData)
             .then((res) => {
-                history.push(`/consultation/${res._id}`, { data: { fees: item.fees } })
+                setReportId(res._id)
+                history.push(`/appointments/consultation/${res._id}`, { data: { fees: item.fees } })
             })
     }
 

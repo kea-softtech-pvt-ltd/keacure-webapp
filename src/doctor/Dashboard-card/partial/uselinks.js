@@ -6,16 +6,37 @@ import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import AttachMoneyRoundedIcon from '@material-ui/icons/AttachMoneyRounded';
 import ControlPointRoundedIcon from '@material-ui/icons/ControlPointRounded';
 import { Link, useLocation } from "react-router-dom/cjs/react-router-dom.min";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { setNewPatientId } from "../../../recoil/atom/setNewPatientId";
+import AppointmentsApi from "../../../services/AppointmentsApi";
+import { setReportsId } from "../../../recoil/atom/setReportId";
 
 export default function UserLinks(props) {
     const { doctorId, helperId, accessModule } = props;
+    const [patientId, setPatientsId] = useRecoilState(setNewPatientId)
+    const [reportId, setReportId] = useState(setReportsId)
+    const { getPatientListDetails } = AppointmentsApi()
     let history = useHistory();
     let location = useLocation();
 
     useEffect(() => {
-
+        patientData()
     }, [location])
+
+    const patientData = () => {
+        getPatientListDetails({ doctorId })
+            .then((res) => {
+                res['test'].map((data) => {
+                    if (data.status === "Ongoing") {
+
+                    }
+                    console.log('===rse', data)
+                })
+            })
+    }
+
+
     function handleClick(e) {
         e.preventDefault()
         history.push(`/patient/${doctorId}`);
@@ -33,11 +54,11 @@ export default function UserLinks(props) {
 
     function handleClinicClick(e) {
         e.preventDefault()
-        history.push(`/PatientsClinicHistory/${doctorId}`);
+        history.push(`/history/${doctorId}`);
     }
     function handleSubscriptionClick(e) {
         e.preventDefault()
-        history.push(`/subscriptioncard/${doctorId}`)
+        history.push(`/subscriptions/update/${doctorId}`)
     }
     function handleAddHelper(e) {
         e.preventDefault()
@@ -51,11 +72,12 @@ export default function UserLinks(props) {
         e.preventDefault()
         history.push(`/medicinelist/${doctorId}`)
     }
-    const { pathname } = window.location;
     return (
         <div className="col-sm-2 dashSpace" align='left'>
             {!helperId ?
-                <div className={pathname === `/doctorProfile/${doctorId}` || pathname === `/editDoctorProfile/${doctorId}` ? "Nav-active" : null}>
+                <div className={window.location.pathname === `/doctorProfile/${doctorId}` ?
+                    "Nav-active" :
+                    null}>
                     < div className="dashboard">
                         <Link
                             onClick={handleOnProfileClick}>
@@ -88,7 +110,9 @@ export default function UserLinks(props) {
             }
             {
                 !helperId ?
-                    <div className={location.pathname === `/patient/${doctorId}` ? "Nav-active" : null}>
+                    <div className={location.pathname === `/patient/${doctorId}` ?
+                        "Nav-active" :
+                        null}>
                         <div className="dashboard ">
                             <Link
                                 onClick={handleClick}>
@@ -97,7 +121,6 @@ export default function UserLinks(props) {
                             </Link>
                         </div>
                     </div>
-
                     :
                     <>
                         {
@@ -125,7 +148,7 @@ export default function UserLinks(props) {
 
             {
                 !helperId ?
-                    <div className={location.pathname === `/PatientsClinicHistory/${doctorId}` ? "Nav-active" : null}>
+                    <div className={location.pathname === `/history/${doctorId}` ? "Nav-active" : null}>
                         <div className="dashboard">
                             <Link
                                 onClick={handleClinicClick}>
@@ -140,8 +163,7 @@ export default function UserLinks(props) {
                             accessModule.map((item) => {
                                 return (
                                     (item.moduleName === "Appointment-History") === true ?
-                                        <div className={location.pathname === `/PatientsClinicHistory/${doctorId}` ? "Nav-active" : null}>
-
+                                        <div className={location.pathname === `/history/${doctorId}` ? "Nav-active" : null}>
                                             <div className="dashboard">
                                                 <Link
                                                     onClick={handleClinicClick}>
@@ -167,7 +189,7 @@ export default function UserLinks(props) {
             </div>
             {
                 !helperId ?
-                    <div className={location.pathname === `/subscriptioncard/${doctorId}` ? "Nav-active" : null}>
+                    <div className={location.pathname === `/subscriptions/update/${doctorId}` ? "Nav-active" : null}>
                         <div className="dashboard">
                             <Link
                                 onClick={handleSubscriptionClick}>
@@ -182,7 +204,7 @@ export default function UserLinks(props) {
                             accessModule.map((item) => {
                                 return (
                                     (item.moduleName === "Subscription") === true ?
-                                        <div className={location.pathname === `/subscriptioncard/${doctorId}` ? "Nav-active" : null}>
+                                        <div className={location.pathname === `/subscriptions/update/${doctorId}` ? "Nav-active" : null}>
                                             <div className="dashboard">
                                                 <Link
                                                     onClick={handleSubscriptionClick}>

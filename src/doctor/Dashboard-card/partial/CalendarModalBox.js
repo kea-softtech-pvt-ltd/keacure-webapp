@@ -25,7 +25,7 @@ function CalendarModalBox(props) {
         }
         MedicineReportData(bodyData)
             .then((res) => {
-                history.push(`/consultation/${res._id}`, { data: { fees: patientList.fees } })
+                history.push(`/appointments/consultation/${res._id}`, { data: { fees: patientList.fees } })
             })
     }
 

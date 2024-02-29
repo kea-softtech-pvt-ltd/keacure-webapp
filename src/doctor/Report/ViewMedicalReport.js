@@ -45,7 +45,7 @@ export default function ViewMedicalReport() {
                
                 <ul className="clearfix">
                 <li>
-                    <Link to={`/Patientsclinichistory/${doctorId}`}>
+                    <Link to={`/history/${doctorId}`}>
                         <i className="arrow_back backArrow" title="back button"></i>
                     </Link>
                 </li>

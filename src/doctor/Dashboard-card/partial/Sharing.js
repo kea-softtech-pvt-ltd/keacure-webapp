@@ -2,7 +2,7 @@ import { WhatsappIcon, WhatsappShareButton } from 'react-share';
 import { useEffect, useState } from 'react';
 import AppointmentsApi from '../../../services/AppointmentsApi';
 
-export default function Sharing(props) {
+export default function SharingSharing(props) {
     const { downloadPrescription } = AppointmentsApi()
     const { reportId } = props
     const [shareUrl, setShareUrl] = useState([])

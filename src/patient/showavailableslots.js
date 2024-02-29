@@ -54,7 +54,7 @@ const ShowInClinicAppointSlots = (props) => {
         }
         paymentInfo(transactionData)
             .then((res) => {
-                history.push(`/patient/${session.doctorId}`);
+                history.push(`/appointments/${session.doctorId}`);
                 setDependentsId(' ')
             })
         handleClose()
