@@ -21,7 +21,7 @@ export default function NewFollowup(props) {
     const onSubmit = () => {
         handleClose();
     };
-    // const history = useHistory()
+    // const navigate = useNavigate()
     const addDatePicker = (date) => {
         setDate(date)
     }
@@ -51,7 +51,7 @@ export default function NewFollowup(props) {
     //     }
     //     await UpdateStatusBookingdata({ appointmentId }, bodyData)
     //         .then((res) => {
-    //             history.push(`/dashboard/${res.doctorId}`)
+    //             navigate(`/dashboard/${res.doctorId}`)
     //         })
     //     await createPDF({ reportId })
     // };

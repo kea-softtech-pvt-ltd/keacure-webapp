@@ -1,5 +1,5 @@
 import { API } from "../config";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LoginPatientOtp } from "../patient/loginPatientOtp";
 import { useState } from "react";
 import { MainInput } from "../mainComponent/mainInput";

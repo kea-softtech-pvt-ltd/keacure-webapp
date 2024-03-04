@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 import { SetTiming } from "./setTiming";
 import { useState, useEffect } from "react";
-import { FaRupeeSign } from "react-icons/fa"
 import { useRecoilState } from 'recoil';
 import { SetDoctorSessionTiming } from "../../../../recoil/atom/SetDoctorSessionTiming";
 import { updateSession } from '../../../../recoil/atom/setUpdateSession'

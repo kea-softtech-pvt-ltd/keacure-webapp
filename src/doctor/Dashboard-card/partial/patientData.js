@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useParams } from "react-router-dom";
 import PatientApi from "../../../services/PatientApi";
 import { Wrapper } from "../../../mainComponent/Wrapper";
 import { MainNav } from "../../../mainComponent/mainNav";

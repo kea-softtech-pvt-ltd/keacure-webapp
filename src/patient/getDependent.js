@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useHistory, useParams } from 'react-router-dom/cjs/react-router-dom.min'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import PatientApi from '../services/PatientApi';
 import { useRecoilState } from 'recoil';
 import { setDependentId } from '../recoil/atom/setDependentId';
 export default function GetDependent() {
     const { patientId } = useParams();
-    const [fetchPatientData, setFetchPatientData] = useState([])
-    const [dependentId, setDependentsId] = useRecoilState(setDependentId)
+    const [ fetchPatientData, setFetchPatientData] = useState([])
+    const [ dependentId, setDependentsId] = useRecoilState(setDependentId)
     const { patientDetailsData } = PatientApi();
-    const history = useHistory()
+    const navigate = useNavigate()
     useEffect(() => {
         getAllPatientData()
     }, [])
@@ -19,8 +19,9 @@ export default function GetDependent() {
                 setFetchPatientData(response[0].dependent)
             })
     }
+
     const handleClick = (item) => {
-        history.push(`/appointmentbookingsection/${item._id}`)
+        navigate(`/appointmentbookingsection/${item._id}`)
         setDependentsId(item._id)
     }
     return (

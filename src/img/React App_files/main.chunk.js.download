@@ -1288,22 +1288,22 @@ function Dashboard() {
   _s();
 
   const classes = Object(_dashboardcardstyle__WEBPACK_IMPORTED_MODULE_6__["useStyles"])();
-  let history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["useHistory"])();
+  const navigate = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["useNavigate"])();
 
   function handleClick() {
-    history.push("/patientlist");
+    navigate("/patientlist");
   }
 
   function handleOnProfileClick() {
-    history.push("/editdoctorprofile");
+    navigate("/edit");
   }
 
   function handlePaymentClick() {
-    history.push("/PatientsPaymentHistory");
+    navigate("/PatientsPaymentHistory");
   }
 
   function handleClinicClick() {
-    history.push("/PatientsClinicHistory");
+    navigate("/PatientsClinicHistory");
   }
 
   return /*#__PURE__*/Object(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_7__["jsxDEV"])("main", {
@@ -1727,7 +1727,7 @@ function Dashboard() {
 }
 
 _s(Dashboard, "cXZz/rbrhPrjL6gJaTc75NCtuak=", false, function () {
-  return [_dashboardcardstyle__WEBPACK_IMPORTED_MODULE_6__["useStyles"], react_router_dom__WEBPACK_IMPORTED_MODULE_5__["useHistory"]];
+  return [_dashboardcardstyle__WEBPACK_IMPORTED_MODULE_6__["useStyles"], react_router_dom__WEBPACK_IMPORTED_MODULE_5__["useNavigate"]];
 });
 
 _c = Dashboard;
@@ -5315,7 +5315,7 @@ function DoctorProfile() {
                     columnNumber: 41
                   }, this), /*#__PURE__*/Object(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_5__["jsxDEV"])("li", {
                     children: /*#__PURE__*/Object(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_5__["jsxDEV"])(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Link"], {
-                      to: "/editdoctorprofile/:loginId",
+                      to: "/edit/:loginId",
                       children: /*#__PURE__*/Object(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_5__["jsxDEV"])("i", {
                         className: "icon_pencil-edit",
                         title: "Edit profile"
@@ -6670,9 +6670,9 @@ if (true) {
 
 /***/ }),
 
-/***/ "./src/EditDoctorProfile.js":
+/***/ "./src/edit.js":
 /*!**********************************!*\
-  !*** ./src/EditDoctorProfile.js ***!
+  !*** ./src/edit.js ***!
   \**********************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -8263,14 +8263,14 @@ function Home() {
   //let {loginId} = useParams();
   const [loading, setLoading] = Object(react__WEBPACK_IMPORTED_MODULE_2__["useState"])(false);
   const timer = Object(react__WEBPACK_IMPORTED_MODULE_2__["useRef"])();
-  let history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["useHistory"])();
+  const navigate = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["useNavigate"])();
 
   const handleButtonClick = () => {
     if (!loading) {
       setLoading(true);
       timer.current = window.setTimeout(() => {
         setLoading(false);
-        history.push("/doctorlist");
+        navigate("/doctorlist");
       }, 2000);
     }
   };
@@ -8280,7 +8280,7 @@ function Home() {
       setLoading(true);
       timer.current = window.setTimeout(() => {
         setLoading(false);
-        history.push("/doctordetail");
+        navigate("/doctordetail");
       }, 4000);
     }
   }; //for doctordata  
@@ -8812,7 +8812,7 @@ function Home() {
 }
 
 _s(Home, "Lq1XNOHGuOw/RhELHbyZ0gz8TB8=", false, function () {
-  return [react_router_dom__WEBPACK_IMPORTED_MODULE_3__["useHistory"]];
+  return [react_router_dom__WEBPACK_IMPORTED_MODULE_3__["useNavigate"]];
 });
 
 _c = Home;
@@ -8930,7 +8930,7 @@ function LoginDoctor() {
   _s();
 
   //for show otp input
-  let history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["useHistory"])();
+  const navigate = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["useNavigate"])();
   const [userId, setUserId] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('');
   const [loginotp, setLoginOtp] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('');
   const [errormessage, setErrormessage] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(false);
@@ -8979,7 +8979,7 @@ function LoginDoctor() {
         if (response.otp != loginotp) {
           setErrormessage("wrong OTP");
         } else {
-          history.push(`/editdoctorprofile/${response._id}`);
+          navigate(`/edit/${response._id}`);
         }
       });
     }
@@ -9194,7 +9194,7 @@ function LoginDoctor() {
 }
 
 _s(LoginDoctor, "93TJH8zvtNElw0WVmp7i2l5nwQM=", false, function () {
-  return [react_router_dom__WEBPACK_IMPORTED_MODULE_0__["useHistory"]];
+  return [react_router_dom__WEBPACK_IMPORTED_MODULE_0__["useNavigate"]];
 });
 
 _c = LoginDoctor;
@@ -9314,7 +9314,7 @@ function LoginPatient() {
   const [email, setEmail] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('');
   const [password, setPassword] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('');
   const [error, setError] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('');
-  let history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useHistory"])();
+  const navigate = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useNavigate"])();
 
   const handleClick = async e => {
     // var bytes = CryptoJS.AES.decrypt(password, 'my-secret-key@123');
@@ -9335,7 +9335,7 @@ function LoginPatient() {
     if (res.status === 400 || !data) {
       setError('Please enter valid Email and Password!');
     } else {
-      history.push("/patientdashboard");
+      navigate("/patientdashboard");
     }
   };
 
@@ -9496,7 +9496,7 @@ function LoginPatient() {
 }
 
 _s(LoginPatient, "+hYly0w+0J5BAuRKypbw8FoGkWs=", false, function () {
-  return [react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useHistory"]];
+  return [react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useNavigate"]];
 });
 
 _c = LoginPatient;
@@ -9601,7 +9601,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _LoginPatient__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./LoginPatient */ "./src/LoginPatient.js");
 /* harmony import */ var _RegisterPatient__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./RegisterPatient */ "./src/RegisterPatient.js");
 /* harmony import */ var _DoctorProfile__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./DoctorProfile */ "./src/DoctorProfile.js");
-/* harmony import */ var _EditDoctorProfile__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./EditDoctorProfile */ "./src/EditDoctorProfile.js");
+/* harmony import */ var _EditDoctorProfile__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
 /* harmony import */ var _PatientList__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./PatientList */ "./src/PatientList.js");
 /* harmony import */ var _Dashboard__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Dashboard */ "./src/Dashboard.js");
 /* harmony import */ var _PatientDashboard__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./PatientDashboard */ "./src/PatientDashboard.js");
@@ -9785,7 +9785,7 @@ function MainContainer() {
       lineNumber: 66,
       columnNumber: 11
     }, this), /*#__PURE__*/Object(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_23__["jsxDEV"])(react_router_dom__WEBPACK_IMPORTED_MODULE_0__["Route"], {
-      path: "/editdoctorprofile/:loginId",
+      path: "/edit/:loginId",
       children: /*#__PURE__*/Object(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_23__["jsxDEV"])(_EditDoctorProfile__WEBPACK_IMPORTED_MODULE_10__["default"], {}, void 0, false, {
         fileName: _jsxFileName,
         lineNumber: 70,
@@ -10520,10 +10520,10 @@ function OPD() {
   } //for history button
 
 
-  let history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_17__["useHistory"])();
+  const navigate = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_17__["useNavigate"])();
 
   function handleClick() {
-    history.push("/MedicineHistory");
+    navigate("/MedicineHistory");
   } //for tab
 
 
@@ -11476,7 +11476,7 @@ function OPD() {
 }
 
 _s(OPD, "EWbWyBFV3OrCppH1vWqpxD778Jw=", false, function () {
-  return [useStyles, react_router_dom__WEBPACK_IMPORTED_MODULE_17__["useParams"], react_router_dom__WEBPACK_IMPORTED_MODULE_17__["useHistory"]];
+  return [useStyles, react_router_dom__WEBPACK_IMPORTED_MODULE_17__["useParams"], react_router_dom__WEBPACK_IMPORTED_MODULE_17__["useNavigate"]];
 });
 
 _c2 = OPD;
@@ -11600,22 +11600,22 @@ function PatientDashboard() {
   _s();
 
   const classes = Object(_dashboardcardstyle__WEBPACK_IMPORTED_MODULE_6__["useStyles"])();
-  let history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["useHistory"])();
+  const navigate = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_5__["useNavigate"])();
 
   function handleClick() {
-    history.push("/appointment");
+    navigate("/appointment");
   }
 
   function onClick() {
-    history.push("/patientinfo");
+    navigate("/patientinfo");
   }
 
   function onPaymentClick() {
-    history.push("/doctorbooking");
+    navigate("/doctorbooking");
   }
 
   function onProfileClick() {
-    history.push("/patientprofile");
+    navigate("/patientprofile");
   }
 
   return /*#__PURE__*/Object(react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_7__["jsxDEV"])("div", {
@@ -11976,7 +11976,7 @@ function PatientDashboard() {
 }
 
 _s(PatientDashboard, "cXZz/rbrhPrjL6gJaTc75NCtuak=", false, function () {
-  return [_dashboardcardstyle__WEBPACK_IMPORTED_MODULE_6__["useStyles"], react_router_dom__WEBPACK_IMPORTED_MODULE_5__["useHistory"]];
+  return [_dashboardcardstyle__WEBPACK_IMPORTED_MODULE_6__["useStyles"], react_router_dom__WEBPACK_IMPORTED_MODULE_5__["useNavigate"]];
 });
 
 _c = PatientDashboard;
@@ -13128,7 +13128,7 @@ function PatientProfile() {
     });
   };
 
-  let history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useHistory"])();
+  const navigate = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useNavigate"])();
   const {
     register,
     handleSubmit,
@@ -13163,7 +13163,7 @@ function PatientProfile() {
     formData.append('foodpreferences', data.foodpreferences);
     formData.append('occupation', data.occupation);
     axios__WEBPACK_IMPORTED_MODULE_6___default.a.post(`http://localhost:9000/update/${registerId}`, formData).then(function (response) {
-      history.push("/patientdashboard");
+      navigate("/patientdashboard");
     });
   }; //for using tab
 
@@ -14759,7 +14759,7 @@ function PatientProfile() {
 }
 
 _s(PatientProfile, "tlBE8/Iw2+zmIVMuU9fbQCzo6bI=", false, function () {
-  return [_utils__WEBPACK_IMPORTED_MODULE_12__["useStyles"], react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useParams"], react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useHistory"], react_hook_form__WEBPACK_IMPORTED_MODULE_2__["useForm"]];
+  return [_utils__WEBPACK_IMPORTED_MODULE_12__["useStyles"], react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useParams"], react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useNavigate"], react_hook_form__WEBPACK_IMPORTED_MODULE_2__["useForm"]];
 });
 
 _c = PatientProfile;
@@ -15794,7 +15794,7 @@ var _jsxFileName = "F:\\xampp\\htdocs\\first-react\\health-app\\src\\RegisterPat
 function RegisterPatient() {
   _s();
 
-  let history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useHistory"])(); //insert 
+  const navigate = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useNavigate"])(); //insert 
 
   const [input, setInput] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({});
 
@@ -15836,7 +15836,7 @@ function RegisterPatient() {
         setErr("email already exit");
         return true;
       } else {
-        history.push(`/patientprofile/${response.data._id}`);
+        navigate(`/patientprofile/${response.data._id}`);
       }
     }, error => {
       console.log(error);
@@ -16145,7 +16145,7 @@ function RegisterPatient() {
 }
 
 _s(RegisterPatient, "qRSJW2fYwm6Izp+HsfCkHLkg0Zg=", false, function () {
-  return [react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useHistory"], react_hook_form__WEBPACK_IMPORTED_MODULE_3__["useForm"]];
+  return [react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useNavigate"], react_hook_form__WEBPACK_IMPORTED_MODULE_3__["useForm"]];
 });
 
 _c = RegisterPatient;
@@ -19016,7 +19016,7 @@ function DoctorPersonalExperience() {
     formData.append('personalEmail', data.personalEmail);
     formData.append('address', data.address);
     console.log(formData);
-    axios__WEBPACK_IMPORTED_MODULE_5___default.a.post(`http://localhost:9000/insertPersonalInfo/${loginId}`, formData).then(function (response) {//  history.push("/dashboard");
+    axios__WEBPACK_IMPORTED_MODULE_5___default.a.post(`http://localhost:9000/insertPersonalInfo/${loginId}`, formData).then(function (response) {//  navigate("/dashboard");
     });
   };
 

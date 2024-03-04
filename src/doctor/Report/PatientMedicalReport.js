@@ -14,7 +14,7 @@ import NewFollowup from './partial/NewFollowup';
 import Symptoms from './partial/Symptoms';
 import LabPrescription from './partial/LabPrescription';
 import { MainNav } from '../../mainComponent/mainNav';
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
+import { useLocation } from 'react-router-dom';
 import { Wrapper } from '../../mainComponent/Wrapper';
 import UserLinks from '../Dashboard-card/partial/uselinks';
 import { setHelperData } from "../../recoil/atom/setHelperData";
@@ -39,8 +39,8 @@ export default function PatientMedicalReport() {
     const [doctorId, setDoctorsId]=useRecoilState(setDoctorId)
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const { state } = useLocation()
-    const { fees } = state.data
-    
+    const { fees } = state
+
     //for tab
     const [value, setValue] = useState(0);
     const handleChange = (e, newValue) => {

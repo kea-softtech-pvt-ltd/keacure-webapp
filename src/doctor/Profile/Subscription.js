@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SubscriptionApi from '../../../src/services/SubscriptionApi'
 import { Button, Modal } from "react-bootstrap";
 import { FaRupeeSign } from "react-icons/fa";
@@ -9,7 +9,7 @@ export default function Subscription() {
     const [getSubData, setGetSubData] = useState([])
     const [getSubscription, setGetSubscription] = useState([])
     const { doctorId } = useParams();
-    const history = useHistory()
+    const navigate = useNavigate()
 
     useEffect(() => {
         getSubscriptionPlans()
@@ -32,7 +32,7 @@ export default function Subscription() {
         }
         subscription(bodyData)
             .then(() => {
-                history.push(`/editdoctorprofile/${doctorId}`)
+                navigate("edit")
             })
 
     }

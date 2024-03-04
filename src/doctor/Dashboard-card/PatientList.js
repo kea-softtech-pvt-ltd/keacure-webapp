@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import moment from 'moment';
 import { Button, Modal } from 'react-bootstrap';
 import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
@@ -13,7 +13,7 @@ import { setReportsId } from '../../recoil/atom/setReportId';
 
 export default function PatientList(props) {
     const { doctorId } = props;
-    let history = useHistory();
+    const navigate = useNavigate();
     const [patientList, setPatientList] = useState(null);
     const [show, setShow] = useState(false);
     const [id, setId] = useState()
@@ -46,7 +46,8 @@ export default function PatientList(props) {
         MedicineReportData(bodyData)
             .then((res) => {
                 setReportId(res._id)
-                history.push(`/appointments/consultation/${res._id}`, { data: { fees: item.fees } })
+                // navigate(`/consultation/${res._id}`)
+                navigate(`/consultation/${res._id}`, { state: { fees: item.fees } })
             })
     }
 
@@ -55,12 +56,14 @@ export default function PatientList(props) {
         getPatientListDetails({ doctorId }, currentPage, pageSize)
             .then((result, i) => {
                 const totalPages = result.totalOngoingPages;
-                setTotalPages(totalPages)
+                setTotalPages(totalPages) 
                 setPatientList(result.ongoing)
                 const data = result['test']
                 data.filter((data) => {
                     const patientAppointmentId = data._id;
-                    if (moment(data.selectedDate).format("YYYY-MM-DD") < moment(new Date()).format("YYYY-MM-DD ") && data.status !== "Completed" && data.status !== "Cancelled") {
+                    const currentDate = moment(new Date()).format("YYYY-MM-DD HH:MM") 
+                    const slotDAte = moment(data.selectedDate).format("YYYY-MM-DD")+" "+ data.slotTime
+                    if ( slotDAte < currentDate && data.status !== "Completed" && data.status !== "Cancelled") {
                         const bodyData = {
                             'status': "Incomplete"
                         }
@@ -81,7 +84,7 @@ export default function PatientList(props) {
         setCurrentPage(data.selected + 1)
     }
     const handleShowProfile = (patientId) => {
-        history.push(`/patientdata/${patientId}`)
+        navigate(`/patientdata/${patientId}`)
     }
     return (
         <>
@@ -215,7 +218,7 @@ export default function PatientList(props) {
                     </Button>
                 </Modal.Footer>
             </Modal >
-
+            <Outlet />
         </>
     )
 }

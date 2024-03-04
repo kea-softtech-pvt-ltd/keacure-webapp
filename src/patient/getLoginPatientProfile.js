@@ -5,7 +5,7 @@ import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
 import { useRecoilState } from "recoil";
 import { setHelperData } from "../recoil/atom/setHelperData";
 import { MainNav } from "../mainComponent/mainNav";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
 import { setDoctorId } from "../recoil/atom/setDoctorId";
 import GetDependent from "./getDependent";
 

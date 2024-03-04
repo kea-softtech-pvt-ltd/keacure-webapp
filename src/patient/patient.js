@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Outlet } from 'react-router-dom';
 import { MainNav } from '../mainComponent/mainNav';
 import { Icon } from '@material-ui/core';
 import { Wrapper } from '../mainComponent/Wrapper';
@@ -40,7 +40,7 @@ export default function Patient() {
                     <li className='float-none' style={{ fontSize: 'inherit' }} >Appointment</li>
                     <li>
                         <Link onClick={() => setActive(!active)} >
-                            <Icon className="addiconbutton " style={{ fontSize: 50 }}>add</Icon>
+                            <Icon className="addiconbutton" style={{ fontSize: 50 }}>add</Icon>
                         </Link>
                     </li>
                 </ul>

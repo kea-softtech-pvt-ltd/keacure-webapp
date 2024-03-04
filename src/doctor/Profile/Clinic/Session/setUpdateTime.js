@@ -57,6 +57,7 @@ function SetUpdateTime(props) {
         }
         return allTimes
     }
+
     const handleToTimeSelection = (time) => {
         setToTime(time);
         setSelectedSlots(checkTimeSlot(moment(fromTime).format('HH:mm'), moment(time).format('HH:mm'), sessionTime.timeSlot))
@@ -98,7 +99,6 @@ function SetUpdateTime(props) {
         } else {
             setError("please enter valid time")
         }
-
     }
 
     return (

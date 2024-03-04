@@ -1,11 +1,10 @@
-import { useHistory } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
 import PersonIcon from '@material-ui/icons/Person';
 import PeopleIcon from '@material-ui/icons/People';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import AttachMoneyRoundedIcon from '@material-ui/icons/AttachMoneyRounded';
 import ControlPointRoundedIcon from '@material-ui/icons/ControlPointRounded';
-import { Link, useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { setNewPatientId } from "../../../recoil/atom/setNewPatientId";
@@ -17,7 +16,7 @@ export default function UserLinks(props) {
     const [patientId, setPatientsId] = useRecoilState(setNewPatientId)
     const [reportId, setReportId] = useState(setReportsId)
     const { getPatientListDetails } = AppointmentsApi()
-    let history = useHistory();
+    const navigate = useNavigate();
     let location = useLocation();
 
     useEffect(() => {
@@ -31,46 +30,44 @@ export default function UserLinks(props) {
                     if (data.status === "Ongoing") {
 
                     }
-                    console.log('===rse', data)
                 })
             })
     }
 
-
     function handleClick(e) {
         e.preventDefault()
-        history.push(`/patient/${doctorId}`);
+        navigate(`/appointments/${doctorId}`);
     }
 
     function handleOnProfileClick(e) {
         e.preventDefault()
-        history.push(`/doctorProfile/${doctorId}`);
+        navigate(`/doctorProfile/${doctorId}`);
     }
 
     function handleCalenderClick(e) {
         e.preventDefault()
-        history.push(`/calender/${doctorId}`);
+        navigate(`/calender/${doctorId}`);
     }
 
     function handleClinicClick(e) {
         e.preventDefault()
-        history.push(`/history/${doctorId}`);
+        navigate(`/history/${doctorId}`);
     }
     function handleSubscriptionClick(e) {
         e.preventDefault()
-        history.push(`/subscriptions/update/${doctorId}`)
+        navigate(`/subscriptions/update/${doctorId}`)
     }
     function handleAddHelper(e) {
         e.preventDefault()
-        history.push(`/helper/${doctorId}`)
+        navigate(`/helper/${doctorId}`)
     }
     // function handleReport(e) {
     //     e.preventDefault()
-    //     history.push(`/report/${doctorId}`)
+    //     navigate(`/report/${doctorId}`)
     // }
     function handleMedicineList(e) {
         e.preventDefault()
-        history.push(`/medicinelist/${doctorId}`)
+        navigate(`/medicinelist/${doctorId}`)
     }
     return (
         <div className="col-sm-2 dashSpace" align='left'>

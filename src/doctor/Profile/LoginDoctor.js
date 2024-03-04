@@ -1,4 +1,4 @@
-import { Link, useHistory } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ShowLoginOtp } from "./Partial/showLoginOtp";
 import { MainButtonInput } from "../../mainComponent/mainButtonInput";
@@ -68,6 +68,7 @@ export default function LoginDoctor() {
                     </div>
                 </div>
             </div>
+            <Outlet/>
         </main>
     )
 }

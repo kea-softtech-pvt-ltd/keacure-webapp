@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import AppointmentsApi from "../../../services/AppointmentsApi";
 import moment from 'moment';
 import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import Sharing from "./Sharing";
 import { FaClinicMedical } from "react-icons/fa";

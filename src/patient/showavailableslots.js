@@ -1,6 +1,6 @@
 import { slots } from "../common/constant";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaRupeeSign } from "react-icons/fa";
 import { setNewPatientId } from "../recoil/atom/setNewPatientId";
 import { useRecoilState } from "recoil";
@@ -18,7 +18,7 @@ const ShowInClinicAppointSlots = (props) => {
     const [show, setShow] = useState(false);
     const [bookSlot, setbookSlot] = useState([]);
     const { paymentInfo, getbookedSlots } = PatientApi();
-    const history = useHistory()
+    const navigate = useNavigate()
 
     useEffect(() => {
         availableSlots()
@@ -54,7 +54,7 @@ const ShowInClinicAppointSlots = (props) => {
         }
         paymentInfo(transactionData)
             .then((res) => {
-                history.push(`/appointments/${session.doctorId}`);
+                navigate(`/appointments/${session.doctorId}`);
                 setDependentsId(' ')
             })
         handleClose()

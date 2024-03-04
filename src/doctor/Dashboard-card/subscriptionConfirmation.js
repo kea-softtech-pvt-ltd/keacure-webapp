@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom/cjs/react-router-dom";
+import { Link } from "react-router-dom";
 import UserLinks from "../Dashboard-card/partial/uselinks";
 import { Wrapper } from "../../mainComponent/Wrapper";
 import { MainNav } from "../../mainComponent/mainNav";
 import AuthApi from "../../services/AuthApi";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import SubscriptionApi from "../../services/SubscriptionApi";
 import { setHelperData } from "../../recoil/atom/setHelperData";

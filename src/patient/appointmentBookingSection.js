@@ -3,14 +3,14 @@ import { DoctorAppointmentType } from "../patient/doctorAppointmentType";
 import { MainAccordion } from "../mainComponent/MainAccordion";
 import { FaClinicMedical } from "react-icons/fa";
 import AuthApi from "../services/AuthApi";
+import { useParams , Link } from "react-router-dom";
 import { setDoctorId } from "../recoil/atom/setDoctorId";
 import { useRecoilState } from "recoil";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
 import { MainNav } from "../mainComponent/mainNav";
 import { setHelperData } from "../recoil/atom/setHelperData";
 import { Wrapper } from "../mainComponent/Wrapper";
-import { useParams } from "react-router-dom/cjs/react-router-dom";
+
 function AppointmentBookingSection() {
     const { patientId } = useParams()
     const [doctorId, setDoctorsId] = useRecoilState(setDoctorId)

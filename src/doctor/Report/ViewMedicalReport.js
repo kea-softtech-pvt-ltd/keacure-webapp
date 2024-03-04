@@ -11,7 +11,7 @@ import { MainNav } from '../../mainComponent/mainNav';
 import { useRecoilState } from 'recoil';
 import { setHelperData } from '../../recoil/atom/setHelperData';
 import { setDoctorId } from '../../recoil/atom/setDoctorId';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { Link } from 'react-router-dom';
 
 export default function ViewMedicalReport() {
     const { reportId } = useParams();

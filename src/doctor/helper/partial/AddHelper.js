@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MainInput } from '../../../mainComponent/mainInput';
 import { MainButtonInput } from '../../../mainComponent/mainButtonInput';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import HelperApi from '../../../services/HelperApi';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -14,7 +14,7 @@ export default function AddHelper(props) {
     const [loginData, setLoginData] = useState([]);
 
 
-    const history = useHistory()
+    const navigate = useNavigate()
     const handleChange = (e) => {
         e.preventDefault();
         const { name, value } = e.target;
@@ -64,7 +64,7 @@ export default function AddHelper(props) {
 
         createHelper(bodyData)
             .then(() => {
-                history.push(`/dashboard/${props.doctorId}`)
+                navigate(`/dashboard/${props.doctorId}`)
             })
         toast.success("Saved Successfully!")
     }

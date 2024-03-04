@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import UserLinks from "./partial/uselinks";
 import { Wrapper } from "../../mainComponent/Wrapper";
 import { MainNav } from "../../mainComponent/mainNav";
-import { Link, useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { Button, Modal } from "react-bootstrap";
@@ -21,7 +21,7 @@ export default function SubscriptionCard() {
 
     const [show, setShow] = useState(false);
 
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchSubscription()
@@ -61,10 +61,10 @@ export default function SubscriptionCard() {
         }
         updateSubscriptionData({ subscriptionId }, bodyData)
             .then((res) => {
-                // history.push(`/doctorprofile/${doctorId}`)
+                // navigate(`/doctorprofile/${doctorId}`)
                 setGetSubData(plan)
             })
-        history.push(`/subscriptionconfirmation/${doctorId}`)
+        navigate(`/subscriptionconfirmation/${doctorId}`)
         handleClose()
 
     }

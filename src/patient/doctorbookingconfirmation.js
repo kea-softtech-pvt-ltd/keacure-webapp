@@ -41,7 +41,7 @@ function DoctorBookingConfirmation(props) {
                     {
                         patientId ?
                             <div className="radius appColor">
-                                <Link to={`/appointmentbookingsection/${patientId}`} className="btn">
+                                <Link to={`appointmentbookingsection/${patientId}`} className="btn">
                                     <span className=" appColor">Book Appointment</span>
                                 </Link>
                             </div>

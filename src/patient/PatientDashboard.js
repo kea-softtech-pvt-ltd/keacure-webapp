@@ -1,4 +1,4 @@
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MainNav } from '../mainComponent/mainNav';
 import { MainCards } from '../mainComponent/mainCards';
 import { MainWrapper } from '../mainComponent/mainWrapper';
@@ -11,21 +11,21 @@ export default function PatientDashboard() {
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const [doctorId, setDoctorsId] = useRecoilState(setDoctorId)
     const { patientId } = useParams()
-    let history = useHistory();
+    const navigate = useNavigate();
     function handleClick() {
-        history.push(`/appointment/${patientId}`);
+        navigate(`/appointment/${patientId}`);
     }
 
     function onClick() {
-        history.push(`/patientinfo/${patientId}`);
+        navigate(`/patientinfo/${patientId}`);
     }
 
     function onPaymentClick() {
-        history.push(`/doctorbooking/${patientId}`);
+        navigate(`/doctorbooking/${patientId}`);
     }
 
     function onProfileClick() {
-        history.push(`/patientprofile/${patientId}`);
+        navigate(`/patientprofile/${patientId}`);
     }
 
     return (

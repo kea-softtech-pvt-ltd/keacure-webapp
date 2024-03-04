@@ -1,4 +1,4 @@
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { PatientRegistrationForm } from "../patient/patientRegistrationForm";
 import { Wrapper } from "../mainComponent/Wrapper";
 import { MainNav } from "../mainComponent/mainNav";
@@ -8,13 +8,13 @@ import { setHelperData } from "../recoil/atom/setHelperData";
 import { setDoctorId } from "../recoil/atom/setDoctorId";
 
 export default function CreatePatientProfile() {
-    const history = useHistory()
+    const navigate = useNavigate()
     const [doctorId, setDoctorsId] = useRecoilState(setDoctorId);
     const { patientId } = useParams()
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
 
     function handalChange() {
-        history.push(`/getLoginPatientProfile/${patientId}`)
+        navigate(`/getLoginPatientProfile/${patientId}`)
     }
     return (
         <Wrapper>
