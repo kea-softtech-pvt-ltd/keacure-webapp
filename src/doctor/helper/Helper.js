@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AddHelper from './partial/AddHelper';
 import HelperList from './partial/helperList';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Outlet } from 'react-router-dom';
 import { MainNav } from '../../mainComponent/mainNav';
 import { Icon } from '@material-ui/core';
 import { Wrapper } from '../../mainComponent/Wrapper';
@@ -9,6 +9,7 @@ import UserLinks from '../Dashboard-card/partial/uselinks';
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
 import HelperApi from '../../services/HelperApi';
+
 export default function Helper() {
     const [helperList, setHelperList] = useState(null);
     const [active, setActive] = useState(false)
@@ -69,7 +70,6 @@ export default function Helper() {
 
                     </>
                 </div>
-
             </div>
         </Wrapper>
     )

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, Outlet } from "react-router-dom";
 import PatientApi from "../services/PatientApi";
 
 function FetchPatientInfo(props) {
     const { patientId } = props;
-    const [fetchPatientData, setFetchPatientData] = useState([])
-    const {patientDetailsData} = PatientApi()
+    const [ fetchPatientData, setFetchPatientData] = useState([])
+    const { patientDetailsData} = PatientApi()
+    const navigate = useNavigate()
+
     useEffect(() => {
         getAllPatientData()
     }, [])
@@ -17,6 +19,10 @@ function FetchPatientInfo(props) {
             })
     }
 
+    const handleClick = async (event) => {
+        event.preventDefault()
+        navigate(`booking/${patientId}`, { state: { patientId: patientId} })
+    }
     return (
         <>
             <div className="underline">
@@ -43,13 +49,13 @@ function FetchPatientInfo(props) {
                 </div>
                 <div align='right'>
                     <div className="radius appColor buttonPatient" align='center'>
-                        <Link to={`/appointmentbookingsection/${patientId}`} className="btn">
-                            <span className=" appColor">Book Appointment</span>
+                        <Link onClick={(event)=>handleClick(event)} className="btn">
+                            <span className="appColor">Book Appointment</span>
                         </Link>
                     </div>
                 </div>
             </div>
-
+            <Outlet/>
         </>
     )
 }

@@ -9,11 +9,11 @@ import PatientApi from "../services/PatientApi";
 function LoginPatientOtp(props) {
     const navigate = useNavigate()
     const { patientId, loginData } = props;
-    const [patientData, setPatientData] = useRecoilState(setNewPatientId);
-    const [loginotp, setLoginOtp] = useState('');
+    const [ patientData, setPatientData] = useRecoilState(setNewPatientId);
+    const [ loginotp, setLoginOtp] = useState('');
     const getOTP = loginData.otp
     const { patientLoginOtp } = PatientApi()
-    const [errormessage, setErrormessage] = useState(false);
+    const [ errormessage, setErrormessage] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -25,9 +25,9 @@ function LoginPatientOtp(props) {
                     setErrormessage("Please Enter Valid OTP");
                 } else {
                     if (isLoggedIn === true) {
-                        navigate(`/getLoginPatientProfile/${patientId}`);
+                        navigate(`patientprofile/${patientId}`);
                     } else {
-                        navigate(`/createpatientprofile/${patientId}`);
+                        navigate(`createprofile/${patientId}`);
                     }
                 }
             })

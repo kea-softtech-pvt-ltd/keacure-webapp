@@ -12,9 +12,9 @@ const { getStorage, ref, getDownloadURL } = require("firebase/storage");
 
 export default function CompletedAppointment(props) {
     const { doctorId } = props;
-    const [patientHistoryData, setPatientHistoryData] = useState(null)
-    const [currentPage, setCurrentPage] = useState(1)
-    const [totalPages, setTotalPages] = useState(0);
+    const [ patientHistoryData, setPatientHistoryData] = useState(null)
+    const [ currentPage, setCurrentPage] = useState(1)
+    const [ totalPages, setTotalPages] = useState(0);
     const { getPatientListDetails, downloadPrescription } = AppointmentsApi()
     const storage = getStorage();
 
@@ -84,7 +84,7 @@ export default function CompletedAppointment(props) {
                                                 </span>
 
                                                 <div className='cardSpan appointmentBtn historyBtn'>
-                                                    <Link to={`/history/medicalreport/${details.medicalReportId}`}>
+                                                    <Link to={`report/${details.medicalReportId}`}>
                                                         <Button className="appColor helperBtn" > View</Button>
                                                     </Link>
                                                     <Button className="appColor helperBtn" onClick={() => downloadPdf(details)}> Download</Button>
@@ -124,7 +124,7 @@ export default function CompletedAppointment(props) {
                                                 </span>
 
                                                 <div className='cardSpan appointmentBtn historyBtn'>
-                                                    <Link to={`/history/medicalreport/${details.medicalReportId}`}>
+                                                    <Link to={`report/${details.medicalReportId}`}>
                                                         <Button className="appColor helperBtn" > View</Button>
                                                     </Link>
                                                     <Button className="appColor helperBtn" onClick={() => downloadPdf(details)}> Download</Button>

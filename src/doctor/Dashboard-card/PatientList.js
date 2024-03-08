@@ -47,7 +47,7 @@ export default function PatientList(props) {
             .then((res) => {
                 setReportId(res._id)
                 // navigate(`/consultation/${res._id}`)
-                navigate(`/consultation/${res._id}`, { state: { fees: item.fees } })
+                navigate(`consultation/${res._id}`, { state: { fees: item.fees } })
             })
     }
 
@@ -62,8 +62,8 @@ export default function PatientList(props) {
                 data.filter((data) => {
                     const patientAppointmentId = data._id;
                     const currentDate = moment(new Date()).format("YYYY-MM-DD HH:MM") 
-                    const slotDAte = moment(data.selectedDate).format("YYYY-MM-DD")+" "+ data.slotTime
-                    if ( slotDAte < currentDate && data.status !== "Completed" && data.status !== "Cancelled") {
+                    const slotDate = moment(data.selectedDate).format("YYYY-MM-DD")+" "+ data.slotTime
+                    if ( slotDate < currentDate && data.status !== "Completed" && data.status !== "Cancelled") {
                         const bodyData = {
                             'status': "Incomplete"
                         }
@@ -83,8 +83,9 @@ export default function PatientList(props) {
     const handlePageClick = (data) => {
         setCurrentPage(data.selected + 1)
     }
-    const handleShowProfile = (patientId) => {
-        navigate(`/patientdata/${patientId}`)
+    const handleShowProfile = (e,patientId) => {
+        e.preventDefault()
+        navigate(`patientdata/${patientId}`)
     }
     return (
         <>
@@ -99,7 +100,7 @@ export default function PatientList(props) {
                                             <span className='cardSpan'>
                                                 <i className='icon-user color patientListIcon' />
                                                 <span className='patientName '>
-                                                    <Link to="#" className='underLine' onClick={() => handleShowProfile(details.patientId)}>
+                                                    <Link to="#" className='underLine' onClick={(e) => handleShowProfile(e,details.patientId)}>
                                                         {details['patientDetails'][0].name}
                                                     </Link>
                                                 </span>

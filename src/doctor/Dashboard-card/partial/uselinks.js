@@ -1,20 +1,22 @@
+import React, { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { setNewPatientId } from "../../../recoil/atom/setNewPatientId";
+import { setDoctorId } from "../../../recoil/atom/setDoctorId";
+import { useRecoilState } from "recoil";
 import AccessTimeRoundedIcon from '@material-ui/icons/AccessTimeRounded';
 import PersonIcon from '@material-ui/icons/Person';
 import PeopleIcon from '@material-ui/icons/People';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 import AttachMoneyRoundedIcon from '@material-ui/icons/AttachMoneyRounded';
-import ControlPointRoundedIcon from '@material-ui/icons/ControlPointRounded';
-import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { setNewPatientId } from "../../../recoil/atom/setNewPatientId";
 import AppointmentsApi from "../../../services/AppointmentsApi";
-import { setReportsId } from "../../../recoil/atom/setReportId";
+import ControlPointRoundedIcon from '@material-ui/icons/ControlPointRounded';
+
 
 export default function UserLinks(props) {
-    const { doctorId, helperId, accessModule } = props;
+    const { helperId, accessModule } = props;
     const [patientId, setPatientsId] = useRecoilState(setNewPatientId)
-    const [reportId, setReportId] = useState(setReportsId)
+    const [doctorId, setdoctorId] = useRecoilState(setDoctorId)
+    console.log("doctorI=====>", doctorId)
     const { getPatientListDetails } = AppointmentsApi()
     const navigate = useNavigate();
     let location = useLocation();
@@ -41,7 +43,7 @@ export default function UserLinks(props) {
 
     function handleOnProfileClick(e) {
         e.preventDefault()
-        navigate(`/doctorProfile/${doctorId}`);
+        navigate(`/profile/${doctorId}`);
     }
 
     function handleCalenderClick(e) {
@@ -55,16 +57,13 @@ export default function UserLinks(props) {
     }
     function handleSubscriptionClick(e) {
         e.preventDefault()
-        navigate(`/subscriptions/update/${doctorId}`)
+        navigate(`/subscription/${doctorId}`)
     }
     function handleAddHelper(e) {
         e.preventDefault()
         navigate(`/helper/${doctorId}`)
     }
-    // function handleReport(e) {
-    //     e.preventDefault()
-    //     navigate(`/report/${doctorId}`)
-    // }
+
     function handleMedicineList(e) {
         e.preventDefault()
         navigate(`/medicinelist/${doctorId}`)
@@ -72,10 +71,12 @@ export default function UserLinks(props) {
     return (
         <div className="col-sm-2 dashSpace" align='left'>
             {!helperId ?
-                <div className={window.location.pathname === `/doctorProfile/${doctorId}` ?
-                    "Nav-active" :
-                    null}>
-                    < div className="dashboard">
+                <div
+                    className={location.pathname === `/profile/${doctorId}` ?
+                        "Nav-active" :
+                        null}
+                >
+                    <div className="dashboard">
                         <Link
                             onClick={handleOnProfileClick}>
                             <PersonIcon style={{ fontSize: 20 }} />
@@ -89,7 +90,7 @@ export default function UserLinks(props) {
                         accessModule.map((item) => {
                             return (
                                 (item.moduleName === "Profile") === true ?
-                                    <div className={location.pathname === `/doctorProfile/${doctorId}` ? "Nav-active" : null}>
+                                    <div className={location.pathname === `/profile/${doctorId}` ? "Nav-active" : null}>
                                         <div className="dashboard">
                                             <Link
                                                 onClick={handleOnProfileClick}
@@ -107,7 +108,7 @@ export default function UserLinks(props) {
             }
             {
                 !helperId ?
-                    <div className={location.pathname === `/patient/${doctorId}` ?
+                    <div className={location.pathname === `/appointments/${doctorId}` ?
                         "Nav-active" :
                         null}>
                         <div className="dashboard ">
@@ -124,7 +125,7 @@ export default function UserLinks(props) {
                             accessModule.map((item) => {
                                 return (
                                     (item.moduleName === "Appointment") === true ?
-                                        <div className={location.pathname === `/patient/${doctorId}` ? "Nav-active" : null}>
+                                        <div className={location.pathname === `/appointments/${doctorId}` ? "Nav-active" : null}>
 
                                             <div className="dashboard">
                                                 <Link
@@ -175,6 +176,7 @@ export default function UserLinks(props) {
                         }
                     </>
             }
+
             <div className={location.pathname === `/calender/${doctorId}` ? "Nav-active" : null}>
                 <div className="dashboard">
                     <Link
@@ -184,9 +186,10 @@ export default function UserLinks(props) {
                     </Link>
                 </div>
             </div>
+
             {
                 !helperId ?
-                    <div className={location.pathname === `/subscriptions/update/${doctorId}` ? "Nav-active" : null}>
+                    <div className={location.pathname === `/subscription/${doctorId}` ? "Nav-active" : null}>
                         <div className="dashboard">
                             <Link
                                 onClick={handleSubscriptionClick}>
@@ -201,7 +204,7 @@ export default function UserLinks(props) {
                             accessModule.map((item) => {
                                 return (
                                     (item.moduleName === "Subscription") === true ?
-                                        <div className={location.pathname === `/subscriptions/update/${doctorId}` ? "Nav-active" : null}>
+                                        <div className={location.pathname === `/subscription/${doctorId}` ? "Nav-active" : null}>
                                             <div className="dashboard">
                                                 <Link
                                                     onClick={handleSubscriptionClick}>
@@ -232,37 +235,10 @@ export default function UserLinks(props) {
                     </div>
 
             }
-            {/* {
-                !helperId ?
-                    <div className="dashboard">
-                        <Link
-                            onClick={handleReport}>
-                            <i className="icon_datareport" style={{ fontSize: 20 }} />
-                            <b className="fontSize">  Report</b>
-                        </Link>
-                    </div> :
-                    <>
-                        {
-                            accessModule.map((item) => {
-                                return (
-                                    (item.moduleName === "Report") === true ?
-                                        <div className="dashboard">
-                                            <Link
-                                                onClick={handleReport}>
-                                                <i className="icon_datareport" style={{ fontSize: 20 }} />
-                                                <b className="fontSize">  Report</b>
-                                            </Link>
-                                        </div>
-                                        : null
-                                )
-                            })
-                        }
-                    </>
-            } */}
+
             {
                 !helperId ?
                     <div className={location.pathname === `/medicinelist/${doctorId}` ? "Nav-active" : null}>
-
                         <div className="dashboard">
                             <Link
                                 onClick={handleMedicineList}>

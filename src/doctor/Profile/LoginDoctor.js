@@ -1,4 +1,4 @@
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useState } from "react";
 import { ShowLoginOtp } from "./Partial/showLoginOtp";
 import { MainButtonInput } from "../../mainComponent/mainButtonInput";
@@ -26,7 +26,6 @@ export default function LoginDoctor() {
                     setLoginData(item)
                     setShowOTP(true)
                 })
-
         }
     };
 
@@ -56,19 +55,20 @@ export default function LoginDoctor() {
                                         <div className="col-md-2 ">
                                             <MainButtonInput onClick={getOTPSection}>Go</MainButtonInput>
                                         </div>
-
                                     </div>
                                     {showOTP === true ?
-                                        <ShowLoginOtp loginData={loginData} />
+                                        <>
+                                            <ShowLoginOtp loginData={loginData} />
+                                            <Outlet />
+                                        </>
                                         : null}
-                                    <Link className='pl-5' to='/loginhelper'>Login by Assistant </Link>
+                                    <Link className='pl-5' to="/helperlogin">Login by Assistant </Link>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <Outlet/>
         </main>
     )
 }

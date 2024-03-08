@@ -23,30 +23,27 @@ export default function AuthApi() {
     };
 
     const addDoctorInformation = async ({ doctorId }) => {
-         
-            try {
-                const result = await axios.get(`${API}/fetchData/${doctorId}`);
-                return result.data;
-            }
-            catch (err) {
-                return err
-            }
-      
+        try {
+            const result = await axios.get(`${API}/fetchData/${doctorId}`);
+            return result.data;
+        }
+        catch (err) {
+            return err
+        }
     };
 
     const submitDoctorInformation = async ({ doctorId, bodyData }) => {
-     
-            try {
-                const result = await axios.post(`${API}/insertPersonalInfo/${doctorId}`, bodyData)
-                return result
-            }
-            catch (err) {
-                return err
-            }
-        
+        try {
+            const result = await axios.post(`${API}/insertPersonalInfo/${doctorId}`, bodyData)
+            return result
+        }
+        catch (err) {
+            return err
+        }
+
     }
 
-    const getDrInfo = async ({ doctorId },currentPage, pageSize) => {
+    const getDrInfo = async ({ doctorId }, currentPage, pageSize) => {
         try {
             const result = await axios.get(`${API}/doctor/${doctorId}?page=${currentPage}&pageSize=${pageSize}`);
             return result.data;

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import { FetchPatientInfo } from "./fetchPatientInfo";
 import { Wrapper } from "../mainComponent/Wrapper";
 import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
@@ -19,7 +19,7 @@ export default function GetLoginPatientProfile() {
                 <MainNav>
                     <ul className="clearfix">
                         <li>
-                            <Link to={`/dashboard/${doctorId}`}>
+                            <Link to={`/appointments/${doctorId}`}>
                                 <i className="arrow_back backArrow" title="back button"></i>
                             </Link>
                         </li>

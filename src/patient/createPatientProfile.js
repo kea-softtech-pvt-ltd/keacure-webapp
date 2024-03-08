@@ -1,4 +1,4 @@
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate, Outlet } from "react-router-dom";
 import { PatientRegistrationForm } from "../patient/patientRegistrationForm";
 import { Wrapper } from "../mainComponent/Wrapper";
 import { MainNav } from "../mainComponent/mainNav";
@@ -8,14 +8,10 @@ import { setHelperData } from "../recoil/atom/setHelperData";
 import { setDoctorId } from "../recoil/atom/setDoctorId";
 
 export default function CreatePatientProfile() {
-    const navigate = useNavigate()
-    const [doctorId, setDoctorsId] = useRecoilState(setDoctorId);
+    const [ doctorId, setDoctorsId] = useRecoilState(setDoctorId);
     const { patientId } = useParams()
-    const [helpersData, setHelpersData] = useRecoilState(setHelperData)
+    const [ helpersData, setHelpersData] = useRecoilState(setHelperData)
 
-    function handalChange() {
-        navigate(`/getLoginPatientProfile/${patientId}`)
-    }
     return (
         <Wrapper>
             <MainNav>
@@ -38,7 +34,7 @@ export default function CreatePatientProfile() {
                     <div className="patientFetch">
                         <div className="Form-data">
                             <div className="box_general_3">
-                                <PatientRegistrationForm patientId={patientId} handalChange={handalChange} />
+                                <PatientRegistrationForm patientId={patientId} doctorId={doctorId}/>
                             </div>
                         </div>
                         {/* <DoctorBookingConfirmation doctorId={doctorId} /> */}

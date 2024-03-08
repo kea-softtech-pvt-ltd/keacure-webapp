@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MainInput } from '../../mainComponent/mainInput';
 import { MainButtonInput } from '../../mainComponent/mainButtonInput';
 import { MainNav } from '../../mainComponent/mainNav';
-import { Link } from 'react-router-dom';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Wrapper } from '../../mainComponent/Wrapper';
 import UserLinks from '../Dashboard-card/partial/uselinks';
 import HelperApi from '../../services/HelperApi';
@@ -15,7 +14,9 @@ export default function EditHelper() {
     const { helperId } = useParams();
     const [getHelperData, setGetHelperData] = useState([]);
     const [doctorId, setDoctorId] = useState('')
-    const navigate = useNavigate()
+
+    const navigate = useNavigate();
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setGetHelperData({ ...getHelperData, [name]: value });
@@ -94,7 +95,7 @@ export default function EditHelper() {
                 </ul>
             </MainNav>
             <div className="row ">
-                <UserLinks doctorId={doctorId} helperId={helperId} accessModule={accessModule} />
+                <UserLinks doctorId={doctorId}  />
                 <div className="common_box">
                     <div className='whiteBox'>
                         <div className="row p-4">

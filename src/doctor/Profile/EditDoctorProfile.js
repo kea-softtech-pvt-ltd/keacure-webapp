@@ -36,7 +36,7 @@ export default function EditDoctorProfile() {
             <MainNav>
                 <ul className="clearfix">
                     <li>
-                        <Link to={`/doctorprofile/${doctorId}`}>
+                        <Link to={`/profile/${doctorId}`}>
                             <i className="arrow_back backArrow" title="back button"></i>
                         </Link>
                     </li>

@@ -57,7 +57,7 @@ export default function PatientMedicalReport() {
             <MainNav>
                 <ul className="clearfix">
                     <li>
-                        <Link to={`/dashboard/${doctorId}`}>
+                        <Link to={`/appointments/${doctorId}`}>
                             <i className="arrow_back backArrow" title="back button"></i>
                         </Link>
                     </li>

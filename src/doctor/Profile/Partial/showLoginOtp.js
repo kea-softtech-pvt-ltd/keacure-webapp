@@ -15,18 +15,18 @@ function ShowLoginOtp(props) {
     const [loginotp, setLoginOtp] = useState('');
     const [errormessage, setErrormessage] = useState(false);
 
-    const handleSubmit =  (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-         loginOtp({ getOTP, _id }) //axios call
+        loginOtp({ getOTP, _id }) //axios call
             .then(response => {
                 setId(_id)
                 if (getOTP !== loginotp) {
                     setErrormessage("Please enter correct OTP");
                 } else {
                     if (isSubscribed === true) {
-                        navigate(`/dashboard/${_id}`)
+                        navigate(`/calender/${_id}`)
                     } else {
-                        navigate(`/subscription/${_id}`);
+                        navigate(`/subscriptions/${_id}`);
                     }
                 }
             })

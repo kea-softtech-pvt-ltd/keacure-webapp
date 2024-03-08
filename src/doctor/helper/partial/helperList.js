@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { Button, Modal } from 'react-bootstrap';
 import HelperApi from '../../../services/HelperApi';
 
@@ -9,6 +9,7 @@ export default function HelperList(props) {
     const [showDelete, setShowDelete] = useState(false);
     const [details, setDetails] = useState([])
     const { removeHelper, getHelper } = HelperApi();
+    const navigate = useNavigate();
 
     useEffect(() => {
         getHelperDetails();
@@ -18,6 +19,7 @@ export default function HelperList(props) {
         setDetails(details)
         setShowDelete(true)
     }
+
     const handleDeleteClose = () => setShowDelete(false)
 
     function getHelperDetails() {
@@ -41,42 +43,46 @@ export default function HelperList(props) {
             })
     }
 
+    const handleClick = (e, details) => {
+        e.preventDefault()
+        navigate(`update/${details._id}`)
+    }
+
     return (
         <div>
             <div className='row'>
-                {
-                    helperList ?
-                        <>
-                            {helperList.map((details, i) => {
-                                return (
-                                    <div className="col-md-3" key={i}>
-                                        <div className="mainCards">
-                                            <span className='cardSpan'>
-                                                <i className='icon-user color' />
-                                                <b className=' fontSize'>{details.username}</b>
-                                            </span>
-                                            <span className='cardSpan'>
-                                                <i className='icon-email color' />
-                                                {details.email}
-                                            </span>
-                                            <span className='cardSpan'>
-                                                <i className='icon-mobile-1 color' />
-                                                {details.mobile}
-                                            </span>
-                                            <span className='cardSpan appointmentBtn'>
-                                                <Link to={`/edithelper/${details._id}`} >
-                                                    <Button className='appColor helperBtn' >Edit</Button>
-                                                </Link>
-                                                <Link to="#" onClick={() => handleDeleteShow(details)}>
-                                                    <Button className="appColor helperBtn" >Delete</Button>
-                                                </Link>
-                                            </span>
-                                        </div>
+                {helperList ?
+                    <>
+                        {helperList.map((details, i) => {
+                            return (
+                                <div className="col-md-3" key={i}>
+                                    <div className="mainCards">
+                                        <span className='cardSpan'>
+                                            <i className='icon-user color' />
+                                            <b className=' fontSize'>{details.username}</b>
+                                        </span>
+                                        <span className='cardSpan'>
+                                            <i className='icon-email color' />
+                                            {details.email}
+                                        </span>
+                                        <span className='cardSpan'>
+                                            <i className='icon-mobile-1 color' />
+                                            {details.mobile}
+                                        </span>
+                                        <span className='cardSpan appointmentBtn'>
+                                            <Link to="#" onClick={(e) => handleClick(e, details)} >
+                                                <Button className='appColor helperBtn' >Edit</Button>
+                                            </Link>
+                                            <Link to="#" onClick={() => handleDeleteShow(details)}>
+                                                <Button className="appColor helperBtn" >Delete</Button>
+                                            </Link>
+                                        </span>
                                     </div>
-                                )
-                            })}
-                        </>
-                        : <div className="clinicHistory" ><b>Loading...</b></div>
+                                </div>
+                            )
+                        })}
+                    </>
+                    : <div className="clinicHistory" ><b>Loading...</b></div>
                 }
             </div>
 
@@ -99,6 +105,7 @@ export default function HelperList(props) {
 
                 </Modal.Footer>
             </Modal>
+            <Outlet />
         </div >
 
     )

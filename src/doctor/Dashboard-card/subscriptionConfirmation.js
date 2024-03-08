@@ -47,7 +47,7 @@ export default function SubscriptionConfirmation() {
                 <MainNav>
                     <ul className="clearfix">
                         <li>
-                            <Link to={`/subscription/update/${doctorId}`}>
+                            <Link to={`/subscription/${doctorId}`}>
                                 <i className="arrow_back backArrow" title="back button"></i>
                             </Link>
                         </li>
@@ -72,7 +72,7 @@ export default function SubscriptionConfirmation() {
                             </div>
 
 
-                            <Link to={`/subscription/update/${doctorId}`}>
+                            <Link to={`/subscription/${doctorId}`}>
                                 <button align='right' className='btn appColor helperBtn'>Done</button>
                             </Link>
                         </div>

@@ -5,12 +5,15 @@ import { useNavigate } from "react-router-dom";
 import { setHelperData } from "../../recoil/atom/setHelperData";
 import { useRecoilState } from "recoil";
 import HelperApi from "../../services/HelperApi";
+import { setDoctorId } from "../../recoil/atom/setDoctorId";
 
 export default function LoginDoctor() {
     const { loginHelperData } = HelperApi()
     const [loginData, setLoginData] = useState({});
     const [isError, setIsError] = useState(false);
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
+    const [doctorId, setDrId] = useRecoilState(setDoctorId)
+    console.log("doctorId===========", doctorId)
     const navigate = useNavigate()
     const handleChange = (e) => {
         e.preventDefault();
@@ -26,6 +29,7 @@ export default function LoginDoctor() {
          loginHelperData(bodyData)
             .then((res) => {
                 setHelpersData(res)
+                setDrId(res.doctorId)
                 if (res === null) {
                     setIsError("Please Enter Valid Username and Password")
                 }

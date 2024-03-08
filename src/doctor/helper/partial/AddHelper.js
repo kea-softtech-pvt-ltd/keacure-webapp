@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { MainInput } from '../../../mainComponent/mainInput';
 import { MainButtonInput } from '../../../mainComponent/mainButtonInput';
 import { useNavigate } from 'react-router-dom';
-import HelperApi from '../../../services/HelperApi';
 import { toast } from 'react-toastify';
-import "react-toastify/dist/ReactToastify.css";
+import HelperApi from '../../../services/HelperApi';
 import Toaster from '../../Toaster';
+import "react-toastify/dist/ReactToastify.css";
+
 export default function AddHelper(props) {
     const { getAccessModule, createHelper } = HelperApi();
-    const [accessModule, setAccessModule] = useState([]);
-    const [selectedModule, setSelectedModule] = useState([]);
-    const [checked, setChecked] = useState([]);
-    const [loginData, setLoginData] = useState([]);
-
+    const [ accessModule, setAccessModule ] = useState([]);
+    const [ selectedModule, setSelectedModule ] = useState([]);
+    const [ checked, setChecked ] = useState([]);
+    const [ loginData, setLoginData ] = useState([]);
 
     const navigate = useNavigate()
     const handleChange = (e) => {

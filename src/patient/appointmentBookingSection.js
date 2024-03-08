@@ -3,7 +3,7 @@ import { DoctorAppointmentType } from "../patient/doctorAppointmentType";
 import { MainAccordion } from "../mainComponent/MainAccordion";
 import { FaClinicMedical } from "react-icons/fa";
 import AuthApi from "../services/AuthApi";
-import { useParams , Link } from "react-router-dom";
+import { useParams , Link, useLocation } from "react-router-dom";
 import { setDoctorId } from "../recoil/atom/setDoctorId";
 import { useRecoilState } from "recoil";
 import UserLinks from "../doctor/Dashboard-card/partial/uselinks";
@@ -12,13 +12,13 @@ import { setHelperData } from "../recoil/atom/setHelperData";
 import { Wrapper } from "../mainComponent/Wrapper";
 
 function AppointmentBookingSection() {
-    const { patientId } = useParams()
     const [doctorId, setDoctorsId] = useRecoilState(setDoctorId)
     const [clinicData, setClinicData] = useState([])
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const [doctorName, setDoctorName] = useState([])
     const { getDrInfo } = AuthApi()
-
+    const patientId  = useParams() 
+    
     useEffect(() => {
         doctorData()
     }, [])
@@ -36,7 +36,7 @@ function AppointmentBookingSection() {
             <MainNav>
                 <ul className="clearfix">
                     <li>
-                        <Link to={`/getLoginPatientProfile/${patientId}`}>
+                        <Link to={`/appointments/${doctorId}`}>
                             <i className="arrow_back backArrow" title="back button"></i>
                         </Link>
                     </li>

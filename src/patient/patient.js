@@ -64,6 +64,7 @@ export default function Patient() {
                 </div>
 
             </div>
+            <Outlet/>
         </Wrapper>
     )
 } 

@@ -20,8 +20,9 @@ export default function GetDependent() {
             })
     }
 
-    const handleClick = (item) => {
-        navigate(`/appointmentbookingsection/${item._id}`)
+    const handleClick = (e,item) => {
+        e.preventDefault()
+        navigate(`booking/${item._id}`)
         setDependentsId(item._id)
     }
     return (
@@ -44,7 +45,7 @@ export default function GetDependent() {
                                                     {item.name}
                                                 </div>
                                                 <div className='col-md-5' align='right'>
-                                                    <Link onClick={() => handleClick(item)} className="btn">
+                                                    <Link onClick={(e) => handleClick(e,item)} className="btn">
                                                         <i className="arrow_carrot-right_alt" style={{ fontSize: 20 }}></i>
                                                     </Link>
                                                 </div>

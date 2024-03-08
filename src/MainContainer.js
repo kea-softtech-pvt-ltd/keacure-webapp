@@ -1,5 +1,7 @@
-import { Outlet, Route, Routes, redirect } from "react-router-dom";
-import DoctorDetail from "./doctor/Dashboard-card/DoctorDetail";
+import { Route, 
+         Routes, 
+         redirect 
+} from "react-router-dom";
 import LoginDoctor from "./doctor/Profile/LoginDoctor";
 import DoctorProfile from "./doctor/Profile/DoctorProfile";
 import EditDoctorProfile from "./doctor/Profile/EditDoctorProfile";
@@ -26,60 +28,58 @@ import { useRecoilState } from "recoil";
 
 function MainContainer() {
   const [doctorId, sestDoctorId] = useRecoilState(setDoctorId);
+  console.log("doctorId--------", doctorId)
 
   return (
     <Routes>
-      <Route path="/" element={<LoginDoctor />} />
-
+      <Route path="/" element= {doctorId ? <Dashboard /> :  <LoginDoctor/>} />
+      <Route path="/subscriptions/:doctorId" element={doctorId ? <Subscription /> : redirect("/")} />
       <Route path="/dashboard/:doctorId" element={doctorId ? <Dashboard /> : redirect("/")} />
 
-      <Route path="/doctorprofile/:doctorId" element={doctorId ? <DoctorProfile /> : redirect("/")}>
-        <Route index path="edit" element={doctorId ? <EditDoctorProfile /> : redirect("/")} />
+      {/* doctor profile */}
+      <Route path="/profile/:doctorId">
+        <Route index element={doctorId ? <DoctorProfile /> : redirect("/")} />
+        <Route path="edit" element={doctorId ? <EditDoctorProfile /> : redirect("/")} />
       </Route>
 
-      <Route path="/appointments/:doctorId" element={doctorId ? <Patient /> : redirect("/")}  >
-        {/* <Route path="consultation/:reportId" element={doctorId ? <PatientMedicalReport /> : redirect("/")} /> 
-          <Route path="getloginpatientprofile/:patientId" element={doctorId ? < GetLoginPatientProfile /> : redirect("/")} />
-          <Route path="appointmentbookingsection/:patientId" element={doctorId ? <AppointmentBookingSection /> : redirect("/")} />
-          <Route path="createpatientprofile/:patientId" element={doctorId ? < CreatePatientProfile /> : redirect("/")} />
-          <Route path="patientdata/:patientId" element={doctorId ? <PatientData /> : redirect("/")}/> */}
+      {/* Appointments */}
+      <Route path="/appointments/:doctorId" >
+        <Route index element={doctorId ? <Patient /> : redirect("/")} />
+        <Route path="consultation/:reportId" element={doctorId ? <PatientMedicalReport /> : redirect("/")} />
+        <Route path="patientprofile/:patientId">
+          <Route index element={doctorId ? < GetLoginPatientProfile /> : redirect("/")} />
+          <Route path="booking/:patientId" element={doctorId ? <AppointmentBookingSection /> : redirect("/")} />
+        </Route>
+        <Route path="createprofile/:patientId" element={doctorId ? < CreatePatientProfile /> : redirect("/")} />
+        <Route path="patientdata/:patientId" element={doctorId ? <PatientData /> : redirect("/")} />
       </Route>
 
-      <Route path="/history/:doctorId" element={doctorId ? < PatientsClinicHistory /> : redirect("/")}>
-        {/* <Route path="medicalreport/:reportId" element={doctorId ? <ViewMedicalReport /> : redirect("/")} /> */}
+      {/* Appointments history */}
+      <Route path="/history/:doctorId" >
+        <Route index element={doctorId ? < PatientsClinicHistory /> : redirect("/")} />
+        <Route path="report/:reportId" element={doctorId ? <ViewMedicalReport /> : redirect("/")} />
       </Route>
 
-      <Route path="/subscription/:doctorId" element={doctorId ? <Subscription /> : redirect("/")}>
-        {/* <Route path="update" element={doctorId ? <SubscriptionCard /> : redirect("/")} />
-            <Route path="confirmation" element={doctorId ? <SubscriptionConfirmation /> : redirect("/")}/> */}
-      </Route>
-
-      <Route path="/helper/:doctorId" element={doctorId ? <Helper /> : redirect("/")}>
-        {/* <Route path="edit" element={doctorId ? <EditHelper /> : redirect("/")} />
-           <Route path="login" element={doctorId ? <LoginHelper /> : redirect("/")} /> */}
-      </Route>
-
+      {/* calender */}
       <Route path="/calender/:doctorId" element={doctorId ? < Calender /> : redirect("/")} />
 
+      {/* subscription */}
+      <Route path="/subscription/:doctorId">
+        <Route index element={doctorId ? <SubscriptionCard /> : redirect("/")} />
+        <Route path="confirm" element={doctorId ? <SubscriptionConfirmation /> : redirect("/")} />
+      </Route>
+
+      {/* Assistant */}
+      <Route path="/helper/:doctorId">
+        <Route index element={doctorId ? <Helper /> : redirect("/")} />
+        <Route path="update/:helperId" element={doctorId ? <EditHelper /> : redirect("/")} />
+      </Route>
+
+      {/* medicine List */}
       <Route path="/medicinelist/:doctorId" element={doctorId ? <MedicineList /> : redirect("/")} />
 
       <Route path="/logout" element={< Logout />} />
-
-      {/* single route */}
-      <Route path="/consultation/:reportId" element={doctorId ? <PatientMedicalReport /> : redirect("/")} ></Route>
-      <Route path="/createpatientprofile/:patientId" element={doctorId ? < CreatePatientProfile /> : redirect("/")}></Route>
-      <Route path="/getloginpatientprofile/:patientId" element={doctorId ? < GetLoginPatientProfile /> : redirect("/")}></Route>
-      <Route path="/appointmentbookingsection/:patientId" element={doctorId ? <AppointmentBookingSection /> : redirect("/")}></Route>
-      <Route path="/patientdata/:patientId" element={doctorId ? <PatientData /> : redirect("/")} />
-
-      <Route path="/history/medicalreport/:reportId" element={doctorId ? <ViewMedicalReport /> : redirect("/")}></Route>
-
-      <Route path="/edithelper/:helperId" element={doctorId ? <EditHelper /> : redirect("/")} />
-      <Route path="/loginhelper" element={doctorId ? <LoginHelper /> : redirect("/")} />
-
-      <Route path="/subscriptions/update/:doctorId" element={doctorId ? <SubscriptionCard /> : redirect("/")}></Route>
-      <Route path="/subscriptionconfirmation/:doctorId" element={doctorId ? <SubscriptionConfirmation /> : redirect("/")}> </Route>
-
+      <Route path="/helperlogin" element={<LoginHelper />} />
     </Routes>
   )
 }

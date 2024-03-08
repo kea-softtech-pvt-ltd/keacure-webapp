@@ -46,6 +46,7 @@ export default function DoctorProfile() {
                     </div>
                 </div>
             </div>
+            <Outlet />
         </Wrapper>
     )
 }
