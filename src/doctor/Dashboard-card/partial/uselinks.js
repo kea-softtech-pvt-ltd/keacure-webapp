@@ -16,7 +16,6 @@ export default function UserLinks(props) {
     const { helperId, accessModule } = props;
     const [patientId, setPatientsId] = useRecoilState(setNewPatientId)
     const [doctorId, setdoctorId] = useRecoilState(setDoctorId)
-    console.log("doctorI=====>", doctorId)
     const { getPatientListDetails } = AppointmentsApi()
     const navigate = useNavigate();
     let location = useLocation();

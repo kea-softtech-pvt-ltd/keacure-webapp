@@ -14,6 +14,7 @@ export default function SubscriptionCard() {
     const [getSubData, setGetSubData] = useState([]);
     const [getPlan, setGetPlan] = useState(null);
     const [subscriptionId, setSubscriptionId] = useState([]);
+    const [duration, setDuration] = useState('')
     const { doctorId } = useParams();
     const [helpersData, setHelpersData] = useRecoilState(setHelperData);
     const [getSubscription, setGetSubscription] = useState([])
@@ -35,6 +36,7 @@ export default function SubscriptionCard() {
                         return item
                     }
                 })
+                setDuration(data[0].duration)
                 setGetSubData(data[0].selected_plan)
                 setSubscriptionId(data[0]._id)
             })
@@ -127,6 +129,13 @@ export default function SubscriptionCard() {
                                             className="btn disabled-card add_bottom_15 shadow-none disabled"
                                         >Subscribed
                                         </button>
+                                        :
+                                        item.frequency < parseInt(duration) ?
+                                            <button
+                                                onClick={handleClose}
+                                                className="btn disabled-card add_bottom_15 shadow-none disabled"
+                                            >Get Started
+                                            </button> 
                                         : <button
                                             onClick={() => handleShow(item)}
                                             className="sub-card-btn add_bottom_15 shadow-none btn btn-primary">
