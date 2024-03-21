@@ -63,7 +63,7 @@ const ShowInClinicAppointSlots = (props) => {
     const checkSlotAvailability = (slot) => {
         const currentDate = moment(new Date()).format("YYYY-MM-DD HH:mm")
         const slotDateTime = moment(new Date(selectedDate)).format("YYYY-MM-DD") + " " + slot.time
-        const returnData = currentDate > slotDateTime || bookingSlots.some(func => (func.slotId === slot._id && func.status !== "Cancelled")  )
+        const returnData = currentDate > slotDateTime || bookingSlots.some(func => (func.slotId === slot._id && func.status !== "Cancelled"))
         return returnData
     }
 
@@ -83,7 +83,8 @@ const ShowInClinicAppointSlots = (props) => {
             <div style={{ flexWrap: 'wrap' }}>
                 <span style={{ color: "black" }}>
                     <b>{slotDate}  </b>
-                    <b>  Fees - <FaRupeeSign /> {session.fees} /-</b></span>
+                    <b>  Fees - <FaRupeeSign /> {session.fees} /-</b>
+                </span>
                 <section className=" radiobutton">
                     {sessionSlot.map((item, index) => (
                         <div key={index}>
@@ -126,7 +127,6 @@ const ShowInClinicAppointSlots = (props) => {
                         <Button variant="default" style={{ border: '1px solid #1a3c8b' }} onClick={handleClose}>
                             No
                         </Button>
-
                     </Modal.Footer>
                 </Modal>
             </div>

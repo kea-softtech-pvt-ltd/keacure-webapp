@@ -103,7 +103,7 @@ export default function SubscriptionCard() {
                     helperId={helpersData._id}
                     accessModule={helpersData.access_module}
                 />
-                <div className="col-sm-10">
+                <div className="col-sm-10  common_box">
                     <div className='row'>
                         {getSubscription.map((item, i) => {
                             return (
