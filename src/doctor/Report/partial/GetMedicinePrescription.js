@@ -31,8 +31,7 @@ const GetMedicinePriscription = (props) => {
         <>
             {showMedicineData.length > 0 ?
                 <>
-                    {/* <label><h6><b className='mx-2' >Medicine</b></h6></label> */}
-                    <div className='whiteBox'>
+                    <div className=''>
                         <TableContainer>
                             <Table>
                                 <TableHead>

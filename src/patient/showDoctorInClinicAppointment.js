@@ -79,8 +79,8 @@ function ShowDoctorInClinicAppointment(props) {
     return (
         <div>
             {setSessions ? (
-                <div className="row">
-                    <div style={{ borderRight: '1px solid #e1e8ed', paddingTop: '5px' }}>
+                <div className="row  padding_2">
+                    <div className=" col-sm-4 white-box" style={{ borderRight: '1px solid #e1e8ed', paddingTop: '5px' }}>
                         <Carousel
                             interval={null}
                             controls={true}
@@ -104,7 +104,7 @@ function ShowDoctorInClinicAppointment(props) {
                             ))}
                         </Carousel>
                     </div>
-                    <div className="col-sm-9">
+                    <div className="col-sm-8 white-box">
                         {showSlot.length > 0 ?
                             <ShowInClinicAppointSlots
                                 doctorId={doctorId}

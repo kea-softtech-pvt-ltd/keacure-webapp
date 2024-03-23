@@ -1,6 +1,7 @@
-import { Route, 
-         Routes, 
-         redirect 
+import {
+  Route,
+  Routes,
+  redirect
 } from "react-router-dom";
 import LoginDoctor from "./doctor/Profile/LoginDoctor";
 import DoctorProfile from "./doctor/Profile/DoctorProfile";
@@ -32,7 +33,7 @@ function MainContainer() {
 
   return (
     <Routes>
-      <Route path="/" element= {doctorId ? <Dashboard /> :  <LoginDoctor/>} />
+      <Route path="/" element={<LoginDoctor />} />
       <Route path="/subscriptions/:doctorId" element={doctorId ? <Subscription /> : redirect("/")} />
       <Route path="/dashboard/:doctorId" element={doctorId ? <Dashboard /> : redirect("/")} />
 

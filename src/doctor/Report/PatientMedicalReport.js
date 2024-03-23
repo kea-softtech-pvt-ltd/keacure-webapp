@@ -4,7 +4,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import PatientPersonalInfo from './partial/PatientPersonalInfo';
 import Investigation from './partial/Investigation'
@@ -74,6 +74,7 @@ export default function PatientMedicalReport() {
                     helperId={helpersData._id}
                     accessModule={helpersData.access_module}
                 />
+                <div className="common_box">
                 <div className="white-box">
                     {/* <PatientPersonalInfo reportId={reportId} /> */}
                     <Paper square>
@@ -143,6 +144,7 @@ export default function PatientMedicalReport() {
                         </TabPanel >
 
 
+                    </div>
                     </div>
                     {/* <div className="text-right add_top_30"><input type="submit" className="btn_1" value="save" /></div> */}
                 </div>

@@ -3355,9 +3355,9 @@ a.btn_2 .full-width {
 	font-size: 50px;
 	border-radius: 5px;
 	display: inline-block;
-	width: auto;
-	margin: 0 !important;
-	padding: 15px 25px 15px 25px !important;
+	width: inherit;
+	margin: 7px 0px 10px 7px;
+	/* padding: 15px 25px 15px 25px !important; */
 	font-size: 15px !important;
 	text-decoration: none;
 	line-height: 1.5;
@@ -4569,7 +4569,7 @@ input[type="file"]::-webkit-file-upload-button {
 .bottomborder {
 	border-bottom-style: solid;
 	border-width: 1px;
-	border-color:  var(--borderColor);
+	border-color: var(--borderColor);
 }
 .rightborder {
 	border-right-style: solid;
@@ -4767,7 +4767,7 @@ a.box_feat_about h3 {
 	background-color: #fff;
 	border-radius: 5px;
 	/* box-shadow: 5px 5px 5px rgb(216, 214, 214); */
-	border: 1px solid  var(--borderColor);
+	border: 1px solid var(--borderColor);
 	padding: 5px;
 }
 .cardSpan {
@@ -4780,7 +4780,7 @@ a.box_feat_about h3 {
 	font-size: 22px;
 }
 .appointmentBtn {
-	border-top: 1px solid  var(--borderColor);
+	border-top: 1px solid var(--borderColor);
 }
 .patientName {
 	font-size: 15px;
@@ -4818,7 +4818,7 @@ a.box_feat_about h3 {
 	background-color: #fff;
 	border-radius: 5px;
 	/* box-shadow: 5px 5px 5px rgb(216, 214, 214); */
-	border: 1px solid  var(--borderColor);
+	border: 1px solid var(--borderColor);
 	margin-bottom: 30px;
 }
 #ck-button {
@@ -5057,8 +5057,11 @@ textarea.form-control {
 	border-radius: 5px;
 	margin-bottom: 15px;
 	margin-top: 4px;
-	width: 83%;
+	width: 1130px;
 	border: 1px solid var(--borderColor);
+}
+.padding_2 {
+	padding: 0px 15px 0px 15px;
 }
 .containar-nav {
 	margin-left: 20px;

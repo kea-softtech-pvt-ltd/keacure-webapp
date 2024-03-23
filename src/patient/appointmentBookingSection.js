@@ -51,7 +51,7 @@ function AppointmentBookingSection() {
                     helperId={helpersData._id}
                     accessModule={helpersData.access_module}
                 />
-                <div className="white-box booking">
+                <div className="common_box booking">
                     <div>
                         {clinicData.map((clinicItem, id) => (
                             <MainAccordion key={id} icon={<FaClinicMedical />} title={clinicItem.clinicName}>

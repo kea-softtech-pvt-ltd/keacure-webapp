@@ -32,7 +32,7 @@ export default function GetLoginPatientProfile() {
                         helperId={helpersData._id}
                         accessModule={helpersData.access_module}
                     />
-                    <div className="container margin_60">
+                    <div className="container common_box margin_60">
                         <div className="row">
                             <div className="col-sm-6">
                                 <div className="box_general_4 cart patientDetails">
