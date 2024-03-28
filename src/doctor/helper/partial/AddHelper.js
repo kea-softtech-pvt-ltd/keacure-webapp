@@ -42,7 +42,7 @@ export default function AddHelper(props) {
         if (value) {
             module.push({
                 moduleId: accessModule[index]._id,
-                moduleName: accessModule[index].module_name
+                moduleName: accessModule[index].moduleName
             })
         } else {
             let m = module.filter((item, i) => {
@@ -69,14 +69,13 @@ export default function AddHelper(props) {
         toast.success("Saved Successfully!")
     }
     return (
-        <div className='whiteBox'>
+        <div className='white-box'>
             <div className="row p-4">
                 <div className="col-lg-5 AddHelper">
                     <label className='helperLabel float-left'><b>User Name</b></label>
                     <MainInput
                         type="text"
                         name="username"
-                        // value='username'
                         onChange={handleChange}
                         placeholder="Enter Your Name">
                     </MainInput>
@@ -87,7 +86,6 @@ export default function AddHelper(props) {
                         <MainInput
                             type="password"
                             name="password"
-                            // value={passwordInput}
                             onChange={handleChange}
                             className=''
                             placeholder="Password">
@@ -99,17 +97,13 @@ export default function AddHelper(props) {
                     <MainInput
                         type="email"
                         name="email"
-                        // value='email'
                         onChange={handleChange}
                         placeholder="Email">
                     </MainInput>
-                    {/* <div> */}
                     <label className='helperLabel float-left'><b>Mobile Number</b></label>
-                    {/* </div> */}
                     <MainInput
                         type="mobile"
                         name="mobile"
-                        // value='mobile'
                         onChange={handleChange}
                         maxLength={10}
                         pattern="[+-]?\d+(?:[.,]\d+)?"
@@ -127,7 +121,7 @@ export default function AddHelper(props) {
                                         onChange={() => changeSelectedModule(index)}
                                         className="mx-3 helperCheckbox"
                                     />
-                                    <label className='helperspan '>{item.module_name}</label>
+                                    <label className='helperspan '>{item.moduleName}</label>
                                 </div>
                             )
                         })

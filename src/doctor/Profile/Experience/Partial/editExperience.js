@@ -85,6 +85,8 @@ function EditExperience(props) {
             year = exYear.toFixed(0)
         }
         data.totalExperience = `${year}.${month}`;
+        console.log('==============',`${year}.${month}`)
+
         return [data];
     }
 
@@ -103,14 +105,14 @@ function EditExperience(props) {
                     <i className="icon-calendar:before" title="Edit profile"></i>
                     <MainMuiPickers
                         name="startYear"
-                        value={ moment(new Date(startYear)).format('MM/YYYY')}
+                        value={moment(new Date(startYear)).format('MM/YYYY')}
                         onChange={handleStartYearChange}>Start Year
                     </MainMuiPickers>
                 </div>
                 <div className="col-md-6 ">
                     <MainMuiPickers
                         name="endYear"
-                        value={ moment(new Date(endYear)).format('MM/YYYY')}
+                        value={moment(new Date(endYear)).format('MM/YYYY')}
                         onChange={handleEndYearChange}>End Year
                     </MainMuiPickers>
                 </div>

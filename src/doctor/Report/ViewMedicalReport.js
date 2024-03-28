@@ -136,20 +136,20 @@ export default function ViewMedicalReport() {
                         </div>
                     </div>
 
-                    <div className="whiteBox viewMreport">
+                    <div className="white-box viewMreport">
                         <GetMedicinePriscription reportId={reportId} />
                     </div>
 
-                    <div className="whiteBox viewMreport">
+                    <div className="white-box viewMreport">
                         <GetLabPrescription reportId={reportId} />
                     </div>
 
-                    <div className="whiteBox viewMreport">
+                    <div className="white-box viewMreport">
                         <GetSymptomsData reportId={reportId} />
                     </div>
 
 
-                    <div className="whiteBox viewMreport">
+                    <div className="white-box viewMreport">
                         <div align="left">
                             <b className='viewMreport'>Investigation :</b>
                             {

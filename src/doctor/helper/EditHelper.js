@@ -30,6 +30,7 @@ export default function EditHelper() {
     const fetchHelper = () => {
         fetchHelperData(helperId)
             .then((res) => {
+                console.log('=========fetchHelperData',res)
                 setDoctorId(res[0].doctorId)
                 setGetHelperData(res[0])
                 setSelectedModule(res[0].access_module)
@@ -52,7 +53,7 @@ export default function EditHelper() {
         if (value) {
             module.push({
                 moduleId: accessModule[index]._id,
-                moduleName: accessModule[index].module_name
+                moduleName: accessModule[index].moduleName
             })
         } else {
             let m = module.filter((item, i) => {
@@ -64,6 +65,7 @@ export default function EditHelper() {
     }
 
     function checkIfModuleisSelected(id, data) {
+        console.log('==========da', data)
         return data.filter(item => (item.moduleId === id))
     }
 
@@ -97,7 +99,7 @@ export default function EditHelper() {
             <div className="row ">
                 <UserLinks doctorId={doctorId}  />
                 <div className="common_box">
-                    <div className='whiteBox'>
+                    <div className='white-box'>
                         <div className="row p-4">
                             <div className="col-lg-5 AddHelper">
                                 <label className='helperLabel float-left'><b>User Name</b></label>
@@ -156,7 +158,7 @@ export default function EditHelper() {
                                                     className="mx-3 helperCheckbox"
                                                     value={item}
                                                 />
-                                                <label className='helperspan'>{item.module_name}</label>
+                                                <label className='helperspan'>{item.moduleName}</label>
                                             </div>
                                         )
                                     })

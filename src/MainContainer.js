@@ -29,7 +29,6 @@ import { useRecoilState } from "recoil";
 
 function MainContainer() {
   const [doctorId, sestDoctorId] = useRecoilState(setDoctorId);
-  console.log("doctorId--------", doctorId)
 
   return (
     <Routes>

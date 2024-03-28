@@ -56,14 +56,14 @@ export default function PatientList(props) {
         getPatientListDetails({ doctorId }, currentPage, pageSize)
             .then((result, i) => {
                 const totalPages = result.totalOngoingPages;
-                setTotalPages(totalPages) 
+                setTotalPages(totalPages)
                 setPatientList(result.ongoing)
                 const data = result['test']
                 data.filter((data) => {
                     const patientAppointmentId = data._id;
-                    const currentDate = moment(new Date()).format("YYYY-MM-DD HH:MM") 
-                    const slotDate = moment(data.selectedDate).format("YYYY-MM-DD")+" "+ data.slotTime
-                    if ( slotDate < currentDate && data.status !== "Completed" && data.status !== "Cancelled") {
+                    const currentDate = moment(new Date()).format("YYYY-MM-DD HH:MM")
+                    const slotDate = moment(data.selectedDate).format("YYYY-MM-DD") + " " + data.slotTime
+                    if (slotDate < currentDate && data.status !== "Completed" && data.status !== "Cancelled") {
                         const bodyData = {
                             'status': "Incomplete"
                         }
@@ -83,7 +83,7 @@ export default function PatientList(props) {
     const handlePageClick = (data) => {
         setCurrentPage(data.selected + 1)
     }
-    const handleShowProfile = (e,patientId) => {
+    const handleShowProfile = (e, patientId) => {
         e.preventDefault()
         navigate(`patientdata/${patientId}`)
     }
@@ -94,13 +94,13 @@ export default function PatientList(props) {
                     {patientList.map((details, i) => {
                         return (
                             <>
-                                {!details.dependentId ?
-                                    <div key={i} className="col-md-4 ">
+                                <div key={i} className="col-md-4 ">
+                                    {!details.dependentId ?
                                         <div className="cardDiv">
                                             <span className='cardSpan'>
                                                 <i className='icon-user color patientListIcon' />
                                                 <span className='patientName '>
-                                                    <Link to="#" className='underLine' onClick={(e) => handleShowProfile(e,details.patientId)}>
+                                                    <Link to="#" className='underLine' onClick={(e) => handleShowProfile(e, details.patientId)}>
                                                         {details['patientDetails'][0].name}
                                                     </Link>
                                                 </span>
@@ -133,8 +133,8 @@ export default function PatientList(props) {
                                                 </Link>
                                             </div>
                                         </div>
-                                    </div>
-                                    : <div key={i} className="col-md-4 ">
+
+                                        :
                                         <div className="cardDiv">
                                             <div className='cardSpan row'>
                                                 <div align='left' className='col-md-8' >
@@ -171,8 +171,8 @@ export default function PatientList(props) {
                                                 </Link>
                                             </div>
                                         </div>
-                                    </div>
-                                }
+                                    }
+                                </div>
                             </>
                         )
                     })}

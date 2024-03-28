@@ -58,42 +58,44 @@ export default function EditDoctorProfile() {
                     helperId={helpersData._id}
                     accessModule={helpersData.access_module}
                 />
-                <div className="white-box">
-                    <MainTabs
-                        value={tabValue}
-                        onChange={handleChange}
-                        label="Personal Information"
-                        label1="Educational Details"
-                        label2="Professional Experience"
-                        label3="Clinic"
-                    >
-                    </MainTabs>
+                <div className="common_box">
+                    <div className="white-box">
+                        <MainTabs
+                            value={tabValue}
+                            onChange={handleChange}
+                            label="Personal Information"
+                            label1="Educational Details"
+                            label2="Professional Experience"
+                            label3="Clinic"
+                        >
+                        </MainTabs>
 
-                    <TabPanel value={tabValue} index={0}>
-                        <DoctorPersonalInformation
-                            data={goToEducation}
-                            doctorId={doctorId}
-                        />
-                    </TabPanel>
+                        <TabPanel value={tabValue} index={0}>
+                            <DoctorPersonalInformation
+                                data={goToEducation}
+                                doctorId={doctorId}
+                            />
+                        </TabPanel>
 
-                    <TabPanel value={tabValue} index={1}>
-                        <DoctorEducation
-                            data={goToExperience}
-                            doctorId={doctorId}
-                        />
-                    </TabPanel>
+                        <TabPanel value={tabValue} index={1}>
+                            <DoctorEducation
+                                data={goToExperience}
+                                doctorId={doctorId}
+                            />
+                        </TabPanel>
 
-                    <TabPanel value={tabValue} index={2}>
-                        <DoctorProfessionalExperience
-                            data={goToClinic}
-                            doctorId={doctorId}
-                        />
-                    </TabPanel>
+                        <TabPanel value={tabValue} index={2}>
+                            <DoctorProfessionalExperience
+                                data={goToClinic}
+                                doctorId={doctorId}
+                            />
+                        </TabPanel>
 
-                    <TabPanel value={tabValue} index={3}>
-                        <DoctorClinic 
-                         doctorId={doctorId}/>
-                    </TabPanel>
+                        <TabPanel value={tabValue} index={3}>
+                            <DoctorClinic
+                                doctorId={doctorId} />
+                        </TabPanel>
+                    </div>
                 </div>
             </div>
         </Wrapper>

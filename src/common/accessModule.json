@@ -1,0 +1,20 @@
+[
+    {
+        "moduleName":"Profile"
+    },
+    {
+        "moduleName":"Appointment"
+    },
+    {
+        "moduleName":"Appointment-History"
+    },
+    {
+        "moduleName":"Subscription"
+    },
+    {
+        "moduleName":"Report"
+    },
+    {
+        "moduleName":"Payment"
+    }
+]

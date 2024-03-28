@@ -6,7 +6,7 @@ import {
     TableRow,
     TableCell,
     TableBody,
-    Paper,
+   
 } from '@material-ui/core';
 import ReportApi from '../../../services/ReportApi';
 

@@ -36,6 +36,7 @@ export default function MedicineList() {
 
     const { getMedicineList } = ReportApi()
     const [getCSV, setCSV] = useState("")
+    
     const useStyles = makeStyles((theme) => ({
         formControl: {
             margin: theme.spacing(1),
@@ -52,7 +53,7 @@ export default function MedicineList() {
 
     useEffect(() => {
         DrInfo(currentPage);
-    }, [currentPage]);
+    }, [currentPage, getCSV]);
 
     const saveData = async (e) => {
         toast.success("Saved Successfully!")
@@ -103,7 +104,7 @@ export default function MedicineList() {
                     helperId={helpersData._id}
                     accessModule={helpersData.access_module}
                 />
-                <form onSubmit={saveData} className="common_box align-center">
+                <div  className="common_box align-center">
                     <div className='row vitalSign' >
                         <input
                             align='center'
@@ -115,7 +116,7 @@ export default function MedicineList() {
                             required
                         />
                         <div className='margin_left_15'>
-                            <MainButtonInput > Save</MainButtonInput>
+                            <MainButtonInput  onClick={saveData} > Save</MainButtonInput>
                         </div>
                     </div>
                     <div className="clinicHistory" >
@@ -168,7 +169,7 @@ export default function MedicineList() {
                             breakLinkClassName="page-link"
                         />
                     </div>
-                </form>
+                </div>
             </div>
         </Wrapper >
     )
