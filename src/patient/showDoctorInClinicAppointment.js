@@ -36,9 +36,7 @@ function ShowDoctorInClinicAppointment(props) {
             setSession(session[0])
             setDate(item.dateMonth)
             setSelectedDate(item.fullDate)
-        } else {
-            setError("slots are not available")
-        }
+        } 
     };
 
     useEffect(() => {
@@ -65,7 +63,6 @@ function ShowDoctorInClinicAppointment(props) {
     }
 
     const getStringDay = (dayId) => {
-
         let days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
         return days[dayId]
     }
