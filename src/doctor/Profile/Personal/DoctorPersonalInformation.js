@@ -27,11 +27,11 @@ function DoctorPersonalInformation(props) {
     };
   
     useEffect(() => {
+        addDrInfo()
         register("name", { required: true });
         register("gender", { required: true });
         register("personalEmail", { required: true });
         register("address", { required: true });
-        addDrInfo()
     }, [])
 
     const addDrInfo = () => {

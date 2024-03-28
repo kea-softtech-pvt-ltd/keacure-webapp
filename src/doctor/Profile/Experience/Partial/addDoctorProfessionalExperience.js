@@ -16,16 +16,10 @@ function AddDoctorProfessionalExperience(props) {
     const [coilDoctorExperience, setCoilDoctorExperience] = useRecoilState(setDoctorExperience)
     const [error, setError] = useState('')
     const [startYear, setStartYear] = useState(new Date())
-    console.log('==startYear==',startYear)
     const [endYear, setEndYear] = useState(new Date())
-    console.log('==endYear==',endYear)
     const [experienceData, setExperienceData] = useState([]);
     const { insertDrExperience } = ExperienceApi();
     const handleStartYearChange = (date) => {
-        // const splitDate = date.split("")
-        // const year = splitDate[0]
-        // const month = splitDate[1]
-        // const dateString =`${year}-${month}`
         setStartYear(date)
     }
     const handleEndYearChange = (date) => {
@@ -35,8 +29,6 @@ function AddDoctorProfessionalExperience(props) {
     useEffect(() => {
         register("clinicName", { required: true });
         register("description", { required: true });
-        // register("endYear", { required: true });
-        // register("startYear", { required: true });
     }, [])
 
     //for all input onchange method
@@ -65,8 +57,8 @@ function AddDoctorProfessionalExperience(props) {
                     const reArrangedData = manipulateExperience(res)
                     setCoilDoctorExperience(coilDoctorExperience.concat(reArrangedData))
                 })
-                toast.success("Saved Successfully!")
-                props.addRecords()
+            toast.success("Saved Successfully!")
+            props.addRecords()
         }
     }
 

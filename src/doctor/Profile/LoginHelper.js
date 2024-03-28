@@ -13,7 +13,6 @@ export default function LoginDoctor() {
     const [isError, setIsError] = useState(false);
     const [helpersData, setHelpersData] = useRecoilState(setHelperData)
     const [doctorId, setDrId] = useRecoilState(setDoctorId)
-    console.log("doctorId===========", doctorId)
     const navigate = useNavigate()
     const handleChange = (e) => {
         e.preventDefault();

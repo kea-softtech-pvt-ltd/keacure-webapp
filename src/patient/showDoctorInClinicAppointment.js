@@ -4,7 +4,6 @@ import Carousel from "react-bootstrap/Carousel";
 import { Link } from "react-router-dom";
 import { ShowInClinicAppointSlots } from "./showavailableslots";
 import moment from "moment";
-import { NavLink } from "react-router-dom";
 
 function ShowDoctorInClinicAppointment(props) {
     const { setSessions, clinicId, doctorId } = props;
@@ -14,6 +13,7 @@ function ShowDoctorInClinicAppointment(props) {
     const [session, setSession] = useState([])
     const [date, setDate] = useState([])
     const [selectedDate, setSelectedDate] = useState([])
+    const startDate = new Date();
 
     const handleChange = (item) => {
         const session = setSessions.filter((slotsData) => {
@@ -34,7 +34,7 @@ function ShowDoctorInClinicAppointment(props) {
                 setShowSlot(session[0].showSelectedSlots)
             }
             setSession(session[0])
-            setDate(item.day + " " + item.dayMonth)
+            setDate(item.dateMonth)
             setSelectedDate(item.fullDate)
         } else {
             setError("slots are not available")
@@ -43,37 +43,45 @@ function ShowDoctorInClinicAppointment(props) {
 
     useEffect(() => {
         showDateMonth();
-        getNextSevenDays();
+        getNextSevenDays(startDate, 7);
     }, [])
 
     const showDateMonth = (days) => {
-        var month = new Date().getMonth();
-        var m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-            "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-        return days + ' ' + m[month]
+        var d = new Date();
+        var month = new Array();
+        month[0] = "Jan";
+        month[1] = "Feb";
+        month[2] = "Mar";
+        month[3] = "Apr";
+        month[4] = "May";
+        month[5] = "Jun";
+        month[6] = "Jul";
+        month[7] = "Aug";
+        month[8] = "Sept";
+        month[9] = "Oct";
+        month[10] = "Nov";
+        month[11] = "Dec";
+        return month[days]
     }
 
     const getStringDay = (dayId) => {
+
         let days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"]
         return days[dayId]
     }
 
-    const getNextSevenDays = () => {
-        let sevenDates = []
-        for (let i = 0; i < 7; i++) {
-            let date = new Date();
-            let apochDate = date.setDate(date.getDate() + i)
-            let apochMonth = date.setDate(date.getDate())
-            let month = showDateMonth(new Date(apochMonth).getDate())
-            const day = getStringDay(new Date(apochDate).getDay())
-            sevenDates.push({
-                "date": new Date(apochDate).getDate(),
-                "day": day, "fullDate": new Date(apochDate).toISOString().split('T')[0],
-                "dayMonth": month
-            })
+    const getNextSevenDays = (startDate, daysToAdd) => {
+        const aryDates = [];
+        for (var i = 0; i <= daysToAdd; i++) {
+            var currentDate = new Date();
+            let appochDate = currentDate.setDate(startDate.getDate() + i);
+            aryDates.push({
+                "dateMonth":getStringDay(currentDate.getDay()) + " " + currentDate.getDate() + " " + showDateMonth(currentDate.getMonth()),
+                "fullDate": new Date(appochDate).toISOString().split('T')[0],
+                "day": getStringDay(currentDate.getDay())
+            });
         }
-
-        setDayMonth(sevenDates)
+        setDayMonth(aryDates)
     }
 
     return (
@@ -94,7 +102,7 @@ function ShowDoctorInClinicAppointment(props) {
                                                 to="#"
                                                 onClick={() => handleChange(item)}>
                                                 <div>
-                                                    <b>{item.day} {item.dayMonth}</b>
+                                                    <b>{item.dateMonth}</b>
                                                 </div>
                                                 Show Available Slots
                                             </Link>

@@ -10,7 +10,7 @@ function FetchPatientInfo(props) {
 
     useEffect(() => {
         getAllPatientData()
-    }, [])
+    }, [fetchPatientData])
 
     function getAllPatientData() {
         patientDetailsData({patientId})
